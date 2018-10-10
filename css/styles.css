@@ -946,7 +946,10 @@ article > section,
     padding: 0 2rem;
   }
 }
-@media only screen and (max-width: 600px) {         
+@media only screen and (max-width: 414px) { 
+  article {
+    padding: 2rem 2rem !important;
+  }        
   .nav-menu,
   footer section {
     padding: 0 1rem;
@@ -969,5 +972,7 @@ article > section,
   .page *,
   .page * {
     font-size: 1.6rem;
+  }  
+    width: 100%;
   }
 }
