@@ -950,6 +950,9 @@ article > section,
   article {
     padding: 2rem 2rem !important;
   }        
+  pre {
+    width: 95%;
+  }
   .nav-menu,
   footer section {
     padding: 0 1rem;
@@ -973,6 +976,17 @@ article > section,
   .page * {
     font-size: 1.6rem;
   }  
+  .cp_embed_wrapper {
     width: 100%;
+  }
+}
+
+@media only screen and (max-width: 375px) { 
+ article.article {
+    padding: 2rem 1rem !important;
+  }  
+  .docs {
+    width: 100%;
+    min-width: 100%;
   }
 }
