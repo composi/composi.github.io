@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Docs</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/observer:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/en/docs/observer/install.html">Install</a></li>
+          <li><a href="/en/docs/observer/observer.html">Observer</a></li>
+          <li><a href="/en/docs/observer/watch.html">Watch</a></li>
+          <li><a href="/en/docs/observer/dispatch.html">Dispatch</a></li>
+          <li class='selected'>Unwatch</li>
+        </ul>
+          <h1>Unwatch</h1>
+          <h2>Unwatch an Event</h2>
+          <p>There may be situations where you need an observer, but only temporarily. You can use the observer's <code>unwatch</code> method to stop watchers from reacting to a particular event. This takes just one argument: the event to stop watching. When you turn off an event with <code>unwatch</code>, this affects all watchers for that event.</p>
+
+          <pre><code class='language-bash'>import { Observer } from '@composi/observer' 
+const observer = new Observer()
+observer.watch('whatever', () => {
+  alert('Whatever just happened!')
+})
+
+// Sometime later dispatch the event:
+observer.dispatch('whatever')
+// alert: 'Whatever just happened!'
+
+// Sometime later unwatch the event:
+observer.unwatch('whatever')
+// Dispatching the event now does nothing:
+observer.dispatch('whatever')
+          </code></pre>
+
+          <p>If you need to revive an unwatched event, you can do so by initalizing a watcher for it later.</p>
+          
+
+
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a> and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

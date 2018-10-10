@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Docs</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+</head>
+
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                  id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+          <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/core</h3>
+        <ul class='breadcrumb'><li><a href="/en/docs/core/install.html">Install</a></li>
+        <li><a href="/en/docs/core/render.html">Render</a></li>
+        <li><a href="/en/docs/core/props.html">Props</a></li>
+        <li><a href="/en/docs/core/events.html">Events</a></li>
+        <li><a href="/en/docs/core/lifecycle.html">Lifecycle</a></li>
+        <li><a href="/en/docs/core/hydrate.html">Hydrate</a></li>
+        <li><a href="/en/docs/core/unmount.html">Unmount</a></li>
+        <li class='selected'>State</li>
+        </ul>
+        <h1>State</h1>
+        <h2>State for Functional Components</h2>
+        <p>Functional components are stateless. You pass data to them as a prop and that gets used during the render. This means that if you pass the same data to a functional component, it will render the exact same way each time. This makes rendering predictable and easier to troubleshoot.</p>
+
+        <p>In contrast, class-based components can encapsulate local state and behaviors that make management and reuse easy.</p>
+
+        <p><strong>@composi/core</strong> provides only functional components with a virtual DOM. Composi does not provide a way to do state management for functional components. It's @composi/datastore. You'll need to install.</p>
+<pre><code class='language-bash'>npm i -D '@composi/core'
+</code></pre>
+
+        <p>After that, you need to import it into your project.</p>
+<pre><code class='language-javascript'>import { h, render } from '@composi/core'
+import { DataStore } from '@composi/datastore'
+</code></pre>
+
+
+<p>After you have DataStore imported, you can create a dataStore. You do this by providing it some data. This will be
+  an object literal with one property: <code>state</code>. You data will be the value of the dataStore's state. The
+  state can be a simple value or an array or object. You will then use the dataStore all the ultimate source of truth
+  for the functional component's state. You do this by passing the dataStore state to the function as a property.
+  DataStores are reactive. They have an internal observer that watches for changes and then fires an event. You can
+  define a watcher on the dataStore with an appropriately named event and have it re-render the functional component.
+  Then, when you need to update state, you use the setState method on the dataStore to do so. This causes the watcher
+  to react to the state changes and re-render the functional component. Job done.</p>
+
+
+        <p>Here is an example of creating a dataStore to use with a component:</p>
+
+<pre><code class='language-javascript'>import { h, render } from '@composi/core'
+import { DataStore } from '@composi/datastore'
+
+// Create a dataStore:
+const dataStore = new DataStore(['Apples', 'Oranges', 'Bananas'])
+
+// Define refs object to hold reference to input:
+const refs = {}
+
+// Define app for holding events, etc.
+const app = {
+  init(base) {
+    refs.input = base.querySelector('input')
+    refs.input.focus()
+  },
+  addItem() {
+    const value = refs.input.value
+    if (value) {
+      // Add value to dataStore:
+      dataStore.setState(prevState => {
+        prevState.push(value)
+        return prevState
+      })
+      // Clear the input's value,
+      // and give it focus:
+      refs.input.value = ''
+      refs.input.focus()
+    }
+  }
+}
+
+// Create a list component and pass the dataStore to it as data:
+function List({data}) {
+  return (
+    &lt;div onmount={base => app.init(base)}>
+      &lt;p>
+        &lt;input type="text" />
+        &lt;button onclick={() => app.addItem()&lt;/button>}&lt;/button>}>Add&lt;/button>
+      &lt;/p>
+    &lt;/div>
+  )
+}
+
+// Render the list and pass in the dataStore state as a prop:
+let list = render(&lt;List data={dataStore.state} />, 'section')
+
+// Set up a watcher and use it to update the component:
+dataStore.watch('update-list', () => {
+  list = render(&lt;List data={dataStore.state} />, 'section', list)
+})
+</code></pre>
+
+        <p>To learn more about how to use DataStore, read the <a href='/docs/datastore/install.html'>documentation</a>.</p>
+        <p>&nbsp;</p>
+      </div>
+    </section>
+  </article>
+  <footer>
+    <section>
+      <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>Composi Logo</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+            <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+              id="Combined-Shape"></path>
+          </g>
+        </g>
+      </svg>
+      <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a>
+        and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+    </section>
+  </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+
+</html>

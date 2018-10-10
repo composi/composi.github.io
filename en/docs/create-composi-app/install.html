@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Docs</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/create-composi-app:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/en/docs/create-composi-app/create-composi-app.html">create-composi-app</a></li>
+          <li class='selected'>Install</li>
+          <li><a href="/en/docs/create-composi-app/usage.html">Usage</a></li>
+        </ul>
+          <h1>Install</h1>
+          <p class="docs__intro">To install Composi, you'll need to have <a href="https://nodejs.org/en/" target='__blank'>Node</a> installed first. If you do have Node, then open your terminal and run:</p>
+
+          <pre><code class='language-bash'>npm install --save-dev @composi/create-composi-app</code></pre>
+
+          <p>If you are on a Mac or Linux, you may need to run the above command with <code>sudo</code>.</p>
+
+          <p>After installing you can check that everything is right by running:</p>
+
+
+          <pre><code class='language-bash'>create-composi-app -h
+// or:
+create-composi-app --help
+</code></pre>
+          <p>This will output help in the terminal. You can also get the current version of <code>create-composi-app</code>:</p>
+<pre><code class='language-bash'>create-composi-app -v
+// or:
+create-composi-app --version
+</code></pre>
+          <p> </p>
+          <h2>Create a Project</h2>
+          <p>Now that you have @composi/create-composi-app installed, you can use it to create a new project setup to use @composi/core. To do this you open your terminal and type in <code>create-composi-app</code> followed by the name for the project. This will create a project with that name on your desktop:</p>
+
+<pre><code class='language-bash'>create-composi-app MyProj</code></pre>
+
+          <p>If you want a multi-word project name with spaces, you'll need to enclose the name in quotes:</p>
+<pre><code class='language-bash'>create-composi-app "My Project"</code></pre>
+          
+          <p>When you create a project with a multi-word name with spaces, Composi creates a folder with that name. However, because of NPM requirements, the package.json name is converted to lowercase and the spaces to hyphens. So the name "My Project" would appear in the package.json file as "my-project". But the project folder would remain "My Project".</p>
+
+          <h2>Provide a Path</h2>
+          <p>By default create-composi-app puts the new project on the desktop. However, you can tell it where you want the project to be placed by providing a second argument. This needs to be a valid path for your operating system. It also needs to be quoted. We'll create our project in a special folder in our home directory:</p>
+<pre><code class='language-bash'>create-composi-app "Panda Puff" "~/dev"</code></pre>
+          <p>The above will create the project "Panda Puff" in the folder <code>dev</code>. If <code>dev</code> does not exist, it will be created. Otherwise it will be create inside of it with whatever else the folder contains.</p>
+
+          <h2>Install Dependencies</h2>
+          <p>After creating a new project you need to install its Dependencies. To do so, <code>cd</code> to the project folder and run the following in your terminal:</p>
+
+<pre><code class='language-bash'>npm i</code></pre>
+          <p>This might take a while since the default comes with a number of image processing plugins that are large. Image porcessing requires C++ code to run efficiently, and those libaries need to be downloaded and built before they can be used. Once the installation is finished you're ready to launch your project.</p>
+
+          <h2>Launch the Project</h2>
+          <p>You launch your project by running the following command in the terminal while in the project folder:</p>
+<pre><code class='language-bash'>npm start</code></pre>
+          <p>This will build the project, set up watchers and launch the build in your default browser.</p>
+
+          <p>Any changes you make to the <code>index.html</code> file, or any files inside the project's <code>src</code> folder, will trigger and appropriate build process and browser refresh.</p>
+
+
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a> and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

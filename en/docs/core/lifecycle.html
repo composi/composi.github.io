@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Docs</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+</head>
+
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                  id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+          <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/core:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/en/docs/core/install.html">Install</a></li>
+          <li><a href="/en/docs/core/render.html">Render</a></li>
+          <li><a href="/en/docs/core/props.html">Props</a></li>
+          <li><a href="/en/docs/core/events.html">Events</a></li>
+          <li class='selected'>Lifecycle</li>
+          <li><a href="/en/docs/core/hydrate.html">Hydrate</a></li>
+          <li><a href="/en/docs/core/unmount.html">Unmount</a></li>
+          <li><a href="/en/docs/core/state.html">State</a></li>
+        </ul>
+        <h1>Lifecycle</h1>
+        <h2>Component Lifecycle Hooks</h2>
+        <p>With Composi, functional components have three lifecycle hooks that you can access:</p>
+
+        <ul class='main-menu'>
+          <li><strong>onmount</strong>: the first time the component is rendered in the DOM</li>
+          <li><strong>onupdate</strong>: when the component gets updated</li>
+          <li><strong>onunmount</strong>: when the component is about to be removed from the DOM</li>
+        </ul>
+
+        <p>Lifecycle hooks let you accomplish tasks specific to the current moment in the component's life. They also let you create animations when the state of a component changes.</p>
+
+        <h2>onmount</h2>
+
+        <p>The <code>onmount</code> lifecycle hook gets fired right after the component is mounted in the DOM. It takes a callback whose first argument is the base element of the component. This lets you do some useful things, such as <a href='#access-dom'>accessing</a> the child elements of the component, or setting up event listeners and <a href='#delegate-events'>delegated events</a>.</p>
+
+        <p>In the documentation for <a href="/en/docs/core/props.html">prpos</a> and <a href="/en/docs/core/event.html">events</a> we saw how to create a list. Now we are going to look at how to add items to the list. To do that we need to have an input where the user can add a new item, and a button to click to add that item to the list. The <code>onmount</code> hook gives is a way to access the component's input to get its value. So, let's do this. Here's how we make a dynamic list. We've updated it by wrapping the list in a <code>div</code> which has two children, the list and a paragraph with a text input and a button.</p>
+
+
+        <h2>Accessing the Component's DOM</h2>
+        <p>In order to access the component's input, we need to add a <code>onmount</code> lifecycle hook. Once we get a reference to the input, we'll store that as a private variable in the List function, right before the return.</p>
+        <p>We're also adding an <code>onmount</code> hook onto the list items with the sole purpose of animating list items as they are added. Add new list items to see the animation.</p>
+
+<p data-height="400" data-theme-id="6688" data-slug-hash="PyWZdb" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - Lifecycle-1" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/PyWZdb/">@composi/core
+    - Lifecycle-1</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+        <p> </p>
+        <h2>onupdate</h2>
+
+        <p>Sometimes you may want to know when a component is being updated, like when its props change. You can do that with <code>onupdate</code>. This hook gets three arguments passed to it: the component's base element, the old <code>props</code> and the new <code>props</code>. You can compare any value between the props to see what changed and then do what you need to.</p>
+        <p><code>onupdate</code> is only called when the particule element that it is registered on is being updated. The <code>onupdate</code> hook is not envoked when the element is mounted or unmounted.</p>
+        <p>To be able to use <code>onupdate</code> properly, you need to be aware of what the old and new props are. We pass props to a component when we pass it to the <code>render</code> function:</p>
+<pre><code class="language-javascript">let list = render(&lt;List data={fruits}/>, 'body')</code></pre>
+        <p>We call the attribute <code>data</code> a proper. However, in this case it will not persist as a prop. That's because the <code>render</code> function will convert the tag into a function and its props will be pass to the function as arguments. Technically, props are only the values directly attached to the elements that the component fucntion returns. Let's take another look at a List component:</p>
+<pre><code class="language-javascript">function List({data}) {
+  function logUpdate(element, oldProps, newProps) {
+    // compare oldProps with newProps...
+  }
+  return (
+    &lt;ul onupdate={logUpdate}>
+      {
+        data.map(item => &lt;li item={item.key}>{item.value}&lt;/li>)
+      }
+    &lt/ul>
+  )
+}
+let list = render(&lt;List data={fruits}/>, 'body')
+</code></pre>
+<p>In the above example, notice that we've place the <code>onupdate</code> event directly on the component's base element. Then in our <code>logUpdate</code> function we want to compare the old and new props to see what changes. You might be thinking that we will get the old and new versions of the <code>data</code> prop. Now look at the element. Do you see any props on it besides <code>onupdate</code>? That's the problem. The <code>ul</code> has no props. The fruits data that we want to test is coming in as a parameter and we are using it separately in the script block delimited by curly braces. This means that when we try to access newProps and oldPros, these will be undefined. To enable the <code>onupdate</code> lifecycle event to access the data, we need to register it as a prop directly on the element were the lifecycle hook is. Here's the component updated:</p>
+<pre><code class="language-javascript">function List({data}) {
+  function logUpdate(element, oldProps, newProps) {
+    // compare oldProps with newProps...
+  }
+  // Attach the data directly on the ul tag:
+  return (
+    &lt;ul onupdate={logUpdate} data={data}>
+      {
+        data.map(item => &lt;li item={item.key}>{item.value}&lt;/li>)
+      }
+    &lt/ul>
+</code></pre>
+  <p>This subtle change in exposing the data to the <code>update</code> event means that now we have access to the previous and current state of <code>data</code>. That means we could compare <code>oldProps.data</code> with <code>newProps.data</code> to see what changed.</p>
+  <p>Always make sure you are exposing the properties you need to on the same element where <code>onupdate</code> is placed. Otherwise you're values will be undefined.</p>
+
+<p>In this example we show how to use <code>onupdate</code> to log out the differences between the count value as it increases and decrease. By using oldProps and newProps, we can see how the value changes and log the difference.</p>
+
+<p data-height="300" data-theme-id="6688" data-slug-hash="zmNZOR" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - update-example" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/zmNZOR/">@composi/core
+    - update-example</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+        <p>You might be wondering when you would use update. The use case for it is very limited. It's great if you want to see what changed, as we did above to log out the changes. You would not use it to change data, as that would trigger another update and put you in an infinite loop. You might use it to trigger an animation. On update add a class that causes and animation, and then remove the class.</p>
+        <p> </p>
+
+        <h2>onunmount</h2>
+        <p>Sometimes when a component is being removed from the DOM you want to be able to know so you can do something. Maybe you need to do some environmental cleanup, or trigger some other event or function. <code>onunmount</code> lets you do that. In fact, <code>onunmount</code> lets you intercept the unmounting process and delay it until you are done with whatever it is you need to do. This is great for situations where you want to do an animation when a list item is delete. We'll make a simple list that uses <code>onunmout</code> to animate the list item before deleting it. For this, we'll leave out the part that actually deletes a list item since we already covered that in the example for event delegation above.</p>
+        <p><code>onunmount</code> expects that its callback with handle a <code>done()</code> function. Specifically, <code>onunmount</code> gets passed two arguments: the element being deleted, and a <code>done</code> callback to invoke when you are done. If you fail to provide a <code>done()</code> callback in your code or forget to invoke at the end of your code, the element will not be removed from the DOM, which could result in really unexpected results as the list data is mutated.</p>
+        <p>In the following example we're using <code>onunmount</code> to run a keyframe animation before the list item is removed. We've also got an <code>onmount</code> on the list items to enable animating new list iems into view.</p>
+<p data-height="600" data-theme-id="6688" data-slug-hash="yRMLVL" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - Lifecycle-onunmount" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/yRMLVL/">@composi/core
+    - Lifecycle-onunmount</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+
+
+<h2>Lifecycle Event Arguments</h2>
+<p>The lifecycle events get their arguments automatically, so you can just use their plain handlers in the inline event. Each lifecycle
+  event expects different arguments, but you indicate these in the handler, on in the inline event:</p>
+<pre><code class="language-javascript">function List() {
+  function init(base) {
+    // Do something with the component's base element.
+    base.querySelector('input').focus()
+  }
+  function logUpdate(element, oldProps, newProps) {
+    // Element the onupdate event is on, in this case, the ul tag.
+    // Compare the oldProp values with the new.
+    if (newProps.data.length > oldProps.data.length) {
+      console.log('An item was added to the list.')
+    } else {
+      console.log('An item was deleted from the list.')
+    }
+  }
+  function handleUnmount(done, element) {
+    // Do something with the component base element.
+    // Trigger deletion animation:
+    element.classList.add('deleting')
+    // Then let the component unmount.
+    // Since we've set the animation to last 3 seconds,
+    // we need to delay the unmounting for 3 seconds:
+    setTimeout(() => {
+      done()
+    }, 3000)
+  }
+  return (
+    &lt;ul onmount={init} onupdate={logUpdate} onunmount={handleUnmount} data={data}>&lt;/ul>
+  )
+}
+
+</code></pre>
+        <p>&nbsp;</p>
+      </div>
+    </section>
+  </article>
+  <footer>
+    <section>
+      <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>Composi Logo</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+            <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+              id="Combined-Shape"></path>
+          </g>
+        </g>
+      </svg>
+      <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a>
+        and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+    </section>
+  </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+
+</html>

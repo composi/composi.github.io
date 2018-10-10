@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Docs</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+</head>
+
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                  id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+          <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+      <h3>@composi/core:</h3>
+      <ul class='breadcrumb'>
+        <li><a href="/en/docs/core/install.html">Install</a></li>
+        <li><a href="/en/docs/core/render.html">Render</a></li>
+        <li class='selected'>Props</li>
+        <li><a href="/en/docs/core/events.html">Events</a></li>
+        <li><a href="/en/docs/core/lifecycle.html">Lifecycle</a></li>
+        <li><a href="/en/docs/core/hydrate.html">Hydrate</a></li>
+        <li><a href="/en/docs/core/unmount.html">Unmount</a></li>
+        <li><a href="/en/docs/core/state.html">State</a></li>
+      </ul>
+        <h1>Props</h1>
+        <h2>Passing Props Down</h2>
+        <p>When working with components, <code>props</code> are the way by which you pass data to a component. The data can be anything--a string, a number, a boolean, an array, an object, a function, and even another component. And of course you can pass the <code>props</code> of a parent down to its children.</p>
+
+        <p>Let's start with a simple example:</p>
+
+<p data-height="300" data-theme-id="6688" data-slug-hash="oaYrOQ" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - Props-1" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/oaYrOQ/">@composi/core
+    - Props-1</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+      <p> </p>
+      <h2>Adding More Props</h2>
+      <p>You can add as many props as you need to.</p>
+
+<p data-height="300" data-theme-id="6688" data-slug-hash="KGNOPW" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - Props-2" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/KGNOPW/">@composi/core
+    - Props-2</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+<p>Above we are passing more values to our component through props, but it's a bit fussy accessing them from the props parameter. We can use destructurig to simply accessing the <code>props</code>.</p>
+
+<h2>Destructuring the Arguments</h2>
+
+<p>Here we destructure the argument that our tag receives. Basically, we are breaking the props argument down into its constituent parts as an object literal.</p>
+
+<p data-height="300" data-theme-id="6688" data-slug-hash="oaYKXV" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - Props-3" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/oaYKXV/">@composi/core
+    - Props-3</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+        <p> </p>
+        <h2>Destructuring Prop Assignment</h2>
+        <p>Instead of passing in individual <code>props</code>, we'll use destructuring to pass them all in as an object literal. We do that by creating an object literal of the values we want to use. Then we pass that to our component using curly braces and the spread operator.</p>
+<p data-height="300" data-theme-id="6688" data-slug-hash="bmBXeB" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - Props-4" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/bmBXeB/">@composi/core
+    - Props-4</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+        <p>Destruction the assignment of props results in cleaner and easier to read code. <code>props</code> make components dynamic and imbue them with super powers.</p>
+
+        <h2>Array Prop for Lists</h2>
+        <p>As we mentioned at the start, you can pass any possible value as a <code>prop</code>. Next we're going to show how to pass an array of objects so we can render a list. To make this more useful, we'll make sure our items have unique keys/ids. We'll use these to key the individual list items. For a static list this is unnecessary. But if you wanted to enable the user to delete or otherwise change the order of the list items, keys will enable Composi to understand how to update the DOM in the most efficient manner.</p>
+        <p>When dealing with an array of data as a <code>prop</code>, we need to drop out of JSX and down to pure JavaScript. You can do that inside the JSX by using curly braces.</p>
+
+        <h2>Using Keys for List</h2>
+        <p>Notice how we access the property <code>data</code>. Since this is an array, we use <code>map</code> to loop over each item in the array an return a list item. The list item has a property <code>key={item.key}</code>. This doesn't actually get rendered to the DOM. Instead Composi preserves this value in the virtual node that it creates for the list. If Composi needs to re-render the list because the order of the list items changed, it will use the key values on the virtual list items to understand best how to reuse the DOM nodes to update the list. Because where passing an array as a <code>prop</code>, we had to change the destructuring to handle an array using the format <code>{...{data}}</code>.</p>
+
+
+<p data-height="300" data-theme-id="6688" data-slug-hash="Lgbwxv" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - Keys" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/Lgbwxv/">@composi/core
+    - Keys</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+<p> </p>
+
+<h2>Passing Props to Children</h2>
+<p>One of the great things about JSX and <code>props</code> is that fact that you can pass them down from parent to child. Unlike frameworks based on the concept of two-way data binding. JSX embraces the practice of one-way data flow. With two-data binding it is very hard to determine in which direction a problem is ocurring. With one-way data flow, this is a lot easier.</p>
+
+<p>In the following example we pass the data for the list items to a child component, which handles looping over the data and creating the list items.</p>
+
+
+<p data-height="300" data-theme-id="6688" data-slug-hash="Lgbwxv" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - Passing Props to Children" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/Lgbwxv/">@composi/core
+    - Passing Props to Children</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+      <p> </p>
+
+<h2>Advanced Composition</h2>
+<p>In this example we are doing advanced composition, using destructuring and  passing props and children down to child components to affect how
+  the complete component renders. Open the exemple in Codepen and you can change the border color by changing the color value on the FancyBorder tag. It is currently set to "maroon", but you can change it to either "red" or "blue".</p>
+<p data-height="300" data-theme-id="6688" data-slug-hash="vVgBXx" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - Passing Children to Component-2" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/vVgBXx/">@composi/core
+    - Passing Children to Component-2</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+        <p>&nbsp;</p>
+      </div>
+    </section>
+  </article>
+  <footer>
+    <section>
+      <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>Composi Logo</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+            <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+              id="Combined-Shape"></path>
+          </g>
+        </g>
+      </svg>
+      <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a>
+        and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+    </section>
+  </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+
+</html>

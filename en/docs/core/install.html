@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Docs</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/core:</h3>
+        <ul class='breadcrumb'>
+          <li class='selected'>Install</li>
+          <li><a href="/en/docs/core/render.html">Render</a></li>
+          <li><a href="/en/docs/core/props.html">Props</a></li>
+          <li><a href="/en/docs/core/events.html">Events</a></li>
+          <li><a href="/en/docs/core/lifecycle.html">Lifecycle</a></li>
+          <li><a href="/en/docs/core/hydrate.html">Hydrate</a></li>
+          <li><a href="/en/docs/core/unmount.html">Unmount</a></li>
+          <li><a href="/en/docs/core/state.html">State</a></li>
+        </ul>
+          <h1>Install</h1>
+          <h2>Composi/core is Small</h2>
+          <p>When you install @composi/core you are only adding 2KB to your final project's JavaScript. That means a simple Hello World app's JavaScript will be only 2KB. Composi's small size means it loads quickly, even on old phones with poor connections. Despite its small size, @composi/core offers a lot of functionality to create complex and powerful applications. This means most of the JavaScript your project needs to load will be code you wrote, not library bloat. In the world of mobile and PWAs, small is beautiful.</p>
+
+          <p>If you've created a project using <code>create-composi-app</code>, you do not have to install @composi/core. Read the <a target="_blank" href="/en/docs/create-composi-app/usage.html">documentation for create-composi-app</a> to learn how to get up and running fast.</p>
+
+          <h2>Install from NPM</h2>
+          <p>To install Composi, you'll need to have <a href="https://nodejs.org/en/" target='__blank'>Node</a> installed first. If you do have Node, then open your terminal and run:</p>
+
+          <pre><code class='language-bash'>npm install --save-dev @composi/core</code></pre>
+
+          <p>If you are on a Mac or Linux, you may need to run the above command with <code>sudo</code>.</p>
+          
+          <p>Once you've installed @composi/core into your project you are ready to start using it. Read <a href="/en/docs/core/render.html">render</a> and other documentation in this section to learn how to use <strong>@composi/core</strong>.</p>
+
+          <h2>No Install</h2>
+          <p>You can infact use @composi/core in the browser without an install or build process. Just include the distribution versions with a script tag:</p>
+
+<pre><code class="language-html">&lt;script src='https://unpkg.com/@composi/core@latest/dist/composi.js'>&lt;/script>
+&lt;script src='https://unpkg.com/@composi/datastore@latest/dist/datastore.js'>&lt;/script>
+&lt;script src='https://unpkg.com/@composi/fragment@latest/dist/fragment.js'>&lt;/script>
+&lt;script>
+  const { h, render } = composi
+  const { DataStore } = datastore
+  // No need to capture Fragment in variable since it comes in as a global.
+
+  function ListItems(data) {
+    return (
+      Fragment(
+        null,
+        {
+          data.map(item => h('ul', {}, item))
+        }
+      )
+    )
+  }
+  const things = ['Apples', 'Shoes', 'Computers']
+  function List(data) {
+    return (
+      h('ul', {class: 'list'}, ListItems(data))
+    )
+  }
+  render(List(things), 'body')
+&lt;/script>
+</code></pre>
+            <p>When you import Composi like this, you can't use JSX but instead have to use the <code>h</code> function to define the markup.</p>
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a> and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

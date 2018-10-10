@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Docs</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+</head>
+
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                  id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+          <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+      <h3>@composi/core:</h3>
+      <ul class='breadcrumb'>
+        <li><a href="/en/docs/core/install.html">Install</a></li>
+        <li><a href="/en/docs/core/render.html">Render</a></li>
+        <li><a href="/en/docs/core/props.html">Props</a></li>
+        <li class='selected'>Events</li>
+        <li><a href="/en/docs/core/lifecycle.html">Lifecycle</a></li>
+        <li><a href="/en/docs/core/hydrate.html">Hydrate</a></li>
+        <li><a href="/en/docs/core/unmount.html">Unmount</a></li>
+        <li><a href="/en/docs/core/state.html">State</a></li>
+      </ul>
+        <h1>Events</h1>
+        <h2>Inline Events</h2>
+
+        <p>You can make your components interact with users through inline events. It's also possible to use event listeners, particularly for setting up delegated events. You'll need to read the documentation for <a href="/en/docs/core/lifecycle.html">Lifecycle hooks</a> for details on how to do that.</p>
+
+        <p>Composi inline events are just like normal JavaScript inline events. You do not need to camel case them like React. They should be lower case. In the event that you accidentally camel case an inline event, Composi will automatically convert it to lower case.</p>
+        
+        <p data-height="300" data-theme-id="6688" data-slug-hash="OBWyve" data-default-tab="js,result" data-user="rbiggs"
+          data-pen-title="@composi/core - Events-1" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/OBWyve/">@composi/core
+            - Events-1</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+          <p> </p>
+        <h2>Example</h2>
+        <p>Let's make an interactive list. We're going to define a function <code>handleClick</code> and using it in an inline click event on the list items. For this to work, we'll need to pass the click handler to the child component. Also, notice how we pass values from the render loop to the click handler. This provides the value that the <code>announce</code> event handler will use.</p>
+
+        <p> </p>
+        <p data-height="300" data-theme-id="6688" data-slug-hash="pxRjxN" data-default-tab="js,result" data-user="rbiggs"
+          data-pen-title="@composi/core - Events-2" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/pxRjxN/">@composi/core
+            - Events-2</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+          
+        <p> </p>
+        <h2>Event Delegation</h2>
+        <p>When you have a long list, having events on every list item uses a lot of memory. Event delegation lets us use just one event to handle click events on all the child elements. So, we'll redo the above example to use event delegation. We do this by registering the event on the list and passing it the event object. In the event handler we check to see what the event target is. If it is event target's <code>nodeName</code> is <code>LI</code>, we get its dataset content value that we stored on the list item. We the announce that vaue. The technique is very simple, actually.</p>
+        <p data-height="300" data-theme-id="6688" data-slug-hash="rqjxBp" data-default-tab="js,result" data-user="rbiggs"
+          data-pen-title="@composi/core - Events-3" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/rqjxBp/">@composi/core
+            - Events-3</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+            <p>Using event delegation on a list means we can add and delete list items without worry about more or less events.  When a component has many nested child component and you are trying to capture the event on one of them, the event has to bubble up to where you are listening for it. It's therefore best to register the delegated event as close as possible to where you want to trap the event. Otherwise a long travel  can result in lag time from event occurence to execution.</p>
+
+            <h2>Event Handlers</h2>
+            <p>We wanted to bring your attention to one detail about how inline events are handle. If you have an event handle that is not expecting any arguments, you can use just its name, no function or parens are necessary:</p>
+<pre><code class='language-javascript'>// Event without arguments:
+function Button() {
+  // This event handler takes no arguments:
+  function alertClick() {
+    alert('You just clicked!')
+  }
+  return &lt;button onclick={alertClick}>Click Here&lt;/button>
+}
+</code></pre>
+        <p>In the above example, we just put <code>alertClick</code> as the value of <code>onclick</code>. We could have also used:</p>
+<pre><code class='language-javascript'>return &lt;button onclick={() => alertClick()}>Click Here&lt;/button>
+</code></pre>
+        <p>However, using an arrow function with an argumentless event handle is not necessary.</p>
+        <h3>No <code>This</code></h3>
+        <p>Because @composi/core provides only functional components, you never have to worry about the scope of your events. There is no <code>this</code> and so there is no need to use <code>bind</code> or other techniques to preserver the scope of the event handler. Of course, to work, an event handler needs to be in the same scope as the code that calls it. We like to define event handlers inside the component function before the return statement. That way they are encapsulated in the component as private properties and available to the event handlers registered on the component's elements.</p>
+        <p>&nbsp;</p>
+      </div>
+    </section>
+  </article>
+  <footer>
+    <section>
+      <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>Composi Logo</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+            <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+              id="Combined-Shape"></path>
+          </g>
+        </g>
+      </svg>
+      <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a>
+        and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+    </section>
+  </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+
+</html>

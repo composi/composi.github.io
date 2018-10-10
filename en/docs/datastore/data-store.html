@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Docs</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/datastore:</h3>
+        <ul class='breadcrumb'>
+        <li><a href="/en/docs/datastore/install.html">Install</a></li>
+        <li class='selected'>DataStore</li>
+        <li><a href="/en/docs/datastore/watch.html">Watch</a></li>
+        <li><a href="/en/docs/datastore/set-state.html">setState</a></li>
+        <li><a href="/en/docs/datastore/dispatch.html">Dispatch</a></li>
+        <li><a href="/en/docs/datastore/unwatch.html">Unwatch</a></li>
+        </ul>
+          <h1>DataStore</h1>
+          <h2>Storing Data</h2>
+          <p>DataStores are for storing data. The DataStore class creates an immutable clone of the data provided. Since dataStores are about immutability, it doesn't make sense to have data that cannot be immutable. We're talking about native DOM elements, etc. You would not use data with references to the DOM since these are always by reference, not by value.</p>
+
+          <h2>Creating a DataStore</h2>
+          <p>First, after installing it,  you need to import the DataStore class into your project:</p>
+
+<pre><code class='language-javascript'>import { DataStore } from '@composi/data-store'</code></pre>
+
+          <p>After that you are ready to create a dataStore. This can take upto two arguments: the data to use for state and an optional custom event.</p>
+
+          <p>Just pass the data you want to use in a dataStore to the DataStore constructor. You'll be able to access the dataStore's data from its <code>state</code> property:</p>
+
+          <pre><code class='language-javascript'>import { DataStore } from '@composi/data-store'
+
+const dataStore = new DataStore({name: 'Sarah'})
+</code></pre>
+
+          <p>You can assign any valid JavaScript data type to the dataStore's state: null, undefined, false, number, string, array, object. In most cases you'll have a complex object as the dataStore's state.</p>
+
+          <h2>watch</h2>
+          <p>You use the <code>watch</code> method to watch for a custom event. The watch can also capture the updated state of the dataStore. A watcher fires a callback, which you can use to do whatever you need to do. For practical purposes this might be to update a component, or persist the data somehow.</p>
+
+          <pre><code class='language-javascript'>dataStore.watch('special-event', function(data) {
+  list = render(<List data={data} />, 'body', list)
+})
+</code></pre>
+
+          <p> </p>
+          <h2>setState</h2>
+          <p>You can use the dataStore's <code>setState</code> to update its state. When yo do so the dataStore notifies all of its watchers, sending them the updated state. Depending on how they are set up, the watchers can do something with the data, or merely react to the event.</p>
+          <p>When you use setState, the callback gets the previous state passed as its argument.</p>
+<pre><code class='language-javascript'>dataStore.setState(prevState => {
+  prevState.names.push('Jessica')
+  return prevState
+})</code></pre>
+          <p> </p>
+          <h2>dispatch</h2>
+          <p>dataStores are not just passive watchers. You can have the dataStore dispatch an event and arbitrary data for that event to use.</p>
+          <pre><code class='language-javascript'>dataStore.dispatch('update-component', {name: 'Jeffrey'})</code></pre>
+          <p> </p>
+          <h2>unwatch</h2>
+          <p>Sometimes you may want a temporary watcher that you can dispose of latter. You can do this using the dataStore <code>unwatch</code> method. This takes one arguemtn: the event to unwatch. After unwatching an event, any watchers expecting that event will no longer work.</p>
+          <pre><code class='language-javascript'>dataStore.unwatch('temp-event')</code></pre>
+
+          <p> </p>
+          <h2>How to Persist a DataStore</h2>
+          <p>DataStore has no builtin means of persistence. To do so the best way is to create an observe to watch for a special persist event. When you dispatch that even, the observer will persist you dataStore(s). To learn how to use observer, read the documentation for <a href='/docs/observer/install.html'>@composi/observer</a>.</p>
+
+          <h2>Summary</h2>
+          <p>If you are already familiar with <a href='/docs/observer/install.html'>@composi/observer</a>, you might have noticed that DataStore shares many features: watch, dispatch and unwatch. That's because internally DataStore uses and observer to watch for changes and react to those when the occur, as well as the ability to dispatch and unwatch its events. Although these features in dataStores make them more versatile, there may be situations where it makes more sense to use an observer in conjunction with a dataStore. That's because of their differences. A dataStore can register events and watch them. And you can dispatch to a particular dataStore event to trigger it. But whenever the dataStore's state changes, ALL of its events are executed. In contrast, with a dedicated observer, you can also register as many custom events as you need. For observers, when you dispatch to an event, only that one will fire.</p>
+
+
+
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a> and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>
