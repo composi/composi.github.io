@@ -175,6 +175,7 @@ let list = render(&lt;List data={fruits}/>, 'body')
 }
 
 </code></pre>
+        <p>The thing to be aware about <code>onunmount</code>, it causes the unmounting to be asynchronous. Even thought the patch algorithm has identified a condition that requires the element to be removed from the DOM, it waits to actually do so until you fire <code>done()</code> in your <code>onunmount</code> handler.</p>
         <p>&nbsp;</p>
       </div>
     </section>
