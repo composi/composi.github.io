@@ -77,7 +77,7 @@
           
         <p> </p>
         <h2>Event Delegation</h2>
-        <p>When you have a long list, having events on every list item uses a lot of memory. Event delegation lets us use just one event to handle click events on all the child elements. So, we'll redo the above example to use event delegation. We do this by registering the event on the list and passing it the event object. In the event handler we check to see what the event target is. If it is event target's <code>nodeName</code> is <code>LI</code>, we get its dataset content value that we stored on the list item. We the announce that vaue. The technique is very simple, actually.</p>
+        <p>When you have a long list, having events on every list item uses a lot of memory. Event delegation lets us use just one event to handle click events on all the child elements. So, we'll redo the above example to use event delegation. We do this by registering the event on the list and passing it the event object. In the event handler we check to see what the event target is. If the event target's <code>nodeName</code> is <code>LI</code>, we get its dataset content value that we stored on the list item. We the announce that vaue. The technique is very simple, actually.</p>
         <p data-height="300" data-theme-id="6688" data-slug-hash="rqjxBp" data-default-tab="js,result" data-user="rbiggs"
           data-pen-title="@composi/core - Events-3" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/rqjxBp/">@composi/core
             - Events-3</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>

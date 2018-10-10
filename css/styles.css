@@ -732,7 +732,140 @@ footer a:hover {
 
 /* End Tutorials */
 
+
+.gh-btn {
+  position: relative;
+  top: -2px;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  line-height: 1;
+  font-size: 16px;
+  overflow: visible;
+  background-color: #eee;
+  background-image: linear-gradient(180deg, #fcfcfc 0, #eee);
+  background-repeat: no-repeat;
+  border: 1px solid #d5d5d5;
+
+
+  padding: 5px 9px;
+  color: #333;
+  text-decoration: none !important;
+  text-shadow: 0 1px 0 #fff;
+  white-space: nowrap;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.gh-ico {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjQwcHgiIGhlaWdodD0iNDBweCIgdmlld0JveD0iMTIgMTIgNDAgNDAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMTIgMTIgNDAgNDAiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxwYXRoIGZpbGw9IiMzMzMzMzMiIGQ9Ik0zMiAxMy40Yy0xMC41IDAtMTkgOC41LTE5IDE5YzAgOC40IDUuNSAxNS41IDEzIDE4YzEgMC4yIDEuMy0wLjQgMS4zLTAuOWMwLTAuNSAwLTEuNyAwLTMuMiBjLTUuMyAxLjEtNi40LTIuNi02LjQtMi42QzIwIDQxLjYgMTguOCA0MSAxOC44IDQxYy0xLjctMS4yIDAuMS0xLjEgMC4xLTEuMWMxLjkgMC4xIDIuOSAyIDIuOSAyYzEuNyAyLjkgNC41IDIuMSA1LjUgMS42IGMwLjItMS4yIDAuNy0yLjEgMS4yLTIuNmMtNC4yLTAuNS04LjctMi4xLTguNy05LjRjMC0yLjEgMC43LTMuNyAyLTUuMWMtMC4yLTAuNS0wLjgtMi40IDAuMi01YzAgMCAxLjYtMC41IDUuMiAyIGMxLjUtMC40IDMuMS0wLjcgNC44LTAuN2MxLjYgMCAzLjMgMC4yIDQuNyAwLjdjMy42LTIuNCA1LjItMiA1LjItMmMxIDIuNiAwLjQgNC42IDAuMiA1YzEuMiAxLjMgMiAzIDIgNS4xYzAgNy4zLTQuNSA4LjktOC43IDkuNCBjMC43IDAuNiAxLjMgMS43IDEuMyAzLjVjMCAyLjYgMCA0LjYgMCA1LjJjMCAwLjUgMC40IDEuMSAxLjMgMC45YzcuNS0yLjYgMTMtOS43IDEzLTE4LjFDNTEgMjEuOSA0Mi41IDEzLjQgMzIgMTMuNHoiLz48L3N2Zz4=);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.resize-image {
+  width: 75%;
+  height: auto;
+  min-width: 280px !important;
+}
+
+.error-message {
+  color: red;
+  background-color: #2d2d2d;
+  padding: 1em;
+}
+
+
+.table-header {
+  background-color: #eee;
+}
+th, td {
+  padding: 5px;
+}
+table {
+  border: solid 1px #ccc;
+}
+th + th, td + td {
+  border-left: solid 1px #ccc;
+}
+.breadcrumb {
+  list-style: none;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.breadcrumb > li {
+  display: inline-block;
+  margin-right: 15px;
+  position: relative;
+}
+.breadcrumb > li > a:hover {
+  text-decoration: none;
+}
+.breadcrumb > li > a:hover:after {
+  content: "";
+  display: block;
+  border-bottom: solid 2px #007bff;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0px;
+}
+.breadcrumb > li.selected:after {
+  content: "";
+  display: block;
+  border-bottom: solid 2px #000;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0px;
+}
+.main-menu {
+  margin-left: 2rem;
+}
+.main-menu ul {
+  margin-left: 2rem;
+}
+
 /* Media Queries */
+
+@media only screen and (max-width: 1024px) {
+article > section,
+  .main__example--section {
+    flex-direction: column;
+  }
+  .main__example--column,
+  .main__editor--example,
+  .main__column {
+    width: 100%;
+  }
+  .cp_embed_wrapper {
+    width: 100%;
+  }
+  .article aside, 
+  .tutorial__article aside {
+    width: 100%;
+  }
+  .tutorial > p > img {
+    width: 90%;
+  }
+  .page .docs__intro,
+  .page .tutorial__intro {
+    font-size: 2rem;
+    margin: 0 .5em 0;
+    font-weight: 300;
+  }
+  .main__header h2 {
+    font-weight: 200;
+  }
+  .main__section__separator {
+    padding: 0 2rem;
+  }
+}
 
 @media only screen and (max-width: 760px) {
   .nav-menu,
@@ -837,102 +970,4 @@ footer a:hover {
   .page * {
     font-size: 1.6rem;
   }
-}
-
-.gh-btn {
-  position: relative;
-  top: -2px;
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-  line-height: 1;
-  font-size: 16px;
-  overflow: visible;
-  background-color: #eee;
-  background-image: linear-gradient(180deg, #fcfcfc 0, #eee);
-  background-repeat: no-repeat;
-  border: 1px solid #d5d5d5;
-
-
-  padding: 5px 9px;
-  color: #333;
-  text-decoration: none !important;
-  text-shadow: 0 1px 0 #fff;
-  white-space: nowrap;
-  cursor: pointer;
-  border-radius: 3px;
-}
-.gh-ico {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  margin-right: 5px;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjQwcHgiIGhlaWdodD0iNDBweCIgdmlld0JveD0iMTIgMTIgNDAgNDAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMTIgMTIgNDAgNDAiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxwYXRoIGZpbGw9IiMzMzMzMzMiIGQ9Ik0zMiAxMy40Yy0xMC41IDAtMTkgOC41LTE5IDE5YzAgOC40IDUuNSAxNS41IDEzIDE4YzEgMC4yIDEuMy0wLjQgMS4zLTAuOWMwLTAuNSAwLTEuNyAwLTMuMiBjLTUuMyAxLjEtNi40LTIuNi02LjQtMi42QzIwIDQxLjYgMTguOCA0MSAxOC44IDQxYy0xLjctMS4yIDAuMS0xLjEgMC4xLTEuMWMxLjkgMC4xIDIuOSAyIDIuOSAyYzEuNyAyLjkgNC41IDIuMSA1LjUgMS42IGMwLjItMS4yIDAuNy0yLjEgMS4yLTIuNmMtNC4yLTAuNS04LjctMi4xLTguNy05LjRjMC0yLjEgMC43LTMuNyAyLTUuMWMtMC4yLTAuNS0wLjgtMi40IDAuMi01YzAgMCAxLjYtMC41IDUuMiAyIGMxLjUtMC40IDMuMS0wLjcgNC44LTAuN2MxLjYgMCAzLjMgMC4yIDQuNyAwLjdjMy42LTIuNCA1LjItMiA1LjItMmMxIDIuNiAwLjQgNC42IDAuMiA1YzEuMiAxLjMgMiAzIDIgNS4xYzAgNy4zLTQuNSA4LjktOC43IDkuNCBjMC43IDAuNiAxLjMgMS43IDEuMyAzLjVjMCAyLjYgMCA0LjYgMCA1LjJjMCAwLjUgMC40IDEuMSAxLjMgMC45YzcuNS0yLjYgMTMtOS43IDEzLTE4LjFDNTEgMjEuOSA0Mi41IDEzLjQgMzIgMTMuNHoiLz48L3N2Zz4=);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-}
-
-.resize-image {
-  width: 75%;
-  height: auto;
-  min-width: 280px !important;
-}
-
-.error-message {
-  color: red;
-  background-color: #2d2d2d;
-  padding: 1em;
-}
-
-
-.table-header {
-  background-color: #eee;
-}
-th, td {
-  padding: 5px;
-}
-table {
-  border: solid 1px #ccc;
-}
-th + th, td + td {
-  border-left: solid 1px #ccc;
-}
-.breadcrumb {
-  list-style: none;
-  margin: 0;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.breadcrumb > li {
-  display: inline-block;
-  margin-right: 15px;
-  position: relative;
-}
-.breadcrumb > li > a:hover {
-  text-decoration: none;
-}
-.breadcrumb > li > a:hover:after {
-  content: "";
-  display: block;
-  border-bottom: solid 2px #007bff;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  bottom: 0px;
-}
-.breadcrumb > li.selected:after {
-  content: "";
-  display: block;
-  border-bottom: solid 2px #000;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  bottom: 0px;
-}
-.main-menu {
-  margin-left: 2rem;
-}
-.main-menu ul {
-  margin-left: 2rem;
 }
