@@ -112,7 +112,7 @@ function Button() {
         <p>However, using an arrow function with an argumentless event handle is not necessary.</p>
 
         <h2>Event Handlers with Arguments</h2>
-        <p>If you need to pass an argument to the event handle, you will need to use an arrow function. Notice how we do it in this example:</p>
+        <p>If you need to pass an argument to the event handler, you will need to use an arrow function. Notice how we do it in this example:</p>
 <pre><code class='language-javascript'>let count = 0
 function Counter({data}) {
   function increaseCount(count) {
@@ -124,6 +124,7 @@ function Counter({data}) {
 }
 render(<Counter data={count}/> 'section')
 </code></pre>
+        <p> </p>
         <h3>No <code>This</code></h3>
         <p>Because @composi/core provides only functional components, you never have to worry about the scope of your events. There is no <code>this</code> and so there is no need to use <code>bind</code> or other techniques to preserver the scope of the event handler. Of course, to work, an event handler needs to be in the same scope as the code that calls it. We like to define event handlers inside the component function before the return statement. That way they are encapsulated in the component as private properties and available to the event handlers registered on the component's elements.</p>
         <p>&nbsp;</p>
