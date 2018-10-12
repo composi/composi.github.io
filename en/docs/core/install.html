@@ -54,19 +54,21 @@
           <h2>Composi/core is Small</h2>
           <p>When you install @composi/core you are only adding 2KB to your final project's JavaScript. That means a simple Hello World app's JavaScript will be only 2KB. Composi's small size means it loads quickly, even on old phones with poor connections. Despite its small size, @composi/core offers a lot of functionality to create complex and powerful applications. This means most of the JavaScript your project needs to load will be code you wrote, not library bloat. In the world of mobile and PWAs, small is beautiful.</p>
 
-          <p>If you've created a project using <code>create-composi-app</code>, you do not have to install @composi/core. Read the <a target="_blank" href="/en/docs/create-composi-app/usage.html">documentation for create-composi-app</a> to learn how to get up and running fast.</p>
+          <h3>No Install</h3>
+          <p>The best way to get up and running with @composi/core is to create a new project with @composi/create-composi-app. Read the <a target="__blank" href="/en/docs/create-composi-app/install.html">documentation for create-composi-app</a> to learn how to get up and running fast.</p>
 
-          <h2>Install from NPM</h2>
-          <p>To install Composi, you'll need to have <a href="https://nodejs.org/en/" target='__blank'>Node</a> installed first. If you do have Node, then open your terminal and run:</p>
+          <p>To use @composi/core, you need to import it. A project create with @composi/create-composi-app already has a file--app.js--with core imported. But if you want to create a new file for a component that uses JSX, you'll need to import the <code>h</code> function from @composi/core</p>
 
-          <pre><code class='language-bash'>npm install --save-dev @composi/core</code></pre>
+          <pre><code class='language-bash'>import { h } from @composi/core
+// Define your component here:
+</code></pre>
+          <p>If you're creating a module that does return JSX, then you do not need to import the <code>h</code> function.</p>
 
-          <p>If you are on a Mac or Linux, you may need to run the above command with <code>sudo</code>.</p>
           
-          <p>Once you've installed @composi/core into your project you are ready to start using it. Read <a href="/en/docs/core/render.html">render</a> and other documentation in this section to learn how to use <strong>@composi/core</strong>.</p>
+          <p>Once you've created a new project with @composi/create-composi-app, read about <a href="/en/docs/core/render.html">render</a> and other documentation in this section to learn how to use <strong>@composi/core</strong>.</p>
 
           <h2>No Install</h2>
-          <p>You can infact use @composi/core in the browser without an install or build process. Just include the distribution versions with a script tag:</p>
+          <p>You can use @composi/core in the browser without an install or build process. Just include the distribution versions with a script tag:</p>
 
 <pre><code class="language-html">&lt;script src='https://unpkg.com/@composi/core@latest/dist/composi.js'>&lt;/script>
 &lt;script src='https://unpkg.com/@composi/datastore@latest/dist/datastore.js'>&lt;/script>
