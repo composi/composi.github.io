@@ -116,13 +116,13 @@ function Button() {
 <pre><code class='language-javascript'>let count = 0
 function Counter({data}) {
   function increaseCount(count) {
-    render(<Counter data={count++}/>, 'section')
+    render(&lt;Counter data={count++}/>, 'section')
   }
   return (
     <button onclick={data => increaseCount(data)}</button>}>{data}</button>
   )
 }
-render(<Counter data={count}/> 'section')
+render(&lt;Counter data={count}/> 'section')
 </code></pre>
         <p> </p>
         <h3>No <code>This</code></h3>
