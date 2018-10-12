@@ -92,8 +92,13 @@ dataStore.watch('update-occurred', () => {
   })
 })
 </code></pre>
-      <p>Using <code>requestAnimationFrame</code> to control how often render occurs can help reduce jankiness when may changes are happening in rapid succesion. This means any type of event or action that can trigger many data updates.</p>
+      <p>Using <code>requestAnimationFrame</code> to control how often render occurs can help reduce jankiness when may changes are happening in rapid succesion. This means any type of event or action that can trigger many data updates. Below is an example of a dataStore producing many rapid updates by the movement of the mourse cursor or touch and using <code>requestAnimationFrame</code> to debounce the updates:</p>
+      <p data-height="500" data-theme-id="6688" data-slug-hash="vVEWQa" data-default-tab="result" data-user="rbiggs"
+        data-pen-title="@composi/core Pythagoras Dancing Tree" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/vVEWQa/">@composi/core
+          Pythagoras Dancing Tree</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+      <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
         <p>&nbsp;</p>
+
       </div>
     </section>
   </article>
