@@ -73,8 +73,8 @@
 
 
         <h2>Accessing the Component's DOM</h2>
-        <p>In order to access the component's input, we need to add a <code>onmount</code> lifecycle hook. Once we get a reference to the input, we'll store that as a private variable in the List function, right before the return.</p>
-        <p>We're also adding an <code>onmount</code> hook onto the list items with the sole purpose of animating list items as they are added. Add new list items to see the animation.</p>
+        <p>In order to access the component's input, we need to add a <code>onmount</code> lifecycle hook. We put it directly on the input. That was the <code>onmount</code> hook gets a reference to the inpjt element. Then we can store that reference on our <code>refs</code> object for easy access in the component's code.</p>
+        <p>We're also adding <code>onmount</code> hooks onto the list items with the sole purpose of animating them as they are created. Add new list items to see the animation.</p>
 
 <p data-height="400" data-theme-id="6688" data-slug-hash="PyWZdb" data-default-tab="js,result" data-user="rbiggs"
   data-pen-title="@composi/core - Lifecycle-1" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/PyWZdb/">@composi/core
