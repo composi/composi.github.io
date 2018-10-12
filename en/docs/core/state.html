@@ -49,91 +49,41 @@
         <li><a href="/en/docs/core/props.html">Props</a></li>
         <li><a href="/en/docs/core/events.html">Events</a></li>
         <li><a href="/en/docs/core/lifecycle.html">Lifecycle</a></li>
-        <li><a href="/en/docs/core/hydrate.html">Hydrate</a></li>
-        <li><a href="/en/docs/core/unmount.html">Unmount</a></li>
+        <li><a href="/en/docs/core/hydrate.html">Hydration</a></li>
         <li class='selected'>State</li>
         </ul>
         <h1>State</h1>
         <h2>State for Functional Components</h2>
         <p>Functional components are stateless. You pass data to them as a prop and that gets used during the render. This means that if you pass the same data to a functional component, it will render the exact same way each time. This makes rendering predictable and easier to troubleshoot.</p>
 
-        <p>In contrast, class-based components can encapsulate local state and behaviors that make management and reuse easy.</p>
-
-        <p><strong>@composi/core</strong> provides only functional components with a virtual DOM. Composi does not provide a way to do state management for functional components. It's @composi/datastore. You'll need to install.</p>
-<pre><code class='language-bash'>npm i -D '@composi/core'
-</code></pre>
-
-        <p>After that, you need to import it into your project.</p>
-<pre><code class='language-javascript'>import { h, render } from '@composi/core'
-import { DataStore } from '@composi/datastore'
+        <p>You can provide state management for functional components with @composi/datastore. If you've create a project with <a href="">@composi/create-composi-app</a>, you can import @composi/datastore into your project to use it.</p>
+<pre><code class='language-bash'>import { h, render } from '@composi/core
+import { DataStore } from '@composi/core'
 </code></pre>
 
 
-<p>After you have DataStore imported, you can create a dataStore. You do this by providing it some data. This will be
-  an object literal with one property: <code>state</code>. You data will be the value of the dataStore's state. The
-  state can be a simple value or an array or object. You will then use the dataStore all the ultimate source of truth
-  for the functional component's state. You do this by passing the dataStore state to the function as a property.
-  DataStores are reactive. They have an internal observer that watches for changes and then fires an event. You can
-  define a watcher on the dataStore with an appropriately named event and have it re-render the functional component.
-  Then, when you need to update state, you use the setState method on the dataStore to do so. This causes the watcher
-  to react to the state changes and re-render the functional component. Job done.</p>
+<p>After importing DataStore, you can create a dataStore. You do this by providing it some data. This will be an object literal with one property: <code>state</code>. You data will be the value of the dataStore's state. The state can be a simple value or an array or object. You will then use the dataStore all the ultimate source of truth for the functional component's state. DataStores are reactive. They have an internal observer that watches for changes and then fires an event. You can define a watcher on the dataStore with an appropriately named event and have it re-render the functional component. Then, when you need to update state, you use the setState method on the dataStore to do so. This causes the watcher to react to the state changes and re-render the functional component. Job done.</p>
 
-
-        <p>Here is an example of creating a dataStore to use with a component:</p>
-
-<pre><code class='language-javascript'>import { h, render } from '@composi/core'
-import { DataStore } from '@composi/datastore'
-
-// Create a dataStore:
-const dataStore = new DataStore(['Apples', 'Oranges', 'Bananas'])
-
-// Define refs object to hold reference to input:
-const refs = {}
-
-// Define app for holding events, etc.
-const app = {
-  init(base) {
-    refs.input = base.querySelector('input')
-    refs.input.focus()
-  },
-  addItem() {
-    const value = refs.input.value
-    if (value) {
-      // Add value to dataStore:
-      dataStore.setState(prevState => {
-        prevState.push(value)
-        return prevState
-      })
-      // Clear the input's value,
-      // and give it focus:
-      refs.input.value = ''
-      refs.input.focus()
-    }
-  }
-}
-
-// Create a list component and pass the dataStore to it as data:
-function List({data}) {
-  return (
-    &lt;div onmount={base => app.init(base)}>
-      &lt;p>
-        &lt;input type="text" />
-        &lt;button onclick={() => app.addItem()&lt;/button>}&lt;/button>}>Add&lt;/button>
-      &lt;/p>
-    &lt;/div>
-  )
-}
-
-// Render the list and pass in the dataStore state as a prop:
-let list = render(&lt;List data={dataStore.state} />, 'section')
-
-// Set up a watcher and use it to update the component:
-dataStore.watch('update-list', () => {
-  list = render(&lt;List data={dataStore.state} />, 'section', list)
+<pre><code class="language-javascript">// Create a new dataStore:
+const dataStore = new DataStore({
+  name: 'Joe'
+})
+// Create a watcher to react to changes in the dataStore's state:
+dataStore.watch('update-occurred', () => {
+  // Re-render the component when changes occur:
+  render(<MyComponent data={dataStore.state}/>, 'section')
 })
 </code></pre>
 
-        <p>To learn more about how to use DataStore, read the <a href='/docs/datastore/install.html'>documentation</a>.</p>
+
+    <p>Here is an example of a component whose state is managed by a dataStore:</p>
+
+<p data-height="500" data-theme-id="6688" data-slug-hash="mzwmwy" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core  with DataStore" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/mzwmwy/">@composi/core
+    with DataStore</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+        <p>To learn more about how to use DataStore, read its <a href='/en/docs/datastore/install.html'>documentation</a>.</p>
         <p>&nbsp;</p>
       </div>
     </section>

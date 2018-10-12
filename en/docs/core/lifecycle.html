@@ -50,8 +50,7 @@
           <li><a href="/en/docs/core/props.html">Props</a></li>
           <li><a href="/en/docs/core/events.html">Events</a></li>
           <li class='selected'>Lifecycle</li>
-          <li><a href="/en/docs/core/hydrate.html">Hydrate</a></li>
-          <li><a href="/en/docs/core/unmount.html">Unmount</a></li>
+          <li><a href="/en/docs/core/hydrate.html">Hydration</a></li>
           <li><a href="/en/docs/core/state.html">State</a></li>
         </ul>
         <h1>Lifecycle</h1>
@@ -88,7 +87,7 @@
         <p>Sometimes you may want to know when a component is being updated, like when its props change. You can do that with <code>onupdate</code>. This hook gets three arguments passed to it: the component's base element, the old <code>props</code> and the new <code>props</code>. You can compare any value between the props to see what changed and then do what you need to.</p>
         <p><code>onupdate</code> is only called when the particule element that it is registered on is being updated. The <code>onupdate</code> hook is not envoked when the element is mounted or unmounted.</p>
         <p>To be able to use <code>onupdate</code> properly, you need to be aware of what the old and new props are. We pass props to a component when we pass it to the <code>render</code> function:</p>
-<pre><code class="language-javascript">let list = render(&lt;List data={fruits}/>, 'body')</code></pre>
+<pre><code class="language-javascript">render(&lt;List data={fruits}/>, 'body')</code></pre>
         <p>We call the attribute <code>data</code> a proper. However, in this case it will not persist as a prop. That's because the <code>render</code> function will convert the tag into a function and its props will be pass to the function as arguments. Technically, props are only the values directly attached to the elements that the component fucntion returns. Let's take another look at a List component:</p>
 <pre><code class="language-javascript">function List({data}) {
   function logUpdate(element, oldProps, newProps) {
@@ -102,7 +101,7 @@
     &lt/ul>
   )
 }
-let list = render(&lt;List data={fruits}/>, 'body')
+render(&lt;List data={fruits}/>, 'body')
 </code></pre>
 <p>In the above example, notice that we've place the <code>onupdate</code> event directly on the component's base element. Then in our <code>logUpdate</code> function we want to compare the old and new props to see what changes. You might be thinking that we will get the old and new versions of the <code>data</code> prop. Now look at the element. Do you see any props on it besides <code>onupdate</code>? That's the problem. The <code>ul</code> has no props. The fruits data that we want to test is coming in as a parameter and we are using it separately in the script block delimited by curly braces. This means that when we try to access newProps and oldPros, these will be undefined. To enable the <code>onupdate</code> lifecycle event to access the data, we need to register it as a prop directly on the element were the lifecycle hook is. Here's the component updated:</p>
 <pre><code class="language-javascript">function List({data}) {
@@ -116,6 +115,8 @@ let list = render(&lt;List data={fruits}/>, 'body')
         data.map(item => &lt;li item={item.key}>{item.value}&lt;/li>)
       }
     &lt/ul>
+  )
+}
 </code></pre>
   <p>This subtle change in exposing the data to the <code>update</code> event means that now we have access to the previous and current state of <code>data</code>. That means we could compare <code>oldProps.data</code> with <code>newProps.data</code> to see what changed.</p>
   <p>Always make sure you are exposing the properties you need to on the same element where <code>onupdate</code> is placed. Otherwise you're values will be undefined.</p>
@@ -140,7 +141,7 @@ let list = render(&lt;List data={fruits}/>, 'body')
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
 
-
+<p> </p>
 <h2>Lifecycle Event Arguments</h2>
 <p>The lifecycle events get their arguments automatically, so you can just use their plain handlers in the inline event. Each lifecycle
   event expects different arguments, but you indicate these in the handler, on in the inline event:</p>

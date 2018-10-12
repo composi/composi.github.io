@@ -50,8 +50,7 @@
           <li><a href="/en/docs/core/props.html">Props</a></li>
           <li><a href="/en/docs/core/events.html">Events</a></li>
           <li><a href="/en/docs/core/lifecycle.html">Lifecycle</a></li>
-          <li><a href="/en/docs/core/hydrate.html">Hydrate</a></li>
-          <li><a href="/en/docs/core/unmount.html">Unmount</a></li>
+          <li><a href="/en/docs/core/hydrate.html">Hydration</a></li>
           <li><a href="/en/docs/core/state.html">State</a></li>
         </ul>
         <h1>Render</h1>
@@ -80,7 +79,7 @@ function HelloWorld() {
         <p>Notice that this function does one thing, it returns some JSX markup.</p> 
         
         <h2>Rendering</h2>
-        <p>We can now pass this function to the <code>render</code> function as a tag. The <code>render</code> function takes at least two arguments: the tag to render, and the container to render into. The tag should be a function written as a JSX tag. The container can be a DOM node reference, or a selector.</p>
+        <p>We can now pass this function to the <code>render</code> function as a tag. The <code>render</code> function takes two arguments: the tag to render, and the container to render into. The tag should be a function written as a JSX tag. The container can be a DOM node reference, or a selector.</p>
 
         <pre><code class='language-javascript'>import { h, render } from '@composi/core'
 function HelloWorld() {
@@ -91,7 +90,7 @@ function HelloWorld() {
 // Render the component to the DOM:
 render(&lt;HelloWorld />, document.body)</code></pre>
 
-        <p>Normally, if you plan on updating a component later, you'll want to catch the ouput of the <code>render</code> function in a variable. Let's update the above example and store the result in a variable–<code>hello</code>:</p>
+        <p>To udate a component, just pass it to render along with new values for its props. Let's update the above example:</p>
 <p data-height="300" data-theme-id="6688" data-slug-hash="ZqBPjK" data-default-tab="js,result" data-user="rbiggs"
   data-pen-title="@composi/core - Hello World" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/ZqBPjK/">@composi/core
     - Hello World</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
@@ -245,6 +244,9 @@ function Greeting(props) {
 }</code></pre>
         <p>In this case, the ternary operator is not as concise as the logical operator. The ternary operator requires <code>if/else</code> logic, whereas the logical operator lets us handle an <code>if</code> condition.</p>
 
+        <h2>Limits of Container</h2>
+        <p>When @composi/core renders a component into a container, it caches the component's virtual node on the container. The next time you render that component, Composi grabs the cached virtual node from the container and uses that to diff and patch the DOM. This means that a container can have only one component. When you render a component into a container, if said container has static content, the component will be appended after the content.</p>
+        <p>If you need to output more than one component into the same container, wrap them in a parent component and render it in the component. You cannot use the <code>Fragment</code> tag for this, as it must be consumed by a tag that returns a singular element.</p>
         <p>&nbsp;</p>
       </div>
     </section>
