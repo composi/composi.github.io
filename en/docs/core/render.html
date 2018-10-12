@@ -247,6 +247,14 @@ function Greeting(props) {
         <h2>Limits of Container</h2>
         <p>When @composi/core renders a component into a container, it caches the component's virtual node on the container. The next time you render that component, Composi grabs the cached virtual node from the container and uses that to diff and patch the DOM. This means that a container can have only one component. When you render a component into a container, if said container has static content, the component will be appended after the content.</p>
         <p>If you need to output more than one component into the same container, wrap them in a parent component and render it in the component. You cannot use the <code>Fragment</code> tag for this, as it must be consumed by a tag that returns a singular element.</p>
+
+        <h2>Debouncing Renders</h2>
+        <p>It's possible that you may be using some type of event, such as cursor position, to trigger an update. This is very common for animation. In that case you would want to wrap the render function in <code>requestAnimationFrame</code>. This will result in skipping unnecessary attempts to render faster than the browser can handle. The format is like this:</p>
+<pre><code class="language-javascript">requestAnimationFrame(() => {
+  render(<MyComponent data={data}/>, 'body')
+})
+</code></pre>
+        <p>Check out the documentation about how to do this with <a target="__blank" href='/en/docs/core/state.html#debounce-renders'>@composi/datastore</a></p>
         <p>&nbsp;</p>
       </div>
     </section>
