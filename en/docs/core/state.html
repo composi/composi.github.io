@@ -84,6 +84,15 @@ dataStore.watch('update-occurred', () => {
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
         <p>To learn more about how to use DataStore, read its <a href='/en/docs/datastore/install.html'>documentation</a>.</p>
+    <h2>Debouncing Renders</h2>
+    <p>If you've got something that produces a lot of data changes in rapid succesion, you may mind the rendering looking chopping. If that's the case you may want to debounce the render. You can do that with <code>requestAnimationFrame</code>:</p>
+<pre><code class="language-javascript">dataStore.watch('anim-update', () => {
+  requestAnimationFrame(() => {
+    render(&lt;MyAnimation data={dataStore.state}/>, '#animationDiv')
+  })
+})
+</code></pre>
+      <p>Using <code>requestAnimationFrame</code> to control how often render occurs can help reduce jankiness when may changes are happening in rapid succesion. This means any type of event or action that can trigger many data updates.</p>
         <p>&nbsp;</p>
       </div>
     </section>
