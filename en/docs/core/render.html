@@ -96,6 +96,8 @@ render(&lt;HelloWorld />, document.body)</code></pre>
     - Hello World</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
+        <p> </p>
+        <h2>Selector vs DOM Reference</h2>
         <p>In the above example we're using a string <code>"header"</code> as the container for the component. This is fine for occasional renders. However, if the component might be rendered many times in rapid succession, such as when animating a component, it would be better to use a DOM reference to that container. That's because when you provide a string selector for the container, each time the component is rendered, Composi has to query the DOM for that selector. Getting a reference to the container first and using that in the render function means that render can immediate start diffing and patching the DOM.</p>
 
         <p> </p>
