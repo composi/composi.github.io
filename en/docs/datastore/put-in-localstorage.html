@@ -42,29 +42,31 @@
       <div class='docs'>
         <h3>@composi/datastore:</h3>
         <ul class='breadcrumb'>
-        <li class='selected'>Install</li>
+        <li><a href="/en/docs/datastore/install.html">Install</a></li>
         <li><a href="/en/docs/datastore/data-store.html">DataStore</a></li>
         <li><a href="/en/docs/datastore/watch.html">Watch</a></li>
         <li><a href="/en/docs/datastore/set-state.html">setState</a></li>
         <li><a href="/en/docs/datastore/dispatch.html">Dispatch</a></li>
         <li><a href="/en/docs/datastore/unwatch.html">Unwatch</a></li>
-        <li><a href="/en/docs/datastore/put-in-localstorage.html">putInLocalStorage</a></li>
+        <li class='selected'>putInLocalStorage</li>
         <li><a href="/en/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a></li>
         </ul>
-          <h1>Install</h1>
-          <h2>Data Management for Components</h2>
-          <p>Managing data for components can be complicated. By default Composi/core functional components have no state. DataStore is a solution for providing reactive re-renders for functional components using a central dataStore.</p>
-          
-          <h3>No Install</h3>
-          <p>If you've created a project using <code>create-composi-app</code>, you do not have to install @composi/datastore. It is already installed and ready to import. Read
-            the <a target="_blank" href="/en/docs/create-composi-app/usage.html">documentation for create-composi-app</a> to
-            learn how to get up and running fast.</p>
+          <h1>putInLocalStorage</h1>
+          <h2>Saving to localStorage</h2>
 
-          <p>To use DataStore, you'll need to import it into your project:</p>
+          <p>Sometimes you may need to persist a dataStore state across user sessions. You can do this using <code>putInLocalStorage</code>. This saves the state of the dataStore in localStorage. <code>putInLocalStorage</code> returns a promise, so it is non-blocking. You can use it in a watcher to automatically save the dataStore state when it changes. You would want to do this to preserve the state when a user adds or deletes items from a list, etc.</p>
 
-          <pre><code class='language-bash'>import { DataStore } from @composi/datastore</code></pre>
+
+<pre><code class='language-javascript'>// We just put a callback in the watcher
+// because we're using the default event:
+dataStore.watch(() => {
+  // When state changes, save to localStorage.
+  dataStore.putInLocalStorage()
+})
+</code></pre>
+          <p>After you've saved a dataStore's state in localStorage, you can retrieve it during a page load to hydrate a dataStore with it. Read the docs for <a target='__blank' href="/en/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a> to learn how.</p>
+
           
-          <p>To learn how to use DataStore, read these links <a target='__blank' href="/en/docs/datastore/data-store.html">DataStore</a> and <a<a target='__blank' href='/docs/datastore/set-state.html'>setState</a>.</p>
 
 
               <p>&nbsp;</p>

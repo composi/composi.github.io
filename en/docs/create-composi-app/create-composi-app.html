@@ -74,8 +74,29 @@ my-project-|
     |-package.json
     |-README.md
     |-rollup.config.js</code></pre>
+              <p> </p>
 
+              <h2>Included Modules</h2>
+              <p>When you create a new project, it includes the following @composi modules ready for you to import if you need to:</p>
+              <ul class='main-menu'>
+                <li><a target='__blank' href="/en/docs/fragment/usage.html">@composi/fragment</a></li>
+                <li><a target='__blank' href="">@composi/datastore</a></li>
+                <li><a target='__blank' href="/en/docs/observer/observer.html">@composi/observer</a></li>
+                <li><a target='__blank' href="/en/docs/idb/idb.html">@composi/idb</a></li>
+                <li><a target='__blank' href="https://github.com/composi/get-type/blob/master/README.md">@composi/get-type</a></li>
+                <li><a target='__blank' href="https://github.com/composi/merge-objects/blob/master/README.md">@composi/merge-objects</a></li>
+              </ul>
 
+              <p>To use these you just need to import them into your project:</p>
+<pre><code class="language-javascript">import { h, render } from '@composi/core'
+import { Fragment } from '@composi/fragment'
+import { DataStore } from '@composi/datastore'
+import { Observer } from '@composi/observer'
+import { idb } from '@composi/idb'
+import { getType } from '@composi/get-type'
+import { mergeObject } from '@composi/merge-objects'
+</code></pre>
+              <p>Read the documentation from the links above to learn how to use them.</p>
 
               <p>&nbsp;</p>
       </div>

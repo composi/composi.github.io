@@ -48,6 +48,8 @@
         <li><a href="/en/docs/datastore/set-state.html">setState</a></li>
         <li><a href="/en/docs/datastore/dispatch.html">Dispatch</a></li>
         <li><a href="/en/docs/datastore/unwatch.html">Unwatch</a></li>
+        <li><a href="/en/docs/datastore/put-in-localstorage.html">putInLocalStorage</a></li>
+        <li><a href="/en/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a></li>
         </ul>
           <h1>DataStore</h1>
           <h2>Storing Data</h2>
@@ -95,11 +97,45 @@ const dataStore = new DataStore({name: 'Sarah'})
           <pre><code class='language-javascript'>dataStore.unwatch('temp-event')</code></pre>
 
           <p> </p>
-          <h2>How to Persist a DataStore</h2>
+          <h2>Data Persistence</h2>
           <p>DataStore has no builtin means of persistence. To do so the best way is to create an observe to watch for a special persist event. When you dispatch that even, the observer will persist you dataStore(s). To learn how to use observer, read the documentation for <a href='/docs/observer/install.html'>@composi/observer</a>.</p>
 
+          <h2>Versioning</h2>
+          <p>When you create a dataStore, it has a version of 1. You can increase the version with the <code>bumpVersion</code> method:</p>
+<pre><code class='language-javascript'>dataStore.version // returns 1
+dataStore.bumpVersion()
+dataStore.version // returns 2
+</code></pre>
+          <p><code>bumpVersion</code> always increments the version by 1.</p>
+          <p>Whenever you save the dataStore state to localStorage with <code>putInLocalStorage</code>, it also saves the current version with the kye <code>composi-store-version</code>. You can retrieve this version during page load to see what version the dataStore was at when the last session ended:</p>
+<pre><code class='language-javascript'>const key = localStorage.getItem('composi-datastore-version')
+if (version < 10) {
+  console.log('The dataStore\'s version is too old.')
+}
+</code></pre>
+          <p> </p>
+          <h2>Timestamps</h2>
+          <p>When you save a dataStore's state with <code>putInLocalStorage</code> it also saves a timestamp for the save with the key <code>composi-datatore-timestamp</code>. During page load you can retrieve the timestamp to see when was the last time the dataStore was saved. If it's too old you may want to clear localStorage to populate it with fresher data.</p>
+<pre><code class='language-javascript'>// During page load:
+const timestamp = localStorage.getItem('composi-datastore-timestamp')
+const currentTime = new Date().getTime()
+// One day in milliseconds.
+const day = 1000 * 60 * 60 * 24
+
+// Test to see if timestamp is older than 30 days.
+// If it is, clear localStorage:
+if ((currentTime - timestamp) / day > 30) {
+  // Remove the dataStore's key/value.
+  localStorage.removeItem('composi-datastore')
+  // Or clear the entire localStorage cache:
+  localStorage.clear()
+}
+</code></pre>
+
+          <p> </p>
           <h2>Summary</h2>
-          <p>If you are already familiar with <a href='/docs/observer/install.html'>@composi/observer</a>, you might have noticed that DataStore shares many features: watch, dispatch and unwatch. That's because internally DataStore uses and observer to watch for changes and react to those when the occur, as well as the ability to dispatch and unwatch its events. Although these features in dataStores make them more versatile, there may be situations where it makes more sense to use an observer in conjunction with a dataStore. That's because of their differences. A dataStore can register events and watch them. And you can dispatch to a particular dataStore event to trigger it. But whenever the dataStore's state changes, ALL of its events are executed. In contrast, with a dedicated observer, you can also register as many custom events as you need. For observers, when you dispatch to an event, only that one will fire.</p>
+          <p>If you are already familiar with <a href='/docs/observer/install.html'>@composi/observer</a>, you might have noticed that DataStore shares many features: watch, dispatch and unwatch. That's because internally DataStore uses an observer to watch for changes and react to those when the occur, as well as the ability to dispatch and unwatch its events. Although these features in dataStores make them more versatile, there may be situations where it makes more sense to use an observer in conjunction with a dataStore. That's because of their differences. A dataStore can register events and watch them. And you can dispatch to a particular dataStore event to trigger it. But whenever the dataStore's state changes, ALL of its events are executed. In contrast, with a dedicated observer, you can also register as many custom events as you need. For observers, when you dispatch to an event, only that one will fire.</p>
+          <p>Although dataStore provides a way to persist its state in localStorage, this may be inadequate for your needs. If that's the case, consider using <a target='__blank' href="/en/docs/idb/idb.html">@composi/idb</a>. This is a promise-base wrapper for IndexedDB with a simple interface like localStorage.</p>
 
 
 

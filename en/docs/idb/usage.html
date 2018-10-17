@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Docs</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/idb:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/en/docs/idb/install.html">Install</a></li>
+          <li><a href="/en/docs/idb/idb.html">IDB</a></li>
+          <li class='selected'>Usage</li>
+        </ul>
+          <h1>Usage</h1>
+          <h2>How to Use IDB</h2>
+          <p>All @composi/idb methods return promises. That means to use them you'll need to use then and catch statements.</p>
+
+          <h2>set</h2>
+          <p>Set takes two arguments: a key and a value to store with it. The value can be any valid JavaScript type or event blobs, such as images, sound files, etc. Storing blobs can quickly take up all your availabe storage space, so use compression and only use the ones you aboslute need.</p>
+          <p><code>set</code> returns a promise, so if you want to do something when the save completes, you need to use <code>then</code>.</p>
+
+<pre><code class="language-javascript">idb.set('name', 'Joe')
+
+// Or do something after setting the key/value:
+idb.set('name', 'Joe')
+  .then(() => {
+    console.log('Saved the name.')
+  })</code></pre>
+          <p>If this is the first time in your code that you are using a method on the idb object, @composi/idb will create an instance of IndexedDB and try to connect to the default database and store. If they do not exist yet, they will be created so that the key/value can be saved.</p>
+
+          <h2>get</h2>
+          <p>The <code>get</code> method takes one argument: the key to retrieve. This is a string. This returns a promise, so to do anything with the returned value, you'll need to use a <code>then</code> function.</p>
+<pre><code class="language-javascript">idb.get('products').then(products => {
+  // Expecting an array of products:
+  if (products && products.length) {
+    // Do something with products
+  }
+})</code></pre>
+
+          <p> </p>
+          <h3>Handle Failure</h3>
+          <p>If <code>get</code> failes to return a value, probably because the key does not exist, it returns <code>undefined</code>. Because it returns something, you can't use a <code>catch</code> function to deal with this. Instead you'll need to use a condition check see if you received anything, and if not, do something else. In the following example, notice how we first use an <code>if</code> statement to see if we got something, and then deal with a failed get in the <code>else</code> statement.</p>
+<pre><code class="language-javascript">idb.get('users').then(users => {
+  // Expecting an array of users:
+  if (users && users.length) {
+    render(&lt;UserList data={users} />, 'section')
+  } else {
+    // No saved users so provide a default:
+    const users = ['Ellen', 'Sam', 'Paula', 'Jeff']
+    render(&lt;UserList data={users} />, 'section')
+  }
+})</code></pre>
+
+          <p>If this is the first time in your code that you are using a method on the idb object, @composi/idb will
+  create an instance of IndexedDB. If the default database and store do not exist, it will create them. Otherwise it will try to get the key/value from the existing database.</p>
+          <h2>remove</h2>
+          <p> </p>
+<pre><code class="language-javascript">idb.remove().then(() => {
+
+})</code></pre>
+          <p> </p>
+          <h2>clear</h2>
+          <p> </p>
+<pre><code class="language-javascript">idb.clear().then(() => {
+
+})</code></pre>
+          <p> </p>
+          <h2>keys</h2>
+
+          <p><code>keys()</code> returns an array of all the keys in the database. You would use this when you want to know what keys are available. </p>
+
+<pre><code class="language-javascript">idb.keys().then(keys => {
+  if (keys.includes('saved-items')) {
+    return idb.get('saved-items')
+  }
+})
+  .then(items => {
+    // Do something with saved items...
+  })
+</code></pre>
+            <p>Looking at the stored keys can give you some valuable insight into what was done in the last session.</p>
+
+            <h2>Versioning and Timestamps</h2>
+            <p>IndexedDB supports versioning and schema upgrades. @composi/idb does not. However, you can use <code>set</code> to store a version or timestamp so at each page load you can check that version or age of the data. If the version or timestamp are too old, you may choose to clear the database and populate it with new data.</p>
+<pre><code class="language-javascript">// Set a version for the store:
+idb.set('version', '3.5')
+
+  // Next page load you can check the version:
+idb.get('version')
+  .then(version => {
+    if (version && version < 5) {
+      idb.clear()
+    }
+  })
+</code></pre>
+            <p>Or you could save a timestamp and at page load check to see if the timestamp is older than 30 days:</p>
+<pre><code class="language-javascript">// Set a timestap for the store:
+idb.set('timestamp', new Date().getTime())
+
+// On a later page load, get the timestamp and see if it is older than 30 days.
+// For that we have some utilites to convert UTF to days.
+const currentTime = new Date().getTime()
+// One day in milliseconds.
+const day = 1000 * 60 * 60 * 24
+// Get the saved timestamp:
+idb.get('timestamp')
+  .then(timestamp => {
+    // If timestamp is older than 30 days:
+    if (timestamp && (currentTime - timestamp) / day > 30) {
+      // Clear out all entries in the store:
+      idb.clear()
+    }
+  })
+</code></pre>
+
+            <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a> and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

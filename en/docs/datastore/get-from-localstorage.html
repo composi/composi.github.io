@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Docs</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+</head>
+
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                  id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+          <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/datastore:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/en/docs/datastore/install.html">Install</a></li>
+          <li><a href="/en/docs/datastore/data-store.html">DataStore</a></li>
+          <li><a href="/en/docs/datastore/watch.html"></a>Watch</li>
+          <li><a href="/en/docs/datastore/set-state.html">setState</a></li>
+          <li><a href="/en/docs/datastore/dispatch.html">Dispatch</a></li>
+          <li><a href="/en/docs/datastore/unwatch.html">Unwatch</a></li>
+          <li><a href="/en/docs/datastore/put-in-localstorage.html">putInLocalStorage</a></li>
+          <li class='selected'>getFromLocalStorage</li>
+        </ul>
+        <h1>getFromLocalStorage</h1>
+        <h2>Hydrate DataStore from LocalStorage</h2>
+
+        <p>If you're using <a href="/en/docs/datastore/put-in-localstorage.html">putInLocalStorage</a> to persist a dataStore's state, you can use <code>getFromLocalStorage</code> during page load to hydrate the dataStore with the data saved during the last session.</p>
+        <p><code>getFromLocalStorage</code> returns a promise, so it is non-blocking. That also means you'll have to use a <code>then</code> function to do anything with the result. If the dataStore does not exist in localStorage, or there is any other problem is retrieving it, <code>getFromLocalStorage</code> with throw and error. This means you must always use a conditional check to see if you received any data before trying to use it. To deal with a failure you will have to use a <code>catch</code> function.</p>
+
+        <p></p>
+        <pre><code class='language-javascript'>import { h, render } from '@composi/core'
+import { DataStore } from '@composi/datastore'
+
+// Create empty dataStore:
+const dataStore = new DataStore()
+
+// Try to hydrate dataStore from localStorage.
+dataStore.getFromLocalStorage()
+  .then(data => {
+    // Always check that you got something back:
+    if (data) {
+      // Use the data to set state on the empty dataStore:
+      dataStore.setState(prevState => {
+        prevState = data
+        return prevState
+      })
+    }
+  })
+</code></pre>
+        <p>In the above example we hyrdate a dataStore with what was found in localStore. However, if there was nothing there, you might want to provide some default data. The following example shows how to do that. We introduce a watcher to render a list component. That way, whether state is set with default data or data retrieved from localStorage, the component will render. We also show how to persist changes to dataStore's state with <code>putInLocalStorage</code>.</p>
+<pre><code class="language-javascript">import { h, render } from '@composi/core'
+import { DataStore } from '@composi/datastore'
+
+const refs = {}
+
+function uuid() {
+  return Math.random().toString(16).substring(2, 16)
+}
+
+// Default data to use.
+const fruits = [
+  {
+    key: 101,
+    value: 'Apples'
+  },
+  {
+    key: 102,
+    value: 'Oranges'
+  },
+  {
+    key: 103,
+    value: 'Bananas'
+  }
+]
+
+// Create an empty dataStore:
+const dataStore = new DataStore()
+
+// Setup a watcher to render the component when state changes:
+dataStore.watch('update-list', () => {
+  render(&lt;List data={dataStore.state}/>, 'section')
+})
+
+// Hydrate dataStore with data from localStorage:
+dataStore.getFromLocalStorage()
+  .then(data => {
+    // If there was data retrieved from localStorage,
+    // add it to dataStore, which will trigger the watcher.
+    if (data) {
+      dataStore.setState(prevState => {
+        prevState = data
+        return prevState
+      })
+    }
+  })
+  // If localStorage has no data,
+  // this is the first time loading.
+  // In that case give the dataStore some default data.
+  .catch(() => {
+    dataStore.setState(prevState => {
+      prevState = fruits
+      return prevState
+    })
+    dataStore.putInLocalStorage()
+  })
+
+// Define component to render.
+function List({data}) {
+  const createInputRef = input => {
+    if (input)
+    refs.input = input
+  }
+  const addItem = () => {
+    const value = refs.input && refs.input.value
+    if (value) {
+      dataStore.setState(prevState => {
+        prevState.push({
+          key: uuid(),
+          value
+        })
+        return prevState
+      })
+      refs.input.value = ''
+      refs.input.focus()
+      // When data is added, save to localStorage.
+      dataStore.putInLocalStorage()
+        .then(() => console.log('Successfully saved data with new item in localStorage!'))
+    } else {
+      alert('Please provide a value before submitting.')
+    }
+  }
+  function deleteItem(key) {
+    dataStore.setState(prevState => {
+      const state = prevState.filter(item => item.key != key)
+      return state
+    })
+    // When an item is deleted, 
+    // save new state to localStorage.
+    dataStore.putInLocalStorage()
+      .then(() => console.log('Successfully persisted removal of item in localStorage!'))
+  }
+  return (
+    &lt;div>
+      &lt;p>
+        &lt;input onmount={createInputRef} type="text"/>
+        &lt;button onclick={addItem}>Add&lt;/button>
+      &lt;/p>
+      &lt;ul>
+        {
+          data.map(item => (
+            &lt;li key="item.key">
+              &lt;span>{item.value}&lt;/span>
+              &lt;button onclick={() => deleteItem(item.key)} className='delete-item'>X&lt;/button>
+            &lt;/li>
+          ))
+        }
+      &lt;/ul>
+    &lt;/div>
+  )
+}</code></pre>
+        <p></p>
+
+
+
+        <p>&nbsp;</p>
+      </div>
+    </section>
+  </article>
+  <footer>
+    <section>
+      <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>Composi Logo</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+            <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+              id="Combined-Shape"></path>
+          </g>
+        </g>
+      </svg>
+      <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a>
+        and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+    </section>
+  </footer>
+  <script src="/js/prism.js"></script>
+
+
+</body>
+
+</html>
