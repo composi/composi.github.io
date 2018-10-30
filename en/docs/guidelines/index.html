@@ -39,6 +39,14 @@
       <div class='docs'>
         <h3>Guidelines:</h3>
           <h1>Getting Stated</h1>
+          <h2>Install the CLI</h2>
+          <p>You could download all the pieces from Github and setup your development environment, but there's an easier way: @composi/create-composi-app. This lets you create a project set up with everything you need. Install it from NPM:</p>
+<pre><code class="language-bash">npm i -g @composi/create-composi-app</code></pre>
+          <p>After that you can create a new Composi project like this:</p>
+<pre><code class="language-javascript">create-composi-app My-Project</code></pre>
+          <p>This will create a project on your destop. Open the terminal, cd to the new project and run:</p>
+<pre><code class="language-javascript">npm i</code></pre>
+          <p>When the install finishes you can run <code>npm start</code> to build the new project and launch it in your default browser. All the important code resides in the project's <code>dev</code> folder. When you make changes to its contents, the project automatically re-builds and reloads the browser. The core of the project's JavaScript is in dev/js/app.js. This is where you assemble all the pieces to make your app work.</p>
           <h2>Choices</h2>
           <p>@composi/core is small but it offers a lot of functionality. This means you need to make some basic choices when you start a new project. Using <a href="/en/docs/create-composi-app/install.html">@composi/create-composi/app</a> gives you a project setup ready to use. There are several approaches you could take to build out your app, some more complicated than the others. We recommend that you start out as simple as possible. A new project comes with a Title rendered to the page. The app.js file imports h and render. That's all you need to get going.</p>
           <h2>Handling Data Needs</h2>

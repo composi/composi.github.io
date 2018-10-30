@@ -77,9 +77,12 @@
     <section>
       <div>
         <h2>@composi/core</h2>
-        <p>The core provides support for functional components just like React, using JSX. Instead of ReactDOM.createElement, we have h (less typing). We also have a render function: <code>render(&lt;Component />, document.body)</code>. You use it the same way you use the ReactDOM.render function. Unlike React, function components come with support for three lifecycle hooks. These are implemented as props on the element you want to target. No need for camel case events or special attributes the React does. Use normal HTML attributes.</p>
+        <p>The core provides support for functional components just like React, using JSX. There is a render function for injecting content into the DOM: <code>render(&lt;Component />, document.body)</code>. You use it the same way you use the ReactDOM.render function. Unlike React, function components come with support for three lifecycle hooks. These are implemented as props so you can track any element as it mounts, updates and unmounts. No need for camel case events or special attributes like React does. Use normal HTML attributes.</p>
         <h2>@composi/core runtime</h2>
-        <p>Core provides a function, <code>run</code>, that creates a program that provides state management for functional components. If you've used Redux, it will feel familiar. The runtime is inspired by the Elm architecture. The runtime is based on the pattern of SVU-State, View and Update. Update is like a simplified versino of Redux, but with all the boilerplate. The runtie provides a means of dealing with effects. They also support composition of programs and communication between parent and child through effects.</p>
+
+        <p>Core provides also provides a way to run encapsulated  programs that provide state management for functional components. Inspired by the Elm architecture, the runtime is based on the pattern of SVU-State, View and Update. State any any valid JavaScript type. View is a function that retruns a representation of the state. Update is like a simplified version of Redux, but without all the boilerplate. The runtime provides a way to deal with effects. Runtime programs support composition with communication between parent and child through effects as well.</p>
+
+        <p>In just 2KB, @composi/core with the runtime provides the same functionality as React with Redux and hooks for functional components. @composi/core does not need <code>shouldComponentUpdate</code>, etc. It checks props and automatically bails if they are the same.</p>
       </div>
     </section>
 
