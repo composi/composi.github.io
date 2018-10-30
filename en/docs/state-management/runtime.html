@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Docs</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/runtime:</h3>
+        <ul class='breadcrumb'>
+          <li class='selected'>Runtime</li>
+          <li><a href="/en/docs/state-management/init.html">Init</a></li>
+          <li><a href="/en/docs/state-management/update.html">Update</a></li>
+          <li><a href="/en/docs/state-management/view.html">View</a></li>
+          <li><a href="/en/docs/state-management/effects.html">Effects</a></li>
+          <li><a href="/en/docs/state-management/tagged-unions.html">Tagged Unions</a></li>
+          <li><a href="/en/docs/state-management/composition.html">Composition</a></li>
+          <li><a href="/en/docs/state-management/end-program.html">Stop Program</a></li>
+        </ul>
+          <h1>Runtime</h1>
+          <h2>State Management for Functional Components</h2>
+          <p>This section assumes you already know how to create and use functional components with @composi/core. If not, please visit this <a href="/en/docs/core/install.html" target='__blank'>section</a>.</p>
+
+          <p>It's amazing how much you can do with just <code>h</code> and <code>render</code>. However, more often your component will need some kind of local state. Class-based components can easy accomplish this. @composi/core only provides functional components, which cannot have local state. @composi/core gets around this limitation through its runtime, which provides a scope for encapsulating state and a mechanism to re-render views when state changes. @composi/core's runtime lets you create a program where the concerns are broken down into clearly defined responsiblities.</p>
+          <h2>SVU: State-View-Update</h2>
+          <p>The Composi runtime is based on the concept of SVU, State, View and Update. This is similar to MVC, but subtly different. In traditional MVC, the model holds not just the data, it can validate the data and persist it in a database. With SVU, State is just raw, inert data. It has no logic for anything. In SVU, View is a function that takes the state and returns a representation of it in some form. The view is agnostic to how this is done. It's your responsiblity to instruct the view how to return the state. This could be merely returning a functional component to be consumed by something else, or using the @composi/core render function to output the result to the DOM. When you render a View, you'll implement events for user interaction. When a user interacts with those events, they send messages to the Update function. The Update function holds all the program's business logic. It handles this internally through action functions. Depending on the message sent, Update passes it to an action that modifies the state. When this happens, the runtime invokes the View with that state, causing the View to return a result. For front end, this means a re-render of the view.</p>
+          <div style='text-align: center;'><img src="/images/SVU.png" alt="SVU Diagram"></div>
+          <p>Every @composi/core runtime program implements this SVU pattern. It does so with three properties: init, update and view. Init is where you define the default state for the program. At startup the runtime takes the value of init and uses it to render the view. The following example shows the core parts of a runtime program.</p>
+<pre><code class='language-javascript'>const program = {
+  init: [state, effect],
+  update(msg, state) {
+    if (msg) {
+      // Handle messages to update state:
+      return [state]
+      // Or also implete an effect:
+      return [state, effect]
+    }
+  },
+  view(state, send) {
+    // Render view that can send messages to update:
+    return render(Component, Container)
+  }
+}</code></pre>
+          <p></p>
+          <p> </p>
+          <h3>Init</h3>
+          <p>Init is a tuple of two values: state and effect. At startup the program uses the init state to render the view. Effect is optional. If provided it will be run at startup too. Effects are asynchronous functions for timers or fetching data. Most of the time init will just provide state. A program's state can be any JavaScript type: null, undefined, number, string, array or object. Complex programs will inevitably need state as an array or object.</p>
+          <h3>Update</h3>
+          <p>Update is where all the program's business logic resides. Update receives messages sent by the view. Depending on what message was received, Update performs actions on a copy of the program state and returns it. This causes the program to re-render the view with the new state.</p>
+          <h3>View</h3>
+          <p>The View is the representation of the program's state. A view usually has events for user interaction. An interaction will send a message to the program's Update function.</p>
+
+          <p>Here is the simplest possible runtime program that you can make. This is valid and it is running, but doing nothing.</p>
+          <p data-height="300" data-theme-id="6688" data-slug-hash="MPxXrR" data-default-tab="js,result" data-user="rbiggs"
+            data-pen-title="@composi/core + runtime Basic" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/MPxXrR/">@composi/core
+              + runtime Basic</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+          <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+          <p> </p>
+          
+          <h3>Order Doesn't Matter</h3>
+          <p>When creating a program to run, the order of the properties is irrelevant. In our examples we use init, update, view. But you could choose to do init, view, update or any other order that you prefer. </p>
+<pre><code class='language-javascript'>const program1 = {
+  init: [],
+  update() {},
+  view() {}
+}
+const program2 = {
+  init: [],
+  view() {},
+  update() {}
+}
+const program3 = {
+  view() {},
+  init: [],
+  update() {}
+}</code></pre>
+          <p>If you do have a prefered order, stick with it for consistency.</p>
+          <h3>Clicker--The Hello World of Programs</h3>
+          <p>To illustrate setting up a program and running it we're going to make a simple clicker. State will be a number. View will send a message to update, and update will then increase the state value by 1.</p>
+
+<p data-height="500" data-theme-id="6688" data-slug-hash="gBqxER" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core + runtime - counter" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/gBqxER/">@composi/core
+    + runtime - counter</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+          <p> </p>
+          <h3>An Object is an Object</h3>
+          <p>In the above example you will notice that we have created an object <code>program</code> that we pass to the <code>run</code> function. This has some parallels to a class component. A class instance is an object returned by a class. The difference is in how these two are used. With class components its common to add new properties to the class to handled new functionality. In contrast, a @composi/core runtime program only has the three main properties: init, update and view. If you need new properties for some functionality, you would add those to the program's state object and access them from with update actions.</p>
+          <p>This clicker example is overly simplistic, but it does show the basic setup for a runtime Composi program: init, update and view. You can learn more about from their dedicated docs from the menu at the top for init, update, view, etc..</p>
+
+          <h2>Part of Core</h2>
+          <p>The runtime is part of @composi/core, so importing and using it does not add anything to the final payload of your project's JavaScript. @composi/core is 2KB gzipped.</p>
+
+          <p>When we say the runtime is small, we mean it. Here's all the code for the runtime minified and completely functional:</p>
+<pre><code class="language-javascript">function run(a){function b(j){i&&c(e(j,h))}function c(j){h=j[0];let k=j[1];k&&k(b),f(h,b)}const
+e=a.update,f=a.view,g=a.done;let h,i=!0;return c(a.init),function(){i&&(i=!1,g&&g(h))}}</code></pre>
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a> and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

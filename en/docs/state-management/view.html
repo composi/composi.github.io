@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Docs</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/runtime:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/en/docs/state-management/runtime.html">Runtime</a></li>
+          <li><a href="/en/docs/state-management/init.html">Init</a></li>
+          <li><a href="/en/docs/state-management/update.html">Update</a></li>
+          <li class='selected'>View</li>
+          <li><a href="/en/docs/state-management/effects.html">Effects</a></li>
+          <li><a href="/en/docs/state-management/tagged-unions.html">Tagged Unions</a></li>
+          <li><a href="/en/docs/state-management/composition.html">Composition</a></li>
+          <li><a href="/en/docs/state-management/end-program.html">Stop Program</a></li>
+        </ul>
+          <h1>View</h1>
+          <h2>Stuff</h2>
+          <p>The view is a function that deals with how to present the data from the state. It doesn't dictate how that view will be produced. You can do that with @composi/core's render function, or any other rendered. You could use it to return a string of HTML for server-side rendering or even return native code for native app development. Here we're dealing with front end development so we'll use @composi/core's render function to output our program to the DOM.</p>
+          <p>The view function takes two arguments: state and send. You should already be familiar with state. Send is a function that enables the view to send messages to the update function. Send is a unary function. It can only handle one argument. Therefore to help update distinguish one message from another, we pass and object with a type. If you need to also pass along some data, you can add that to the message object as well.</p>
+          <p>In general we recommend using JSX to define the view to be created, but you could use the <code>h</code> function instead. Here's the same view created with JSX and <code>h</code>:</p>
+<pre><code class="language-javascript">
+function List({state}) {
+  return (
+    &lt;div>
+      &lt;p>
+        &lt;input type="text">
+        &lt;button>Add&lt;/button>
+      &lt;/p>
+      &lt;ul>
+        {
+          state.items.map(item => &lt;li key={item.key}>{item.value}&lt;/li>)
+        }
+      &lt;/ul>
+    &lt;/div>
+  )
+}
+</code></pre>
+          <p>A quick glance is sufficient to understand what DOM elements will be created. Now here is the same component defined with <code>h</code>:</p>
+<pre><code class="language-javascript">
+function List({state}) {
+  return h(
+    'div',
+    {},
+    [
+      h(
+        'p',
+        {},
+        [
+          h(
+            'input',
+            {type: 'text'}
+          ),
+          h(
+            'button',
+            {},
+            'Add'
+          )
+        ]
+      ),
+      h(
+        'ul',
+        {},
+        ${
+          state.items.map(item => h('li', {key: item.key}, item.value))
+        }
+      )
+    ]
+  )
+}
+</code></pre>
+
+          <p>As you can see, using function to create the virtual nodes instead of using JSX produces a more verbose and difficult to read result.</p>
+          
+          <h2>Sending Messages</h2>
+          <p>Views can be completely static, such as a newsletter or blog. However many views will be designed for user interaction. The @composi/core runtime provides a <code>send</code> function for views to send messages and data to the update function.</p>
+          <p>A message can be any type: null, undefined, number, string, array or object. However, in most cases a message will need to be an object so you can have a consistent interface for the update function to test what type of message was sent. An object also allows you to pass along some data with the message.</p>
+
+          <p>When you define a program's view, you pass in two arguments, the state and the send function. In the following example, notice how in the List component we have click events that send a message object with a type and some data. This enables us to use a switch in the update function to check what type of message was sent.</p>
+
+
+          <p data-height="600" data-theme-id="6688" data-slug-hash="gBZEQp" data-default-tab="js,result" data-user="rbiggs"
+            data-pen-title="@composi/core + runtime" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/gBZEQp/">@composi/core
+              + runtime</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+          <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+          <pre><code class='language-javascript'></code></pre>
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a> and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

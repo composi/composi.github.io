@@ -42,26 +42,36 @@
   <article class='article'>
     <section>
       <div class='docs'>
-        <h3>@composi/fragment:</h3>
+        <h3>@composi/runtime:</h3>
         <ul class='breadcrumb'>
-          <li class='selected'>Install</li>
-          <li><a href="/en/docs/fragment/usage.html">Usage</a></li>
+          <li><a href="/en/docs/state-management/runtime.html">Runtime</a></li>
+          <li><a href="/en/docs/state-management/init.html">Init</a></li>
+          <li><a href="/en/docs/state-management/update.html">Update</a></li>
+          <li><a href="/en/docs/state-management/view.html">View</a></li>
+          <li class='selected'>Effects</li>
+          <li><a href="/en/docs/state-management/tagged-unions.html">Tagged Unions</a></li>
+          <li><a href="/en/docs/state-management/composition.html">Composition</a></li>
+          <li><a href="/en/docs/state-management/end-program.html">Stop Program</a></li>
         </ul>
+          <h1>Effects</h1>
+          <h2>Launching Effects from an Action</h2>
+          <p>In @composi/core runtime an effect is a function that sends a message. Effects are asynchronous. Effects let you interact with the world outside the runtime. An effect can create a timer, fetch data, persist data, log data, or open a browser alert. The section covering <a href="/en/docs/state-management/init.html" target='__blank'>init</a> explained how to launch an effect at startup by providing init with a second value in its array. Similarly, the section on <a href="/en/docs/state-management/update.html">update</a> showed that an action always returns state surrounded by braces. That's so you can include an optional second value as an effect.</p>
 
-          <h1>Install</h1>
+          <h2>Separate but Equal</h2>
+          <p>Separating effects out into their own actions makes it easier to reason about the actions that deal with state management.</p>
+
+          <p>Below is an example of a runtime program that has two effects but does not return a view. Instead the view returns undefined. This program's init has state and an effect. The effect causes a counter to start at load time. When it reaches five, it triggers another affect to alert the final result. If you open the web inspector console, you'll see the count progress, followed by an alert upon completion.</p>
+
+          <p data-height="600" data-theme-id="6688" data-slug-hash="yRwoZE" data-default-tab="js,result" data-user="rbiggs"
+            data-pen-title="@composi/core + runtime Effects-1" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/yRwoZE/">@composi/core
+              + runtime Effects-1</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+          <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+          <p>When your program is very simple it may not seem like such a big deal to separate effects form the other logic. But as a program becomes more complex, isolating effects from business logic results in code that is easier to reason about.</p>
+        
+
+              
           
-          <p>If you've created a project using <code>create-composi-app</code>, you do not have to install @composi/fragment. It
-            is already installed in the project and ready to import into your code. Read
-            the <a target="_blank" href="/en/docs/create-composi-app/usage.html">documentation for create-composi-app</a> to
-            learn how to get up and running fast.</p>
-
-          <p>To use Fragment, you'll need to import it into your project:</p>
-
-          <pre><code class='language-bash'>import { Fragment } from '@composi/fragment'</code></pre>
-          
-          <p>Follow the link to <a href="/en/docs/fragment/usage.html">Usage</a> to learn how to use Fragment.</p>
-
-
               <p>&nbsp;</p>
       </div>
     </section> 

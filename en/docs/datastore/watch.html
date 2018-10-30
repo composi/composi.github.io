@@ -46,7 +46,7 @@
         <li><a href="/en/docs/datastore/data-store.html">DataStore</a></li>
         <li class='selected'>Watch</li>
         <li><a href="/en/docs/datastore/set-state.html">setState</a></li>
-        <li><a href="/en/docs/datastore/dispatch.html">Dispatch</a></li>
+        <li><a href="/en/docs/datastore/send.html">Send</a></li>
         <li><a href="/en/docs/datastore/unwatch.html">Unwatch</a></li>
         <li><a href="/en/docs/datastore/put-in-localstorage.html">putInLocalStorage</a></li>
         <li><a href="/en/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a></li>
@@ -67,7 +67,7 @@ dataStore.watch('', () => {
   // Do stuff
 })
 </code></pre>
-<p>These would also fire if you dispatched to the event <code>dataStoreStateChanged</code>.</p>
+<p>These would also fire if you sent to the event <code>dataStoreStateChanged</code>.</p>
 
           <pre><code class='language-javascript'>import { DataStore } from  @composi/datastore
 
@@ -116,7 +116,7 @@ dataStore.watch('employee-promoted', data => {
   // Do something here.
 }
 </code></pre>
-          <p>Having watchers with different events is useful for triggering different scenarious. This is possible when using a dataStore <a href='/docs/datastore/dispatch.html'>dispatch</a> method.</p>
+          <p>Having watchers with different events is useful for triggering different scenarious. This is possible when using a dataStore <a href='/docs/datastore/send.html'>send</a> method.</p>
 
           <h2>Updating a Functional Component</h2>
           <p>DataStores provide state management for functional components. Functional components don't have state. They receive their data through props. Instead of manually changing data and then re-rendering the component, you can use a dataStore to do that for you. You simply set up a watcher that will re-render the component every time the dataStore state changes:</p>

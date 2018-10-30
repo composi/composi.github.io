@@ -11,6 +11,8 @@
   <title>Composi - Docs</title>
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
 </head>
 <body class='page'>
   <nav>
@@ -45,7 +47,7 @@
           <li><a href="/en/docs/observer/install.html">Install</a></li>
           <li><a href="/en/docs/observer/observer.html">Observer</a></li>
           <li class='selected'>Watch</li>
-          <li><a href="/en/docs/observer/dispatch.html">Dispatch</a></li>
+          <li><a href="/en/docs/observer/send.html">Send</a></li>
           <li><a href="/en/docs/observer/unwatch.html">Unwatch</a></li>
         </ul>
           <h1>Watch</h1>
@@ -90,7 +92,7 @@ observer.watch('special-event', () => {
 
           <p> </p>
           <h2>Multiple Watchers for Same Event</h2>
-          <p>It is possible to create multiple watchers for the same event. You might need to do this when you have several components that need to react to the same event. When you create multiple watchers on the same event, whenever that event is dispatched, all the watchers will execute.</p>
+          <p>It is possible to create multiple watchers for the same event. You might need to do this when you have several components that need to react to the same event. When you create multiple watchers on the same event, whenever that event is sent, all the watchers will execute.</p>
 
 
 
@@ -107,14 +109,14 @@ observer.watch('special-event', () => {
 console.log('The second watcher just fired!')
 })
 </code></pre>
-          <p>Dispatching 'special-event' with cause both of these watchers to execute.</p>
+          <p>Sending 'special-event' with cause both of these watchers to execute.</p>
 
-          <p>To learn how to dispatch and event to a watcher, read its <a  href='/docs/observer/dispatch.html'>documentation</a>.</p>
+          <p>To learn how to send and event to a watcher, read its <a  href='/docs/observer/send.html'>documentation</a>.</p>
           <p> </p>
 
           <h2>Using Guards</h2>
 
-          <p>Because you can't know if an event will be dispatch with data or not, it's always best to check that the callback did receive some data before trying to use it.</p>
+          <p>Because you can't know if an event will be send with data or not, it's always best to check that the callback did receive some data before trying to use it.</p>
 
           <pre><code class='language-bash'>import { Observer } from '@composi/observer
 
@@ -123,7 +125,7 @@ observer.watch('special-event', data => {
   // Check that data was passed with the event:
   if (data) {
     console.log(`Just received this data: ${data}`)
-  // No event was dispatched, so do something else:
+  // No event was sended, so do something else:
   } else {
     console.log(`The event happened but no data was received.`)
   }
@@ -146,7 +148,7 @@ observer.watch('special-event', data => {
       console.log('Received this array:')
       data.map((item, idx) => console.log(`item ${idx}: ${item}))
     }
-  // No event was dispatched, so do something else:
+  // No event was sent, so do something else:
   } else {
     console.log(`The event happened but no data was received.`)
   }

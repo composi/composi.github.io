@@ -46,7 +46,7 @@
         <li><a href="/en/docs/datastore/data-store.html">DataStore</a></li>
         <li><a href="/en/docs/datastore/watch.html">Watch</a></li>
         <li><a href="/en/docs/datastore/set-state.html">setState</a></li>
-        <li><a href="/en/docs/datastore/dispatch.html">Dispatch</a></li>
+        <li><a href="/en/docs/datastore/send.html">Send</a></li>
         <li class='selected'>Unwatch</li>
         <li><a href="/en/docs/datastore/put-in-localstorage.html">putInLocalStorage</a></li>
         <li><a href="/en/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a></li>
@@ -61,8 +61,8 @@
 })
 // Sometime later:
 dataStore.unwatch('temp-event')
-// Now if you dispatch that event, nothing will happen:
-dataStore.dispatch('temp-event')</code></pre>
+// Now if you send that event, nothing will happen:
+dataStore.send('temp-event')</code></pre>
 
 
 

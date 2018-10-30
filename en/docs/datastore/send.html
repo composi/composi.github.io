@@ -11,8 +11,6 @@
   <title>Composi - Docs</title>
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/prism.css">
-  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
-  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
 </head>
 <body class='page'>
   <nav>
@@ -42,25 +40,41 @@
   <article class='article'>
     <section>
       <div class='docs'>
-        <h3>@composi/fragment:</h3>
+        <h3>@composi/datastore:</h3>
         <ul class='breadcrumb'>
-          <li class='selected'>Install</li>
-          <li><a href="/en/docs/fragment/usage.html">Usage</a></li>
+        <li><a href="/en/docs/datastore/install.html">Install</a></li>
+        <li><a href="/en/docs/datastore/data-store.html">DataStore</a></li>
+        <li><a href="/en/docs/datastore/watch.html">Watch</a></li>
+        <li><a href="/en/docs/datastore/set-state.html">setState</a></li>
+        <li class='selected'>Send</li>
+        <li><a href="/en/docs/datastore/unwatch.html">Unwatch</a></li>
+        <li><a href="/en/docs/datastore/put-in-localstorage.html">putInLocalStorage</a></li>
+        <li><a href="/en/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a></li>
         </ul>
+          <h1>send</h1>
+          <h2>Send Events</h2>
+          <p>You can send an event that a dataStore is watching. The <code>send</code> method can take two arguments: the event and some optional data to pass with it.</p>
 
-          <h1>Install</h1>
-          
-          <p>If you've created a project using <code>create-composi-app</code>, you do not have to install @composi/fragment. It
-            is already installed in the project and ready to import into your code. Read
-            the <a target="_blank" href="/en/docs/create-composi-app/usage.html">documentation for create-composi-app</a> to
-            learn how to get up and running fast.</p>
 
-          <p>To use Fragment, you'll need to import it into your project:</p>
+<pre><code class='language-javascript'>dataStore.watch('uh-oh', data => {
+  console.log('Just received some data.')
+  console.log(data)
+})
 
-          <pre><code class='language-bash'>import { Fragment } from '@composi/fragment'</code></pre>
-          
-          <p>Follow the link to <a href="/en/docs/fragment/usage.html">Usage</a> to learn how to use Fragment.</p>
+// Sometme later send the event:
+dataStore.send('uh-oh', 'Woohoo!')</code></pre>
+          <p>As mentioned above, you can send and event with data, and for that matter, you can have an event that doesn't expect any data either:</p>
 
+<pre><code class='language-javascript'>dataStore.watch('uh-oh', () => {
+  console.log('Looks like something happened.')
+})
+
+// Sometme later send the event:
+dataStore.send('uh-oh')</code></pre>
+
+          <p> </p>
+          <h2>Observer</h2>
+          <p>Send is a convenient feature of dataStores, but in many cases it may be more efficient to just use an observer to watch for the event and deal with it. That's because all dataStore watchers are run whenever the dataStore state changes, not just when you send the event. This could lead to some rather convoluted behaviors where having a separate dedicated observer might be more simple and efficient. Please check out the documentation for <a href='/docs/observer/install.html'>@composi/observer</a> to learn how to use it.</p>
 
               <p>&nbsp;</p>
       </div>

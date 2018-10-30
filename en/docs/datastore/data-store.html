@@ -46,7 +46,7 @@
         <li class='selected'>DataStore</li>
         <li><a href="/en/docs/datastore/watch.html">Watch</a></li>
         <li><a href="/en/docs/datastore/set-state.html">setState</a></li>
-        <li><a href="/en/docs/datastore/dispatch.html">Dispatch</a></li>
+        <li><a href="/en/docs/datastore/send.html">Send</a></li>
         <li><a href="/en/docs/datastore/unwatch.html">Unwatch</a></li>
         <li><a href="/en/docs/datastore/put-in-localstorage.html">putInLocalStorage</a></li>
         <li><a href="/en/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a></li>
@@ -88,9 +88,9 @@ const dataStore = new DataStore({name: 'Sarah'})
   return prevState
 })</code></pre>
           <p> </p>
-          <h2>dispatch</h2>
-          <p>dataStores are not just passive watchers. You can have the dataStore dispatch an event and arbitrary data for that event to use.</p>
-          <pre><code class='language-javascript'>dataStore.dispatch('update-component', {name: 'Jeffrey'})</code></pre>
+          <h2>send</h2>
+          <p>dataStores are not just passive watchers. You can have the dataStore send an event and arbitrary data for that event to use.</p>
+          <pre><code class='language-javascript'>dataStore.send('update-component', {name: 'Jeffrey'})</code></pre>
           <p> </p>
           <h2>unwatch</h2>
           <p>Sometimes you may want a temporary watcher that you can dispose of latter. You can do this using the dataStore <code>unwatch</code> method. This takes one arguemtn: the event to unwatch. After unwatching an event, any watchers expecting that event will no longer work.</p>
@@ -98,7 +98,7 @@ const dataStore = new DataStore({name: 'Sarah'})
 
           <p> </p>
           <h2>Data Persistence</h2>
-          <p>DataStore has no builtin means of persistence. To do so the best way is to create an observe to watch for a special persist event. When you dispatch that even, the observer will persist you dataStore(s). To learn how to use observer, read the documentation for <a href='/docs/observer/install.html'>@composi/observer</a>.</p>
+          <p>DataStore has no builtin means of persistence. To do so the best way is to create an observe to watch for a special persist event. When you send that event, the observer will persist you dataStore(s). To learn how to use observer, read the documentation for <a href='/docs/observer/install.html'>@composi/observer</a>.</p>
 
           <h2>Versioning</h2>
           <p>When you create a dataStore, it has a version of 1. You can increase the version with the <code>bumpVersion</code> method:</p>
@@ -134,7 +134,7 @@ if ((currentTime - timestamp) / day > 30) {
 
           <p> </p>
           <h2>Summary</h2>
-          <p>If you are already familiar with <a href='/docs/observer/install.html'>@composi/observer</a>, you might have noticed that DataStore shares many features: watch, dispatch and unwatch. That's because internally DataStore uses an observer to watch for changes and react to those when the occur, as well as the ability to dispatch and unwatch its events. Although these features in dataStores make them more versatile, there may be situations where it makes more sense to use an observer in conjunction with a dataStore. That's because of their differences. A dataStore can register events and watch them. And you can dispatch to a particular dataStore event to trigger it. But whenever the dataStore's state changes, ALL of its events are executed. In contrast, with a dedicated observer, you can also register as many custom events as you need. For observers, when you dispatch to an event, only that one will fire.</p>
+          <p>If you are already familiar with <a href='/docs/observer/install.html'>@composi/observer</a>, you might have noticed that DataStore shares many features: watch, send and unwatch. That's because internally DataStore uses an observer to watch for changes and react to those when the occur, as well as the ability to send and unwatch its events. Although these features in dataStores make them more versatile, there may be situations where it makes more sense to use an observer in conjunction with a dataStore. That's because of their differences. A dataStore can register events and watch them. And you can send to a particular dataStore event to trigger it. But whenever the dataStore's state changes, ALL of its events are executed. In contrast, with a dedicated observer, you can also register as many custom events as you need. For observers, when you send to an event, only that one will fire.</p>
           <p>Although dataStore provides a way to persist its state in localStorage, this may be inadequate for your needs. If that's the case, consider using <a target='__blank' href="/en/docs/idb/idb.html">@composi/idb</a>. This is a promise-base wrapper for IndexedDB with a simple interface like localStorage.</p>
 
 

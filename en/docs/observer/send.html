@@ -11,6 +11,8 @@
   <title>Composi - Docs</title>
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
 </head>
 <body class='page'>
   <nav>
@@ -40,41 +42,54 @@
   <article class='article'>
     <section>
       <div class='docs'>
-        <h3>@composi/datastore:</h3>
+        <h3>@composi/observer:</h3>
         <ul class='breadcrumb'>
-        <li><a href="/en/docs/datastore/install.html">Install</a></li>
-        <li><a href="/en/docs/datastore/data-store.html">DataStore</a></li>
-        <li><a href="/en/docs/datastore/watch.html">Watch</a></li>
-        <li><a href="/en/docs/datastore/set-state.html">setState</a></li>
-        <li class='selected'>Dispatch</li>
-        <li><a href="/en/docs/datastore/unwatch.html">Unwatch</a></li>
-        <li><a href="/en/docs/datastore/put-in-localstorage.html">putInLocalStorage</a></li>
-        <li><a href="/en/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a></li>
+          <li><a href="/en/docs/observer/install.html">Install</a></li>
+          <li><a href="/en/docs/observer/observer.html">Observer</a></li>
+          <li><a href="/en/docs/observer/watch.html">Watch</a></li>
+          <li class='selected'>Send</li>
+          <li><a href="/en/docs/observer/unwatch.html">Unwatch</a></li>
         </ul>
-          <h1>dispatch</h1>
-          <h2>Dispatch Events</h2>
-          <p>You can dispatch an event that a dataStore is watching. The <code>dispatch</code> method can take two arguments: the event and some optional data to pass with it.</p>
+          <h1>Send</h1>
+          <p>An observing watcher is useless if it never receives an event. To send a watch and event you need to use the observer <code>watch</code> method. This takes two arguments: the event to send and some optional data to send along with the event.</p>
 
+          <h2>Send With Data</h2>
+          <p> </p>
 
-<pre><code class='language-javascript'>dataStore.watch('uh-oh', data => {
-  console.log('Just received some data.')
-  console.log(data)
+          <pre><code class='language-bash'>import { Observer } from '@composi/observer'
+
+const observer = new Observer()
+observer.watch('whatever', data => {
+  console.log('Whatever just happened.')
+  console.log(`Received this data: ${data})
 })
 
-// Sometme later dispatch the event:
-dataStore.dispatch('uh-oh', 'Woohoo!')</code></pre>
-          <p>As mentioned above, you can dispatch and event with data, and for that matter, you can have an event that doesn't expect any data either:</p>
-
-<pre><code class='language-javascript'>dataStore.watch('uh-oh', () => {
-  console.log('Looks like something happened.')
-})
-
-// Sometme later dispatch the event:
-dataStore.dispatch('uh-oh')</code></pre>
+// Sometime later:
+observer.send('whatever', 'This is whatever')
+</code></pre>
 
           <p> </p>
-          <h2>Observer</h2>
-          <p>Dispatch is a convenient feature of dataStores, but in many cases it may be more efficient to just use an observer to watch for the event and deal with it. That's because all dataStore watchers are run whenever the dataStore state changes, not just when you dispatch the event. This could lead to some rather convoluted behaviors where having a separate dedicated observer might be more simple and efficient. Please check out the documentation for <a href='/docs/observer/install.html'>@composi/observer</a> to learn how to use it.</p>
+          <h2>Send without Data</h2>
+          <p>You can send an event without data. You might do so because the watcher isn't expecting data. Or you've set up the watcher to handle different situations depending on if data is sent or not.</p>
+          <p> </p>
+
+
+          <pre><code class='language-bash'>import { Observer } from '@composi/observer'
+
+const observer = new Observer()
+observer.watch('whatever', data => {
+  console.log('Whatever just happened.')
+  if (data) {
+    console.log(`Received this data: ${data})
+  }
+})
+
+// Sometime later:
+observer.send('whatever')
+</code></pre>
+
+<pre><code class='language-bash'>npm install --save-dev @composi/core</code></pre>
+
 
               <p>&nbsp;</p>
       </div>

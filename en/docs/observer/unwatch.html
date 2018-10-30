@@ -11,6 +11,8 @@
   <title>Composi - Docs</title>
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
 </head>
 <body class='page'>
   <nav>
@@ -45,7 +47,7 @@
           <li><a href="/en/docs/observer/install.html">Install</a></li>
           <li><a href="/en/docs/observer/observer.html">Observer</a></li>
           <li><a href="/en/docs/observer/watch.html">Watch</a></li>
-          <li><a href="/en/docs/observer/dispatch.html">Dispatch</a></li>
+          <li><a href="/en/docs/observer/send.html">Send</a></li>
           <li class='selected'>Unwatch</li>
         </ul>
           <h1>Unwatch</h1>
@@ -58,14 +60,14 @@ observer.watch('whatever', () => {
   alert('Whatever just happened!')
 })
 
-// Sometime later dispatch the event:
-observer.dispatch('whatever')
+// Sometime later send the event:
+observer.send('whatever')
 // alert: 'Whatever just happened!'
 
 // Sometime later unwatch the event:
 observer.unwatch('whatever')
-// Dispatching the event now does nothing:
-observer.dispatch('whatever')
+// Sending the event now does nothing:
+observer.send('whatever')
           </code></pre>
 
           <p>If you need to revive an unwatched event, you can do so by initalizing a watcher for it later.</p>

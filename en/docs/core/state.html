@@ -12,6 +12,8 @@
   <title>Composi - Docs</title>
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
 </head>
 
 <body class='page'>
@@ -53,51 +55,16 @@
         <li class='selected'>State</li>
         </ul>
         <h1>State</h1>
-        <h2>State for Functional Components</h2>
-        <p>Functional components are stateless. You pass data to them as a prop and that gets used during the render. This means that if you pass the same data to a functional component, it will render the exact same way each time. This makes rendering predictable and easier to troubleshoot.</p>
-
-        <p>You can provide state management for functional components with @composi/datastore. If you've created a project with <a href="">@composi/create-composi-app</a>, you can import @composi/datastore into your project to use it.</p>
-<pre><code class='language-bash'>import { h, render } from '@composi/core
-import { DataStore } from '@composi/core'
-</code></pre>
-
-
-<p>After importing DataStore, you can create a dataStore. You do this by providing it some data. This will be an object literal with one property: <code>state</code>. Your data will be the value of the dataStore's state. The state can be a simple value or an array or object. You will then use the dataStore as the ultimate source of truth for the functional component's state. DataStores are reactive. They have an internal observer that watches for changes and then fires an event. You can define a watcher on the dataStore with an appropriately named event and have it re-render the functional component. Then, when you need to update state, you use the setState method on the dataStore to do so. This causes the watcher to react to the state changes and re-render the functional component. Job done.</p>
-
-<pre><code class="language-javascript">// Create a new dataStore:
-const dataStore = new DataStore({
-  name: 'Joe'
-})
-// Create a watcher to react to changes in the dataStore's state:
-dataStore.watch('update-occurred', () => {
-  // Re-render the component when changes occur:
-  render(<MyComponent data={dataStore.state}/>, 'section')
-})
-</code></pre>
-
-
-    <p>Here is an example of a component whose state is managed by a dataStore:</p>
-
-<p data-height="500" data-theme-id="6688" data-slug-hash="mzwmwy" data-default-tab="js,result" data-user="rbiggs"
-  data-pen-title="@composi/core  with DataStore" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/mzwmwy/">@composi/core
-    with DataStore</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-
-        <a name='debounce-renders'></a>
-        <p>To learn more about how to use DataStore, read its <a href='/en/docs/datastore/install.html'>documentation</a>.</p>
-    <h2>Debouncing Renders</h2>
-    <p>If you've got something that produces a lot of data changes in rapid succesion, you may mind the rendering looking chopping. If that's the case you may want to debounce the render. You can do that with <code>requestAnimationFrame</code>:</p>
-<pre><code class="language-javascript">dataStore.watch('anim-update', () => {
-  requestAnimationFrame(() => {
-    render(&lt;MyAnimation data={dataStore.state}/>, '#animationDiv')
-  })
-})
-</code></pre>
-      <p>Using <code>requestAnimationFrame</code> to control how often render occurs can help reduce jankiness when may changes are happening in rapid succesion. This means any type of event or action that can trigger many data updates. Below is an example of a dataStore producing many rapid updates by the movement of the mourse cursor or touch and using <code>requestAnimationFrame</code> to debounce the updates. Scroll down in the code to the Tree component and look for the <code>move</code> function to see how we debouce the render:</p>
-      <p data-height="500" data-theme-id="6688" data-slug-hash="vVEWQa" data-default-tab="js,result" data-user="rbiggs"
-        data-pen-title="@composi/core Pythagoras Dancing Tree" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/vVEWQa/">@composi/core
-          Pythagoras Dancing Tree</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
-      <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+        <h2>State Management for Functional Components</h2>
+        <p>Class components enable local state. However, @composi/core is a functional libray. By their very nature, functional components are stateless. You will certainly find yourself needing local state for your components. @composi/core provides a means of state management for functional components through its runtime. This is a simplified implementation of <code>TEA</code>: <a target='__blank' href='https://guide.elm-lang.org/architecture/'>The Elm Architecture</a>.</p>
+        <h2>SVU</h2>
+        <p>Every runtime program breaks its functionality down to three parts:</p>
+        <ul class='main-menu'>
+          <li>State: any valid JavaScript type</li>
+          <li>View: the visual rendering of the program's state</li>
+          <li>Update: actions that return a new version of state</li>
+        </ul>
+        <p>Because state management is a complex subject and the runtime provides many features, we have a dedicated section for it: <a target='__blank'  href="/en/docs/state-management/runtime.html">Runtime</a></p>
         <p>&nbsp;</p>
 
       </div>

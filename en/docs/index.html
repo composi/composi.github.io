@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
 </head>
 
 <body class='page'>
@@ -42,111 +44,123 @@
     </ul>
   </nav>
   <article class='article'>
-    <section>
-      <div class='docs'>
-        <h1>Composi Documentation</h1>
-
-        <ul class='main-menu'>
-          <li>CLI:
-            <ul>
-              <li><a href="/en/docs/create-composi-app/create-composi-app.html">create-composi-app</a></li>
-              <li><a href="/en/docs/create-composi-app/install.html">Install</a></li>
-              <li><a href="/en/docs/create-composi-app/usage.html">Usage</a></li>
-            </ul>
-          </li>
-          <li>Core:
-            <ul>
-              <li><a href="/en/docs/core/install.html">Install</a></li>
-              <li><a href="/en/docs/core/render.html">Render</a></li>
-              <li><a href="/en/docs/core/props.html">Props</a></li>
-              <li><a href="/en/docs/core/events.html">Events</a></li>
-              <li><a href="/en/docs/core/lifecycle.html">Lifecycle</a></li>
-              <li><a href="/en/docs/core/hydrate.html">Hydration</a></li>
-              <li><a href="/en/docs/core/state.html">State</a></li>
-            </ul>
-          </li>
-          <li>Fragment:
-            <ul>
-              <li><a href="/en/docs/fragment/install.html">Install</a></li>
-              <li><a href="/en/docs/fragment/usage.html">Usage</a></li>
-            </ul>
-          </li>
-          <li>DataStore:
-            <ul>
-              <li><a href="/en/docs/datastore/install.html">Install</a></li>
-              <li><a href="/en/docs/datastore/data-store.html">DataStore</a></li>
-              <li><a href="/en/docs/datastore/watch.html">Watch</a></li>
-              <li><a href="/en/docs/datastore/set-state.html">setState</a></li>
-              <li><a href="/en/docs/datastore/dispatch.html">Dispatch</a></li>
-              <li><a href="/en/docs/datastore/unwatch.html">Unwatch</a></li>
-              <li><a href="/en/docs/datastore/put-in-localstorage.html">putInLocalStorage</a></li>
-              <li><a href="/en/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a></li>
-            </ul>
-          </li>
-          <li>IDB (IndexedDB):
-            <ul>
-              <li><a href="/en/docs/idb/install.html">Install</a></li>
-              <li><a href="/en/docs/idb/idb.html">IDB</a></li>
-              <li><a href="/en/docs/idb/usage.html">Usage</a></li>
-            </ul>
-          </li>
-          <li>Observer:
-            <ul>
-              <li><a href="/en/docs/observer/install.html">Install</a></li>
-              <li><a href="/en/docs/observer/observer.html">Observer</a></li>
-              <li><a href="/en/docs/observer/watch.html">Watch</a></li>
-              <li><a href="/en/docs/observer/dispatch.html">Dispatch</a></li>
-              <li><a href="/en/docs/observer/unwatch.html">Unwatch</a></li>
-            </ul>
-          </li>
-          
-          <!--
-          <li><a href="/en/docs/datastore-component/index.html">DataStore-Component</a>: DataStore Component for state management
-            <ul>
-              <li><a href="/en/docs/datastore-component/install.html">Install</a></li>
-              <li><a href="/en/docs/datastore-component/create.html">Create dataStore component</a></li>
-              <li><a href="/en/docs/datastore-component/setstate.html">Manage dataStore component state though its dataStore object.</a></li>
-            </ul>
-          </li>
-          <li><a href="/en/docs/styler/index.html">Styler</a>: For styled components
-            <ul>
-              <li><a href="/en/docs/styler/install.html">Install</a></li>
-              <li><a href="/en/docs/styler/create.html">Create styled components</a></li>
-            </ul>
-          </li>
-          <li><a href="/en/docs/normalized-events/index.html">Normalized Events</a>: Use same events on desktop and mobile
-            <ul>
-              <li><a href="/en/docs/normalized-events/install.html">Install</a></li>
-              <li><a href="/en/docs/normalized-events/eventstart.html">eventstart</a></li>
-              <li><a href="/en/docs/normalized-events/eventend.html">eventend</a></li>
-              <li><a href="/en/docs/normalized-events/eventmove.html">eventmove</a></li>
-              <li><a href="/en/docs/normalized-events/eventcancel.html">eventcancel</a></li>
-            </ul>
-          </li>
-          <li><a href="/en/docs/gestures/index.html">Gestures</a>: Gestures for desktop and mobile
-            <ul>
-              <li><a href="/en/docs/gestures/install.html">Install</a></li>
-              <li><a href="/en/docs/gestures/tap.html">tap</a></li>
-              <li><a href="/en/docs/gestures/dbltap.html">dbltap</a></li>
-              <li><a href="/en/docs/gestures/longtap.html">longtap</a></li>
-              <li><a href="/en/docs/gestures/swipeleft.html">swipeleft</a></li>
-              <li><a href="/en/docs/gestures/swiperight.html">swiperight</a></li>
-              <li><a href="/en/docs/gestures/swipeup.html">swipeup</a></li>
-              <li><a href="/en/docs/gestures/swipedown.html">swipedown</a></li>
-              <li><a href="/en/docs/gestures/swipe.html">swipe</a></li>
-            </ul>
-          </li>
-          <li><a href="/en/docs/utilities/index.html">Utilities</a>: Assorted utilities for use with Composi
-            <ul>
-              <li><a href="/en/docs/utilities/get-type.html">getType</a></li>
-              <li><a href="/en/docs/utilities/merge-objects.html">merge</a></li>
-              <li><a href="/en/docs/utilities/uuid.html">uuid</a></li>
-            </ul>
-          </li>
-          -->
+    <section class='for-grid'>
+      <h1 class='documentation-header'>Documentation</h1>
+      <div class='docs menu-grid'>
+        <div>
+          <h3>Guielines</h3>
+          <ul>
+            <li><a href="/en/docs/guidelines/index.html">Getting Started</a></li>
+          </ul>
+          <h3>CLI</h3>
+          <ul>
+            <li><a href="/en/docs/create-composi-app/create-composi-app.html">create-composi-app</a></li>
+            <li><a href="/en/docs/create-composi-app/install.html">Install</a></li>
+            <li><a href="/en/docs/create-composi-app/usage.html">Usage</a></li>
+          </ul>
+          <h3>Core</h3>
+          <ul>
+            <li><a href="/en/docs/core/install.html">Install</a></li>
+            <li><a href="/en/docs/core/render.html">Render</a></li>
+            <li><a href="/en/docs/core/props.html">Props</a></li>
+            <a name="fragment"></a>
+            <li><a href="/en/docs/core/events.html">Events</a></li>
+            <li><a href="/en/docs/core/lifecycle.html">Lifecycle</a></li>
+            <li><a href="/en/docs/core/hydrate.html">Hydration</a></li>
+            <a name="datastore"></a>
+            <li><a href="/en/docs/core/state.html">State</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Runtime</h3>
+          <ul>
+            <li><a href="/en/docs/state-management/runtime.html">Runtime</a></li>
+            <li><a href="/en/docs/state-management/init.html">Init</a></li>
+            <li><a href="/en/docs/state-management/update.html">Update</a></li>
+            <li><a href="/en/docs/state-management/view.html">View</a></li>
+            <li><a href="/en/docs/state-management/effects.html">Effects</a></li>
+            <li><a href="/en/docs/state-management/tagged-unions.html">Tagged Unions</a></li>
+            <li><a href="/en/docs/state-management/composition.html">Composition</a></li>
+            <li><a href="/en/docs/state-management/end-program.html">Stop Program</a></li>
+          </ul>
+          <h3>IndexedDB</h3>
+          <ul>
+            <li><a href="/en/docs/idb/install.html">Install</a></li>
+            <li><a href="/en/docs/idb/idb.html">IDB</a></li>
+            <li><a href="/en/docs/idb/usage.html">Usage</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>DataStore</h3>
+        <ul>
+          <li><a href="/en/docs/datastore/install.html">Install</a></li>
+          <li><a href="/en/docs/datastore/data-store.html">DataStore</a></li>
+          <li><a href="/en/docs/datastore/watch.html">Watch</a></li>
+          <li><a href="/en/docs/datastore/set-state.html">setState</a></li>
+          <li><a href="/en/docs/datastore/send.html">Send</a></li>
+          <li><a href="/en/docs/datastore/unwatch.html">Unwatch</a></li>
+          <li><a href="/en/docs/datastore/put-in-localstorage.html">putInLocalStorage</a></li>
+          <li><a href="/en/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a></li>
         </ul>
-        
-        <p>&nbsp;</p>
+          <h3>Observer</h3>
+          <ul>
+            <li><a href="/en/docs/observer/install.html">Install</a></li>
+            <li><a href="/en/docs/observer/observer.html">Observer</a></li>
+            <li><a href="/en/docs/observer/watch.html">Watch</a></li>
+            <li><a href="/en/docs/observer/send.html">Send</a></li>
+            <li><a href="/en/docs/observer/unwatch.html">Unwatch</a></li>
+          </ul>
+        </div>
+        <div>
+          <!--<h3>Router</h3>
+          <ul>
+            <li><a href="/en/docs/router/install.html">Install</a></li>
+            <li><a href="/en/docs/router/router.html">Router</a></li>
+            <li><a href="/en/docs/router/usage.html">Usage</a></li>
+          </ul>-->
+          <h3>Fragment</h3>
+          <ul>
+            <li><a href="/en/docs/fragment/install.html">Install</a></li>
+            <li><a href="/en/docs/fragment/usage.html">Usage</a></li>
+          </ul>
+          <h3>Styled Components</h3>
+          <ul>
+            <li><a href="/en/docs/styler/install.html">Install</a></li>
+            <li><a href="/en/docs/styler/styler.html">Styler</a></li>
+            <li><a href="/en/docs/styler/usage.html">Usage</a></li>
+          </ul>
+        </div>
+        <!--
+        <div>Normalized Events</a>: Use same events on desktop and mobile
+          <ul>
+            <li><a href="/en/docs/normalized-events/install.html">Install</a></li>
+            <li><a href="/en/docs/normalized-events/eventstart.html">eventstart</a></li>
+            <li><a href="/en/docs/normalized-events/eventend.html">eventend</a></li>
+            <li><a href="/en/docs/normalized-events/eventmove.html">eventmove</a></li>
+            <li><a href="/en/docs/normalized-events/eventcancel.html">eventcancel</a></li>
+          </ul>
+        </div>
+        <li><a href="/en/docs/gestures/index.html">Gestures</a>: Gestures for desktop and mobile
+          <ul>
+            <li><a href="/en/docs/gestures/install.html">Install</a></li>
+            <li><a href="/en/docs/gestures/tap.html">tap</a></li>
+            <li><a href="/en/docs/gestures/dbltap.html">dbltap</a></li>
+            <li><a href="/en/docs/gestures/longtap.html">longtap</a></li>
+            <li><a href="/en/docs/gestures/swipeleft.html">swipeleft</a></li>
+            <li><a href="/en/docs/gestures/swiperight.html">swiperight</a></li>
+            <li><a href="/en/docs/gestures/swipeup.html">swipeup</a></li>
+            <li><a href="/en/docs/gestures/swipedown.html">swipedown</a></li>
+            <li><a href="/en/docs/gestures/swipe.html">swipe</a></li>
+          </ul>
+        </div>
+        <div><a href="/en/docs/utilities/index.html">Utilities</a>: Assorted utilities for use with Composi
+          <ul>
+            <li><a href="/en/docs/utilities/get-type.html">getType</a></li>
+            <li><a href="/en/docs/utilities/merge-objects.html">merge</a></li>
+            <li><a href="/en/docs/utilities/uuid.html">uuid</a></li>
+          </ul>
+        </div>
+        -->
       </div>
     </section>
   </article>
@@ -166,8 +180,8 @@
     </section>
   </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script>
@@ -175,4 +189,5 @@
   </script>
 
 </body>
+
 </html>

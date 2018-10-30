@@ -830,6 +830,24 @@ th + th, td + td {
 .main-menu ul {
   margin-left: 2rem;
 }
+h1.documentation-header {
+  margin: 0 0 20px 0;
+}
+.menu-grid {
+  width: 100%;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr) ) 
+}
+.menu-grid ul {
+  margin: 10px;
+}
+.menu-grid h3 {
+  font-size: 14pt;
+}
+article > section.for-grid {
+  flex-direction: column;
+}
 
 /* Media Queries */
 

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Docs</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/runtime:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/en/docs/state-management/runtime.html">Runtime</a></li>
+          <li><a href="/en/docs/state-management/init.html">Init</a></li>
+          <li class='selected'>Update</li>
+          <li><a href="/en/docs/state-management/view.html">View</a></li>
+          <li><a href="/en/docs/state-management/effects.html">Effects</a></li>
+          <li><a href="/en/docs/state-management/tagged-unions.html">Tagged Unions</a></li>
+          <li><a href="/en/docs/state-management/composition.html">Composition</a></li>
+          <li><a href="/en/docs/state-management/end-program.html">Stop Program</a></li>
+        </ul>
+          <h1>Update</h1>
+          <h2>Program Business Logic</h2>
+          <p>A program's update method hold all its business logic. The update function listens for messages, when it receives one, it can check it to see which message it is and then run an appropriate action. By defining different actions, you instruct update how to handle them.</p>
+          <p>Update gets two arguments: message and state. Message is any message sent by a user interaction with the view. The second argument is the current state of the program. If the program is complex, it will probably require a number of messages being sent to update. Since send can only handle one argument, it's convention to bundle everything up in an object literal with a type and data payload. Notice how we do this in the following snippet.</p>
+          <pre><code class='language-javascript'>&lt;p class='list-form'>
+  &lt;input autofocusonchange={getInputValue} type="text" />
+  &lt;button class='add-item' onclick={()=> send({type: 'add-item', data: inputValue})}>Add&lt;/button>
+&lt;/p>
+</code></pre>
+          <p>Knowing that the view will send an object with a type property for the message, we can set up the update function to test the message for various types. Notice how we create an actions object to to do this:</p>
+<pre><code class="language-javascript">/ Business Logic.
+// Intercept actions sent by view.
+// Use those actions to transform state.
+// Then return the new state.
+// That will cause the view to update.
+function actions(msg, state) {
+  switch (msg.type) {
+    case 'add-item':
+      const value = msg.inputValue
+      if (value) {
+        state.fruits.push({ key: state.newKey++, value })
+        return [state]
+      } else {
+        alert('Please provide a value!')
+        return [state]
+      }
+      break
+    case 'delete-item': 
+      state.fruits = state.fruits.filter(item => item.key != msg.key)
+      return [state]
+      break
+  }
+}</code></pre>
+          <p>Note that no matter what decision we make with an action, we always return state. Every action must return state. Even if you make no changes to state, you have to return it. Failing to do so will generate an error. This is because actions pass state to the view to render, so not returning state will cause the view to fail because it never received state.</p>
+          <p>Just because you always return state, even when it doesn't change, doesn't mean that you cause unnecessary renders of the view. In fact, @composi/core's render function checks the state and component props early on and bails if they are identical.</p>
+
+          <h2>About Redux</h2>
+          <p>If you're familiar with Redux, you might notice some similarities with how update actions work. That's because Redux was inspired by the Elm architecture. The difference is in the detials. The messages sent by the view resemble Redux actions, and the update actions look like Redux reducers. They are similar, but different. Redux reducers are so called because they take the state, perform any number of operations and then return the new state. Runtime actions, on the other hand, can also just return the new state, or they can also fire off an effect. Because they can do more than one thing, they cannot be called reducers. Even so, in the vast majority of cases they will act just like Redux reducers. That's the most common use case.</p>
+
+          <p>Below is a working example of a program where the view sends several different messages to update, which examines them to see which type they are to preform the appropriate action. Examine it carefully to see how messages bundle up data to send to actions, which then update the state, causing the view to update. We've use a number of lifecycle event on the function component elements to handle things like input focus, input value, etc. We use an <code>onchange</code> event to get the value of the input so we can send it in a message to update.</p>
+          <p data-height="600" data-theme-id="6688" data-slug-hash="gBZEQp" data-default-tab="js,result" data-user="rbiggs"
+            data-pen-title="@composi/core + runtime" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/gBZEQp/">@composi/core
+              + runtime</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+          <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+              <p> </p> 
+              <h2>Alternative Approach</h2>
+              <p>There is another way to send messages and capture them using a tagged union. @composi/core enables this through its <code>union</code> function. This basically creates a tuple of string values for function names and the actions to be used in update. This may sound complicated, but it's actually quite simple and results in cleaner and easier to read code. Go here to learn how to use <a target='__blank' href="/en/docs/state-management/tagged-unions.html">tagged unions with update.</a></p>
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a> and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>
