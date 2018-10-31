@@ -76,7 +76,7 @@ idb.set('name', 'Joe')
 
           <p> </p>
           <h3>Handle Failure</h3>
-          <p>If <code>get</code> failes to return a value, probably because the key does not exist, it returns <code>undefined</code>. Because it returns something, you can't use a <code>catch</code> function to deal with this. Instead you'll need to use a condition check see if you received anything, and if not, do something else. In the following example, notice how we first use an <code>if</code> statement to see if we got something, and then deal with a failed get in the <code>else</code> statement.</p>
+          <p>If <code>get</code> failes to return a value, probably because the key does not exist, it returns <code>undefined</code>. Because it returns something, you can't use a <code>catch</code> function to deal with this. Instead you'll need to use a conditional check see if you received anything, and if not, do something else. In the following example, notice how we first use an <code>if</code> statement to see if we got something, and then deal with a failed get in the <code>else</code> statement.</p>
 <pre><code class="language-javascript">idb.get('users').then(users => {
   // Expecting an array of users:
   if (users && users.length) {
