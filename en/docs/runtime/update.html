@@ -101,6 +101,7 @@ import { mergeObjects } from '@composi/merge-objects'
 // With mergeObjects imported, you can use it to clone program state.
 </code></pre>
 
+          <p> </p> 
           <h2>About Redux</h2>
           <p>If you're familiar with Redux, you might notice some similarities with how update actions work. That's because Redux was inspired by the Elm architecture. The difference is in the detials. The messages sent by the view resemble Redux actions, and the update actions look like Redux reducers. They are similar, but different. Redux reducers are so called because they take the state, perform any number of operations and then return the new state. Runtime actions, on the other hand, can also just return the new state, or they can also fire off an effect. Because they can do more than one thing, they cannot be called reducers. Even so, in the vast majority of cases they will act just like Redux reducers. That's the most common use case.</p>
 
