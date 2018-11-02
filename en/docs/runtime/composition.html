@@ -59,12 +59,12 @@
           
           <p>You may also want to use a small, separate runtime app inside another one. This is possible, though a bit verbose. The main thing to be aware of when doing this is that the @composi/core render function can only process markup. That means that the child program's view cannot render the component, it has to just return its markup. That way the parent component's view will handle rendering the child's view. Notice how we do this in the following example:</p>
 
-          <p data-height="600" data-theme-id="6688" data-slug-hash="XxGPwO" data-default-tab="js,result" data-user="rbiggs"
-            data-pen-title="@composi/core + runtime Composition" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/XxGPwO/">@composi/core
-              + runtime Composition</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+          <p data-height="600" data-theme-id="6688" data-slug-hash="qQWJPY" data-default-tab="js,result" data-user="rbiggs"
+            data-pen-title="@composi/core + runtime Composition1a" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/qQWJPY/">@composi/core
+              + runtime Composition1a</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
           <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-          <p>This is a bit convoluted because of the parent's need to hijack the child's effect. There is a way to make this cleaner, using <code>mapEffect</code>.</p>
 
+          <p> </p>
           <h2>Mapping Effects</h2>
 
           <p>The runtime provides a special function <code>mapEffect</code> for use with runtime program composition. It makes it easier for a parent program to use the effect of a child. You do need to import it into your project:</p>
@@ -72,27 +72,27 @@
 
             <p>Here's our previous example redone using <code>mapEffect</code>. Notice how much cleaner and easier to read it is.</p>
             
-            <p data-height="600" data-theme-id="6688" data-slug-hash="XxGPwO" data-default-tab="js,result" data-user="rbiggs"
-              data-pen-title="@composi/core + runtime Composition1" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/XxGPwO/">@composi/core
-                + runtime Composition1</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+            <p data-height="600" data-theme-id="6688" data-slug-hash="yQBRwX" data-default-tab="js,result" data-user="rbiggs"
+              data-pen-title="@composi/core + runtime Composition2a" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/yQBRwX/">@composi/core
+                + runtime Composition2a</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
             <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
             
             <p> </p>
             <h2>Parent to Child Communication</h2>
             <p>We can use similar techniques to have the parent change the default state of a child program. The following example shows how we do that with a simple effect that gets passed to the child. Notice that the counter program has its state set to 22. But the parent overrides that value to 123.</p>
 
-            <p data-height="600" data-theme-id="6688" data-slug-hash="rqRbRq" data-default-tab="js,result" data-user="rbiggs"
-              data-pen-title="@composi/core + runtime Composition3" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/rqRbRq/">@composi/core
-                + runtime Composition3</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+            <p data-height="600" data-theme-id="6688" data-slug-hash="jQNexM" data-default-tab="js,result" data-user="rbiggs"
+              data-pen-title="@composi/core + runtime Composition3a" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/jQNexM/">@composi/core
+                + runtime Composition3a</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
             <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
             
             <p> </p>
             <h2>Child to Parent Communication</h2>
             <p>Using the same pattern we used in the previous example, we have an example of the child program using an effect to communicate with the parent.</p>
 
-            <p data-height="600" data-theme-id="6688" data-slug-hash="KGELMB" data-default-tab="js,result" data-user="rbiggs"
-              data-pen-title="@composi/core + runtime Composition4" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/KGELMB/">@composi/core
-                + runtime Composition4</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+            <p data-height="600" data-theme-id="6688" data-slug-hash="jQNevV" data-default-tab="js,result" data-user="rbiggs"
+              data-pen-title="@composi/core + runtime Composition4a" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/jQNevV/">@composi/core
+                + runtime Composition4a</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
             <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
               <p>&nbsp;</p>
