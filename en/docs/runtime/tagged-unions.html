@@ -90,13 +90,17 @@ Msg.deleteItem(132)
   return Msg.match(msg, {
     // Check for the message tag:
     'addItem': value => {
-      state.fruits.push({ key: state.newKey++, value })
-      return [state]
+      // Use mergeObjects to clone state:
+      const prevState = mergeObjects(state)
+      prevState.fruits.push({ key: state.newKey++, value })
+      return [prevState]
     },
     // Check for the message tag:
     'deleteItem': key => {
-      state.fruits = state.fruits.filter(item => item.key != key)
-      return [state]
+      // Use mergeObjects to clone state:
+      const prevState = mergeObjects(state)
+      prevState.fruits = prevState.fruits.filter(item => item.key != key)
+      return [prevState]
     }
   })
 }
@@ -104,12 +108,16 @@ Msg.deleteItem(132)
 function actions(msg, state) {
   switch (msg.type) {
     case 'add-item':
-      state.fruits.push({ key: state.newKey++, msg.inputValue })
-      return [state]
+      // Use mergeObjects to clone state:
+      const prevState = mergeObjects(state)
+      prevState.fruits.push({ key: prevState.newKey++, msg.inputValue })
+      return [prevState]
       break
     case 'delete-item': 
-      state.fruits = state.fruits.filter(item => item.key != msg.key)
-      return [state]
+      // Use mergeObjects to clone state:
+      const prevState = mergeObjects(state)
+      prevState.fruits = prevState.fruits.filter(item => item.key != msg.key)
+      return [prevState]
       break
   }
 }</code></pre>
