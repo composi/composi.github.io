@@ -64,7 +64,7 @@
 &lt;/p>
 </code></pre>
           <p>Knowing that the view will send an object with a type property for the message, we can set up the update function to test the message for various types. Notice how we create an actions object to to do this:</p>
-<pre><code class="language-javascript">/ Business Logic.
+<pre><code class="language-javascript">// Business Logic.
 // Intercept actions sent by view.
 // Use those actions to transform state.
 // Then return the new state.
@@ -74,21 +74,28 @@ function actions(msg, state) {
     case 'add-item':
       const value = msg.inputValue
       if (value) {
-        state.fruits.push({ key: state.newKey++, value })
-        return [state]
+        // Use mergeObjects to clone state:
+        const prevState = mergeObjects(state)
+        prevState.fruits.push({ key: prevState.newKey++, value })
+        return [prevState]
       } else {
         alert('Please provide a value!')
         return [state]
       }
       break
     case 'delete-item': 
-      state.fruits = state.fruits.filter(item => item.key != msg.key)
-      return [state]
+      // Use mergeObjects to clone state:
+      const prevState = mergeObjects(state)
+      prevState.fruits = prevState.fruits.filter(item => item.key != msg.key)
+      return [prevState]
       break
   }
 }</code></pre>
           <p>Note that no matter what decision we make with an action, we always return state. Every action must return state. Even if you make no changes to state, you have to return it. Failing to do so will generate an error. This is because actions pass state to the view to render, so not returning state will cause the view to fail because it never received state.</p>
           <p>Just because you always return state, even when it doesn't change, doesn't mean that you cause unnecessary renders of the view. In fact, @composi/core's render function checks the state and component props early on and bails if they are identical.</p>
+
+          <h2>Immutability</h2>
+          <p>In the above example we used the <code>mergeObjects</code> function to clone the state. This allows us to safely manipulate the clone without effecting the current program state. When were done with modifications to state clone, we return it. This then gets passed to the view method for rendering and reassigned back to the program state.</p>
 
           <h2>About Redux</h2>
           <p>If you're familiar with Redux, you might notice some similarities with how update actions work. That's because Redux was inspired by the Elm architecture. The difference is in the detials. The messages sent by the view resemble Redux actions, and the update actions look like Redux reducers. They are similar, but different. Redux reducers are so called because they take the state, perform any number of operations and then return the new state. Runtime actions, on the other hand, can also just return the new state, or they can also fire off an effect. Because they can do more than one thing, they cannot be called reducers. Even so, in the vast majority of cases they will act just like Redux reducers. That's the most common use case.</p>
