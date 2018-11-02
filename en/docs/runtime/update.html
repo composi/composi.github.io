@@ -106,10 +106,16 @@ import { mergeObjects } from '@composi/merge-objects'
           <p>If you're familiar with Redux, you might notice some similarities with how update actions work. That's because Redux was inspired by the Elm architecture. The difference is in the detials. The messages sent by the view resemble Redux actions, and the update actions look like Redux reducers. They are similar, but different. Redux reducers are so called because they take the state, perform any number of operations and then return the new state. Runtime actions, on the other hand, can also just return the new state, or they can also fire off an effect. Because they can do more than one thing, they cannot be called reducers. Even so, in the vast majority of cases they will act just like Redux reducers. That's the most common use case.</p>
 
           <p>Below is a working example of a program where the view sends several different messages to update, which examines them to see which type they are to preform the appropriate action. Examine it carefully to see how messages bundle up data to send to actions, which then update the state, causing the view to update. We've use a number of lifecycle event on the function component elements to handle things like input focus, input value, etc. We use an <code>onchange</code> event to get the value of the input so we can send it in a message to update.</p>
-          <p data-height="600" data-theme-id="6688" data-slug-hash="gBZEQp" data-default-tab="js,result" data-user="rbiggs"
-            data-pen-title="@composi/core + runtime" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/gBZEQp/">@composi/core
+
+          <p data-height="500" data-theme-id="6688" data-slug-hash="oQvJdw" data-default-tab="js,result" data-user="rbiggs"
+            data-pen-title="@composi/core + runtime" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/oQvJdw/">@composi/core
               + runtime</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
           <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+          <!--<p data-height="600" data-theme-id="6688" data-slug-hash="gBZEQp" data-default-tab="js,result" data-user="rbiggs"
+            data-pen-title="@composi/core + runtime" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/gBZEQp/">@composi/core
+              + runtime</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+          <script async src="https://static.codepen.io/assets/embed/ei.js"></script>-->
 
               <p> </p> 
               <h2>Alternative Approach</h2>
