@@ -150,6 +150,276 @@ idb.get('timestamp')
   })
 </code></pre>
 
+    <h2>Using with @composi/core</h2>
+    <p>Here's an example of a todo list using @composi/idb and @composi/core with its runtime.</p>
+
+<pre><code class="language-javascript">import { h, render, run, union } from '@composi/core'
+import { mergeObjects } from '@composi/merge-objects'
+import { idb } from '@composi/idb'
+
+// id for list items
+function id() {
+  return Math.floor(Math.random() * 100000000 + Math.random() * 1000);
+}
+
+// Set state of footer bottons to show tasks.
+const setButtonState = index => {
+  const buttons = [false, false, false];
+  buttons[index] = true;
+  return buttons;
+};
+
+// Footer Component:
+function Footer({ state, setButtonState, send }) {
+  let count = 0;
+  state.items.forEach(item => {
+    if (item.active === true) {
+      count += 1;
+    }
+  });
+  return (
+    &lt;footer>
+      &lt;div id="totals-view">
+        &lt;span>{count} left.&lt;/span>
+      &lt;/div>
+      &lt;p>Show: &lt;/p>
+      &lt;div id="show-todo-state">
+        &lt;button
+          onclick={e => send(Msg.showAll(e))}
+          id="show-all"
+          class={state.selectedButton[0] ? "selected" : ""}
+        >
+          All
+        &lt;/button>
+        &lt;button
+          onclick={() => send(Msg.showActive())}
+          id="show-active"
+          class={state.selectedButton[1] ? "selected" : ""}
+        >
+          Active
+        &lt;/button>
+        &lt;button
+          onclick={e => send(Msg.showCompleted(e))}
+          id="show-completed"
+          class={state.selectedButton[2] ? "selected" : ""}
+        >
+          Completed
+        &lt;/button>
+      &lt;/div>
+    &lt;/footer>
+  );
+}
+
+// List Item Component:
+function ListItem({ item, animateIn, animateOut, send }) {
+  return (
+    &lt;li
+      key={item.id}
+      class={item.active ? "active" : ""}
+      hidden={item.hidden}
+      onmount={animateIn}
+      onunmount={animateOut}
+    >
+      &lt;button
+        class="set-state"
+        onclick={() => send(Msg.setActiveState(item.id))}
+      >
+        &lt;svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1">
+          &lt;g
+            id="Page-1"
+            stroke="none"
+            stroke-width="1"
+            fill="none"
+            fill-rule="evenodd"
+          >
+            &lt;g id="selection-indicator">
+              &lt;path
+                d="M2,13 L9.9294326,16.8406135 L17.1937075,1.90173332"
+                id="checkmark"
+                stroke="#007AFF"
+                stroke-width="2"
+              />
+            &lt;/g>
+          &lt;/g>
+        &lt;/svg>
+      &lt;/button>
+      &lt;h3 onclick={() => send(Msg.setActiveState(item.id))}>{item.value}&lt;/h3>
+      &lt;button onclick={() => send(Msg.deleteItem(item.id))} class="delete">
+        &lt;svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1">
+          &lt;g
+            id="Page-1"
+            stroke="none"
+            stroke-width="1"
+            fill="none"
+            fill-rule="evenodd"
+          >
+            &lt;g
+              id="Delete"
+              stroke="#FF0000"
+              stroke-width="2"
+              stroke-linecap="square"
+            >
+              &lt;path d="M26.5,3.5 L3.5,26.5" id="Line" />
+              &lt;path d="M3.5,3.5 L26.5,26.5" id="Line" />
+            &lt;/g>
+          &lt;/g>
+        &lt;/svg>
+      &lt;/button>
+    &lt;/li>
+  );
+}
+
+// Define todo list.
+function TodoList({ state, send }) {
+  console.log(state)
+  let value;
+  function focusInput(input) {
+    input.focus();
+  }
+  function updateValue(e) {
+    value = e.target.value;
+    e.target.focus();
+  }
+  function animateIn(el) {
+    el.classList.add("add-item");
+  }
+  function animateOut(done, el) {
+    el.classList.add("delete-item");
+    setTimeout(() => {
+      done();
+    }, 1000);
+  }
+  return (
+    &lt;div class="parent-view">
+      &lt;p class="add-todo">
+        &lt;input type="text" onchange={updateValue} value={state.inputValue} />
+        &lt;button class="addItem" onclick={() => send(Msg.addItem(value))}>
+          Add Item
+        &lt;/button>
+      &lt;/p>
+      &lt;ul class="todo-list">
+        {state.items.map(item => (
+          &lt;ListItem {...{ item, animateIn, animateOut, send }} />
+        ))}
+      &lt;/ul>
+      &lt;Footer {...{ state, setButtonState, send }} />
+    &lt;/div>
+  );
+}
+
+// Default state:
+let state = {
+  newKey: 104,
+  items: [
+    { active: true, value: "Take a nap", id: id(), hidden: false },
+    { active: false, value: "Eat a snack", id: id(), hidden: false },
+    { active: true, value: "Talk with Mom", id: id(), hidden: false }
+  ],
+  selectedButton: [true, false, false],
+  inputValue: ""
+};
+
+// Create a tagged union.
+const Msg = union([
+  "addItem",
+  "deleteItem",
+  "setActiveState",
+  "showActive",
+  "showCompleted",
+  "showAll",
+  "storeLocally"
+]);
+
+// Set up program.
+const program = {
+  init: [state],
+  view(state, send) {
+    render(&lt;TodoList {...{ state, send }} />, "section")
+  },
+  update(msg, state) {
+    return Msg.match(msg, {
+      addItem: value => {
+        if (value) {
+          const prevState = mergeObjects(state);
+          prevState.items.push({
+            active: true,
+            value,
+            id: id(),
+            hidden: false
+          });
+          // Preserve state in IndexedDB.
+          // This is an async effect.
+          idb.set('todos', prevState)
+          return [prevState]
+        }
+      },
+      deleteItem: id => {
+        const prevState = mergeObjects(state);
+        prevState.items = prevState.items.filter(item => item.id != id);
+        // Preserve state in IndexedDB.
+        // This is an async effect.
+        idb.set('todos', prevState)
+        return [prevState]
+      },
+      setActiveState: id => {
+        const prevState = mergeObjects(state);
+        const index = prevState.items.findIndex(item => {
+          return item.id == id;
+        });
+        prevState.items[index].active = !prevState.items[index].active;
+        return [prevState];
+      },
+      showActive: () => {
+        const prevState = mergeObjects(state);
+        prevState.items.map(item => {
+          if (!item.active) item.hidden = true;
+          else item.hidden = false;
+        });
+        prevState.selectedButton = setButtonState(1);
+        return [prevState];
+      },
+      showCompleted: () => {
+        const prevState = mergeObjects(state);
+        prevState.items.map(item => {
+          if (item.active) item.hidden = true;
+          else item.hidden = false;
+        });
+        prevState.selectedButton = setButtonState(2);
+        return [prevState];
+      },
+      showAll: () => {
+        const prevState = mergeObjects(state);
+        prevState.items.map(item => (item.hidden = false));
+        prevState.selectedButton = setButtonState(0);
+        return [prevState];
+      },
+      storeLocally: prevState => {
+        idb.set('todos', prevState)
+      }
+    });
+  }
+};
+
+// Before running program,
+// check to see if there is anything stored in IndexedDB, 
+// if there is load it as state for the program.
+// Otherwise run program with default state.
+idb.get('todos').then(data => {
+  if (data) {
+    console.log('got data')
+    program.init[0] = data
+    run(program)
+    // If no data use default:
+  } else {
+    console.log('no data so using defaults')
+    // render(&lt;TodoList state={state} />, "section")
+    run(program)
+    idb.set('todos', state)
+  }
+})
+
+</code></pre>
+
             <p>&nbsp;</p>
       </div>
     </section> 
