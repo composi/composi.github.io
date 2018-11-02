@@ -51,7 +51,7 @@
         </ul>
           <h1>Immutability</h1>
           <h2>Program State is Mutable</h2>
-          <p>By default a program's state is mutable when you have access to it inside both the update and view methods. Hopefully no one would ever modify state from the code for rendering the view. Update, on the other hand, is how you modify a program's state. For simple examples this is probably not going to be a problem. However, if your app and data are complex, you will probably want to avoid directly modifying state in an action. Instead you can clone that state inside the action, modify the clone and then return it. You can use @composi/merge-objects to clone objects or arrays. This function can create a clone of an array or object. You would need to import it into your project and then use it in an update action.</p>
+          <p>By default a program's state is mutable when you have access to it inside both the update and view methods. Hopefully no one would ever modify state from the code for rendering the view. Update, on the other hand, is how you modify a program's state. For simple examples this is probably not going to be a problem. However, if your app and data are complex, you will probably want to avoid directly modifying state in an action. Instead you can clone that state inside the action, modify the clone and then return it. You can use @composi/merge-objects to clone objects or arrays. You would need to import it into your project and then use it in an update action.</p>
 
 <pre><code class="language-javascript">import { h, render, run, union } from @composi/core
 import { mergeObjects } from '@composi/merge-objects'
