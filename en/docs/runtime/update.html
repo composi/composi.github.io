@@ -63,34 +63,45 @@
   &lt;button class='add-item' onclick={()=> send({type: 'add-item', data: inputValue})}>Add&lt;/button>
 &lt;/p>
 </code></pre>
-          <p>Knowing that the view will send an object with a type property for the message, we can set up the update function to test the message for various types. Notice how we create an actions object to to do this:</p>
-<pre><code class="language-javascript">// Business Logic.
-// Intercept actions sent by view.
-// Use those actions to transform state.
-// Then return the new state.
-// That will cause the view to update.
-function actions(msg, state) {
-  switch (msg.type) {
-    case 'add-item':
-      const value = msg.inputValue
-      if (value) {
-        // Use mergeObjects to clone state:
+          <p>Knowing that the view will send an object with a type property for the message, we can set up the update function to test the message for various types. Here is a simple program. Notice how in its update method we check what message was sent, then perform approriate actions, such as "add-item", or "delete-item"</p>
+<pre><code class="language-javascript">
+const program = {
+  init: [state],
+  // Business Logic is in update method.
+  // It intercepts actions sent by view.
+  // Use those actions to transform state.
+  // Then return the new state.
+  // That will cause the view to update.
+  update(msg, state) {
+    switch (msg.type) {
+      case 'add-item':
+        const value = msg.inputValue
+        if (value) {
+          const prevState = mergeObjects(state)
+          prevState.fruits.push({ key: prevState.newKey++, value })
+          return [prevState]
+        } else {
+          alert('Please provide a value!')
+          return [state]
+        }
+        break
+      case 'delete-item':
         const prevState = mergeObjects(state)
-        prevState.fruits.push({ key: prevState.newKey++, value })
+        prevState.fruits = prevState.fruits.filter(item => item.key != msg.key)
         return [prevState]
-      } else {
-        alert('Please provide a value!')
-        return [state]
-      }
-      break
-    case 'delete-item': 
-      // Use mergeObjects to clone state:
-      const prevState = mergeObjects(state)
-      prevState.fruits = prevState.fruits.filter(item => item.key != msg.key)
-      return [prevState]
-      break
+        break
+    }
+  },
+  view(state, send) {
+    return render(&lt;List {...{ state, send }} />, section)
   }
 }</code></pre>
+          <p>And here is a working example:</p>
+          <p data-height="500" data-theme-id="6688" data-slug-hash="jQNRbe" data-default-tab="js,result" data-user="rbiggs"
+            data-pen-title="@composi/core + runtime basic" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/jQNRbe/">@composi/core
+              + runtime basic</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+          <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
           <p>Note that no matter what decision we make with an action, we always return state. Every action must return state. Even if you make no changes to state, you have to return it. Failing to do so will generate an error. This is because actions pass state to the view to render, so not returning state will cause the view to fail because it never received state.</p>
           <p>Just because you always return state, even when it doesn't change, doesn't mean that you cause unnecessary renders of the view. In fact, @composi/core's render function checks the state and component props early on and bails if they are identical.</p>
 
