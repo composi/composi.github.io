@@ -32,11 +32,6 @@
       <li class='nav-menu__item selected'>
         <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
       </li>
-      <!--
-      <li class='nav-menu__item'>
-        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
-      </li>
-      -->
     </ul>
   </nav>
   <article class='article'>
@@ -44,42 +39,49 @@
       <div class='docs'>
         <h3>@composi/runtime:</h3>
         <ul class='breadcrumb'>
-          <li><a href="/en/docs/state-management/runtime.html">Runtime</a></li>
-          <li class='selected'>Init</li>
-          <li><a href="/en/docs/state-management/update.html">Update</a></li>
-          <li><a href="/en/docs/state-management/view.html">View</a></li>
-          <li><a href="/en/docs/state-management/effects.html">Effects</a></li>
-          <li><a href="/en/docs/state-management/tagged-unions.html">Tagged Unions</a></li>
-          <li><a href="/en/docs/state-management/composition.html">Composition</a></li>
-          <li><a href="/en/docs/state-management/end-program.html">Stop Program</a></li>
+          <li><a href="/en/docs/runtime/runtime.html">Runtime</a></li>
+          <li><a href="/en/docs/runtime/init.html">Init</a></li>
+          <li><a href="/en/docs/runtime/update.html">Update</a></li>
+          <li><a href="/en/docs/runtime/view.html">View</a></li>
+          <li><a href="/en/docs/runtime/effects.html">Effects</a></li>
+          <li><a href="/en/docs/runtime/tagged-unions.html">Tagged Unions</a></li>
+          <li><a href="/en/docs/runtime/composition.html">Composition</a></li>
+          <li><a href="/en/docs/runtime/end-program.html">Stop Program</a></li>
+          <li class='selected'>Immutability</li>
         </ul>
-          <h1>Init</h1>
-          <h2>Preparing for Startup</h2>
-          <p>When you pass a program to the <code>run</code> function, the runtime takes the value of the <code>init</code> property to use for setting things up. Init expects an array as its value. That array can have two indices in order: state and effect. State will be the default state when the program starts. Effect is an optional function to run at startup. This could be a timer of some kind, or a request for data. An effect is always asynchronous, running independently of the rest of the program. Most of the time your init will only have state. Even so, it must always be enclosed in braces. You can think of init as a tuple with up to two values.</p>
-<pre><code class="language-javascript">const program = {
-  init: [state]
-  update() {},
-  view() {}
-}</code></pre>
-          <p>When you do want to run an effect at startup, it will always be the second value in the init array:</p>
-<pre><code class="language-javascript">const program = {
-  init: [state, effect]
-  update() {},
-  view() {}
-}</code></pre>
+          <h1>Immutability</h1>
+          <h2>Program State is Mutable</h2>
+          <p>By default a program's state is mutable when you have access to it inside both the update and view methods. Hopefully no one would ever modify state from the code for rendering the view. Update, on the other hand, is how you modify a program's state. For simple examples this is probably not going to be a problem. However, if you app and data are complex, you will probably want to avoid directly modifying state in an action. Instead you can clone that state inside an action, modify the clone and then return it. If your state is an array or object, you can clone it using @composi/merge-objects. This function can create a clone of an array or object. You would need to import it into your project and then use it in an update action.</p>
 
-        <p>And here's a simple Hello World example:</p>
-        <p data-height="500" data-theme-id="6688" data-slug-hash="GYzPEZ" data-default-tab="js,result" data-user="rbiggs"
-          data-pen-title="@composi/core + runtime Hello World" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/GYzPEZ/">@composi/core
-            + runtime Hello World</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
-        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+<pre><code class="language-javascript">import { h, render, run, union } from @composi/core
+import { mergeObjects } from '@composi/merge-objects'
 
-        <p>In the following example we show how to set up and effect in the program's init to start an interval loop to display the time every second. The interval runs separately from the runtime, sending an message every second to the update action, causing the view to update the time shown.</p>
-        <p data-height="500" data-theme-id="6688" data-slug-hash="QZYzZm" data-default-tab="js,result" data-user="rbiggs"
-          data-pen-title="@composi/core + runtime Clock" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/QZYzZm/">@composi/core
-            + runtime Clock</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
-        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-        <h2>The Braces</h2>
+const Msg = union(['AddItem', 'DeleteItem'])
+// And here we use mergeObjects in our actions.
+// Here were using a tagged union.
+function actions(msg, state) {
+  return Msg.match(msg, {
+    // Check for the message tag:
+    'AddItem': value => {
+      // Clone the state:
+      const prevState = mergeObjects(state)
+      prevState.fruits.push({ key: prevState.newKey++, value })
+      // Render view and update program state:
+      return [prevState]
+    },
+    // Check for the message tag:
+    'DeleteItem': key => {
+      // Clone state:
+      const prevState = mergeObjects(state)
+      prevState.fruits = prevState.fruits.filter(item => item.key != key)
+      // Render view and update program state:
+      return [prevState]
+    }
+  })
+}
+</code></pre>
+            <p>Using the above technique of cloning the state with <code>mergeObjects</code> means that the program state won't be updated until the action returns it.</p>
+
               <p>&nbsp;</p>
       </div>
     </section> 
