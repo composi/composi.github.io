@@ -61,40 +61,40 @@
         <h2>Action Shortcuts</h2>
         <p>When we were looking at how to use actions in the update function the usage was very similar to Redux. For sure Redux require much more boiler plate. Still, there is a slight disconnect between what the view event is doing and what happend inside the udpate function. @composi/core offers a solution to this disconnect through tagged unions. It provides tagged unions through its <code>union</code> function. To use it you'll need to first import it into your project:</p>
 <pre><code class="language-javascript">import { h, render, run, union } from '@composi/core'</code></pre>
-        <p>A tagged union is basically a tuple that links a string value, the name for the function, with the action in the update function. Doing this inables us to invoke these from the view. In our previous example we used hyphenated strings as the message type: "add-item", "delete-item", etc. Now we're going to change those to unhaphyenated names that we can use as a function: "AddItem", "DeleteItem". We'll use these as the values for creating a tagged union. The arguments are enclosed in an array, even if its only one value:</p>
-<pre><code class="language-javascript">const Msg = new union(['AddItem', 'DeleteItem'])</code></pre>
+        <p>A tagged union is basically a tuple that links a string value, the name for the function, with the action in the update function. Doing this inables us to invoke these from the view. In our previous example we used hyphenated strings as the message type: "add-item", "delete-item", etc. Now we're going to change those to unhaphyenated names that we can use as a function: "addItem", "deleteItem". We'll use these as the values for creating a tagged union. The arguments are enclosed in an array, even if its only one value:</p>
+<pre><code class="language-javascript">const Msg = new union(['addItem', 'deleteItem'])</code></pre>
         <p>The above creates a tagged union that we can use to associate our update actions with. This will allow us to call the update actions directly in our view as:</p>
-<pre><code class="language-javascript">Msg.AddItem('Watermelon')
-Msg.DeleteItem(132)
+<pre><code class="language-javascript">Msg.addItem('Watermelon')
+Msg.deleteItem(132)
 </code></pre>
         <p>Here's how we would use them in our view markup:</p>
 <pre><code class="language-javascript">// To add an item:
-&lt;button class='add-item' onclick={() => send(Msg.AddItem(inputValue))}>Add&lt;/button>
+&lt;button class='add-item' onclick={() => send(Msg.addItem(inputValue))}>Add&lt;/button>
 // To delete an item:
-&lt;button class="DeleteItem" onclick={() => send(Msg.DeleteItem(item.key))}>X&lt;/button></code></pre>
+&lt;button class="deleteItem" onclick={() => send(Msg.deleteItem(item.key))}>X&lt;/button></code></pre>
         <p>Compare that with the previous method of sending messages:</p>
 <pre><code class="language-javascript">// To add an item:
 &lt;button class='add-item' onclick={() => send({type: 'add-item', data: inputValue})}>Add&lt;/button>
 // To delete an item:
-&lt;button class="DeleteItem" onclick={() => send({type: 'delete-item', data: item.key})}>X&lt;/button></code></pre>
+&lt;button class="deleteItem" onclick={() => send({type: 'delete-item', data: item.key})}>X&lt;/button></code></pre>
 
         <p>With the above code, when the user clicks, the send function will invoke the tagged union terms. This will result in a package being sent to the update function with the following format:</p>
-<pre><code class="language-javascript">// send(Msg.AddItem('Watermelon'))
-{type: 'AddItem', data: 'Watermelon'}
-// send(Msg.DeleteItem(132))
-{type: 'DeleteItem', data: 132}
+<pre><code class="language-javascript">// send(Msg.addItem('Watermelon'))
+{type: 'addItem', data: 'Watermelon'}
+// send(Msg.deleteItem(132))
+{type: 'deleteItem', data: 132}
 </code></pre>
 
         <p>Now, when we setup the update function, we check that the message sent matches the values in the tagged union. We do that using the <code>match</code> method on the tagged union. Notice that we don't need to check for a tag type <code>msg.type</code>, just the direct value of the tag. Also we don't need to access the data of the message with <code>msg.data</code>. Instead it's made directly available to the action callback as its argument. Since we're using the tagged union's match method, we don't need a switch statement's signature (switch, case, break.) This results in a simpler signature for the actions:</p>
 <pre><code class="language-javascript">function actions(msg, state) {
   return Msg.match(msg, {
     // Check for the message tag:
-    'AddItem': value => {
+    'addItem': value => {
       state.fruits.push({ key: state.newKey++, value })
       return [state]
     },
     // Check for the message tag:
-    'DeleteItem': key => {
+    'deleteItem': key => {
       state.fruits = state.fruits.filter(item => item.key != key)
       return [state]
     }
