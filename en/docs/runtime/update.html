@@ -95,7 +95,11 @@ function actions(msg, state) {
           <p>Just because you always return state, even when it doesn't change, doesn't mean that you cause unnecessary renders of the view. In fact, @composi/core's render function checks the state and component props early on and bails if they are identical.</p>
 
           <h2>Immutability</h2>
-          <p>In the above example we used the <code>mergeObjects</code> function to clone the state. This allows us to safely manipulate the clone without effecting the current program state. When were done with modifications to state clone, we return it. This then gets passed to the view method for rendering and reassigned back to the program state.</p>
+          <p>In the above example we used the <code>mergeObjects</code> function to clone the state. This allows us to safely manipulate the clone without effecting the current program state. When were done with modifications to state clone, we return it. This then gets passed to the view method for rendering and reassigned back to the program state. <code>mergeObjects</code> comes pre-installed when you create a new @composi/core project. But you do need to import it into your project to use it:</p>
+<pre><code class="language-javascript">import { h, render, run } from '@composi/core'
+import { mergeObjects } from '@composi/merge-objects'
+// With mergeObjects imported, you can use it to clone program state.
+</code></pre>
 
           <h2>About Redux</h2>
           <p>If you're familiar with Redux, you might notice some similarities with how update actions work. That's because Redux was inspired by the Elm architecture. The difference is in the detials. The messages sent by the view resemble Redux actions, and the update actions look like Redux reducers. They are similar, but different. Redux reducers are so called because they take the state, perform any number of operations and then return the new state. Runtime actions, on the other hand, can also just return the new state, or they can also fire off an effect. Because they can do more than one thing, they cannot be called reducers. Even so, in the vast majority of cases they will act just like Redux reducers. That's the most common use case.</p>
