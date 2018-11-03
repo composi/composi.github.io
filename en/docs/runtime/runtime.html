@@ -62,9 +62,11 @@
           <h2>SVU: State-View-Update</h2>
           <p>The Composi runtime is based on the concept of SVU, State, View and Update. This is similar to MVC, but subtly different. In traditional MVC, the model holds not just the data, it can validate the data and persist it in a database. With SVU, State is just raw, inert data. It has no logic for anything. In SVU, View is a function that takes the state and returns a representation of it in some form. The view is agnostic to how this is done. It's your responsiblity to instruct the view how to return the state. This could be merely returning a functional component to be consumed by something else, or using the @composi/core render function to output the result to the DOM. When you render a View, you'll implement events for user interaction. When a user interacts with those events, they send messages to the Update function. The Update function holds all the program's business logic. It handles this internally through action functions. Depending on the message sent, Update passes it to an action that modifies the state. When this happens, the runtime invokes the View with that state, causing the View to return a result. For front end, this means a re-render of the view.</p>
           <div style='text-align: center;'><img src="/images/SVU.png" alt="SVU Diagram"></div>
-          <p>Every @composi/core runtime program implements this SVU pattern. It does so with three properties: init, update and view. Init is where you define the default state for the program. At startup the runtime takes the value of init and uses it to render the view. The following example shows the core parts of a runtime program.</p>
+          <p>Every @composi/core runtime program implements this SVU pattern. It does so with three methods: init, update and view. Init is where you define the default state for the program. At startup the runtime takes the value returned by init and uses it to render the view. The following example shows the core parts of a runtime program.</p>
 <pre><code class='language-javascript'>const program = {
-  init: [state, effect],
+  init() {
+    return [state, effect]
+  },
   update(msg, state) {
     if (msg) {
       // Handle messages to update state:
@@ -81,7 +83,7 @@
           <p></p>
           <p> </p>
           <h3>Init</h3>
-          <p>Init is a tuple of two values: state and effect. At startup the program uses the init state to render the view. Effect is optional. If provided it will be run at startup too. Effects are asynchronous functions for timers or fetching data. Most of the time init will just provide state. A program's state can be any JavaScript type: null, undefined, number, string, array or object. Complex programs will inevitably need state as an array or object.</p>
+          <p>Init is a function that returns a tuple of two values: state and effect. At startup the program uses the state that init provides to render the view. Effect is optional. If provided it will be run at startup too. Effects are asynchronous functions for timers or fetching data. Most of the time init will just provide state. A program's state can be any JavaScript type: null, undefined, number, string, array or object. Complex programs will inevitably need state as an array or object.</p>
           <h3>Update</h3>
           <p>Update is where all the program's business logic resides. Update receives messages sent by the view. Depending on what message was received, Update performs actions on a copy of the program state and returns it. This causes the program to re-render the view with the new state.</p>
           <h3>View</h3>
@@ -97,18 +99,18 @@
           <h3>Order Doesn't Matter</h3>
           <p>When creating a program to run, the order of the properties is irrelevant. In our examples we use init, update, view. But you could choose to do init, view, update or any other order that you prefer. </p>
 <pre><code class='language-javascript'>const program1 = {
-  init: [],
+  init() { return [] },
   update() {},
   view() {}
 }
 const program2 = {
-  init: [],
+  init() { return [] },
   view() {},
   update() {}
 }
 const program3 = {
   view() {},
-  init: [],
+  init() { return [] },
   update() {}
 }</code></pre>
           <p>If you do have a prefered order, stick with it for consistency.</p>
@@ -128,8 +130,8 @@ const program3 = {
           <p>The runtime is part of @composi/core, so importing and using it does not add anything to the final payload of your project's JavaScript. @composi/core is 2KB gzipped.</p>
 
           <p>When we say the runtime is small, we mean it. Here's all the code for the runtime minified and completely functional:</p>
-<pre><code class="language-javascript">function run(a){function b(j){i&&c(e(j,h))}function c(j){h=j[0];let k=j[1];k&&k(b),f(h,b)}const
-e=a.update,f=a.view,g=a.done;let h,i=!0;return c(a.init),function(){i&&(i=!1,g&&g(h))}}</code></pre>
+<pre><code class="language-javascript">function run(a){function b(k){j&&c(e(k,h))}function c(k){k?[h,i]=k:[h,i]=a.init(),i&&i(b),f(h,b)}const
+e=a.update,f=a.view,g=a.done;let h,i,j=!0;return c(h),function(){j&&(j=!1,g&&g(h))}}</code></pre>
               <p>&nbsp;</p>
       </div>
     </section> 

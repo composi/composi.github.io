@@ -56,15 +56,19 @@
         </ul>
           <h1>Init</h1>
           <h2>Preparing for Startup</h2>
-          <p>When you pass a program to the <code>run</code> function, the runtime takes the value of the <code>init</code> property to use for setting things up. Init expects an array as its value. That array can have two indices in order: state and effect. State will be the default state when the program starts. Effect is an optional function to run at startup. This could be a timer of some kind, or a request for data. An effect is always asynchronous, running independently of the rest of the program. Most of the time your init will only have state. Even so, it must always be enclosed in braces. You can think of init as a tuple with up to two values.</p>
+          <p>When you pass a program to the <code>run</code> function, the runtime takes the value returned by the <code>init</code> method to use for setting things up. Init must return an array as its value. That array can have two indices in order: state and effect. State will be the default state when the program starts. Effect is an optional function to run at startup. This could be a timer of some kind, or a request for data. An effect is always asynchronous, running independently of the rest of the program. Most of the time your init will only return state. Even so, you must always enclose it in braces. You can think of init as a tuple with up to two values.</p>
 <pre><code class="language-javascript">const program = {
-  init: [state]
+  init() {
+    return [state]
+  },
   update() {},
   view() {}
 }</code></pre>
-          <p>When you do want to run an effect at startup, it will always be the second value in the init array:</p>
+          <p>When you do want to run an effect at startup, it will always be the second value in the array that init returns:</p>
 <pre><code class="language-javascript">const program = {
-  init: [state, effect]
+  init() {
+    return [state, effect]
+  },
   update() {},
   view() {}
 }</code></pre>
@@ -77,12 +81,12 @@
         <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
 
-        <p>In the following example we show how to set up and effect in the program's init to start an interval loop to display the time every second. The interval runs separately from the runtime, sending an message every second to the update action, causing the view to update the time shown.</p>
+        <p>In the following example we show how to set up an effect in the program's init to start an interval loop to display the time every second. The interval runs separately from the runtime, sending an message every second to the update action, causing the view to update the time shown.</p>
         <p data-height="500" data-theme-id="6688" data-slug-hash="QZYzZm" data-default-tab="js,result" data-user="rbiggs"
           data-pen-title="@composi/core + runtime Clock" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/QZYzZm/">@composi/core
             + runtime Clock</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
         <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-        <h2>The Braces</h2>
+
               <p>&nbsp;</p>
       </div>
     </section> 

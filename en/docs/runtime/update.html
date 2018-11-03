@@ -66,7 +66,9 @@
           <p>Knowing that the view will send an object with a type property for the message, we can set up the update function to test the message for various types. Here is a simple program. Notice how in its update method we check what message was sent, then perform approriate actions, such as "add-item", or "delete-item"</p>
 <pre><code class="language-javascript">
 const program = {
-  init: [state],
+  init() {
+    return [state]
+  },
   // Business Logic is in update method.
   // It intercepts actions sent by view.
   // Use those actions to transform state.
