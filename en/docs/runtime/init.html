@@ -109,6 +109,7 @@ function effect() {
 // Assemble programe together:
 const program = {
   init() {
+    // Return the effect with the state:
     return ['Default State Value', effect]
   },
   update(msg, state) {
