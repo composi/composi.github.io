@@ -83,7 +83,7 @@
           <p></p>
           <p> </p>
           <h3>Init</h3>
-          <p>Init is a function that returns a tuple of two values: state and effect. At startup the program uses the state that init provides to render the view. Effect is optional. If provided it will be run at startup too. Effects are asynchronous functions for timers or fetching data. Most of the time init will just provide state. A program's state can be any JavaScript type: null, undefined, number, string, array or object. Complex programs will inevitably need state as an array or object.</p>
+          <p>Init is a function that returns an array of two values: state and effect. At startup the program uses the state that init provides to render the view. Effect is optional. If provided it will be run at startup too. Effects are asynchronous functions for timers or fetching data. Most of the time init will just provide state. A program's state can be any JavaScript type: null, undefined, number, string, array or object. Complex programs will inevitably need state as an array or object.</p>
           <h3>Update</h3>
           <p>Update is where all the program's business logic resides. Update receives messages sent by the view. Depending on what message was received, Update performs actions on a copy of the program state and returns it. This causes the program to re-render the view with the new state.</p>
           <h3>View</h3>
@@ -130,8 +130,9 @@ const program3 = {
           <p>The runtime is part of @composi/core, so importing and using it does not add anything to the final payload of your project's JavaScript. @composi/core is 2KB gzipped.</p>
 
           <p>When we say the runtime is small, we mean it. Here's all the code for the runtime minified and completely functional:</p>
-<pre><code class="language-javascript">function run(a){function b(k){j&&c(e(k,h))}function c(k){k?[h,i]=k:[h,i]=a.init(),i&&i(b),f(h,b)}const
-e=a.update,f=a.view,g=a.done;let h,i,j=!0;return c(h),function(){j&&(j=!1,g&&g(h))}}</code></pre>
+<pre><code class="language-javascript">function run(a){function b(k){j&&c(e(k,h))}function c(k){let
+l=a.init();k?[h,i]=k:l&&l.length?[h,i]=l:h=[],i&&i(b),f(h,b)}const e=a.update,f=a.view,g=a.done;let h,i,j=!0;return
+c(h),function(){j&&(j=!1,g&&g(h))}}</code></pre>
               <p>&nbsp;</p>
       </div>
     </section> 
