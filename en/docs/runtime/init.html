@@ -112,11 +112,9 @@ const program = {
     // Return the effect with the state:
     return ['Default State Value', effect]
   },
-  update(msg, state) {
-    return [state + 1]
-  },
+  update() {},
   view(state, send) {
-    render(<Counter {...{state, send}} />, section)
+    render(&l;tCounter {...{state, send}} />, 'section')
   }
 }
 
