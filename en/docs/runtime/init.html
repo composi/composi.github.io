@@ -56,7 +56,7 @@
         </ul>
           <h1>Init</h1>
           <h2>Preparing for Startup</h2>
-          <p>When you pass a program to the <code>run</code> function, the runtime takes the value returned by the <code>init</code> method to use for setting things up. Init must return an array as its value. That array can have two indices in order: state and effect. State will be the default state when the program starts. Effect is an optional function to run at startup. This could be a timer of some kind, or a request for data. An effect is always asynchronous, running independently of the rest of the program. Most of the time your init will only return state. Even so, you must always enclose it in braces. You can think of init as a tuple with up to two values.</p>
+          <p>When you pass a program to the <code>run</code> function, the runtime takes the value returned by the <code>init</code> method to use for setting things up. Init must return an array, even if it is an empty one. The return array can have two indices in this order: state and effect. State will be the default state when the program starts. Effect is an optional function to run at startup. This could be a timer of some kind, or a request for data. An effect is always asynchronous, running independently of the rest of the program. Most of the time your init will only return state. Even so, you must always enclose it in braces. You can think of init as a tuple with up to two values.</p>
 <pre><code class="language-javascript">const program = {
   init() {
     return [state]

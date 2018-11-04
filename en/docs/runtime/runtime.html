@@ -99,18 +99,18 @@
           <h3>Order Doesn't Matter</h3>
           <p>When creating a program to run, the order of the properties is irrelevant. In our examples we use init, update, view. But you could choose to do init, view, update or any other order that you prefer. </p>
 <pre><code class='language-javascript'>const program1 = {
-  init() { return [] },
+  init() {},
   update() {},
   view() {}
 }
 const program2 = {
-  init() { return [] },
+  init() {},
   view() {},
   update() {}
 }
 const program3 = {
   view() {},
-  init() { return [] },
+  init() {},
   update() {}
 }</code></pre>
           <p>If you do have a prefered order, stick with it for consistency.</p>
@@ -123,7 +123,7 @@ const program3 = {
 
           <p> </p>
           <h3>An Object is an Object</h3>
-          <p>In the above example you will notice that we have created an object <code>program</code> that we pass to the <code>run</code> function. This has some parallels to a class component. A class instance is an object returned by a class. The difference is in how these two are used. With class components its common to add new properties to the class to handled new functionality. In contrast, a @composi/core runtime program only has the three main properties: init, update and view. If you need new properties for some functionality, you would add those to the program's state object and access them from with update actions.</p>
+          <p>In the above example you will notice that we have created an object <code>program</code> that we pass to the <code>run</code> function. This has some parallels to a class component. A class instance is an object returned by a class. The difference is in how these two are used. With class components its common to add new properties to the class to handled new functionality. In contrast, a @composi/core runtime program only has the three main methods: init, update and view.</p>
           <p>This clicker example is overly simplistic, but it does show the basic setup for a runtime Composi program: init, update and view. You can learn more about from their dedicated docs from the menu at the top for init, update, view, etc..</p>
 
           <h2>Part of Core</h2>
