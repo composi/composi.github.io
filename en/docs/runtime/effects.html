@@ -69,9 +69,90 @@
           <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
           <p>When your program is very simple it may not seem like such a big deal to separate effects form the other logic. But as a program becomes more complex, isolating effects from business logic results in code that is easier to reason about.</p>
+
+          <h2>batchEffects</h2>
+          <p>Sometimes you have a lot of effects that you need to run together. Or you have one big effect doing alot of things that you wish you could break down into smaller pieces. @composi/core provides <code>batchEffect</code> for those purposes. It allows you to create a map of effects that you can execute one after the other. Be aware that effects run asynchronously and independently of each other. So, event though they are being executed in order, they will probably terminate at different times. If you want to execute effects sequentially, one after the other, then you should look into running them as ES6 async/await functions</p>
+          <p>Below is a snippet illustrating how to batch effects together:</p>
+<pre><code class="language-javascript">import { h, render, run, batchEffects } from '@composi/core'
+
+// Define three separate effects:
+const hello = console.log('Hello World!')
+const secondEffect = console.log('Second effect ran!')
+// Starting value for count.
+let count = 5
+// Countdown effect:
+const countDown = () => {
+  const id = setInterval(() => {
+    if (count === 0) {
+      clearInterval(id)
+    } else {
+      count--
+      console.log(`The count is: ${count}.`)
+    }
+  }, 100)
+}
+
+// Batch effects together:
+const effects = batchEffects([hello, secondEffect, countDown])
+
+// Run the batched effects inside another effect:
+function effect() {
+  effects(effect => effect)
+}
+
+const program = {
+  init() {
+    // Provide batched effects to run:
+    return [null, effect]
+  },
+  update() {},
+  view() {}
+}
+
+// Run the program:
+run(program)
+
+</code></pre>
         
+          <p> </p>
+          <h2>mapEffects</h2>
+          <p>Another useful function for effects is <code>mapEffects</code>. You would use this the same way you use tagged unions to enable views to use actions. With mapped effects you can access from one program the effect of another program. This opens up a channel of communication between a parent program and a child program.</p>
+
+          <p>To create mapped effects you first need to import it into your project.</p>
+<pre><code class="language-javascript">import { h, render, run, mapEffects } from '@composi/core'
+
+const counter = {
+  init() {
+    return [0]
+  }, // State is an integer to count
+  update(message, state) {
+    return [state + 1] // Increment the state
+  },
+  view(state, send) {
+    // add later...
+  }
+}
+// Effect we will use with counter:
+const counterMessage = message => ({
+  type: 'counterMessage',
+  data: message
+})
+
+// Capture the state and effect of counter program to be used by its parent:
+const [counterState, counterEffect] = counter.init()
+
+// Create a new init function for that we will use with counter.
+// Here we app the effects:
+const init = () => [{counterState}, mapEffect(counterEffect, counterMessage)]
+</code></pre>
 
               
+          <p>In the following Codepen example, the child program is being rendered by the parent program. But the child has its own local state. To enable the parent to know that state and use it to render the child, we use a mapped effect. The mapped effect allows the parent to know what the child's state is. It has access to the state to print it out in its own scope, but the state is owned by the child.</p>
+
+          <p data-height="500" data-theme-id="6688" data-slug-hash="yQBRwX" data-default-tab="js,result" data-user="rbiggs"
+            data-pen-title="@composi/core + runtime Composition2a" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/yQBRwX/">@composi/core
+              + runtime Composition2a</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+          <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
           
               <p>&nbsp;</p>
       </div>
