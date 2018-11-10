@@ -53,7 +53,7 @@
           <p>All @composi/idb methods return promises. That means to use them you'll need to use then and catch statements.</p>
 
           <h2>set</h2>
-          <p>Set takes two arguments: a key and a value to store with it. The value can be any valid JavaScript type or event blobs, such as images, sound files, etc. Storing blobs can quickly take up all your availabe storage space, so use compression and only use the ones you aboslute need.</p>
+          <p>Set takes two arguments: a key and a value to store with it. The value can be any valid JavaScript type or even blobs, such as images, sound files, etc. Storing blobs can quickly take up all your availabe storage space, so use compression and only use the ones you aboslute need.</p>
           <p><code>set</code> returns a promise, so if you want to do something when the save completes, you need to use <code>then</code>.</p>
 
 <pre><code class="language-javascript">idb.set('name', 'Joe')
@@ -91,13 +91,13 @@ idb.set('name', 'Joe')
           <p>If this is the first time in your code that you are using a method on the idb object, @composi/idb will
   create an instance of IndexedDB. If the default database and store do not exist, it will create them. Otherwise it will try to get the key/value from the existing database.</p>
           <h2>remove</h2>
-          <p> </p>
+          <p>This function allows you to delete the database completely. Be careful when doing so.</p>
 <pre><code class="language-javascript">idb.remove().then(() => {
 
 })</code></pre>
           <p> </p>
           <h2>clear</h2>
-          <p> </p>
+          <p>If you don't want to delete the database, but its content is old and stale, you can use this function to clear it out.</p>
 <pre><code class="language-javascript">idb.clear().then(() => {
 
 })</code></pre>

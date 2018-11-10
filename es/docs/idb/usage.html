@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/idb:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/es/docs/idb/install.html">Instalación</a></li>
+          <li><a href="/es/docs/idb/idb.html">IDB</a></li>
+          <li class='selected'>Uso</li>
+        </ul>
+          <h1>Uso</h1>
+          <h2>Cómo Usar IDB</h2>
+          <p>Todos los métodos de @composi/idb methods devuelven promesas. Eso significa que tendrás que usar sentencias on <code>then</code> y <code>catch</code>.</p>
+
+          <h2>set</h2>
+          <p>Set accepta dos argumentos: una clave y un valor que quardar con ella. El valor puede ser cualquier tipo de o aún un blob (contenido binario), tales como imágenes, archivos de sonido, etc. Almacenar blobs puede usar todo el espacio disponible para almacenaje rápidamente, así que debes de usar algún tipo de compresión y solo usar los que más necesitas.</p>
+          <p><code>set</code> devuelve una promesa, así pues, si quieres hacer algo cuando el guardar termina, tendrás que usar <code>then</code>.</p>
+
+<pre><code class="language-javascript">idb.set('nombre', 'José')
+
+// O haz algo después de guardar la clave y valor:
+idb.set('nombre', 'José')
+  .then(() => {
+    console.log('Guardamos el nombre.')
+  })</code></pre>
+         <p>Si esta es la primera vez en su código que utiliza un método del objeto idb, @composi/idb creará una instancia de IndexedDB e intentará conectarse a la base de datos y al almacén predeterminados. Si aún no existen, se crearán para que se pueda guardar la clave y valor.</p>
+
+          <h2>get</h2>
+          <p>El método <code>get</code> accepta un solo argumento: la clave que recuperar. Esta es una clave de texto y devuelve una promesa. Así, para hacer algo con el valor que se retorna, tendrás que usar una función <code>then</code>.</p>
+<pre><code class="language-javascript">idb.get('productos').then(productoss => {
+  // Se espera una matriz de productos:
+  if (productoss && productos.length) {
+    // Haz algo con los productos...
+  }
+})</code></pre>
+
+          <p> </p>
+          <h3>Gestionar el Fracaso</h3>
+          <p>Si <code>get</code> falla en devolver un valor, probablemente porque la clave no existe, devuelve <code>undefined</code>. Debido a que devuelve algo, no se puede usar una función <code>catch</code> para tratar con esto. En su lugar, tendrás que usar una verificación condicional para ver si recibiste algo y, si no, hacer otra cosa. En el siguiente ejemplo, observa cómo usamos primero una sentencia <code>if</code> para ver si obtuvimos algo y luego tratamos con un error en la sentencia <code>else</code>.</p>
+
+<pre><code class="language-javascript">idb.get('usuarios').then(usuarios => {
+  // Se espera una matriz de usuarios:
+  if (usuarios && usuarios.length) {
+    render(&lt;ListaUsuarios datos={usuarios} />, 'section')
+  } else {
+    // No hay usuarios guardados, así proporciona unos por defecto:
+    const usuarios = ['Gloria', 'Juan', 'Paula', 'Jorje']
+    render(&lt;ListaUsuarios datos={usuarios} />, 'section')
+  }
+})</code></pre>
+
+          <p>Si esta es la primera vez que estás usando un método del objeto idb,  @composi/idb creará una instancia de IndexedDB. Si ni existe ni la base de datos ni el almacén (store), los creará también. De otro mode, tratará de conseguir la clave y valor de la base de datos que encontró.</p>
+          <h2>remove</h2>
+          <p>Esta función elimina la base de datos. Úsalo con cuidado.</p>
+<pre><code class="language-javascript">idb.remove().then(() => {
+
+})</code></pre>
+          <p> </p>
+          <h2>clear</h2>
+          <p>Si no quieres eliminar la base de datos por completo, pero los datos que ella contiene son bastante viejas, puedes
+          vaciar la base de sus contenido con esta función.</p>
+<pre><code class="language-javascript">idb.clear().then(() => {
+
+})</code></pre>
+          <p> </p>
+          <h2>keys</h2>
+
+          <p>La función <code>keys()</code> devuelve una matriz de todas las claves en la base de datos. Usarás esta cuando quieres sabers cuáles son las claves en la base de datos. </p>
+
+<pre><code class="language-javascript">idb.keys().then(keys => {
+  if (keys.includes('Ítemes-guardados')) {
+    return idb.get('Ítemes-guardados')
+  }
+})
+  .then(items => {
+    // Haz algo con los ítemes guardados...
+  })
+</code></pre>
+            <p>El examinar las claves guardados te puede dar una buena idea de qué se hizo durante la última sesión.</p>
+
+            <h2>Conrol de Versiones y Marca de Tiempo</h2>
+            <p>IndexedDB soporte el control de versions y la actualización de las esquemas. @composi/idb no soporta eso. Sin embargo, puedes usar <code>set</code> para guardar una versión o marca de tiempo para que puedas chequear la versión o cuán vieja es la marca de tiempo cuando se accede a la base de datos de nuevo. Si la versión o la marca de tiempo es demasiado viejo, puedas decidir vaciar la base de datos y poblarla con nuevos dataos.</p>
+<pre><code class="language-javascript">// Guarda una vesión para el store:
+idb.set('versión', '3.5')
+
+  // Durante la próxima recarga de la página, chequear la versión:
+idb.get('versión')
+  .then(version => {
+    if (versión && versión < 5) {
+      idb.clear()
+    }
+  })
+</code></pre>
+            <p>O puedes guard una marca de tiempo y al recargar la página, chequeas para ver si la marca tiene mas de 30 días::</p>
+<pre><code class="language-javascript">// Guarda marca de tiempo:
+idb.set('tiempo', new Date().getTime())
+
+// Durante el recargar consigue el tiempo para ver si tiene más de 30 días.
+// Para eso vamos a usar unas functions auxiliars para convertir el valor UTF a días.
+const tiempoActual = new Date().getTime()
+// Un día en milisegundos.
+const día = 1000 * 60 * 60 * 24
+// Consigue el tiempo:
+idb.get('tiempo')
+  .then(tiempo => {
+    // Si el tiempo tiene más de 30 días:
+    if (tiempo && (tiempoActual - tiempo) / día > 30) {
+      // Vacía todo el contenido de la base de datos:
+      idb.clear()
+    }
+  })
+</code></pre>
+    <p> </p>
+
+    <h2>Usando con @composi/core</h2>
+    <p>Here's an example of a todo list using @composi/idb and @composi/core with its runtime.</p>
+
+<pre><code class="language-javascript">import { h, render, run, union } from '@composi/core'
+import { mergeObjects } from '@composi/merge-objects'
+import { idb } from '@composi/idb'
+
+// id para los ítemes de lista
+function id() {
+  return Math.floor(Math.random() * 100000000 + Math.random() * 1000);
+}
+
+// Manejar el estado de los botones del pie para mostrar las tareas.
+const manejarEstadoBoton = index => {
+  const botones = [false, false, false];
+  botones[index] = true;
+  return botones;
+};
+
+// Componente Pie:
+function Pie({ estado, manejarEstadoBoton, send }) {
+  let cuenta = 0;
+  estado.items.forEach(item => {
+    if (item.activa === true) {
+      cuenta += 1;
+    }
+  });
+  return (
+    &lt;footer>
+      &lt;div id="vista-de-suma">
+        &lt;span>{cuenta} left.&lt;/span>
+      &lt;/div>
+      &lt;p>Show: &lt;/p>
+      &lt;div id="mostrar-estado-tarea">
+        &lt;button
+          onclick={e => send(Msj.mostrarTodas(e))}
+          id="mostrar-todas"
+          class={estado.botónSeleccionado[0] ? "selected" : ""}
+        >
+          All
+        &lt;/button>
+        &lt;button
+          onclick={() => send(Msj.mostrarActivas())}
+          id="mostrar-activas"
+          class={estado.botónSeleccionado[1] ? "selected" : ""}
+        >
+          Active
+        &lt;/button>
+        &lt;button
+          onclick={e => send(Msj.mostrarCompletadas(e))}
+          id="mostrar-comletadas"
+          class={estado.botónSeleccionado[2] ? "selected" : ""}
+        >
+          Completed
+        &lt;/button>
+      &lt;/div>
+    &lt;/footer>
+  );
+}
+
+// Componente ítemes de lista:
+function ÍtemesDeLista({ item, animarEntrada, animarSalida, send }) {
+  return (
+    &lt;li
+      key={item.id}
+      class={item.activa ? "activa" : ""}
+      hidden={item.hidden}
+      onmount={animarEntrada}
+      onunmount={animarSalida}
+    >
+      &lt;button
+        class="manejar-estado"
+        onclick={() => send(Msj.manejarEstadoActivo(item.id))}
+      >
+        &lt;svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1">
+          &lt;g
+            id="Página-1"
+            stroke="none"
+            stroke-width="1"
+            fill="none"
+            fill-rule="evenodd"
+          >
+            &lt;g id="indicador-selección">
+              &lt;path
+                d="M2,13 L9.9294326,16.8406135 L17.1937075,1.90173332"
+                id="checkmark"
+                stroke="#007AFF"
+                stroke-width="2"
+              />
+            &lt;/g>
+          &lt;/g>
+        &lt;/svg>
+      &lt;/button>
+      &lt;h3 onclick={() => send(Msj.manejarEstadoActivo(item.id))}>{item.valor}&lt;/h3>
+      &lt;button onclick={() => send(Msj.eliminarÍtem(item.id))} class="eliminar">
+        &lt;svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1">
+          &lt;g
+            id="Página-2"
+            stroke="none"
+            stroke-width="1"
+            fill="none"
+            fill-rule="evenodd"
+          >
+            &lt;g
+              id="Eliminar"
+              stroke="#FF0000"
+              stroke-width="2"
+              stroke-linecap="square"
+            >
+              &lt;path d="M26.5,3.5 L3.5,26.5" id="Line" />
+              &lt;path d="M3.5,3.5 L26.5,26.5" id="Line" />
+            &lt;/g>
+          &lt;/g>
+        &lt;/svg>
+      &lt;/button>
+    &lt;/li>
+  );
+}
+
+// Definir lista de tareas.
+function ListaTareas({ estado, send }) {
+  console.log(estado)
+  let valor;
+  function focusInput(input) {
+    input.focus();
+  }
+  function updateValue(e) {
+    valor = e.target.value;
+    e.target.focus();
+  }
+  function animarEntrada(el) {
+    el.classList.add("añadir-ítem");
+  }
+  function animarSalida(done, el) {
+    el.classList.add("eliminar-ítem");
+    setTimeout(() => {
+      done();
+    }, 1000);
+  }
+  return (
+    &lt;div class="vista-padre">
+      &lt;p class="añadir-tarea">
+        &lt;input type="text" onchange={updateValue} valor={estado.valorInput} />
+        &lt;button class="añadirÍtem" onclick={() => send(Msj.añadirÍtem(valor))}>
+          Add Item
+        &lt;/button>
+      &lt;/p>
+      &lt;ul class="lista-tareas">
+        {estado.items.map(item => (
+          &lt;ÍtemesDeLista {...{ item, animarEntrada, animarSalida, send }} />
+        ))}
+      &lt;/ul>
+      &lt;Pie {...{ estado, manejarEstadoBoton, send }} />
+    &lt;/div>
+  );
+}
+
+// El estado por defecto:
+let estado = {
+  items: [
+    { activa: true, valor: "Tomar una siesta", id: id(), hidden: false },
+    { activa: false, valor: "Comer algo rico", id: id(), hidden: false },
+    { activa: true, valor: "Hablar con me mamá", id: id(), hidden: false }
+  ],
+  botónSeleccionado: [true, false, false],
+  valorInput: ""
+};
+
+// Crear una unión etiquetada.
+const Msj = union([
+  "añadirÍtem",
+  "eliminarÍtem",
+  "manejarEstadoActivo",
+  "mostrarActivas",
+  "mostrarCompletadas",
+  "mostrarTodas",
+  "guardarLocalmente"
+]);
+
+// Asemblar el programa.
+const programa = {
+  init: [estado],
+  view(estado, send) {
+    render(&lt;ListaTareas {...{ estado, send }} />, "section")
+  },
+  update(msj, estado) {
+    return Msj.match(msj, {
+      añadirÍtem: valor => {
+        if (valor) {
+          // Clonar el estado:
+          const estadoPrevio = mergeObjects(estado);
+          estadoPrevio.items.push({
+            activa: true,
+            valor,
+            id: id(),
+            hidden: false
+          });
+          // Guardar el estado en IndexedDB.
+          // Éste es un efecto asincrónico.
+          idb.set('tareas', estadoPrevio)
+          return [estadoPrevio]
+        }
+      },
+      eliminarÍtem: id => {
+        const estadoPrevio = mergeObjects(estado);
+        estadoPrevio.items = estadoPrevio.items.filter(item => item.id != id);
+        // Guardar el estado en IndexedDB.
+        // Éste es un efecto asincrónico.
+        idb.set('tareas', estadoPrevio)
+        return [estadoPrevio]
+      },
+      manejarEstadoActivo: id => {
+        const estadoPrevio = mergeObjects(estado);
+        const index = estadoPrevio.items.findIndex(item => {
+          return item.id == id;
+        });
+        estadoPrevio.items[index].activa = !estadoPrevio.items[index].activa;
+        return [estadoPrevio];
+      },
+      mostrarActivas: () => {
+        const estadoPrevio = mergeObjects(estado);
+        estadoPrevio.items.map(item => {
+          if (!item.activa) item.hidden = true;
+          else item.hidden = false;
+        });
+        estadoPrevio.botónSeleccionado = manejarEstadoBoton(1);
+        return [estadoPrevio];
+      },
+      mostrarCompletadas: () => {
+        const estadoPrevio = mergeObjects(estado);
+        estadoPrevio.items.map(item => {
+          if (item.activa) item.hidden = true;
+          else item.hidden = false;
+        });
+        estadoPrevio.botónSeleccionado = manejarEstadoBoton(2);
+        return [estadoPrevio];
+      },
+      mostrarTodas: () => {
+        const estadoPrevio = mergeObjects(estado);
+        estadoPrevio.items.map(item => (item.hidden = false));
+        estadoPrevio.botónSeleccionado = manejarEstadoBoton(0);
+        return [estadoPrevio];
+      },
+      guardarLocalmente: estadoPrevio => {
+        idb.set('tareas', estadoPrevio)
+      }
+    });
+  }
+};
+
+// Antes de ejectuar el programa,
+// chequear si hay datos guardos en IndexedDB.
+// Si hay, usarlos para el programa.
+// Si no, usar los datos por defecto.
+idb.get('tareas').then(datos => {
+  if (datos) {
+    console.log('Hay datos')
+    programa.init[0] = datos
+    run(programa) 
+  } else {
+    console.log('No hay datos guardos así que vamos a usar otros.')
+    // render(&lt;ListaTareas estado={estado} />, "section")
+    run(programa)
+    idb.set('tareas', estado)
+  }
+})
+
+</code></pre>
+
+            <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a> y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

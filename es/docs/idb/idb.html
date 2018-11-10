@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/idb:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/es/docs/idb/install.html">Instalación</a></li>
+          <li class='selected'>IDB</li>
+          <li><a href="/es/docs/idb/usage.html">Uso</a></li>
+        </ul>
+          <h1>IDB</h1>
+          <h3>IndexedDB con Promesas</h3>
+          <p>IDB es una envoltura de promesa para IndexedDB. Eso significa que todas sus operaciones no bloquean. Proporciona una API simple y similar a localStorage. Esto le permite conservar los datos localmente con la facilidad de uso de localStorage pero con la solidez de IndexedDB.</p>
+
+          <p>LocalStorage es ideal para guardar pequeñas cantidades de datos rápidamente. Sin embargo, solo almacena un tipo: cadena. Todo lo que quieras guardar en él debe convertirse en una cadena. Eso incluye todos los tipos de datos de JavaScript. Esto requiere convertir los datos a cadenas con JSON.stringify. Para recuperar los datos hay que pasar los datos a JSON.parse. Esta conversión de ida y vuelta no suele ser un problema. Pero a veces sí lo es. Cuanto más complejos sean los datos, más se enfrentarán a las limitaciones de localStorage. Básicamente, localStorage es una cookie glorificada, un caché para datos de cadena. Y, por último, el almacenamiento local está limitado a aproximadamente 5 MB de datos. En contraste, IndexedDB comienza con 50 MB de almacenamiento disponible y puede usar más con la aprobación del usuario. Si evita guardar los blobs, puedes almacenar bastante en 50 MB.</p>
+
+          <p>IndexedDB es una base de datos no-SQL y por lo tanto no tiene ninguna de las limitaciones de SQL. Pero eso significa que su API es comlejo. Configurar una base de datos con ella y mantenerla se complicado. Cuando todo lo que deseas es conservar algunos datos, aprender a usar IndexedDB de manera eficiente puede ser excesivo. @composi/idb fue creado para abordar este problema. Proporciona una solución para persistir fácilmente los datos en IndexedDB sin tener que saber cómo funciona IndexedDB.</p>
+
+          <p>Con IndexedDB, necesitas saber cómo crear una base de datos, crear un store, abrir una conexión, manejar el control de versiones, manejar esquemas de actualización y manejar transacciones. En contraste, con @composi/idb tienes la siguiente API:</p>
+
+          <ul class='main-menu'>
+            <li>set(clave, valor)</li>
+            <li>get(clave)</li>
+            <li>remove(clave)</li>
+            <li>clear()</li>
+            <li>keys()</li>
+          </ul>
+          <p> </p>
+          <h2>Una Base de Datos para Regirlos Todos</h2>
+          <p>Debido a que @composi/idb se trata de conservar los datos y mantener las cosas en forma fácil, se limita a una base de datos: <code>composi-idb</code> con un store (almacén): <code>composi-store</code>. Para usarlo, simplemente lo importas a tu proyecto y usas uno de los métodos anteriores. Al hacer eso, IDB crea automáticamente una base de datos predeterminada para ti.</p>
+
+<pre><code class="language-javascript">import { h, render } from '@composi/core'
+import { idb } from '@composi/idb'
+
+// Crear la base por defecto de datos y guarda unos datos en ella:
+idb.set('mis-cosas', ['manzanas', 'calcetines', 'jabón'])
+</code></pre>
+
+          <p>Como mencionamos, @composi/idb toma ventaja de las promesas. Eso significa que todos los métodos anteriores devuelven promesas. Para acceder sus resultados, tendrás que utilizar una función <code>then</code>. Vaya a <a href="/es/docs/idb/usage.html">Uso</a> para aprender a usar los métodos de @ composi/idb.</p>
+
+
+          <h2>Otras Opciones</h2>
+          <p>Si quieres más control sobre lo que hace IndexedDB, debes de considerar otras librerías que simplican la interfaz de IndexedDB: <a href="hhttps://www.npmjs.com/package/dexie">dexie</a>, <a href="https://www.npmjs.com/package/pouchdb-browser">pouchdb-browser</a>, o chequee lo que se encuentra en <a href="https://www.npmjs.com/search?q=indexeddb">NPM</a></p>
+
+
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a> y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

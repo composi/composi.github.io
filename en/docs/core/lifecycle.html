@@ -71,7 +71,7 @@
 
         <p>The <code>onmount</code> lifecycle hook gets fired right after the component is mounted in the DOM. It takes a callback whose first argument is the base element of the component. This lets you do some useful things, such as <a href='#access-dom'>accessing</a> the child elements of the component, or setting up event listeners and <a href='#delegate-events'>delegated events</a>.</p>
 
-        <p>In the documentation for <a href="/en/docs/core/props.html">prpos</a> and <a href="/en/docs/core/event.html">events</a> we saw how to create a list. Now we are going to look at how to add items to the list. To do that we need to have an input where the user can add a new item, and a button to click to add that item to the list. The <code>onmount</code> hook gives is a way to access the component's input to get its value. So, let's do this. Here's how we make a dynamic list. We've updated it by wrapping the list in a <code>div</code> which has two children, the list and a paragraph with a text input and a button.</p>
+        <p>In the documentation for <a href="/en/docs/core/props.html">props</a> and <a href="/en/docs/core/event.html">events</a> we saw how to create a list. Now we are going to look at how to add items to the list. To do that we need to have an input where the user can add a new item, and a button to click to add that item to the list. The <code>onmount</code> hook gives is a way to access the component's input to get its value. So, let's do this. Here's how we make a dynamic list. We've updated it by wrapping the list in a <code>div</code> which has two children, the list and a paragraph with a text input and a button.</p>
 
 
         <h2>Accessing the Component's DOM</h2>
@@ -87,10 +87,10 @@
         <h2>onupdate</h2>
 
         <p>Sometimes you may want to know when a component is being updated, like when its props change. You can do that with <code>onupdate</code>. This hook gets three arguments passed to it: the component's base element, the old <code>props</code> and the new <code>props</code>. You can compare any value between the props to see what changed and then do what you need to.</p>
-        <p><code>onupdate</code> is only called when the particule element that it is registered on is being updated. The <code>onupdate</code> hook is not envoked when the element is mounted or unmounted.</p>
+        <p><code>onupdate</code> is only called when the particular element that it is registered on is being updated. The <code>onupdate</code> hook is not envoked when the element is mounted or unmounted.</p>
         <p>To be able to use <code>onupdate</code> properly, you need to be aware of what the old and new props are. We pass props to a component when we pass it to the <code>render</code> function:</p>
 <pre><code class="language-javascript">render(&lt;List data={fruits}/>, 'body')</code></pre>
-        <p>We call the attribute <code>data</code> a proper. However, in this case it will not persist as a prop. That's because the <code>render</code> function will convert the tag into a function and its props will be pass to the function as arguments. Technically, props are only the values directly attached to the elements that the component fucntion returns. Let's take another look at a List component:</p>
+        <p>We call the attribute <code>data</code> a prop. However, in this case it will not persist as a prop. That's because the <code>render</code> function will convert the tag into a function and its props will be pass to the function as arguments. Technically, props are only the values directly attached to the elements that the component function returns. Let's take another look at a List component:</p>
 <pre><code class="language-javascript">function List({data}) {
   function logUpdate(element, oldProps, newProps) {
     // compare oldProps with newProps...
@@ -98,14 +98,14 @@
   return (
     &lt;ul onupdate={logUpdate}>
       {
-        data.map(item => &lt;li item={item.key}>{item.value}&lt;/li>)
+        data.map(item => &lt;li key={item.key}>{item.value}&lt;/li>)
       }
     &lt/ul>
   )
 }
 render(&lt;List data={fruits}/>, 'body')
 </code></pre>
-<p>In the above example, notice that we've place the <code>onupdate</code> event directly on the component's base element. Then in our <code>logUpdate</code> function we want to compare the old and new props to see what changes. You might be thinking that we will get the old and new versions of the <code>data</code> prop. Now look at the element. Do you see any props on it besides <code>onupdate</code>? That's the problem. The <code>ul</code> has no props. The fruits data that we want to test is coming in as a parameter and we are using it separately in the script block delimited by curly braces. This means that when we try to access newProps and oldPros, these will be undefined. To enable the <code>onupdate</code> lifecycle event to access the data, we need to register it as a prop directly on the element were the lifecycle hook is. Here's the component updated:</p>
+<p>In the above example, notice that we've place the <code>onupdate</code> event directly on the component's base element. Then in our <code>logUpdate</code> function we want to compare the old and new props to see what changes. You might be thinking that we will get the old and new versions of the <code>data</code> prop. Now look at the element. Do you see any props on it besides <code>onupdate</code>? That's the problem. The <code>ul</code> has no props. The fruits data that we want to test is coming in as a parameter and we are using it separately in the script block delimited by curly braces. This means that when we try to access newProps and oldPros, these will be undefined. To enable the <code>onupdate</code> lifecycle event to access the data, we need to register that data as a prop directly on the element were the lifecycle hook is. Here's the component updated:</p>
 <pre><code class="language-javascript">function List({data}) {
   function logUpdate(element, oldProps, newProps) {
     // compare oldProps with newProps...
@@ -135,7 +135,7 @@ render(&lt;List data={fruits}/>, 'body')
 
         <h2>onunmount</h2>
         <p>Sometimes when a component is being removed from the DOM you want to be able to know so you can do something. Maybe you need to do some environmental cleanup, or trigger some other event or function. <code>onunmount</code> lets you do that. In fact, <code>onunmount</code> lets you intercept the unmounting process and delay it until you are done with whatever it is you need to do. This is great for situations where you want to do an animation when a list item is delete. We'll make a simple list that uses <code>onunmout</code> to animate the list item before deleting it. For this, we'll leave out the part that actually deletes a list item since we already covered that in the example for event delegation above.</p>
-        <p><code>onunmount</code> expects that its callback with handle a <code>done()</code> function. Specifically, <code>onunmount</code> gets passed two arguments: the element being deleted, and a <code>done</code> callback to invoke when you are done. If you fail to provide a <code>done()</code> callback in your code or forget to invoke at the end of your code, the element will not be removed from the DOM, which could result in really unexpected results as the list data is mutated.</p>
+        <p><code>onunmount</code> expects that its callback will handle a <code>done()</code> function. Specifically, <code>onunmount</code> gets passed two arguments: the element being deleted, and a <code>done</code> callback to invoke when you are done. If you fail to provide a <code>done()</code> callback in your code or forget to invoke at the end of your code, the element will not be removed from the DOM, which could lead to really unexpected results as the list data is mutated.</p>
         <p>In the following example we're using <code>onunmount</code> to run a keyframe animation before the list item is removed. We've also got an <code>onmount</code> on the list items to enable animating new list iems into view.</p>
 <p data-height="600" data-theme-id="6688" data-slug-hash="yRMLVL" data-default-tab="js,result" data-user="rbiggs"
   data-pen-title="@composi/core - Lifecycle-onunmount" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/yRMLVL/">@composi/core
@@ -178,7 +178,7 @@ render(&lt;List data={fruits}/>, 'body')
 }
 
 </code></pre>
-        <p>The thing to be aware about <code>onunmount</code>, it causes the unmounting to be asynchronous. Even thought the patch algorithm has identified a condition that requires the element to be removed from the DOM, it waits to actually do so until you fire <code>done()</code> in your <code>onunmount</code> handler.</p>
+        <p>The thing to be aware about <code>onunmount</code>, it causes the unmounting to be asynchronous. Even though the patch algorithm has identified a condition that requires the element to be removed from the DOM, it waits to actually do so until you fire <code>done()</code> in your <code>onunmount</code> handler.</p>
         <p>&nbsp;</p>
       </div>
     </section>

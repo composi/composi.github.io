@@ -46,8 +46,8 @@
         <ul class='breadcrumb'>
           <li><a href="/en/docs/runtime/runtime.html">Runtime</a></li>
           <li><a href="/en/docs/runtime/init.html">Init</a></li>
-          <li><a href="/en/docs/runtime/update.html">Update</a></li>
           <li><a href="/en/docs/runtime/view.html">View</a></li>
+          <li><a href="/en/docs/runtime/update.html">Update</a></li>
           <li><a href="/en/docs/runtime/effects.html">Effects</a></li><li><a href="/en/docs/runtime/tagged-unions.html">Tagged Unions</a></li>
           <li class='selected'>Composition</li>
           <li><a href="/en/docs/runtime/end-program.html">Stop Program</a></li>
@@ -55,7 +55,7 @@
           <li><a href="/en/docs/runtime/hop.html">Higher Order Program</a></li>
         </ul>
           <h1>Composition</h1>
-          <h2></h2>
+          <h2>One Program in Another</h2>
           <p>As a program becomes more complex, so will its view. This may require breaking it down into smaller pieces, even storing those in separate files so they can be reused. The nature of functional components makes it easy to compose them together, passing props from parent to child. You can learn more about functional component composition in the section about the @composi/core <a target='__blank' href="/en/docs/core/render.html">render</a> function.</p>
           
           <p>You may also want to use a small, separate runtime app inside another one. This is possible, though a bit verbose. The main thing to be aware of when doing this is that the @composi/core render function can only process markup. That means that the child program's view cannot render the component, it has to just return its markup. That way the parent component's view will handle rendering the child's view. Notice how we do this in the following example:</p>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/runtime:</h3>
+        <ul class='breadcrumb'>
+          <li class='selected'>Entorno de Ejecución</li>
+          <li><a href="/es/docs/runtime/init.html">Init</a></li>
+          <li><a href="/es/docs/runtime/view.html">View</a></li>
+          <li><a href="/es/docs/runtime/update.html">Update</a></li>
+          <li><a href="/es/docs/runtime/effects.html">Efectos</a></li>
+          <li><a href="/es/docs/runtime/tagged-unions.html">Unión Etiquetada</a></li>
+          <li><a href="/es/docs/runtime/composition.html">Composición</a></li>
+          <li><a href="/es/docs/runtime/end-program.html">Parar el Programa</a></li>
+          <li><a href="/es/docs/runtime/immutability.html">Inmutabilidad</a></li>
+          <li><a href="/es/docs/runtime/hop.html">Programa de Orden Superior</a></li>
+        </ul>
+          <h1>Entorno de Ejecución</h1>
+          <h2>Gestión de Estado para los Componentes Funcionales</h2>
+          <p>Esta sección asume que ya sabe cómo crear y usar componentes funcionales con @composi/core. Si no es así, visite esta <a href="/es/docs/core/install.html" target='_blank'>sección</a>.</p>
+
+          <p>Es increíble lo que puedes hacer con solo <code>h</code> y <code>render</code>. Sin embargo, más a menudo tu componente necesitará algún tipo de estado local. Los componentes basados en clases pueden lograr esto fácilmente. @composi/core solo proporciona componentes funcionales, que no pueden tener un estado local. @composi/core soluciona esta limitación a través de su entorno de ejecución creado con la función <code>run</code>, que proporciona un ámbito privado para encapsular el estado y un mecanismo para acutalizar la vista cuando cambia el estado. El entorno de ejecución de @composi/core te permite crear un programa en el cuál las preocupaciones se dividen en responsabilidades claramente definidas.</p>
+
+          <h2>SVU: State-View-Update</h2>
+          <p>El entorno de ejecución de Composi se basa en el concepto de SVU, State, View y Update (Estado, Vista y Actualización). Esto es similar a MVC, pero sutilmente diferente. En el MVC tradicional, el modelo no solo contiene los datos, sino que puede validar los datos y conservarlos en una base de datos. Con SVU, el estado consiste en los datos inertes. No tiene lógica para nada. En SVU, View es una función que toma el estado y devuelve una representación de éste. A la vista no le importa cómo se hace esto. Es tu responsabilidad dar instrucciones a la vista sobre qué hacer con el estado. Esto podría ser simplemente devolver un componente funcional, o usar la función <code>render</code> de @composi/core para renderizar el resultado en el DOM. Al crear una vista, se supone que vas a implementar eventos para la interacción con el usuario. Cuando un usuario interactúa con esos eventos, ese acto envía mensajes al método <code>Update</code>. La función <code>update</code> contiene toda la lógica de negocios del programa. El método <code>update</code> maneja esto internamente a través de funciones de acción. Dependiendo del mensaje enviado, <code>update</code> lo pasa a una acción que modifica el estado. Cuando esto sucede, el entorno de ejecución invoca el método <code>view</code> con ese estado, lo que hace que <code>view</code> devuelva el resultado. En cuanto al desarollo front-end (para el navegador), esto significa una nueva representación de la vista.</p>
+
+          <div style='text-align: center;'><img src="/images/SVU-es.png" alt="SVU Diagram"></div>
+
+          <p>Si la ilustración anterior es un poco demasiado técnica para ti, aquí hay otra que muestra cómo funciona un programa de retorno de ejecución. Como usuario, interactúas con la vista enviando mensajes. Estos son interceptados por el método de actualización, que luego manipula el estado, causando que la vista cambie.</p>
+
+          <div style='text-align: center;'><img style='height: auto; width: 100%;' src="/images/SVU2-ES.jpg" alt="SVU Diagram"></div>
+
+          <p>Cada programa de returno de ejecución @composi/core implementa este patrón SVU. Lo hace con tres métodos: init, ver y update. Init es donde se define el estado predeterminado para el programa. En el inicio, el retorno de ejecución toma el valor devuelto por init y lo usa para representar la vista. El siguiente ejemplo muestra las partes centrales de un programa de ejecución.</p>
+<pre><code class='language-javascript'>const programa = {
+  init() {
+    return [estado, efecto]
+  },
+  view(estado, enviar) {
+  // Renderiza la vista que puede enviar mensajes a update:
+  return render(componente, contenedor)
+  },
+  update(mensaje, estado) {
+    if (mensaje) {
+      // Gestionar mensajes para actualizar el estado:
+      return [estado]
+      // O implementar un efecto:
+      return [estado, efecto]
+    }
+  }
+}</code></pre>
+          <p></p>
+          <p> </p>
+          <h3>Init</h3>
+
+          <p>Init es una función que devuelve una matriz de dos valores: estado y efecto. Al inicio, el programa usa el estado que init proporciona para representar la vista. El efecto es opcional. Si se proporciona, se ejecutará al inicio también. Los efectos son funciones asíncronas para los temporizadores o la obtención de datos. La mayoría de las veces init solo proporcionará el estado. El estado de un programa puede ser cualquier tipo de JavaScript: null, undefined, number, string, array u objecto. Los programas complejos inevitablemente necesitarán algún estado como una matriz u objeto.</p>
+
+          <h3>View</h3>
+          <p>View es una función que implementa la vista, la cual es la representación del estado del programa. Una vista por lo general tiene eventos para la interacción con el usuario. Una interacción enviará un mensaje a la función de <code>update</code> del programa.</p>
+
+          <h3>Update</h3>
+          <p>Update es la función donde se arregla toda la lógica de negocios para el programa. Según el mensaje que recibe, update performa acciones sobre el estado y lo devuelve. Esto causa que el programa vuelva a renderizar la vista con el estado nuevo.</p>
+
+          <p>Aquí está el program más sencillo que se puede hacer. Este es válido y funcionando, pero no hace nada.</p>
+          
+          <p data-height="300" data-theme-id="6688" data-slug-hash="GwZdoz" data-default-tab="js,result" data-user="rbiggs"
+            data-pen-title="@composi/core + runtime Básico" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/GwZdoz/">@composi/core
+              + runtime Básico</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+          <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+          <p> </p>
+          
+          <h3>El Orden no Importa</h3>
+          <p>Al crear un programa, el orden de las funciones no importa. En nuestros ejemplos solemos usar init, view, update. Pero puedes escoger cualquier orden que prefieres.</p>
+<pre><code class='language-javascript'>const programa1 = {
+  init() {},
+  update() {},
+  view() {}
+}
+const programa2 = {
+  init() {},
+  view() {},
+  update() {}
+}
+const programa3 = {
+  view() {},
+  init() {},
+  update() {}
+}</code></pre>
+          <p>Si ya tienes un orden que prefieres, quédate con el para preservar la consistencia.</p>
+
+          <h3>Contador--El Hola Mundo de Programas</h3>
+          <p>To illustrate setting up a program and running it we're going to make a simple clicker. State will be a number. View will send a message to update, and update will then increase the state value by 1.</p>
+<p data-height="500" data-theme-id="6688" data-slug-hash="EOYOEJ" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core + runtime - counter" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/EOYOEJ/">@composi/core
+    + runtime - counter</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+          <p> </p>
+          <h3>Un Objeto es un Objeto</h3>
+          <p>En los ejemplos anteriores se puede notar que hemos creado objetos con el nombre <code>programa</code> los cuales pasamos a la función <code>run</code>. Esto es similar a los componentes de clase. Una instancia de clase es un objeto retornado por una clase. La diferencia es en cómo se usan. Con los componentes de clase es muy común añadir propiedades y métodos nuevos a la clase para que tengan funcionalidad nueva. Al contrario, un programa de entorno de ejecución @composi/core solo tiene tres métodos: init, view y update.</p>
+          <p>El ejemplo previo del contador es talvez demasiado sencillo, pero muestra el formato básico para un programa del entorno de ejecución: init, view y update. Puedes aprender más de su documentación en el menú arriba.</p>
+
+          <h2>Part of Core</h2>
+          <p>The runtime is part of @composi/core, so importing and using it does not add anything to the final payload of your project's JavaScript. @composi/core is 2KB gzipped.</p>
+
+          <p>When we say the runtime is small, we mean it. Here's all the code for the runtime minified and completely functional:</p>
+<pre><code class="language-javascript">function run(a){function b(k){j&&c(e(k,h))}function c(k){let
+l=a.init();k?[h,i]=k:l&&l.length?[h,i]=l:h=[],i&&i(b),f(h,b)}const e=a.update,f=a.view,g=a.done;let h,i,j=!0;return
+c(h),function(){j&&(j=!1,g&&g(h))}}</code></pre>
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a> y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

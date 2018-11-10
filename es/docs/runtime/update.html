@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="clavewords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/runtime:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/es/docs/runtime/runtime.html">Entorno de Ejecución</a></li>
+          <li><a href="/es/docs/runtime/init.html">Init</a></li>
+          <li><a href="/es/docs/runtime/view.html">View</a></li>
+          <li class='selected'>Update</li>
+          <li><a href="/es/docs/runtime/effects.html">Efectos</a></li>
+          <li><a href="/es/docs/runtime/tagged-unions.html">Unión Etiquetada</a></li>
+          <li><a href="/es/docs/runtime/composition.html">Composición</a></li>
+          <li><a href="/es/docs/runtime/end-program.html">Parar el Programa</a></li>
+          <li><a href="/es/docs/runtime/immutability.html">Inmutabilidad</a></li>
+          <li><a href="/es/docs/runtime/hop.html">Programa de Orden Superior</a></li>
+        </ul>
+          <h1>Update</h1>
+          <h2>Lógica de Negocios del Programa</h2>
+          <p>El método update es para contener toda la lógica de negocios para el programa El método escucha los mensajes, cuando recibe uno, lo chequéa para averiguar cuál es y entonces ejecuta una acción apropiada. Por definir acciones diferentes, instruyes update cómo gestionarlas.</p>
+          <p>Update recibe dos argumentos: mensaje y estado. Mensaje es cualquier mensaje enviado por una interación del usuario con la vista. El argumento segundo es el estado actual del programa. Si el programa es complejo, a lo mejore va requerir enviar varios mensajes a update. Puesto que send solo puede tratar de uno solo argumento, es conveniente combinar lo todo como un objeto literal con tipo y datos. Nota cómo hacemos eso en el escrito siguiente.</p>
+          <pre><code class='language-javascript'>&lt;p class='formulario'>
+  &lt;input autofocus onchange={consigueValorInput} type="text" />
+  &lt;button class='añadir-ítem' onclick={()=> send({type: 'añadir-ítem', dato: valorDeInput})}>Añadir&lt;/button>
+&lt;/p>
+</code></pre>
+          <p>Saber que las vista mandará un objeto con propiedad de tipo como mensaje, podemos poner una prueba en la función update para captar los mensajes por tipo. Aquí es un ejemplo sencillo. Fíjate cómo en la función update chequeamos cuál mensaje fue enviado, entonce ejecutamos la accióna apropiada, como "añadir-ítem" o "eliminar-ítem".</p>
+<pre><code class="language-javascript">
+const programa = {
+  init() {
+    return [estado]
+  },
+  view(estado, send) {
+    return render(&lt;Lista {...{ estado, send }} />, section)
+  },
+
+  // La lógica de negocios se encuentra en el método update.
+  // Intercepta las acciones enviadas por la vista.
+  // Usar esas acciones para transformar al estado.
+  // Después se devuelve el nuevo estado.
+  // Eso causará que la vista se actualice.
+  update(mensaje, estado) {
+    switch (mensaje.type) {
+      case 'añadir-ítem':
+        const valor = mensaje.valorDeInput
+        if (valor) {
+          const estadoPrevio = mergeObjects(estado)
+          estadoPrevio.frutas.push({ clave: estadoPrevio.newKey++, valor })
+          return [estadoPrevio]
+        } else {
+          alert('¡Por favor de un valor!')
+          return [estado]
+        }
+        break
+      case 'eliminar-ítem':
+        const estadoPrevio = mergeObjects(estado)
+        estadoPrevio.frutas = estadoPrevio.frutas.filter(item => item.clave != mensaje.clave)
+        return [estadoPrevio]
+        break
+    }
+  }
+}</code></pre>
+          <p>Aquí es el ejemplo vivo:</p>
+          <p data-height="500" data-theme-id="6688" data-slug-hash="pQyQrm" data-default-tab="js,result" data-user="rbiggs"
+            data-pen-title="@composi/core + entorno de ejecución" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/pQyQrm/">@composi/core
+              + entorno de ejecución</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+          <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+          <p>Date cuenta de que no importa qué decisión tomemos con una acción, siempre tenemos que devolver el estado. Cada acción debe devolver el estado, incluso si no realiza cambios en el estado. No hacerlo generará un error. Esto se debe a que las acciones pasan el estado a la vista para representarse, por lo que no devolver el estado hará que la vista falle porque nunca recibió el estado.</p> 
+          <p>El hecho de que siempre tienes que devolver el estado, aun cuando no haya cambios, no quiere decir que esto causara que las vista vuelva a renderizarse. De echo, la función render chequéa el estado y las props del componente cuanto antes y para si son idénticos
+
+          <h2>Inmutabilidad</h2>
+          <p>En el ejemplo anterior, usamos la función <code>mergeObjects</code> para clonar el estado. Esto nos permite manipular de forma segura el clon sin afectar el estado actual del programa. Cuando terminamos con modificaciones al clon del estado, lo devolvemos. Esto luego se pasa al método view para renderizar y se vuelve a asignar al estado del programa. <code>mergeObjects</code> viene preinstalado cuando creas un nuevo proyecto @composi/core. Pero necesitas importarlo en tu proyecto para usarlo:</p>
+
+<pre><code class="language-javascript">import { h, render, run } from '@composi/core'
+import { mergeObjects } from '@composi/merge-objects'
+// With mergeObjects imported, you can use it to clone program state.
+</code></pre>
+
+          <p> </p> 
+          <h2>Acerca de Redux</h2>
+          <p>Si está familiarizado con Redux, puede observar algunas similitudes con la forma en que funcionan las acciones de update. Eso es porque Redux se inspiró en la arquitectura Elm. La diferencia está en los detalles. Los mensajes enviados por la vista se parecen a las acciones de Redux, y las acciones de update se parecen a los reducers de Redux. Son similares, pero diferentes. Los reducers de Redux se llaman así porque toman el estado, realizan cualquier número de operaciones y luego devuelven el nuevo estado. Las acciones del entorno de ejecución, por otro lado, también pueden devolver un nuevo estado, o también pueden disparar un efecto. Debido a que pueden hacer más de una cosa, no pueden llamarse reducers. Aun así, en la gran mayoría de los casos, actuarán como reducers de Redux. Ese es el caso de uso más común.</p>
+
+          <p>A continuación se muestra un ejemplo práctico de un programa en el que la vista envía varios mensajes diferentes para actualizar, que los examina para ver qué tipo de ellos deben realizar la acción apropiada. Examínalo detenidamente para ver cómo los mensajes agrupan los datos para enviarlos a las acciones, que luego actualizan el estado y hacen que la vista también se actualice. Hemos utilizado varios eventos del ciclo de vida en los elementos del componente funcional para manejar el enfoque del input, valor del input, etc. Utilizamos un evento <code>onchange</code> para obtener el valor del input para poder enviarla. en un mensaje para actualizar.</p>
+
+
+          <p data-height="500" data-theme-id="6688" data-slug-hash="VVjmXY" data-default-tab="js,result" data-user="rbiggs"
+            data-pen-title="@composi/core + entorno de ejecución" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/VVjmXY/">@composi/core
+              + entorno de ejecución</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+          <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+              <p> </p> 
+              <h2>Enfoque Alternativo</h2>
+              <p>Hay otra forma de enviar mensajes y capturarlos utilizando una unión etiquetada. @composi/core permite esto a través de su función <code>union</code>. Básicamente, esto crea una matriz de valores de cadena para los nombres de funciones y las acciones que se utilizarán en update. Esto puede parecer complicado, pero en realidad es bastante simple y resulta en un código más limpio y fácil de leer. Debes de leer la documentación sobre cómo utilizar <a target='__blank' href="/es/docs/runtime/tagged-unions.html">Unión Etiquetada</a>.</p>
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a> y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

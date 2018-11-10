@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/styler:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/es/docs/styler/install.html">Instalación</a></li>
+          <li><a href="/es/docs/styler/styler.html">Styler</a></li>
+          <li>Uso</li>
+        </ul>
+          <h1>Uso</h1>
+          <h3>Scoped Styles</h3>
+          <p>@composi/styler uses a JavScript object to describe the styles to create. Because of this you have to be careful defining styles. You are creating an object literal, so all values must be in quotes. single word CSS properties are fine, but if you want to use hypenated CSS properties you have to use their camel case version, or enclose them in quotes. Similarly, pseudo-elements, because the begin with a <code>:</code>, they have to be quoted as well. Also if you are going to use a keyframe animation or a media query, the entire property needs to be quoted. You will see examples of these below.</p>
+          <p>One last thing, never include a semi-colon at the end of a property value. CSS expects those, but this is JavaScript, so just the plain value in quotes. Include a semi-colon as part of a property value will throw and error.</p>
+
+          <h3>No Semi-colons</h3>
+<pre><code class="language-javascript">// Correct usage:
+addStyles('#list', {
+  // Use comma to separate from next property:
+  border: 'solid 1px #ccc',
+  margin: '20px'
+})
+
+// Incorrect:
+addStyles('#list', {
+  // Do not put semicolons at end!
+  // This will generate an error:
+  border: 'solid 1px #ccc';
+  // Do not put them inside the value.
+  // That will also generate an error:
+  margin: '20px;'
+})</code></pre>
+          <p> </p>
+          <h2>Setup</h2>
+          <p>First you need to import @composi/styler into your project. You want its <code>addStyles</code> method</p>
+<pre><code class='language-javascript'>import { addStyles } from '@composi/styler'</code></pre>
+          <p> </p>
+          <h2>Arguments</h2>
+          <p><code>addStyles</code> takes who arguments, the base for the style, which is the parent selector you wish to target, and an object literal of key value pairs defining the CSS to create.</p>
+
+          <p>When using with @composi/core, you can define your styles inside a component anywhere before the return statement.</p>
+
+          <pre><code class='language-javascript'>import { h, render }} from @composi/core
+import { addStyles } from '@composi/styler'
+
+// Define a component with styles:
+function Title({greet}) {
+  // Define styles:
+  addStyles('h1' {
+    padding: '2rem',
+    color: 'red'
+  })
+  return (
+    &lt;h1>Hello, {greet}!&lt;/h1>
+  )
+}
+</code></pre>
+
+          <p>Because <code>addStyles</code> is inside the component function, everytime it is render, the <code>addStyles</code> function will be called. <code>addStyles</code> creates one virtual stylesheet to which all rules get added. Rules with the same selector will overwrite earlier definitions with the last value provided being used.</code></p>
+
+          <h2>Camel Case or Quoted</h2>
+          <p>To use hyphenated properties you have two choices: camel cased or quoted:</p>
+<pre><code class='language-javascript'>import { h, render }} from @composi/core
+import { addStyles } from '@composi/styler'
+
+// Define a component with styles:
+function Title({greet}) {
+  // Define styles:
+  addStyles('h1' {
+    padding: '2rem',
+    color: 'white'
+    // camel cased:
+    backgroundColor: 'red'
+    // or quoted:
+    'background-color': 'red'
+  })
+  return (
+    &lt;h1>Hello, {greet}!&lt;/h1>
+  )
+}
+</code></pre>
+          <p> </p>
+          <h2>Pixel Values</h2>
+          <p>If you're using a pixel value for a property, you can leave off the length identifier and provide just a raw number:</p>
+
+<pre><code class='language-javascript'>addStyles('#list', {
+  // Define margin of 20px:
+  margin: 20,
+  // Define width of 300px:
+  width: 300
+})</code></pre>
+          <p> </p>
+          <h2>Nested Elements</h2>
+          <p>Like LESS and SASS, you can nest child elements to define their relationship to parents. This also works for
+          pseudo-elements.</p>
+<pre><code class='language-javascript'>addStyles('#main', {
+  ul: {
+    margin: 10,
+    width: 350,
+    border: 'solid 1px #ccc',
+    li: {
+      padding: 10,
+      borderBottom: 'solid 1px #ccc',
+      transition: 'all .25s ease-out',
+      ':hover': {
+        cursor: 'pointer',
+        backgroundColor: '#333',
+        color: '#fff'
+      },
+      ':last-of-type': {
+        border: 'none'
+      }
+    }
+  }
+})</code></pre>
+          <p>This will produce the following stylesheet:</p>
+<pre><code class='language-css'>#main ul {
+  margin: 10px;
+  width: 350px;
+  border: solid 1px #ccc;
+}
+#main ul li {
+  padding: 10px;
+  border-bottom: solid 1px #ccc;
+  transition: all .25s ease-out;
+}
+#main ul li:hover {
+  cursor: pointer;
+  background-color: #333;
+  color: #fff;
+}
+#main ul li:last-of-type {
+  border: none;
+}</code></pre>
+          <p> </p>
+          <h2>Media Queries</h2>
+          <p>You can add media queries to your component's stylesheet. Just make sure you quote the entire media query. To create a
+          media query rule you need to quote the entire query, and then the entire value. Notice how this is done below:</p>
+
+<pre><code class='language-javascript'>addStyles('h1', {
+    padding: '2rem',
+    fontSize: '13pt'
+  }
+  '@media only screen and (max-width: 500px)':  `{
+    h1: {
+      padding: '1rem',
+      fontSize: '11pt'
+    }
+}`)</code></pre>
+          <p> </p>
+          <h2>Keyframe Animation</h2>
+          <p>You can add keyframe animations. To do so youo need to quote the keyframe and name property together, and then quote
+          the entire animation rule. Notice how we do that below:</p>
+<pre><code class='language-javascript'>addStyles(nav, {
+  h1: {
+    'animation-duration': '3s',
+    'animation-timing-function': 'ease-out',
+    'animation-fill-mode': 'forwards',
+    'text-shadow': '0 5px 5px white',
+    ':hover': {
+      'animation': 'animate-out'
+    }
+  },
+  '@keyframes animate-out': `{
+    0% {
+      transform: translateX(0);
+      opacity: 1;
+      height: 40px;
+    }
+    100% {
+      transform: translateX(1000px); 
+      opacity: 0;
+      height: 0px;
+    }
+  }`
+})</code></pre>
+
+          <p> </p> 
+          <h2>BEM</h2>
+          <p>This will also work with <a href="https://css-tricks.com/bem-101/" target='__blank'>BEM</a>. When doing so, best to just use the generic body tag as the base for the stylesheet:</p>
+          <p>Define BEM CSS for above markup:</p>
+<pre><code class='language-javascript'>addStyles('body', {
+  '.list': {
+    margin: '20px 0',
+    listStyle: 'none',
+    border: 'solid 1px #ccc'
+  },
+  '.list__item': {
+    padding: 0,
+    borderBottom: 'solid 1px #ccc',
+    ':last-of-type': {
+      border: 'none'
+    }
+  },
+  '.item__title': {
+    margin: 0,
+    padding: 10,
+    ':hover': {
+      backgroundColor: '#333',
+      color: '#fff',
+      cursor: 'pointer'
+    }
+  },
+  'item__title-selected': {
+    backgroundColor: '#333',
+    color: '#fff'
+  }
+})</code></pre>
+
+<p> </p>
+          <h2>Complete Example</h2>
+<pre><code class='language-javascript'>import { h, render } from '@composi/core'
+import { addStyles } from '@composi/styler'
+
+// Create list with associated stylesheet:
+function List({data}) {
+  // Base stylesheet rule on class 'list':
+  addStyles('.list', {
+    listStyles: 'none',
+    padding: 0,
+    margin: 0,
+    border: 'solid 1px #ccc',
+    li: {
+      padding: '5px 10px'
+      borderBottom: 'solid 1px #ccc'
+      ':last-of-type': {
+        border: 'none'
+      }
+    }
+  })
+  // Give list class of 'list':
+  return (
+    &lt;ul class='list'>
+      {
+        data.map(item => &lt;li key={item.key}>{item.value}&lt;/li>)
+      }
+    &lt;/ul>
+  )
+}</code></pre>
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a> y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

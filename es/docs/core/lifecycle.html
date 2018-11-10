@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                  id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+          <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/core:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/es/docs/core/install.html">Instalación</a></li>
+          <li><a href="/es/docs/core/render.html">Renderización</a></li>
+          <li><a href="/es/docs/core/props.html">Propiedades</a></li>
+          <li><a href="/es/docs/core/events.html">Eventos</a></li>
+          <li class='selected'>Ciclo de Vida</li>
+          <li><a href="/es/docs/core/hydrate.html">Hidratación</a></li>
+          <li><a href="/es/docs/core/state.html">Estado</a></li>
+        </ul>
+        <h1>Ciclo de Vida</h1>
+        <h2>Component Lifecycle Hooks</h2>
+        <p>Con Composi, los componentes funcionales tienen tres enganches de ciclo de vida que puedes usar:</p>
+
+        <ul class='main-menu'>
+          <li><strong>onmount</strong>: la primera vez que el componente se renderiza en el DOM</li>
+          <li><strong>onupdate</strong>: cuando el componente se actualiza</li>
+          <li><strong>onunmount</strong>: cuando el componente está a punto de ser eliminado del DOM</li>
+        </ul>
+
+        <p>Los enganches de ciclo de vida te permiten realizar tareas en un momento específico de la vida del componente. También te permiten crear animaciones cuando cambia el estado de un componente.</p>
+
+        <h2>onmount</h2>
+
+        <p>El enganche de ciclo de vida <code>onmount</code> se activa justo después de que el componente se monta en el DOM. Toma un callback cuyo primer argumento es el elemento base del componente. Esto le permite hacer algunas cosas útiles, como <a href='#access-dom'>acceder</a> a los elementos secundarios del componente, o configurar escuchas de eventos y <a href='#delegate-events'>eventos delegados</a>.</p>
+
+        <p>En la documentación de <a href="/es/docs/core/props.html">props</a> y <a href="/es/docs/core/event.html">events</a>, vimos cómo crear una lista. Ahora vamos a ver cómo agregar elementos a la lista. Para hacer eso, necesitamos tener un input donde el usuario pueda agregar un nuevo ítem y un botón para hacer clic para agregar ese ítem a la lista. El enganche <code>onmount</code> es una forma de acceder al input del componente para obtener su valor. Entonces, hagamos esto. Vamos a cambiar el ejemplo, envolviendo la lista en un <code>div</code> que tiene dos hijos, la lista y un párrafo con un input de texto y un botón.</p>
+
+        <h2>Acceder al DOM del Componente</h2>
+        <p>Para poder acceder al input del componente, debemos agregar un enganche de ciclo de vida <code> onmount </code>. Lo ponemos directamente en el input. De esa manera, el enganche <code>onmount</code> obtiene una referencia al elemento input mismo. Luego podemos guardar esa referencia en el objeto <code>refs</code> para un fácil acceso en el código del componente.</p>
+        <p>También estamos agregando enganches <code>onmount</code> a los ítemes de la lista con el único propósito de animarlos cuando se crean. Añade nuevos ítemes a la lista para ver la animación.</p>
+
+<p data-height="300" data-theme-id="6688" data-slug-hash="aQNBZM" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - Ciclo de Vida-onmount" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/aQNBZM/">@composi/core
+    - Ciclo de Vida-onmount</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+        <p> </p>
+        <h2>onupdate</h2>
+
+        <p>A veces vas a querer saber cuándo un componente se está actualizando, como cuando se cambian sus <code>props</code>. Puedes realizar esto con <code>onupdate</code>. Este enganche recibe tres argumentos: el element base del componente, las <code>props</code> anteriores y las <code>props</code> nuevas. Puedes comparar las <code>props</code> para ver cómo cambiaron y así decidir que hacer.</p>
+        <p><code>onuptate</code> se invoca cuando el element particular en el cual está registrado se acutaliza. El enganche <code>onupdate</code> no es invocado cuando el elemento se monta or desmonta.</p>
+        <p>Para usar <code>onupdate</code> correctamente, tienes que entender bien qué son las <code>props</code> viejas y nuevas. Pasamos las <code>props</code> a un componente cuando pasamos éste a la función code>render</code>:</p>
+<pre><code class="language-javascript">render(&lt;Lista datos={frutas}/>, 'body')</code></pre>
+        <p>Decimos que el atributo <code>datos</code> es una <code>prop</code>. Pero, en este caso no va persistir como <code>prop</code>. Eso es porque la función <code>render</code> convertirá la etiqueta JSX en una función y sus <code>props</code> serán los argumentos de aquella función. Tecnicamente, las <code>props</code> son los valores agregados directamente en los elementos que el componente como función devuele. Vamos a examinar otra vez el componente de Lista:</p>
+<pre><code class="language-javascript">function Lista({datos}) {
+  function mostrarCambio(elemento, propsViejas, propsNuevas) {
+    // compara propsViejas con propsNuevas
+  }
+  return (
+    &lt;ul onupdate={mostrarCambio}>
+      {
+        datos.map(ítem => &lt;li key={ítem.clave}>{ítem.valor}&lt;/li>)
+      }
+    &lt/ul>
+  )
+}
+render(&lt;Lista datos={frutas}/>, 'body')
+</code></pre>
+<p>En el ejemplo anterior, fíjate que hemos puest el evento <code>onupdate</code> directamente en el elemento base del componente. Luego, en nuestra función <code> mostrarCambio</code> queremos comparar las <code>props</code> viejas y nuevas para ver qué cambia. Podrías estar pensando que obtendremos las versiones anterior y nueva de la propiedad <code>datos</code>. Ahora mira el elemento. ¿Ves otras propiedades en él además de <code>onupdate</code>? De hecho no hay y esto es un problema. El <codeul </code> no tiene propiedades. Los datos de frutas que queremos probar vienen siendo un parámetro y los estamos utilizando en el código en un bloque delimitado por llaves. Esto significa que cuando intentemos acceder a propsNuevas y propsViejas, estas estarán indefinidas. Para habilitar el enganche de ciclo de vida <code>onupdate</code> para acceder a los datos, debemos registrar los datos como una propiedad directamente en el elemento donde está el gancho del ciclo de vida. Aquí está el componente con esa corrección:</p>
+
+<pre><code class="language-javascript">function Lista({datos}) {
+  function mostrarCambio(element, propsViejas, propsNuevas) {
+    // Compara propsViejas con propsNuevas
+  }
+  // Pon los datos directamente en la etiqueta ul:
+  return (
+    &lt;ul onupdate={mostrarCambio} datos={datos}>
+      {
+        datos.map(ítem => &lt;li key={ítem.clave}>{ítem.valor}&lt;/li>)
+      }
+    &lt/ul>
+  )
+}
+</code></pre>
+  <p>Este cambio sutil para exponener los datos al enganche <code>update</code> significa que ahora tenemos acceso al estado anterior y actual de <code>datos</code>. Con eso, podemos comparar <code>propsViejas.datos</code> con <code>propsNuevas.datos</code> para ver qué ha cambiado.</p>
+  <p>Ten cuidado de que siempre estás exponiendo las propiedades que necisitas en el miso elemento en el cual colocas <code>onupdate</code>. Si no, los valores salirán no definidos (undefined).</p>
+
+<p>En el ejemplo siguiente mostramos cómo usar <code>onupate</code> para mostrar un mensaje de las diferencias entre el valor de cuenta mientras va aumentando o disminuyendo. Por usar propsViejas y propsNuevas, podemos ver cómo el valor cambia y entonces mostra esa diferencia en la consola.</p>
+
+<p data-height="300" data-theme-id="6688" data-slug-hash="zmNZOR" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - ejemplo de actualización" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/zmNZOR/">@composi/core
+    - ejemplo de actualización</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+        <p>Es importante saber cuándo se debe usar onupdate. El caso de uso para ello es muy limitado. Es útil si deseas ver qué ha cambiado, como hicimos anteriormente para mostrar unos cambios. Nunca hay que utilizarlo para cambiar datos, ya que eso activaría otra actualización y te pondría en un bucle infinito. Puede usarlo para activar una animación. Durante la actualización, agregue una clase que cause y animación, y luego elimine la clase. Veremos cómo hacer esto adelante.</p>
+        <p> </p>
+
+        <h2>onunmount</h2>
+        <p>A veces, vas a querer saber cuando se está eliminando un componente del DOM para poder hacer algo. Tal vez necesites realizar una limpieza de ambiente o desencadenar algún otro evento o función. <code>onunmount</code> te permite hacer eso. De hecho, <code>onunmount</code> le permite interceptar el proceso de desmontaje y demorarlo hasta que hayas terminado con lo que sea que estás haciendo. Esto es ideal para situaciones en las que deseas hacer una animación cuando se elimina un ítem de una lista. Haremos una lista simple que usa <code>onunmout</code> para animar el ítem de lista antes de eliminarlo. Para esto, omitiremos la parte que realmente elimina un ítem de lista ya que ya cubrimos eso en el ejemplo anterior para la delegación de eventos.</p>
+
+        <p><code>onunmount</code> expects that its callback with handle a <code>done()</code> function. Specifically, <code>onunmount</code> gets passed two arguments: the element being deleted, and a <code>done</code> callback to invoke when you are done. If you fail to provide a <code>done()</code> callback in your code or forget to invoke at the end of your code, the element will not be removed from the DOM, which could result in really unexpected results as the list data is mutated.</p>
+
+        <p><code>onunmount</code> espera que su callback va tratar con una función <code>done()</code>. Específicamente, <code>onunmount</code> pasa dos argumentos: el elemento que se está eliminando y el callback <code>done</code> para invocar cuando haya terminado. Si no proporcionas un callback <code>done()</code> en su código u olvidas invocarlo al final del código en esa función, el elemento no se eliminará del DOM, lo que podría causar resultados realmente inesperados mientras se cambian los datos de aquella lista.</p>
+        
+        <p>En el ejemplo próximo usamos <code>onunmount</code> para implementar una animación de keyframe antes de que el ítem de lista sea eliminado. También usamos <code>onmount</code> en los ítemes de lista para hacer la animación de los ítemes nuevos mientras se trasladan en la vista.</p>
+
+<p data-height="500" data-theme-id="6688" data-slug-hash="OaNgyv" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - Ciclo de Vida-onunmount" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/OaNgyv/">@composi/core
+    - Ciclo de Vida-onunmount</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+
+<p> </p>
+<h2>Argumentos para Ciclos de Vida</h2>
+<p>Los enganches de ciclo de vida reciben sus argumentos automáticamente, así pues puedes utilizar sus gestores sin argumento en los eventos en línea. Cada enganche de ciclo de vida espera argumentos diferentes, pero puedes indicarlos en su gestor en el evento en línea:</p>
+<pre><code class="language-javascript">function Lista() {
+  function init(base) {
+    // Haz algo con el elemento base del componente.
+    base.querySelector('input').focus()
+  }
+  function mostrarCambio(element, propsViejas, propsNuevas) {
+    // El elemente en el cual se ubica el evento, en este caso, la etiqueta ul.
+    // Compara los valores de propsViejas con los nuevos.
+    if (propsNuevas.data.length > propsViejas.data.length) {
+      console.log('Se agregó un ítem a la lista.')
+    } else {
+      console.log('Se eliminó un ítem de la lista.')
+    }
+  }
+  function gestionarDesmonte(done, element) {
+    // Haz algo con el elemento base del componente.
+    // Entonces desencadena la animación de eliminación.
+    element.classList.add('deleting')
+    // Then let the component unmount.
+    // Since we've set the animation to last 3 seconds,
+    // we need to delay the unmounting for 3 seconds:
+    // Entonces deja que el componente desmonte.
+    // Pueste que hicimos que la animación dure tres segundos,
+    // tenemos que demorar el desmontar por tres segundos.
+    setTimeout(() => {
+      done()
+    }, 3000)
+  }
+  return (
+    &lt;ul onmount={init} onupdate={mostrarCambio} onunmount={gestionarDesmonte} data={data}>&lt;/ul>
+  )
+}
+
+</code></pre>
+        <p>Lo que hay que tener en cuenta con <code>onunmount</code> es que causa que el desmontar sea asincrónico. Aunque el algoritmo de parche ha identificado una condición que requiere que el elemento se elimine del DOM, espera hasta que  invocas <code>done()</code> en el gestor para terminar la eliminación del elemento.</p>
+        <p>&nbsp;</p>
+      </div>
+    </section>
+  </article>
+  <footer>
+    <section>
+      <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>Composi Logo</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+            <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+              id="Combined-Shape"></path>
+          </g>
+        </g>
+      </svg>
+      <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a>
+        y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+    </section>
+  </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+
+</html>

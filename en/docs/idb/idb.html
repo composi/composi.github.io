@@ -51,7 +51,7 @@
           <h1>IDB</h1>
           <h3>IndexedDB with Promises</h3>
           <p>IDB is a promise-base wrapper for IndexedDB. That means all its operations are non-blocking. It provides a simple API similar to localStorage. This allows you to persist data locally with the ease of using localStorage but with the robustness of IndexedDB.</p>
-          <p>LocalStorage is great for saving small amounts of data quickly. However, it only stores one type: string. Whatever you want to save in it has to be converted to a string. That includes all JavaScript data types. This requires converting your data to strings with JSON.stringify. To get your types back you need to pass your data through JSON.parse. This back and forth conversion is usually not a problem. But sometimes it is. The more complex your data, the more you come up against the limitations of localStorage. Basically, localStorage is a glorified cookie, a cache for string data. And finally, localStorage is limite to about 5MB of data. In contrast, IndexedDB starts off with 50MB of available storage and can use more upon user approval. If you avoid saving blobs, you can store quite a bit in 50MB.</p>
+          <p>LocalStorage is great for saving small amounts of data quickly. However, it only stores one type: string. Whatever you want to save in it has to be converted to a string. That includes all JavaScript data types. This requires converting your data to strings with JSON.stringify. To get your data back you need to pass your data through JSON.parse. This back and forth conversion is usually not a problem. But sometimes it is. The more complex your data, the more you come up against the limitations of localStorage. Basically, localStorage is a glorified cookie, a cache for string data. And finally, localStorage is limite to about 5MB of data. In contrast, IndexedDB starts off with 50MB of available storage and can use more upon user approval. If you avoid saving blobs, you can store quite a bit in 50MB.</p>
           <p>IndexedDB is a no-SQL database and so has none of these limitations. But that means its API is comlex. Setting up a database with it and maintaining it is get complicated. When all you want to do is persist some data, learning how to use IndexedDB efficiently can be overkill. @composi/idb was created to address this issue. It provides a solution to easily persist data in IndexedDB without having to know how IndexedDB works.</p>
 
           <p>With IndexedDB you need to know how to create a database, create a store, open a connection, handle versioning, deal with upgrading schemas, and handle transactions. In contrast, with @composi/idb you have the following API:</p>
@@ -65,7 +65,7 @@
           </ul>
           <p> </p>
           <h2>One Database to Rule Them All</h2>
-          <p>Because @composi/idb is about persisting data and keeping things simple, it does so by limiting itself to one database: <code>composi-idb</code> with one store: <code>composi-store</code>. To use it you just import it into your project and use one of the above mehotds. Doing so automatically creates the default database for you.</p>
+          <p>Because @composi/idb is about persisting data and keeping things simple, it does so by limiting itself to one database: <code>composi-idb</code> with one store: <code>composi-store</code>. To use it you just import it into your project and use one of the above methods. Doing so automatically creates the default database for you.</p>
 
 <pre><code class="language-javascript">import { h, render } from '@composi/core'
 import { idb } from '@composi/idb'
@@ -77,7 +77,7 @@ idb.set('my-stuff', ['apples', 'socks', 'laundry soap'])
           <p>As we mentioned, @composi/idb is promise-based. That means all the above methods return promises. To deal with their results you'll need to use a <code>then</code> function. Hop over to <a href="/en/docs/idb/usage.html">Usage</a> to learn how to use @composi/idb's methods.</p>
 
           <h2>Other Options</h2>
-          <p>If want greater control over what IndexedDB is doing than @composi/idb offers, you can look at using other IndexedDB wrapers: <a href="hhttps://www.npmjs.com/package/dexie">dexie</a>, <a href="https://www.npmjs.com/package/pouchdb-browser">pouchdb-browser</a>, or check out what's available on <a href="https://www.npmjs.com/search?q=indexeddb">NPM</a></p>
+          <p>If you want greater control over what IndexedDB is doing than @composi/idb offers, you can look at using other IndexedDB wrappers: <a href="hhttps://www.npmjs.com/package/dexie">dexie</a>, <a href="https://www.npmjs.com/package/pouchdb-browser">pouchdb-browser</a>, or check out what's available on <a href="https://www.npmjs.com/search?q=indexeddb">NPM</a></p>
 
 
               <p>&nbsp;</p>

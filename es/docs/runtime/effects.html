@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/runtime:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/es/docs/runtime/runtime.html">Entorno de Ejecución</a></li>
+          <li><a href="/es/docs/runtime/init.html">Init</a></li>
+          <li><a href="/es/docs/runtime/view.html">View</a></li>
+          <li><a href="/es/docs/runtime/update.html">Update</a></li>
+          <li class='selected'>Efectos</li>
+          <li><a href="/es/docs/runtime/tagged-unions.html">Unión Etiquetada</a></li>
+          <li><a href="/es/docs/runtime/composition.html">Composición</a></li>
+          <li><a href="/es/docs/runtime/end-program.html">Parar el Programa</a></li>
+          <li><a href="/es/docs/runtime/immutability.html">Inmutabilidad</a></li>
+          <li><a href="/es/docs/runtime/hop.html">Programa de Orden Superior</a></li>
+        </ul>
+          <h1>Efectos</h1>
+          <h2>Ejecutar los Efectos de una Acción</h2>
+          <p>En el entorno de ejecución @composi/core, un efecto es una función que envía un mensaje. Los efectos son asincrónicos. Los efectos le permiten interactuar con el mundo fuera del entorno de ejecución. Un efecto puede crear un temporizador, recuperar datos, persistir los datos, registrar datos o abrir una alerta del navegador. La sección que cubre <a href="/es/docs/runtime/init.html" target='__blank'>init</a> explica cómo iniciar un efecto en el inicio al proporcionar a init un segundo valor en su matriz. Del mismo modo, la sección sobre <a href="/es/docs/runtime/update.html">update</a> mostró que una acción siempre devuelve el estado rodeado de llaves. Eso es para que puedas incluir un segundo valor opcional como efecto.</p>
+
+          <h2>Separados Pero Iguales</h2>
+          <p>El separar los efectos en sus propias acciones hace que sea más fácil razonar acerca de las acciones que tratan con la gestión de estado.</p>
+          <p>A continuación se muestra un ejemplo de un programa de entorno de ejecución que tiene dos efectos pero no devuelve una vista. En cambio, la función view devuelve undefined (indefinido). El inicio de este programa tiene estado y efecto. El efecto hace que un contador se inicie en el tiempo de carga. Cuando llega a cinco, activa otro efecto para alertar el resultado final. Si abre la consola del inspector web, verás el progreso del conteo, seguido de una alerta al finalizar.</p>
+
+          <p data-height="500" data-theme-id="6688" data-slug-hash="RqRgYx" data-default-tab="js,result" data-user="rbiggs" data-pen-title="@composi/core + runtime Efectos-1" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/RqRgYx/">@composi/core + runtime Efectos-1</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+          <p>Cuando tu programa es muy sencillo, puede que no parezca tan importante separar los efectos de la otra lógica. Pero a medida que un programa se vuelve más complejo, el aislamiento de los efectos de la lógica de negocios da como resultado un código más fácil de razonar.</p>
+
+          <h2>batchEffects</h2>
+          <p>A veces puedes tener muchos efectos que necesitas ejecutar juntos. O tienes un efecto bien complejo haciendo muchas cosas que quieres dividir en pedazos más pequeños. @composi/core proporciona <code>batchEffect</code> para esos propósitos. Te permite crear una matriz de efectos que puedes ejecutar uno tras otro. Ten en cuenta que los efectos se ejecutan de forma asíncrona e independiente entre sí. Por eso, aunque los eventos se están ejecutando en orden, probablemente terminarán en diferentes momentos. Si deseas ejecutar los efectos de forma secuencial, uno tras otro, deberías considerar ejecutarlos como funciones asincrónicas, usando <a target='__blank' href="http://blog.builtbyedgar.com/funciones-asincronas-con-es7-async-await/">async/await de ES6</a>.</p>
+
+          <p>El ejemplo siguiente muestra cómo combinar los efectos. Abre la consola del navegador para ver el resultado de los tres efectos.</p>
+
+          <p data-height="300" data-theme-id="6688" data-slug-hash="vQKxow" data-default-tab="js,result" data-user="rbiggs"
+            data-pen-title="@composi/core + runtime Efectos" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/vQKxow/">@composi/core
+              + runtime Efectos</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+          <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+        
+          <p> </p>
+          <h2>mapEffects</h2>
+          <p>Otra función útil para los efectos es <code>mapEffects</code>. Usarías esto de la misma manera que usa uniones etiquetadas para permitir que el view use acciones del update. Con los efectos mapeados puede acceder desde un programa al efecto de otro programa. Esto abre un canal de comunicación entre un programa principal y un programa secundario.</p>
+
+
+          <p>Para crear los efectos mapeados primero hay que importar <code>mapEffects</code> al proyecto.</p>
+<pre><code class="language-javascript">import { h, render, run, mapEffects } from '@composi/core'
+
+const contador = {
+  init() {
+    return [0]
+  }, // El estado es un número para contar:
+  update(mensaje, state) {
+    return [state + 1] // Aumentar el estado
+  },
+  view(state, send) {
+    // y después...
+  }
+}
+// El efecto que usaremos con el contador:
+const mensajeContador = mensaje => ({
+  tipo: 'mensajeContador',
+  datos: mensaje
+})
+
+// Conseguir el estado y efecto del programa contador que se va exponer a su padre:
+const [counterState, counterEffect] = contador.init()
+
+// Crear un nuevo función init que usaremos con el contador.
+// Aquí vamos a mapear los efectos:
+const init = () => [{counterState}, mapEffect(counterEffect, mensajeContador)]
+</code></pre>
+
+              
+          <p>In the following Codepen example, the child program is being rendered by the parent program. But the child has its own local state. To enable the parent to know that state and use it to render the child, we use a mapped effect. The mapped effect allows the parent to know what the child's state is. It has access to the state to print it out in its own scope, but the state is owned by the child.</p>
+
+          <p>En el siguiente ejemplo de Codepen, el programa padre renderiza el programa hijo. A pesar de eso,  el hijo tiene su propio estado local. Para permitir que el padre conozca ese estado y que lo use para representar al hijo, usamos un efecto mapeado. El efecto mapeado permite al padre saber cuál es el estado del hijo. Así ése iene acceso al estado para imprimirlo en su propio ámbito, pero el estado es propiedad del hijo.</p>
+
+          <p data-height="500" data-theme-id="6688" data-slug-hash="Pxzjrd" data-default-tab="js,result" data-user="rbiggs" data-pen-title="@composi/core + runtime Composition2a es" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/Pxzjrd/">@composi/core + runtime Composition2a es</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+          
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a> y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

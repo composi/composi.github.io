@@ -46,8 +46,8 @@
         <ul class='breadcrumb'>
           <li class='selected'>Runtime</li>
           <li><a href="/en/docs/runtime/init.html">Init</a></li>
-          <li><a href="/en/docs/runtime/update.html">Update</a></li>
           <li><a href="/en/docs/runtime/view.html">View</a></li>
+          <li><a href="/en/docs/runtime/update.html">Update</a></li>
           <li><a href="/en/docs/runtime/effects.html">Effects</a></li>
           <li><a href="/en/docs/runtime/tagged-unions.html">Tagged Unions</a></li>
           <li><a href="/en/docs/runtime/composition.html">Composition</a></li>
@@ -74,27 +74,28 @@
   init() {
     return [state, effect]
   },
+  view(state, send) {
+  // Render view that can send messages to update:
+  return render(Component, Container)
+  },
   update(msg, state) {
     if (msg) {
       // Handle messages to update state:
       return [state]
-      // Or also implete an effect:
+      // Or also implement an effect:
       return [state, effect]
     }
-  },
-  view(state, send) {
-    // Render view that can send messages to update:
-    return render(Component, Container)
   }
 }</code></pre>
           <p></p>
           <p> </p>
           <h3>Init</h3>
           <p>Init is a function that returns an array of two values: state and effect. At startup the program uses the state that init provides to render the view. Effect is optional. If provided it will be run at startup too. Effects are asynchronous functions for timers or fetching data. Most of the time init will just provide state. A program's state can be any JavaScript type: null, undefined, number, string, array or object. Complex programs will inevitably need state as an array or object.</p>
-          <h3>Update</h3>
-          <p>Update is where all the program's business logic resides. Update receives messages sent by the view. Depending on what message was received, Update performs actions on a copy of the program state and returns it. This causes the program to re-render the view with the new state.</p>
           <h3>View</h3>
           <p>The View is the representation of the program's state. A view usually has events for user interaction. An interaction will send a message to the program's Update function.</p>
+          <h3>Update</h3>
+          <p>Update is where all the program's business logic resides. Update receives messages sent by the view. Depending on what message was received, Update performs actions on a copy of the program state and returns it. This causes the program to re-render the view with the new state.</p>
+          
 
           <p>Here is the simplest possible runtime program that you can make. This is valid and it is running, but doing nothing.</p>
           <p data-height="300" data-theme-id="6688" data-slug-hash="MPxXrR" data-default-tab="js,result" data-user="rbiggs"
@@ -131,7 +132,7 @@ const program3 = {
           <p> </p>
           <h3>An Object is an Object</h3>
           <p>In the above example you will notice that we have created an object <code>program</code> that we pass to the <code>run</code> function. This has some parallels to a class component. A class instance is an object returned by a class. The difference is in how these two are used. With class components its common to add new properties to the class to handled new functionality. In contrast, a @composi/core runtime program only has the three main methods: init, update and view.</p>
-          <p>This clicker example is overly simplistic, but it does show the basic setup for a runtime Composi program: init, update and view. You can learn more about from their dedicated docs from the menu at the top for init, update, view, etc..</p>
+          <p>The previous clicker example is overly simplistic, but it does show the basic setup for a runtime Composi program: init, view and update. You can learn more about from their dedicated docs from the menu at the top for init, update, view, etc..</p>
 
           <h2>Part of Core</h2>
           <p>The runtime is part of @composi/core, so importing and using it does not add anything to the final payload of your project's JavaScript. @composi/core is 2KB gzipped.</p>

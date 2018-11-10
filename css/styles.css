@@ -381,9 +381,8 @@ nav {
   background-color: #DF0000;
   color: #fff;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   height: 8rem;
   position: fixed;
   z-index: 1;
@@ -462,15 +461,15 @@ article > section {
 }
 .nav-menu {
   list-style: none;
-  /* padding: 0 2rem; */
-  width: 100%;
+  display: inline-block;
   max-width: 150rem
 }
 .nav-menu__item {
   display: inline-block;
   position: relative;
+  margin-right: 2rem;
 }
-.nav-menu__item + .nav-menu__item.selected::after {
+.nav-menu__item.selected .nav-menu__item__link::after {
   content: "";
   display: block;
   border-bottom: solid 2px #fff;
@@ -479,12 +478,11 @@ article > section {
   left: 0;
   bottom: 0;
 }
-.nav-menu__item + .nav-menu__item + .nav-menu__item.selected::after {
-  width: 80%;
+.nav-menu__item.selected .nav-menu__item__link::after {
+  width: 100%;
 }
 .nav-menu__item__link {
   color: #fff;
-  margin-right: 2rem;
   font-size: 1.8rem;
   transition: all .25s ease-out;
 }
@@ -497,7 +495,7 @@ article > section {
   margin-left: 5px;
 }
 
-.nav-menu__item.selected:hover::after,
+.nav-menu__item.selected:hover .nav-menu__item__link::after,
 .nav-menu__item__link:hover,
 .nav-menu__item__link:hover svg path {
   color: rgb(21, 159, 255);
@@ -847,6 +845,23 @@ h1.documentation-header {
 }
 article > section.for-grid {
   flex-direction: column;
+}
+
+a.version {
+  text-decoration: none;
+  display: inline-block;
+  height: 20px !important;
+  width: 40px;
+  background-size: auto 20px;
+  padding: 0;
+  border: solid 1px #fafafa;
+}
+
+.spanish {
+  background: transparent url(/images/flag-mexico.png) no-repeat;
+}
+.english {
+  background: transparent url(/images/flag-usa.png) no-repeat;
 }
 
 /* Media Queries */

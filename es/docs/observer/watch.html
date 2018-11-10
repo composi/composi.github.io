@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/observer:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/es/docs/observer/install.html">Instalación</a></li>
+          <li><a href="/es/docs/observer/observer.html">Observer</a></li>
+          <li class='selected'>Watch</li>
+          <li><a href="/es/docs/observer/send.html">Send</a></li>
+          <li><a href="/es/docs/observer/unwatch.html">Unwatch</a></li>
+        </ul>
+          <h1>Watch</h1>
+          <p>Observers are meant to watch for events. To do so, you use the observer's <code>watch</code> method. This takes two arguments: an event, and a callback to execute when the event occurs. The callback gets one argument passed to it automatically: any data that was passed with the event. A watcher does not have to deal with event data. It can completely ignore the data and do whatever it needs to.</p>
+
+          <h2>Setting up a Watcher</h2>
+          <p> </p>
+          <pre><code class='language-bash'>import { Observer } from '@composi/observer
+
+const observer = new Observer()
+observer.watch('special-event', data => {
+  console.log(`Just received this data: ${data}`)
+})
+</code></pre>
+
+          <p> </p>
+
+          <h2>Ignoring the Data Passed</h2>
+          <p>Same watcher, but ignoring any data passed:</p>
+
+
+          <pre><code class='language-bash'>import { Observer } from '@composi/observer
+
+const observer = new Observer()
+observer.watch('special-event', data => {
+  // Ignore the data:
+  console.log('The special event just fired!')
+})
+</code></pre>
+
+          <p> </p>
+          <h2>Watcher without Data</h2>
+          <p>As mentioned, a watcher does not even have to expect any data. You can opt to instead just watch for the event.</p>
+<pre><code class='language-bash'>import { Observer } from '@composi/observer
+
+const observer = new Observer()
+// No data for this watcher:
+observer.watch('special-event', () => {
+  console.log('The special event just fired!')
+})
+</code></pre>
+
+          <p> </p>
+          <h2>Multiple Watchers for Same Event</h2>
+          <p>It is possible to create multiple watchers for the same event. You might need to do this when you have several components that need to react to the same event. When you create multiple watchers on the same event, whenever that event is sent, all the watchers will execute.</p>
+
+
+
+          <pre><code class='language-bash'>import { Observer } from '@composi/observer
+
+const observer = new Observer()
+// First watcher for 'special-event':
+observer.watch('special-event', data => {
+  console.log(`The first watcher received this data: ${data}`)
+})
+
+// Second watcher for 'special-event':
+observer.watch('special-event', () => {
+console.log('The second watcher just fired!')
+})
+</code></pre>
+          <p>Sending 'special-event' with cause both of these watchers to execute.</p>
+
+          <p>To learn how to send and event to a watcher, read its <a  href='/docs/observer/send.html'>documentation</a>.</p>
+          <p> </p>
+
+          <h2>Using Guards</h2>
+
+          <p>Because you can't know if an event will be send with data or not, it's always best to check that the callback did receive some data before trying to use it.</p>
+
+          <pre><code class='language-bash'>import { Observer } from '@composi/observer
+
+const observer = new Observer()
+observer.watch('special-event', data => {
+  // Check that data was passed with the event:
+  if (data) {
+    console.log(`Just received this data: ${data}`)
+  // No event was sended, so do something else:
+  } else {
+    console.log(`The event happened but no data was received.`)
+  }
+})
+</code></pre>
+          <p>In all our examples we used a simple string as the data for our events. In reality the data could be any type. As such it's best to also check the type of the data before attempting to use it.</p>
+
+          
+          <pre><code class='language-bash'>import { Observer } from '@composi/observer
+
+const observer = new Observer()
+observer.watch('special-event', data => {
+  // Check that data was passed with the event:
+  if (data) {
+    // Dealing with a string:
+    if (typeof data === 'string') {
+      console.log(`Just received this data: ${data}`)
+    // Dealing with an array of strings:
+    } else if(Array.isArray(data)) {
+      console.log('Received this array:')
+      data.map((item, idx) => console.log(`item ${idx}: ${item}))
+    }
+  // No event was sent, so do something else:
+  } else {
+    console.log(`The event happened but no data was received.`)
+  }
+})
+</code></pre>
+
+
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a> y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

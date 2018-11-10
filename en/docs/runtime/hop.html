@@ -46,8 +46,8 @@
         <ul class='breadcrumb'>
           <li><a href="/en/docs/runtime/runtime.html">Runtime</a></li>
           <li><a href="/en/docs/runtime/init.html">Init</a></li>
-          <li><a href="/en/docs/runtime/update.html">Update</a></li>
           <li><a href="/en/docs/runtime/view.html">View</a></li>
+          <li><a href="/en/docs/runtime/update.html">Update</a></li>
           <li><a href="/en/docs/runtime/effects.html">Effects</a></li>
           <li><a href="/en/docs/runtime/tagged-unions.html">Tagged Unions</a></li>
           <li><a href="/en/docs/runtime/composition.html">Composition</a></li>
@@ -57,7 +57,7 @@
         </ul>
           <h1>HOP&mdash;Higher Order Progam</h1>
           <h2>Wrap One Program In Another</h2>
-          <p>@composi/core's runtime does a lot of interesting things to make it just work. This happens in the runtime closure. That's where it keeps state. If you want to be able to examine your program's state, you cannot reach it because it's never exposed outside the closure. However, if you absolute must be able to examine state during development, you can create a Higher Order Program to wrap around your program to expose its state. Here how you would do that:</p>
+          <p>@composi/core's runtime does a lot of interesting things to make it just work. This happens in the runtime closure. That's where it keeps state. If you want to be able to examine your program's state, you cannot reach it because it's never exposed outside the closure. However, if you absolutely must be able to examine state during development, you can create a Higher Order Program to wrap around your program to expose its state. Here is how you would do that:</p>
 <pre><code class="language-javascript">export function logState (program, stateChanged) {
   return {
     ...program,
@@ -68,7 +68,7 @@
   }
 }
 </code></pre>
-              <p>Using the above HOP, you can use it to access the wrapped program's state:</p>
+              <p>You can use the above HOP to access the wrapped program's state:</p>
 <pre><code class="language-javascript">import { h, render, run } from '@composi/core'
 import { logState } from './logState'
 
@@ -85,7 +85,7 @@ const wrappedProgram = logState(program, state => {
 })
 
 // Run the Higher Order Program:
-runtime(wrappedProgram)
+run(wrappedProgram)
 </code></pre>   
               <p>With our program wrapped by this Higher Order Program, the program's state will get logged every time it changes.</p>
 
@@ -98,19 +98,6 @@ runtime(wrappedProgram)
     { hasError: false, error: null, programState },
     programEffect
   ]
-
-  // Intercept the program's update to trap any errors:
-  function update(msg, state) {
-    let updateView
-    try {
-      updateView = program.update(msg, state.programState)
-    } catch (error) {
-      return [{ ...state, hasError: true, error }]
-    }
-
-    const [programState, programEffect] = updateView
-    return [{ ...state, programState }, programEffect]
-  }
 
   // Handle whatever the update returns.
   // If error, deal with it,
@@ -125,6 +112,19 @@ runtime(wrappedProgram)
       // Otherwise, everything is fine so render the view.
       return program.view(state.programState, send)
     }
+  }
+
+  // Intercept the program's update to trap any errors:
+  function update(msg, state) {
+    let updateView
+    try {
+      updateView = program.update(msg, state.programState)
+    } catch (error) {
+      return [{ ...state, hasError: true, error }]
+    }
+
+    const [programState, programEffect] = updateView
+    return [{ ...state, programState }, programEffect]
   }
 
   // Allow program to end.

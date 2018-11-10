@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                  id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+          <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+      <h3>@composi/core:</h3>
+      <ul class='breadcrumb'>
+        <li><a href="/es/docs/core/install.html">Instalación</a></li>
+        <li><a href="/es/docs/core/render.html">Renderización</a></li>
+        <li><a href="/es/docs/core/props.html">Propiedades</a></li>
+        <li class='selected'>Eventos</li>
+        <li><a href="/es/docs/core/lifecycle.html">Ciclo de Vida</a></li>
+        <li><a href="/es/docs/core/hydrate.html">Hidratación</a></li>
+        <li><a href="/es/docs/core/state.html">Estado</a></li>
+      </ul>
+        <h1>Eventos</h1>
+        <h2>Eventos en Línea</h2>
+
+        <p>Puede hacer que los usuarios pueden interactuar con los componentes a través de eventos en línea. También es posible utilizar escuchas de eventos, especialmente para configurar eventos delegados. Deberá leer la documentación de <a href="/es/docs/core/lifecycle.html">Enganches del Ciclo de Vida</a> para obtener detalles sobre cómo hacerlo.</p>
+
+        <p>Los eventos en línea de Composi son como los eventos en línea normales de JavaScript. No hay que usar letra de camello como React. Deben estar en minúsculas. En el caso de que se usa un evento en línea con letra de camello accidentalmente, Composi lo convertirá automáticamente a minúsculas.</p>
+        
+        <<p data-height="300" data-theme-id="6688" data-slug-hash="xQVwqE" data-default-tab="js,result" data-user="rbiggs"
+          data-pen-title="@composi/core - Eventos-1" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/xQVwqE/">@composi/core
+            - Eventos-1</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+          <p> </p>
+        <h2>Ejemplo</h2>
+        <p>Hagamos una lista interactiva. Vamos a definir una función <code>manejaClic</code> y usarla en un evento de clic en línea en los elementos de la lista. Para que esto funcione, tendremos que pasar el controlador de clic al componente secundario. Además, dáte cuenta cómo pasamos los valores dentro del bucle de renderización al controlador de clic. Esto proporciona el valor que utilizará el controlador de evento <code>anunciar</code>.</p>
+
+        <p> </p>
+        <p data-height="300" data-theme-id="6688" data-slug-hash="LXNpeL" data-default-tab="js,result" data-user="rbiggs"
+          data-pen-title="@composi/core - Eventos-2" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/LXNpeL/">@composi/core
+            - Eventos-2</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+          
+        <p> </p>
+        <h2>Delegación de Eventos</h2>
+        <p>Cuando tiene una lista larga, tener eventos en cada ítem de la lista usa mucha memoria. La delegación de eventos nos permite usar solo un evento para manejar eventos de clic en todos los ítemes secundarios. Entonces, rehaceremos el ejemplo anterior para usar la delegación de eventos. Hacemos esto registrando el evento en la lista y pasándole el objeto de evento. Con el gestón de eventos, verificamos para ver cuál es la targeta del evento. Si el <code>nodeName</code> de la targeta del evento es <code>LI</code>, obtenemos el el contenido textual de ese ítem de la lista. Entonces anunciamos ese valor. La técnica es muy simple, en realidad.</p>
+        <p data-height="300" data-theme-id="6688" data-slug-hash="YRqyoj" data-default-tab="js,result" data-user="rbiggs"
+          data-pen-title="@composi/core - Eventos-3" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/YRqyoj/">@composi/core
+            - Eventos-3</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+            <p>Usar la delegación de eventos en una lista significa que podemos agregar y eliminar ítemes de la lista sin preocuparnos por cuantos eventos hayan. Cuando un componente tiene muchos componentes secundarios anidados y está intentando capturar el evento en uno de ellos, el evento tiene que viajar desde donde ocurrió hasta donde lo está escuchando. Por lo tanto, es mejor registrar el evento delegado lo más cerca posible del lugar donde desea interceptar el evento. De lo contrario, un viaje largo puede resultar en un tiempo de demora desde la ocurrencia del evento hasta la ejecución.</p>
+
+            <h2>Gestor de Evento</h2>
+            <p>Queríamos llamarle la atención a un detalle sobre cómo se manejan los eventos en línea. Si tiene un controlador de eventos que no espera ningún argumento, puede usar solo su nombre, no es necesaria ninguna función o paréntesis:</p>
+<pre><code class='language-javascript'>// Evento sin argumento:
+function Botón() {
+  // Este gestor de evento no recibe argumento cualquiera:
+  function anuciarClic() {
+    alert('¡Acabas de dar clic!')
+  }
+  return &lt;button onclick={anuciarClic}>Clic&lt;/button>
+}
+</code></pre>
+
+  <p>Los eventos en línea que se usan así reciben el objeto de evento automáticamente. Por eso prodrías hacer lo siguiente:</p>
+
+<pre><code class="language-javascript">function Botón() {
+  // Puedes acceder el objeto del evento así:
+  function anuciarClic(e) {
+    alert('Diste clic en un botón con este texto: ${e.target.textContent}.')
+  }
+  return &lt;button onclick={anuciarClic}>Clic&lt;/button>
+}</code></pre>
+
+        <p>Aquí usamos una function de flecha con <code>onclick</code>:</p>
+<pre><code class='language-javascript'>return &lt;button onclick={() => anuciarClic()}>Clic&lt;/button>
+</code></pre>
+        <p>Date cuenta que no es necesario usar una función de flecha con un gestor de evento cuando este no tiene argumento.</p>
+
+        <h2>Gestor de Evento con Argumento</h2>
+        <p>Si necesitas pasar un argumento al gestor de evento, tendrás que usar una función de flecha. Nota cómo lo hacemos en este ejemplo:</p>
+<pre><code class='language-javascript'>let count = 0
+function Contador({data}) {
+  function aumentarCuenta(count) {
+    render(&lt;Contador data={count++}/>, 'section')
+  }
+  return (
+    &lt;button onclick={data => aumentarCuenta(data)}>{data}&lt;/button>
+  )
+}
+render(&lt;Contador data={count}/> 'section')
+</code></pre>
+        <p> </p>
+        <h3>No Hay <code>this</code></h3>
+        <p>Como @composi/core solo proporciona componentes funcionales, nunca debe preocuparse por el ámbito de los eventos. Porque los componentes son funciones, no hay <code>this</code> y, por lo tanto, no es necesario utilizar <code>bind</code> u otras técnicas para preservar el ámbito del gestor de evento. Por supuesto, para funcionar, un gestor de evento debe estar en el mismo ámbito que el código que lo utiliza. Nos gusta definir los gestores de evento dentro del componente funcional antes de la declaración de retorno. De esa manera, se encapsulan en el componente mismo como propiedades privadas y están disponibles para los gestores de evento registrados en los elementos del componente.</p>
+        <p>&nbsp;</p>
+      </div>
+    </section>
+  </article>
+  <footer>
+    <section>
+      <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>Composi Logo</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+            <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+              id="Combined-Shape"></path>
+          </g>
+        </g>
+      </svg>
+      <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a>
+        y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+    </section>
+  </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+
+</html>

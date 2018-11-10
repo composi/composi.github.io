@@ -75,7 +75,7 @@
     - Props-2</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
-<p>Above we are passing more values to our component through props, but it's a bit fussy accessing them from the props parameter. We can use destructurig to simply accessing the <code>props</code>.</p>
+<p>Above we are passing more values to our component through props, but it's a bit fussy accessing them from the props parameter. We can use destructuring to simply accessing the <code>props</code>.</p>
 
 <h2>Destructuring the Arguments</h2>
 
@@ -96,7 +96,7 @@
 
         <p>Destruction the assignment of props results in cleaner and easier to read code. <code>props</code> make components dynamic and imbue them with super powers.</p>
 
-        <h2>Array Prop for Lists</h2>
+        <h2>Array as Prop for Lists</h2>
         <p>As we mentioned at the start, you can pass any possible value as a <code>prop</code>. Next we're going to show how to pass an array of objects so we can render a list. To make this more useful, we'll make sure our items have unique keys/ids. We'll use these to key the individual list items. For a static list this is unnecessary. But if you wanted to enable the user to delete or otherwise change the order of the list items, keys will enable Composi to understand how to update the DOM in the most efficient manner.</p>
         <p>When dealing with an array of data as a <code>prop</code>, we need to drop out of JSX and down to pure JavaScript. You can do that inside the JSX by using curly braces.</p>
 

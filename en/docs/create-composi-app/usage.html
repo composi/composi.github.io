@@ -66,7 +66,7 @@
         <p>This will install the project's dependencies, build the project, start watchers and launch the project in your default browser. Any changes you make to the files in the project's <code>src</code> folder will trigger another build and reload the updated code in the browser.</p>
 
         <h2>Other Tasks</h2>
-        <p>Every Composi project comes set up for several other useful tasks. These involve linting, image minification, conversion of SVG images into a sprite sheet for icons, clearing out the project's <code>dist</code> folder, and creating a production-ready version of the project.</p>
+        <p>Every Composi project comes set up for several other useful tasks. These involve linting, clearing out the project's <code>dist</code> folder, and creating a production-ready version of the project.</p>
 
         <h3>Eslint</h3>
         <p>If you have your project running, you can open another tab in your terminal, <code>cd</code> to your project and run:</p>
@@ -75,7 +75,7 @@
 
         <p>Your project has an <code>.eslintrc.json</code> file at the root of the project. You can edit this to have the linting work the way you want.</p>
         <p>If your project's JavaScript in the <code>src</code> folder violates and Eslint rule, you'll get the line number and rule broken output to the console. Use that information to fix the problem.</p>
-        <p>Read out the <a href="https://eslint.org/docs/rules/">eslint rules documentation</a> to learn how to custize the linting.</p>
+        <p>Read the <a href="https://eslint.org/docs/rules/">eslint rules documentation</a> to learn how to custize the linting.</p>
 
         <h3>Prettier</h3>
         <p>The project comes configured to run Prettier on your source code. Just <code>cd</code> to the project and run:</p>
@@ -123,7 +123,7 @@
         <p>Since the baseline for Composi is modern browsers, we don't think you really need Sass or Less any more. If you look in the project's CSS, you'll see that it uses <a href='https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables'>CSS variables</a> for colors. Technically these are called custom properties. They work the same as variables in Sass and Less. If you use <a href='http://getbem.com/introduction/'>BEM</a>, than you'll have no need for nested selectors. These are slower any way. And for layout you can use flex box and <a href='https://css-tricks.com/snippets/css/complete-guide-grid/'>CSS grid layout</a>.</p>
 
         <h2>Shortcut</h2>
-        <p>In case you don't like typing our <code>create-composi-app</code> all the time, you can create a shortcut for use in the terminal. For Linux and macOS, open your <code>.bashprofile</code>, or create one if you do not have one, and add the following:</p>
+        <p>In case you don't like typing <code>create-composi-app</code> all the time, you can create a shortcut for use in the terminal. For Linux and macOS, open your <code>.bashprofile</code>, or create one if you do not have one, and add the following:</p>
 <pre><code class="language-bash">alias cca="create-composi-app"
 </code></pre>
         <p>After saving, restart the terminal and you can now use <code>cca</code> instead of <code>create-composi-app</code>. For Windows, open the prompt and run:</p>

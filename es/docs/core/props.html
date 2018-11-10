@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                  id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+          <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+      <h3>@composi/core:</h3>
+      <ul class='breadcrumb'>
+        <li><a href="/es/docs/core/install.html">Instalación</a></li>
+        <li><a href="/es/docs/core/render.html">Renderización</a></li>
+        <li class='selected'>Propiedades</li>
+        <li><a href="/es/docs/core/events.html">Eventos</a></li>
+        <li><a href="/es/docs/core/lifecycle.html">Ciclo de Vida</a></li>
+        <li><a href="/es/docs/core/hydrate.html">Hidratación</a></li>
+        <li><a href="/es/docs/core/state.html">Estado</a></li>
+      </ul>
+        <h1>Propiedades</h1>
+        <h2>Pasando los Props Para Abajo</h2>
+        <p>Mientras se desarolla algo con componentes, las <code>props</code> son las manera por la cual se pasan datos al componente. Los dataos pueden ser cualquier cosa--cadena, número, boleano, vector, objeto, función o aún otro componente. Y, por supuesto se pueden pasar las <code>props</code> de un padre a sus hijos.</p>
+
+        <p>Examinemos un ejemplo sencillo:</p>
+
+<p data-height="300" data-theme-id="6688" data-slug-hash="eQJrMV" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - Props-1 es" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/eQJrMV/">@composi/core
+    - Props-1 es</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+      <p> </p>
+      <h2>Usando Más Props</h2>
+      <p>Puedes usar tantos props como necesitas.</p>
+
+<p data-height="300" data-theme-id="6688" data-slug-hash="wQMjNo" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - Props-2 es" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/wQMjNo/">@composi/core
+    - Props-2 es</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+<p>En el ejemplo anterior pasamos más valores al componente através de las props, pero es un poco fastidioso accediéndolos del parámetro props. Podemos usar la desestructuración para simplemente acceder a las <code>props</code>.</p>
+
+<h2>Desestructurar los Argumentos</h2>
+
+<p>Aquí desestructuramos el argumento que recibe nuestra etiqueta. Básicamente, estamos dividiendo el argumento props en sus partes constitutivas como un objeto literal.</p>
+
+<p data-height="300" data-theme-id="6688" data-slug-hash="OaMEPW" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - Props-3 es" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/OaMEPW/">@composi/core
+    - Props-3 es</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+        <p> </p>
+        <h2>Desestructuración de la Asignación de Props</h2>
+        <p>En lugar de pasar las <code>props</code> individualmente, usaremos la desestructuración para pasarlas a todos como un objeto literal. Lo hacemos creando un objeto literal de los valores que queremos usar. Luego pasamos eso a nuestro componente utilizando llaves y el operador de propagación.</p>
+
+<p data-height="300" data-theme-id="6688" data-slug-hash="xQZzrK" data-default-tab="js,result" data-user="rbiggs" data-pen-title="@composi/core - Props-4 es" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/xQZzrK/">@composi/core - Props-4 es</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+        <p>La destrucción de la asignación de propiedades resulta en un código más limpio y fácil de leer. Las <code>props</code>
+        hacen que los componentes sean dinámicos y los imbuye con superpoderes.</p>
+
+        <h2>Vector como Prop para las Listas</h2>
+        <p>Como mencionamos al principio, se puede pasar cualquier valor posible como <code>prop</code>. A continuación, vamos a mostrar cómo pasar un vector de objetos para que podamos generar una lista. Para hacer esto más útil, nos aseguraremos de que nuestros artículos tengan claves únicas. Los usaremos para ingresar los elementos individuales de la lista. Para una lista estática esto es innecesario. Pero si deseas permitir que el usuario elimine o cambie el orden de los elementos de la lista, las claves permitirán que Composi entienda cómo actualizar el DOM de la manera más eficiente.</p>
+        <p>Cuando se trata de un vector de datos como <code>prop</code>, debemos abandonar JSX y usar el JavaScript puro. Puedes hacer eso dentro del JSX usando claves.</p>
+
+        <h2>Usar las claves para las Listas</h2>
+        <p>Fíjate cómo accedemos a la propiedad <code>data</code>. Como se trata de un vector, usamos <code>map</code> para recorrer cada elemento del vector y devolver un ítem de la lista. El ítem de la lista tiene una propiedad
+        <code>key={item.key}</code>. <code>key</code> viene siendo el término que se usa para clave en Composi. Esto realmente no se procesa en el DOM. En su lugar, Composi conserva este valor en el nodo virtual que crea para la lista. Si Composi necesita volver a renderizar la lista debido a que el orden de los
+        elementos de la lista cambió, utilizará los valores de las claves en los elementos de la lista virtual para comprender mejor cómo reutilizar los nodos DOM para actualizar la lista. Porque al pasar un vector como <code>prop</code>, tuvimos que cambiar la desestructuración para manejar un vector utilizando el formato <code>{... {data}}</code>.</p>
+
+
+<p data-height="300" data-theme-id="6688" data-slug-hash="qQbKGN" data-default-tab="js,result" data-user="rbiggs" data-pen-title="@composi/core - Pasar Props a los Hijos" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/qQbKGN/">@composi/core - Pasar Props a los Hijos</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+<p> </p>
+
+<h2>Pasar Props a los Hijos</h2>
+<p>Una de las cosas más importantes de JSX y <code>props</code> es el hecho de que se pueden pasar de padres a hijos. A diferencia de los frameworks basados en el concepto de enlace de datos bidireccional. JSX abarca la práctica del flujo de datos unidireccional. Con el enlace de dos datos es muy difícil determinar en cuál dirección está ocurriendo un problema. Con el flujo de datos unidireccional, esto es mucho más fácil.</p>
+
+<p>En el siguiente ejemplo, pasamos los datos de los ítemes de la lista a un componente secundario, que itera sobre los datos para crear los ítemes de la lista.</p>
+
+
+<p data-height="300" data-theme-id="6688" data-slug-hash="OaMwXo" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - Pasar Props a los Hijos" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/OaMwXo/">@composi/core
+    - Pasar Props a los Hijos</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+<p> </p>
+
+<h2>Composición Avanzada</h2>
+<p>En este ejemplo, estamos haciendo una composición avanzada, utilizando la desestructuración y pasando las propiedades y los niños al componente secundario para afectar la manera en que se renderiza el componente entero. Abre el ejemplo en Codepen y puedes cambiar el color del borde cambiando el valor del color en la etiqueta BordeLujoso. Actualmente está configurado con color "rojo", pero puede cambiarlo a "verde" o "azul".</p>
+<p data-height="300" data-theme-id="6688" data-slug-hash="KrVxZm" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - Pasar Props a lost Hijos-2" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/KrVxZm/">@composi/core
+    - Pasar Props a lost Hijos-2</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+        <p>&nbsp;</p>
+      </div>
+    </section>
+  </article>
+  <footer>
+    <section>
+      <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>Composi Logo</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+            <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+              id="Combined-Shape"></path>
+          </g>
+        </g>
+      </svg>
+      <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a>
+        y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+    </section>
+  </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+
+</html>

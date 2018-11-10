@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/create-composi-app:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/es/docs/create-composi-app/create-composi-app.html">create-composi-app</a></li>
+          <li><a href="/es/docs/create-composi-app/install.html">Instalación</a></li>
+          <li class='selected'>Uso</li>
+        </ul>
+          <h1>Uso</h1>
+          <h2>Cómo Crear los Proyectos</h2>
+          <p>Como se menciona en la documentación de instalación, creas un nuevo proyecto predeterminado en el escritorio por ejecutar composi-create-app seguido de un nombre para el proyecto:</p>
+
+<pre><code class="language-bash">create-composi-app "My Proj"</code></pre>
+
+        <p>Puede crear un proyecto en un lugar específico proporcionando un segundo argumento como ruta para el proyecto:</p>
+
+<pre><code class="language-bash">create-composi-app "Mi Proyecto" "~/dev/proyectos-personales</code></pre>
+
+        <p>Esto creará el proyecto "Mi Proyecto" en "~/dev/proyectos-personales".</p>
+
+        <h2>Compilar &amp; Lanzar</h2>
+        <p>Usa la terminal para <code>cd</code> a la carpeta del proyecto y ejecuta: </p>
+<pre><code clase="language-bash">npm i && npm start</code></pre>
+        <p>Esto instalará las dependencias del proyecto, creará el proyecto, iniciará observadores e iniciará el proyecto en el navegador predeterminado. Cualquier cambio que realice en los archivos en la carpeta <code>src</code> del proyecto activará otra compilación y recargará el código actualizado en el navegador.</p>
+        <h2>Otras Tareas</h2>
+        <p>Cada proyecto Composi viene configurado para varias otras tareas útiles. Esto implica guía de estilo para el código, limpieza de la carpeta <code> dist </code> del proyecto y creación de una versión del proyecto lista para producción.</p>
+
+        <h3>Eslint</h3>
+        <p>Si tiene su proyecto en ejecución, puede abrir otra pestaña en su terminal, <code>cd</code> a su proyecto y ejecutar:</p>
+
+<pre><code class="language-bash">npm run lint</code></pre>
+
+        <p>Su proyecto tiene un archivo <code>.eslintrc.json</code> en la raíz del proyecto. Puedes editar esto para que la línea funcione de la manera que quieras.</p>
+        <p>Si el JavaScript de su proyecto en la carpeta <code>src</code> viola alguna regla de Eslint, imprimirá el número de línea y la regla de salida rota en la consola. Usa esa información para solucionar el problema.</p>
+        <p>Lée <a href="https://eslint.org/docs/rules/">la documentación de las reglas de eslint</a> para aprender cómo personalizar la verificación del estilo de código para su proyecto.</p>
+
+        <h3>Prettier</h3>
+        <p>El proyecto viene configurado para usar Prettier en su código. Solo <code>cd</code> al proyecto y ejecute:</p>
+<pre><code class="language-bash">npm run format</code></pre>
+
+        <p>El valor predeterminado es convertir las comillas dobles en una sola y eliminar todos los puntos y coma no necesarios. Si prefiere tener comillas dobles de forma predeterminada y apreciar los puntos y coma en su código, abre el archivo <code>package.json</code> y cambia esta línea:</p>
+<pre><code class="language-javascript">"format": "prettier --no-semi --single-quote --write ./lib/*.js"</code></pre>
+        <p>To:</p>
+        <pre><code class="language-javascript">"format": "prettier --write ./lib/*.js"</code></pre>
+        <p> </p>
+        <h3>Limpiar y Recompilar</h3>
+        <p>Los archivos finales que necesita se envían a la carpeta dist. Durante un período de tiempo, es posible que esta carpeta contenga la salida de archivos que ya no están en su carpeta src. Puede limpiar y repoblar la carpeta dist con el siguiente comando:</p>
+<pre><code class="language-shell">npm run clean && npm run build:fresh</code></pre>
+        <p>If you want to launch your project after clean, then run this:</p>
+<pre><code class="language-shell">npm run clean && npm start</code></pre>
+        <p> </p>
+        <h3>Minificación de Imágenes</h3>
+        <p>Es posible que tengas muchas imágenes en su proyecto y querrías minimizarlas para la producción. Puedes actualizar su proyecto para manejar esto con un script NPM. Primero instala <code>imagemin</code></p>
+
+<pre><code class="language-bash">npm i -D imagemin-cli</code></pre>
+
+        <p>Entonces agrega la línea siguiente a los scripts en el archivo package.json:</p>
+
+        <pre><code class="language-bash">"build:images": "imagemin src/images/* -o dist/images",</code></pre>
+        <p>Cómo puedes ver, según este comando los imágenes deben de estar dentro de la carpeta src del proyecto.</p>
+        <p>Con esto, prodrás minificar los imágenes y ponerlas en la carpeta dist por ejecutar:</p>
+        <pre><code class="language-bash">npm run build:images,</code></pre>
+        <p>Esto comprimirá los jpegs y pngs.</p>
+
+        <h3>Icónos de SVG</h3>
+        <p>Si desea utilizar imágenes SVG como iconos, puede poner todas sus imágenes SVG en la carpeta src/images/icons de su proyecto. Luego instale los siguientes dos módulos:</p>
+<pre><code class="language-bash">npm i -D svg-sprite-generator svgo</code></pre>
+
+        <p>Agrega el comando siguiente a los escriptos en el package.json:</p>
+<pre><code class="language-bash">"build:icons": "svgo -f src/images/icons -o dist/images/icons && svg-sprite-generate -d dist/images/icons -o
+        dist/images/icons/icon-sprites.svg",</code></pre>
+        <p> </p>
+
+        <h2>Versión de Producción</h2>
+        <p>Para crear una versión del proyector para producción, <code>cd</code> a la carpeta y ejecuta:</p>
+        <pre><code class="language-bash">npm run build:production</code></pre>
+        <p>Esto creará una nueva carpeta en el mismo directorio que su proyecto, pero con "-production" anexada a su nombre. Por ejemplo, si el nombre de su proyecto era "mi-proyecto", esto crearía la versión de producción llamada "my-proj-production" en la misma carpeta cómo el proyecto original. Dentro de este proyecto encontrarás el archivo index.html y la carpeta dist. Puedes ponerlos donde sea necesario para la producción. Todos los enlaces en el index.html usan rutas absolutas, por lo que la ubicación de la carpeta dist puede estar en la carpeta pública, o como sea para que el servidor funcione apropiadamente.</p>
+
+        <h2>En Cuanto a CSS</h2>
+        <p>Dado que el base para Composi es el de los navegadores modernos, no creemos que realmente necesite Sass o Less. Si observa el CSS del proyecto, verá que utiliza <a href='https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables'> variables de CSS</a> para colores. Técnicamente estas se llaman propiedades personalizadas. Funcionan igual que los variables en Sass y Less. Si utiliza <a href='http://getbem.com/introduction/'>BEM</a>, no tendrá necesidad de selectores anidados. Estos son más lentos de cualquier manera. Y para el diseño,puede utilizar flex box y <a href='https://css-tricks.com/snippets/css/complete-guide-grid/'> maquetación con cuadrícula CSS</a>.</p>
+
+        <h2>Atajo</h2>
+        <p>En caso de que te molesta escribir <code> create-composi-app </code> todo el tiempo, puedes crear un acceso directo para usar en la terminal. Para Linux y macOS, abre el archivo <code>.bashprofile</code>, o crea uno si no existe, y agrega lo siguiente:</p>
+<pre><code class="language-bash">alias cca="create-composi-app"
+</code></pre>
+        <p>Después de guardar, cierra la terminal y ábrela de nuevo. Ahora puedes usar <code>cca</code> en vez de <code>create-composi-app</code>. Para Windows, abre el Prompt (línea de comando) y ejecuta:</p>
+<pre><code class="language-bash">doskey cca=create-composi-app
+</code></pre>
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a> y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

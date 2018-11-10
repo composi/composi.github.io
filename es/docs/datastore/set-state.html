@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/datastore:</h3>
+        <ul class='breadcrumb'>
+        <li><a href="/es/docs/datastore/install.html">Instalación</a></li>
+        <li><a href="/es/docs/datastore/data-store.html">DataStore</a></li>
+        <li><a href="/es/docs/datastore/watch.html">Watch</a></li>
+        <li class='selected'>setState</li>
+        <li><a href="/es/docs/datastore/send.html">Send</a></li>
+        <li><a href="/es/docs/datastore/unwatch.html">Unwatch</a></li>
+        <li><a href="/es/docs/datastore/put-in-localstorage.html">putInLocalStorage</a></li>
+        <li><a href="/es/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a></li>
+        </ul>
+          <h1>setState</h1>
+          <h2>Manging DataStore State</h2>
+          <p>So you put data in a dataStore. You need a way to update or change that data during the lifetime of your app. You do that using the <code>setState</code> method. This can be used in two ways. Passing in a object that will get merged with the state object, or using a callback.</p>
+
+          <h2>Pass Object to setState</h2>
+          <p>As we mentioned, you can update the dataStores state by passing an objet to the <code>setState</code> method. Please not that this can only be done with the dataStore state is an object. It's possible for a dataStore state to be a primitive type or array. In those cases this approach will not work. You'd have to use a callback instead.</p>
+
+<pre><code class='language-javascript'>dataStore.setState({
+  name: 'Sam Smith'
+})
+</code></pre>
+
+          <p>The above code can do either of two things. In the case that the dataStore's state doesn't have a property name, it will be added. If it already has a name with a different value, this will change it to "Sam Smith".</p>
+          <p>This is a very simple way to update a state object. However, we strongly recommend using a callback. It gives you more control and is more explicit about what is happening.</p>
+
+          <h2>setState with Callback</h2>
+          <p>You can update a dataStore's state by using a callback. When you do so, the callback's argument will be the previous state of the dataStore. We usually refer to this as <code>prevState</code> in our code. You could use any value you want, but prevState shows what we are dealing with more clearly.</p>
+          <p>When you do use a callback, you perform whatever actions you need to on the previous state. When you are done, you need to return the prevState. If you fail to, the dataStore's state will not get updated and none of its events will fire. That means, if you have a setState method to change a dataStore's state and nothing is happening, check if you returned prevState at the end.</p>
+
+          <pre><code class='language-javascript'>dataStore.setState(prevState => {
+  // Here state is an array:
+  prevState.push({
+    key: 109,
+    value: 'Melon',
+    price: 1.99
+  })
+  // Don't forget to return prevState:
+  return prevState
+})
+dataStore.setState(prevState => {
+  // Here state is an object with a fruits array:
+  prevState.fruits.push({
+    key: 109,
+    value: 'Melon',
+    price: 1.99
+  })
+  // Don't forget to return prevState:
+  return prevState
+})
+dataStore.setState(prevState => {
+  // Here we delete an item by filering it out:
+  const newState = prevState.filter(fruit => fruit.value !== 'Lemon')
+  // Don't forget to return newState:
+  return newState
+})
+</code></pre>
+
+        <p> </p>
+        <h2>setState for Objects</h2>
+        <p>You can also use a <code>setState</code> callback to update an object. The object properties will be available from the <code>prevState</code> value:</p>
+<pre><code class='language-javascript'>dataStore.setState(prevState => {
+  prevState.name.first = 'Joe'
+  prevState.name.last = 'Bodoni'
+  prevState.updated = new Date().getTime()
+  // Don't forget to return prevState:
+  return prevState
+})</code></pre>
+          <p> </p>
+          <h2>prevState</h2>
+          <p>When we use <code>setState</code> we refer to the data that it exposes with the term <code>prevState</code>. This is just a convention. You can use whatever term you want for this value: potatoe, foo, etc. If your native laguage is not English, you might want to use something that makes more sense for you:</p>
+<pre><code class="language-javascript">// Simplified Chinese:
+const 参考 = {}
+参考.钥 = 105
+参考.值 = '蕉'
+
+const 数据缓存 = new DataStore({水果: [
+  { 钥: 101, 值: '苹' },
+  { 钥: 102, 值: '橙' }
+]})
+
+数据缓存.setState(旧数据 => {
+  const 项目 = 参考.值
+  旧数据.水果.push({
+    钥: 参考.钥++,
+    值: 项目
+  })
+  return 旧数据
+})
+
+// Spanish:
+const almac&eacute;n = new DataStore({frutos: [
+  { clave: 101, valor: 'manzanas' }
+  { clave: 102, valor: 'naranjas' }
+]})
+const referencias = {}
+referencias.clave = 105
+referencias.valor = 'pl&aacute;tanos'
+almac&eacute;n.setState(estadoPrevio => {
+  const &iacute;tem = referencias.valor
+  estadoPrevio.push({
+    clave: referencias.clave++
+    valor: &iacute;tem
+  })
+  return estadoPrevio
+}
+</code></pre>
+
+
+        
+
+
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a> y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

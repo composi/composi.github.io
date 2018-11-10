@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" tipo="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" tipo="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                  id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+          <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs' style='width: 100%;'>
+        <h3>@composi/runtime:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/es/docs/runtime/runtime.html">Entorno de Ejecución</a></li>
+          <li><a href="/es/docs/runtime/init.html">Init</a></li>
+          <li><a href="/es/docs/runtime/view.html">View</a></li>
+          <li><a href="/es/docs/runtime/update.html">Update</a></li>
+          <li><a href="/es/docs/runtime/effects.html">Efectos</a></li>
+          <li class='selected'>Unión Etiquetada</li>
+          <li><a href="/es/docs/runtime/composition.html">Composición</a></li>
+          <li><a href="/es/docs/runtime/end-program.html">Parar el Programa</a></li>
+          <li><a href="/es/docs/runtime/immutability.html">Inmutabilidad</a></li>
+          <li><a href="/es/docs/runtime/hop.html">Programa de Orden Superior</a></li>
+        </ul>
+        <h1>Unión Etiquetada</h1>
+        <h2>Atajos de Acciones</h2>
+        <p>Cuando tratábamos de cómo usar acciones en la función update, el uso fue muy similar al de Redux. Seguro que Redux requiere mucho más boilerplate (código repetivo). Aún así, hay una ligera desconexión entre lo que está haciendo un evento de la vista y lo que sucedió dentro de la función udpate. @composi/core ofrece una solución a esta desconexión por medio de uniones etiquetadas. Proporciona uniones etiquetadas con su función <code>union</code>. Para usarlo, primero tienes que importarlo a su proyecto:</p>
+
+<pre><code class="language-javascript">import { h, render, run, union } from '@composi/core'</code></pre>
+        <p>Una unión etiquetada es básicamente una matriz que vincula un valor de cadena, el nombre de una función, con la acción en la función update. Hacer esto nos permite invocarlos desde la vista. En nuestro ejemplo anterior, usamos cadenas con guión como tipo de mensaje: "añadir-ítem", "eliminar-ítem", etc. Ahora vamos a cambiar esas a nombres sin quiones que podemos usar como función en esta form: "añadirÍtem", "eliminarÍtem". Usaremos estos como los valores para crear una unión etiquetada. Estos argumentos se incluyen en una matriz, incluso si es un solo valor:</p>
+<pre><code class="language-javascript">// Creamos una unión etiquetada y la quardamos en el variable Msj (Mensaje):
+const Msj = new union(['añadirÍtem', 'eliminarÍtem'])</code></pre>
+
+        <p>Lo anterior crea una unión etiquetada que podemos usar con nuestras acciones de update. Esto nos permitirá llamar esas acciones de update directamente en nuestra vista:</p>
+<pre><code class="language-javascript">Msj.añadirÍtem('Sandía')
+Msj.eliminarÍtem(132)
+</code></pre>
+        <p>Aquí mostramos cómo usar la unión etiquetada en la vista:</p>
+<pre><code class="language-javascript">// Para añadir un ítem:
+&lt;button class='añadir-ítem' onclick={() => send(Msj.añadirÍtem(valorDeInput))}>Añadir&lt;/button>
+// Para eliminar un ítem:
+&lt;button class="eliminarÍtem" onclick={() => send(Msj.eliminarÍtem(ítem.clave))}>X&lt;/button></code></pre>
+        <p>Compara eso con la forma previa de enviar mensajes:</p>
+<pre><code class="language-javascript">// Añadir un ítem:
+&lt;button class='añadir-ítem' onclick={() => send({tipo: 'añadir-ítem', datos: valorDeInput})}>Añadir&lt;/button>
+// Para eliminar un ítem:
+&lt;button class="eliminarÍtem" onclick={() => send({tipo: 'delete-ítem', datos: ítem.clave})}>X&lt;/button></code></pre>
+
+        <p>Con el código anterio, cuando el usuario da clic, la función send invoca el termino correspondiente en la unión etiquetada. Eso resultará en que se manda un paquete a la función update con el formato siguiente::</p>
+<pre><code class="language-javascript">// send(Msj.añadirÍtem('Sandía'))
+{tipo: 'añadirÍtem', datos: 'Sandía'}
+// send(Msj.eliminarÍtem(132))
+{tipo: 'eliminarÍtem', datos: 132}
+</code></pre>
+
+        <p>Now, when we setup the update function, we check that the message sent matches the values in the tagged union. We do that using the <code>match</code> method on the tagged union. Notice that we don't need to check for a tag tipo <code>msg.tipo</code>, just the direct value of the tag. Also we don't need to access the datos of the message with <code>msg.datos</code>. Instead it's made directly available to the action callback as its argument. Since we're using the tagged union's match method, we don't need a switch statement's signature (switch, case, break.) This results in a simpler signature for the actions:</p>
+
+        <p>Ahora, cuando configuramos la función update, verificamos que el mensaje enviado coincida con los valores de la unión etiquetada. Lo hacemos utilizando el método <code>match</code> en la unión etiquetada. Date cuenta que no tenmos que chequar el tipo de la etiqueta: <code>msg.tipo</code>, solo el valor directo de la etiqueta. Además, no necesitamos acceder a los datos del mensaje con <code>msg.datos</code>. En su lugar, está directamente disponible para el callback de acción como su argumento. Ya que estamos usando el método match de la unión etiquetada, no necesitamos una sentencia de <code>switch</code>(switch, case, break). Esto resulta en código más sencillo para las acciones:</p>
+
+<pre><code class="language-javascript">function actions(msg, state) {
+  return Msj.match(msg, {
+    // Chequear la etiqueta del mensaje:
+    'añadirÍtem': value => {
+      // Usar mergeObjects para clonar el estado:
+      const estadoPrevio = mergeObjects(state)
+      estadoPrevio.frutas.push({ clave: state.newKey++, value })
+      return [estadoPrevio]
+    },
+    // Chequear la etiqueta del mensaje:
+    'eliminarÍtem': clave => {
+      // Usar mergeObjects para clonar el estado:
+      const estadoPrevio = mergeObjects(state)
+      estadoPrevio.frutas = estadoPrevio.frutas.filter(ítem => ítem.clave != clave)
+      return [estadoPrevio]
+    }
+  })
+}
+
+// Sin la unión etiquetada:
+function actions(msg, state) {
+  switch (msg.tipo) {
+    case 'añadir-ítem':
+      // Usar mergeObjects para clonar el estado:
+      const estadoPrevio = mergeObjects(state)
+      estadoPrevio.frutas.push({ clave: estadoPrevio.newKey++, msg.valorDeInput })
+      return [estadoPrevio]
+      break
+    case 'eliminar-ítem': 
+      // Usar mergeObjects para clonar el estado:
+      const estadoPrevio = mergeObjects(state)
+      estadoPrevio.frutas = estadoPrevio.frutas.filter(ítem => ítem.clave != msg.clave)
+      return [estadoPrevio]
+      break
+  }
+}</code></pre>
+        <p>El ejemplo anterior debería dejar claro por qué usar una unión etiquetada. Hace el código más limpio y más fácil de comprender. El uso de una unión etiquetada en la vista aclara la intención del evento. La etiqueta implica que invocará una acción correspondiente de update. Sin uniones etiquetadas, los eventos en nuestra vista disvían los objetos del mensaje a un destino no especificado. Confiamos en nuestra comprensión de cómo funciona el entorno de ejecución para asumir que serán interceptados por acciones de update. Las uniones etiquetadas hacen que la intención de los eventos de la vista sea más clara y las acciones de udpate más compactas.</p>
+
+        <p>Sigue un ejemplo vivo de cómo usar una unión etiquetada para definir las acciones y enviarlas desde la vista.</p>
+
+        <p data-height="600" data-theme-id="6688" data-slug-hash="eQzyYJ" data-default-tab="js,result" data-user="rbiggs" data-pen-title="@composi/core + runtime + unión" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/eQzyYJ/">@composi/core + runtime + unión</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+        <p></p>
+
+        <p>&nbsp;</p>
+      </div>
+    </section>
+  </article>
+  <footer>
+    <section>
+      <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>Composi Logo</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+            <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+              id="Combined-Shape"></path>
+          </g>
+        </g>
+      </svg>
+      <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a>
+        y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+    </section>
+  </footer>
+  <script src="/js/prism.js"></script>
+
+
+</body>
+
+</html>

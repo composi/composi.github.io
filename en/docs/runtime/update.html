@@ -46,8 +46,8 @@
         <ul class='breadcrumb'>
           <li><a href="/en/docs/runtime/runtime.html">Runtime</a></li>
           <li><a href="/en/docs/runtime/init.html">Init</a></li>
-          <li class='selected'>Update</li>
           <li><a href="/en/docs/runtime/view.html">View</a></li>
+          <li class='selected'>Update</li>
           <li><a href="/en/docs/runtime/effects.html">Effects</a></li>
           <li><a href="/en/docs/runtime/tagged-unions.html">Tagged Unions</a></li>
           <li><a href="/en/docs/runtime/composition.html">Composition</a></li>
@@ -60,15 +60,18 @@
           <p>A program's update method hold all its business logic. The update function listens for messages, when it receives one, it can check it to see which message it is and then run an appropriate action. By defining different actions, you instruct update how to handle them.</p>
           <p>Update gets two arguments: message and state. Message is any message sent by a user interaction with the view. The second argument is the current state of the program. If the program is complex, it will probably require a number of messages being sent to update. Since send can only handle one argument, it's convention to bundle everything up in an object literal with a type and data payload. Notice how we do this in the following snippet.</p>
           <pre><code class='language-javascript'>&lt;p class='list-form'>
-  &lt;input autofocusonchange={getInputValue} type="text" />
+  &lt;input autofocus onchange={getInputValue} type="text" />
   &lt;button class='add-item' onclick={()=> send({type: 'add-item', data: inputValue})}>Add&lt;/button>
 &lt;/p>
 </code></pre>
-          <p>Knowing that the view will send an object with a type property for the message, we can set up the update function to test the message for various types. Here is a simple program. Notice how in its update method we check what message was sent, then perform approriate actions, such as "add-item", or "delete-item"</p>
+          <p>Knowing that the view will send an object with a type property for the message, we can set up the update function to test the message for various types. Here is a simple program. Notice how in its update method we check what message was sent, then perform approriate actions, such as "add-item", or "delete-item".</p>
 <pre><code class="language-javascript">
 const program = {
   init() {
     return [state]
+  },
+  view(state, send) {
+    return render(&lt;List {...{ state, send }} />, section)
   },
   // Business Logic is in update method.
   // It intercepts actions sent by view.
@@ -94,9 +97,6 @@ const program = {
         return [prevState]
         break
     }
-  },
-  view(state, send) {
-    return render(&lt;List {...{ state, send }} />, section)
   }
 }</code></pre>
           <p>And here is a working example:</p>
@@ -109,7 +109,7 @@ const program = {
           <p>Just because you always return state, even when it doesn't change, doesn't mean that you cause unnecessary renders of the view. In fact, @composi/core's render function checks the state and component props early on and bails if they are identical.</p>
 
           <h2>Immutability</h2>
-          <p>In the above example we used the <code>mergeObjects</code> function to clone the state. This allows us to safely manipulate the clone without effecting the current program state. When were done with modifications to state clone, we return it. This then gets passed to the view method for rendering and reassigned back to the program state. <code>mergeObjects</code> comes pre-installed when you create a new @composi/core project. But you do need to import it into your project to use it:</p>
+          <p>In the above example we used the <code>mergeObjects</code> function to clone the state. This allows us to safely manipulate the clone without effecting the current program state. When were done with modifications to the cloned state, we return it. This then gets passed to the view method for rendering and reassigned back to the program state. <code>mergeObjects</code> comes pre-installed when you create a new @composi/core project. But you do need to import it into your project to use it:</p>
 <pre><code class="language-javascript">import { h, render, run } from '@composi/core'
 import { mergeObjects } from '@composi/merge-objects'
 // With mergeObjects imported, you can use it to clone program state.

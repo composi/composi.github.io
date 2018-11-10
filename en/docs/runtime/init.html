@@ -46,8 +46,8 @@
         <ul class='breadcrumb'>
           <li><a href="/en/docs/runtime/runtime.html">Runtime</a></li>
           <li class='selected'>Init</li>
-          <li><a href="/en/docs/runtime/update.html">Update</a></li>
           <li><a href="/en/docs/runtime/view.html">View</a></li>
+          <li><a href="/en/docs/runtime/update.html">Update</a></li>
           <li><a href="/en/docs/runtime/effects.html">Effects</a></li>
           <li><a href="/en/docs/runtime/tagged-unions.html">Tagged Unions</a></li>
           <li><a href="/en/docs/runtime/composition.html">Composition</a></li>
@@ -62,16 +62,16 @@
   init() {
     return [state]
   },
-  update() {},
-  view() {}
+  view() {},
+  update() {}
 }</code></pre>
           <p>When you do want to run an effect at startup, it will always be the second value in the array that init returns:</p>
 <pre><code class="language-javascript">const program = {
   init() {
     return [state, effect]
   },
-  update() {},
-  view() {}
+  view() {},
+  update() {}
 }</code></pre>
 
         <p>And here's a simple Hello World example:</p>
@@ -113,10 +113,10 @@ const program = {
     // Return the effect with the state:
     return ['Default State Value', effect]
   },
-  update() {},
   view(state) {
-    render(&lt;Counter {...{state}} />, 'section')
-  }
+  render(&lt;Counter {...{state}} />, 'section')
+  },
+  update() {}
 }
 
 // Run program:

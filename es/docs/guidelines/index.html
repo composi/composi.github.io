@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>Pautas:</h3>
+          <h1>Cómo Empezar un Proyecto</h1>
+          <h2>Instalar el CLI</h2>
+          <p>Se podría descargar todo lo necesario de Github y configurar el entorno de desarrollo, pero hay una forma más sencilla: @composi/create-composi-app. Esto te permite crear un proyecto configurado con todo lo que necesitas. Instálalo de NPM:</p>
+<pre><code class="language-bash">npm i -g @composi/create-composi-app</code></pre>
+          <p>Después de eso puedes crear un nuevo proyecto Composi así:</p>
+<pre><code class="language-javascript">create-composi-app Mi-Proyecto</code></pre>
+          <p>Ésto creará un proyecto en el escritorio. Abre la terminal y usa el comando <code>cd</code> para acceder la carpeta del nuevo proyecto. Entonces ejecuta:</p>
+<pre><code class="language-javascript">npm i</code></pre>
+          <p>Cuando finalice la instalación, puede ejecutar <code>npm start</code> para compilar el nuevo proyecto y abrirlo en el navegador predeterminado. Todo el código importante reside en la carpeta <code>dev</code> del proyecto. Cuando se realizan cambios en su contenido, el proyecto se reconstruye y vuelve a cargar el navegador automáticamente. El núcleo del código del proyecto está en dev/js/app.js. Aquí es donde ensamblas todas las piezas para que la aplicación funcione.</p>
+          <h2>Elecciones</h2>
+          <p>@composi/core es pequeño pero brinda mucha functionalidad. Ésto significa que tienes que hacer una decisiones básicas cuando empiezas uno nuevo proyecto. Usando <a href="/es/docs/create-composi-app/install.html">@composi/create-composi-app</a>, puedes crear un proyecto ya listo para usar. Hay varios enfoques que podrías tomar para hacer su aplicación, algunos más complicados que los otros. Te recomendamos que comiences lo más simple posible. Un nuevo proyecto viene con un título renderizado a la página. El archivo app.js importa h y render. Eso es todo lo que necesitas para empezar.</p>
+
+          <h2>Manejando los Datos del Proyecto</h2>
+          <p>Ojalá quieras algo más que un título. Tu aplicación probablemente tendrá que generar algún tipo de recopilación de datos. Necesitas crear una vista que pueda manejar eso. Es probable que desees permitir que el usuario interactúe con la aplicación. No te molestes con eso al principio. Simplemente cree un componente que pueda representar los datos básicos y la estructura de la aplicación. Estos datos son un objeto separado en el código que utiliza para representar la vista. Cuando vea que tiene lo que espera, regrese y agregue eventos, uno por uno. Ahora la elección importante es cómo hacer que la aplicación reaccione a los eventos. Debido a que sus datos son inertes, los eventos tendrán que actualizarlos y volver a renderizar la vista.</p>
+          <h2>DataStore</h2>
+          <p>Hacer que los eventos manipulen el estado y que las vistas se vuelvan a renderizarse es complicado. Cuando la aplicación llegue a esta etapa, probablemente debería pensar en utilizar un <a href='/es/docs/datastore/data-store.html' target='__blank'>dataStore</a>. Tendrá que importarlo en el proyecto para usarlo. Un dataStore le proporciona datos inmutables y la actualización del estado puede volver a representar la vista. De esa manera los eventos solo tienen que actualizar el estado del dataStore.</p>
+          <h2>Persistencia de Datos del Lado del Cliente</h2>
+          <p>En algún momento, es posible que desees habilitar la persistencia de las interacciones del usuario, como agregar o eliminar elementos. Puedes hacerlo con un dataStore a través de su método <code>putInLocalStorage</code>. Pruébalo. LocalStorage tiene limitaciones, la cantidad de datos que puede guardar y el hecho de que todos los datos tienen que convertirs en cadenas de texto. Cuando esto es un probema, piensa en utilizar <a href='/es/docs/idb/idb.html' target='__blank'>@composi/idb</a>. Este es un envoltura basada en promesas para IndexedDB que proporciona una interfaz simple y similar a localStorage.</p>
+
+          <h2>Complejidad de Interacción</h2>
+          <p>El uso de un dataStore o de IndexedDB y observadores con la aplicación puede ser todo lo que necesitas. Sin embargo, si encuentras que hay muchos eventos que deben ser rastreados por los escuchas de dataStore u observadores, es posible que desees una alternativa. Eso sería @composi/core runtime. Ya está en tu proyecto como parte de @composi/core. Solo necesitas
+          importarlo en tu aplicación:</p>
+          <pre><code class="language-javascript">import { h, render, run} from '@composi/core'</code></pre>
+          <p>El entorno de ejecución proporciona un ámbito encapsulado con administración de estado para sus componentes funcionales. Si es la primera vez que usa @composi/core, desearía comenzar con uno de los enfoques más simples descritos anteriormente. Cuando se sienta cómodo creando y actualizando con componentes funcionales, eche un vistazo a
+          cómo usar el <a href="/es/docs/runtime/runtime.html">entorno de ejecución</a>.</p>
+
+          <h2>Empezando con el Entorno de Ejecución</h2>
+          <p> Si ya estás familiarizado con el uso del entorno de ejecución de @composi/core, entonces está bien comenzar con él de inmediato. Sin embargo, aún debes seguir pasos similares a los que describimos anteriormente. Comienza con la implementación más simple posible: algunos datos estáticos. Luego, agrega lentamente eventos a la vista y acciones a la función de actualización (update). Poco a poco va refactorizando para incidir en la complejidad. De esa forma, si algo se rompe, ya sabes dónde buscar.</p>
+          
+          <p>Recuerde, todo lo que necesitas para crear un programa de entorno de ejecución válido es esto:</p>
+
+<pre><code class="language-javascript">import { h, render, run } from '@composi/core'
+const program = {
+  init: [],
+  update() {},
+  view() {}
+}
+// Ejecute el programa:
+run(program)
+</code></pre>
+          <p>Y, aquí está vivo:</p>
+          <p data-height="300" data-theme-id="6688" data-slug-hash="MzadEx" data-default-tab="js,result" data-user="rbiggs"
+            data-pen-title="@composi/core + runtime Basic-es" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/MzadEx/">@composi/core
+              + runtime Basic-es</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+          <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+<p>Comienza simple. Luego agrega una vista estática. Luego agrega un evento y una acción para manejarlo. Mantenlo todo en un archivo al principio. A medida que el programa crece en complejidad, mueve las piezas a sus propios archivos.</p>
+          
+          
+
+
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a> y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

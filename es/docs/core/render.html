@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                  id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+          <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/core:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/es/docs/core/install.html">Instalación</a></li>
+          <li class='selected'>Renderización</li>
+          <li><a href="/es/docs/core/props.html">Propiedades</a></li>
+          <li><a href="/es/docs/core/events.html">Eventos</a></li>
+          <li><a href="/es/docs/core/lifecycle.html">Ciclo de Vida</a></li>
+          <li><a href="/es/docs/core/hydrate.html">Hidratación</a></li>
+          <li><a href="/es/docs/core/state.html">Estado</a></li>
+        </ul>
+        <h1>Renderización</h1>
+        <h2>Defición de Marcado</h2>
+        <p>Por defecto, Composi usa JSX para definir el marcado que representa. Esto es declarativo y hace que sea fácil razonar sobre cuál será el resultado.</p>
+
+        <h2>Importar h y render</h2>
+        <p>Antes de que podamos hacer algo, necesitamos importar dos funciones esenciales de <strong>@composi/core</strong>: <code>h</code> y <code>render</code>:</p>
+
+        <pre><code class='language-javascript'>import { h, render } from '@composi/core'</code></pre>
+
+        <p><code>h</code> hace que Babel transforme las etiquetas de JSX en funciones que crean nodos virtuales. Estos se convertirán en nodos DOM reales durante la rendirización.</p>
+
+        <h2>JSX</h2>
+        <p>Puedes usar JSX para definir el marcado que crea un componente funcional. A diferencia de React, no tiene que usar atributos especiales o notación de camello con atributos. Utiliza los atributos HTML normales: <code>onclick={}</code>, <code>class=''</code>, <code>for=''</code>, etc. Debido a que esto es JSX, que es una variedad de XML, debe terminar las etiquetas que se cierran automáticamente con una barra inclinada: <code>&lt;br/></code>, <code>&lt;input type='text' /></code>, <code>&lt;img src='' /></code>, etc.</p>
+
+        <h2>Componentes Functionales</h2>
+        <p>Para crear un componente que se puede renderizar, se necesita empezar con una función. El nomfre de ésta tiene que estar en mayúsculas. Aquí es un ejemplo sencillo de una función Hola Mundo.</p>
+
+        <pre><code class='language-javascript'>import { h, render } from '@composi/core'
+function HolaMundo() {
+  return (
+    &lt;h1>¡Hola, Mundo!&lt;/h1>
+  )
+}</code></pre>
+        <p>Date cuenta que esta función hace una sóla cosa, devuelve algunas etiquetas de JSX.</p> 
+        
+        <h2>Renderización</h2>
+        <p>Ahora podemos pasar esta función a la función <code>render</code> como una etiqueta. La función <code>render</code> espera dos argumentos: la etiqueta para renderizar y el contenedor en el cual va renderizar. La etiqueta debe ser una función escrita como una etiqueta JSX. El contenedor puede ser una referencia de nodo DOM, o un selector.</p>
+
+        <pre><code class='language-javascript'>import { h, render } from '@composi/core'
+function HolaMundo() {
+  return (
+    &lt;h1>Hola, Mundo!&lt;/h1>
+  )
+}
+// Renderiza el componente en el DOM:
+render(&lt;HolaMundo />, document.body)</code></pre>
+
+        <p>Para actualizar un componente, tan sólo pásalo a la función render con los valores nuevos para sus propiedades. Este ejemplo muestra cómo hacer esoß:</p>
+<p data-height="300" data-theme-id="6688" data-slug-hash="ZmQQbJ" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - Hola Mundo" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/ZmQQbJ/">@composi/core
+    - Hola Mundo</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+        <p> </p>
+        <h2>Selector vs Referencia de DOM</h2>
+        <p>En el ejemplo anterior, estamos usando el texto <code>"header"</code> como contenedor para el componente. Esto está bien para la renderización ocasional. Sin embargo, si el componente puede procesarse muchas veces en rápida sucesión, como cuando se anima un componente, sería mejor usar una referencia de DOM para ese contenedor. Esto se debe a que cuando proporciona un selector de text para el contenedor, cada vez que se procesa el componente, Composi tiene que consultar el DOM para ese selector. Obtener una referencia al contenedor primero y usar eso en la función significa que el procesamiento puede comenzar de inmediato a computar las differences para parchear el DOM.</p>
+        
+        <p> </p>
+        <h2>Pasando Hijos a un Componente</h2>
+        <p>A veces es posible que desees pasar componentes niños a un componente. Puedes habilitar cualquier componente funcional para que acepte hijos arbitrarios pasándole un segundo parámetro después del argument de props (propiedades). Luego, puede emitir lo que sean los hijos procesando el valor <code>children</code> dentro de llaves. Observe cómo lo hacemos en este ejemplo. Tenemos un <code>BordeLujoso</code> que acepta cualquier componente secundario. Esto significa que podemos pasar cualquier cosa
+        que necesitemos como niño. En este caso, pasamos a otro componente, <code> DiálogoDeMensage</code>, pero podría ser cualquier cosa. Esto hace más fácil que se reutilice el componente BordeLujoso.</p>
+
+        <p data-height="300" data-theme-id="6688" data-slug-hash="yRVmRE" data-default-tab="js,result" data-user="rbiggs"
+          data-pen-title="@composi/core - Passing Children to Component" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/yRVmRE/">@composi/core
+            - Passing Children to Component</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+
+        <p> </p>
+        <h2>Propiedades (Props)</h2>
+        <p>Para hacer que un componente sea dinámico, necesitamos poder pasarle algunos datos. Lo hacemos a través de <code>props</code>, que es la form por la cual accedemos a las propiedadedes de un componente. Este es el principal argumento que recibe cualquier etiqueta JSX. Cualquier propiedad que le des a la etiqueta estará disponible desde este objeto. Vamos a rehacer nuestro ejemplo anterior para usar props. Observe cómo accedemos al valor de <code>saludo</code> del objeto <code>props</code> dentro del cuerpo de la función <code>HolaMundo</code>:</p>
+<p data-height="300" data-theme-id="6688" data-slug-hash="OaMNvz" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - HolaMundo-2" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/OaMNvz/">@composi/core
+    - HolaMundo-2</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+        <p>Puesto que ya estamos usand <code>props</code> en el componente, podemos actualizar el componente en cualqier momento por renderizarlo on un valor nuevo para el <code>prop</code>. Supone que queremos actualizar el valor de nuestro ejemplo de HolaMunto después de cinco segundos. Para actualizar el componente, tan sólo tenemos que cambiar el valor de la propiedad cuando regresamos a rendizarlo de nuevo:</p>
+<p data-height="300" data-theme-id="6688" data-slug-hash="gQPMwd" data-default-tab="js,result" data-user="rbiggs"
+  data-pen-title="@composi/core - Hola Mundo-3" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/gQPMwd/">@composi/core
+    - Hola Mundo-3</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+        <p>Para más detalles sobre como usar <code>props</code>, consulta la <a href="/es/docs/core/props.html">documentación</a>.</p>
+
+        <h2>Renderización Conditional</h2>
+        <p>A veces necesitas renderizar un componente basado en un cierto criterio. Hay dos formas de manejar la representación condicional: directamente en la declaración de retorno (return) o antes de la declaración de retorno.</p>
+
+        <h3>Lógica en la Sentencia Return</h3>
+        <p>La forma más común de controlar como se renderiza un componente es hacerlo directamente dentro de la sentencia de retorno (return). Para hacer esto, utilizas cheques booleanos con JavaScript <a target='__blank' href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_Operators'>operadores lógicos</ a> (&&, ||, y !) o con <a target='__ blank' href='https: //developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator'>operador ternario</a>. De hecho, puedes usarlos para obtener un marcado diferente según los controles condicionales. Debido a que está dentro de una sentencia de retorno, no puedes usar ninguna estructura condicional (if, if else, else).</p>
+        <h3>Operadores Lógicos</h3>
+
+        <p>Puede usar operadores lógicos para determinar qué devolver en su declaración. Observe cómo utilizamos el operador AND (&&) y luego el operador OR (||) para cambiar a la otra opción. Sin embargo, cuando desees un <code>if/else</code> necesitas usar el operador <code>||</code> para el <code>else</code>. El problema es que es fácil olvidarse de poner el operador <code>||</code>, en cuyo caso la segunda condición nunca ocurrirá. Esto resulta en situaciones difíciles de depurar.</p>
+<pre><code class='language-javascript'>// Dos componentes para renderizar:
+function SaludarUsuario(props) {
+  return &lt;h1>¡Bienvenido de nuevo!&lt;/h1>
+}
+
+function SaludarVisitante(props) {
+  return &lt;h1>¡Regístrate, por favor!&lt;/h1>
+}
+
+function Saludo(props) {
+  const sesiónIniciada = props.sesiónIniciada
+  // Con operadores lógicos:
+  return (
+    sesiónIniciada && &lt;SaludarUsuario /> ||  
+    !sesiónIniciada && &lt;SaludarVisitante />
+  )
+}
+</code></pre>
+
+      <p>El uso del operador AND es excelente cuando solo deseas generar resultados basados en una sóla condición. En ese caso viene siendo lo mismo que <code>if</code>. Observa cómo en esta versión, está muy claro cuál es la intención. Sin embargo no es ramificación de lógica.</p>
+
+<pre><code class='language-javascript'>// Sólo renderiza el saludo si el usuario inició sesión.
+// No hay renderización alternativa.
+function Saludo(props) {
+  const sesiónIniciada = props.sesiónIniciada
+  // Con operadores lógicos:
+  return (
+    sesiónIniciada && &lt;SaludarUsuario />
+  )
+}
+</code></pre>
+
+      <p>Aquí es un ejemplo que muestra cómo usar los operadoes lógicos puede resultar en logica difícil de entender cuando los componentes son complejos:</p>
+      <p data-height="300" data-theme-id="6688" data-slug-hash="pQgNNO" data-default-tab="js,result" data-user="rbiggs"
+        data-pen-title="@composi/core - Conditional-1 es" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/pQgNNO/">@composi/core
+          - Conditional-1 es</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+      <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+      <p> </p>
+       <h3>Operador Ternario</h3>
+       <p>El operador ternario es más claro sobre lo que está pasando y más compacto. Esta es una gran opción para etiquetas
+      simples. Sin embargo, si sus etiquetas tienen muchas propiedades, una expresión ternaria puede ser difícil de leer.</p>
+<pre><code class='language-javascript'>function Saludo(props) {
+  const sesiónIniciada = props.sesiónIniciada
+  // Con un sentencia conditional ternaria:
+  return sesiónIniciada ? &lt;SaludarUsuario /> : &lt;SaludarVisitante />
+}
+</code></pre>
+        <p>Aquí hay un ejemplo del uso de un operador ternario con componentes complejos. Observa que tiene la misma estructura básica que el ejemplo anterior utilizando operadores lógicos:</p>
+        <p data-height="300" data-theme-id="6688" data-slug-hash="dQGNyR" data-default-tab="js,result" data-user="rbiggs"
+          data-pen-title="@composi/core - Conditional-2 es" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/dQGNyR/">@composi/core
+            - Conditional-2 es</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+        <p> </p>
+
+        <h3>La Lógica Antes de Return</h3>
+        <p>Si necesita una representación condicional sin los inconvenientes de los operadores lógicos y ternarios, puede usar sentencias condicionales estándar para determinar qué devolver. Muchos desarrolladores prefieren la sintaxis más compacta de los operadores lógicos ternarios. Sin embargo, con las declaraciones condicionales no hay ambigüedad sobre lo que está sucediendo.</p>
+
+
+<pre><code class='language-javascript'>function Saludo(props) {
+  const sesiónIniciada = props.sesiónIniciada
+  // With conditional statements:
+  if (sesiónIniciada) {
+    return &lt;SaludarUsuario />
+  } else {
+    return &lt;SaludarVisitante />
+  }
+}
+</code></pre>
+        <p>A algunos desarrolladores y linters que chequean el estilo de código no les gustan sentencias de retorno dentro de las estructuras condicionales. Podemos camibar eso para fijar el problema:</p>
+<pre><code class='language-javascript'>function Saludo(props) {
+  const sesiónIniciada = props.sesiónIniciada
+  // Con estructura condicional:
+  if (sesiónIniciada) {
+    return &lt;SaludarUsuario />
+  }
+  // Si la lógica falla,
+  // devuele el saludo de visitante:
+  return &lt;SaludarVisitante />
+}
+</code></pre>
+
+        <p>Aquí está el ejemplo vivo. Este tiene el código más fácil de leer:</p>
+        <p data-height="300" data-theme-id="6688" data-slug-hash="XyXMmz" data-default-tab="js,result" data-user="rbiggs"
+          data-pen-title="@composi/core - Conditional-3 es" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/XyXMmz/">@composi/core
+            - Conditional-3 es</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+        <p>A fin de cuentas, elige el método que funcione mejor para ti. </p>
+
+        <h3>No Renderizar un Componente</h3>
+        <p>A veces no quieres renderizar un componente cuando una condición sucede. Podemos realizar esto por usar la estructura conditional anterior. Aquí es un ejemplo:</p>
+        <p data-height="300" data-theme-id="6688" data-slug-hash="BGjWmK" data-default-tab="js,result" data-user="rbiggs"
+          data-pen-title="@composi/core - Conditional-4 es" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/BGjWmK/">@composi/core
+            - Conditional-4 es</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+        <p>Fíjate como cuando <code> mostrarAdvertencia </code> es verdadero, devolvemos el componente, de lo contrario, devolvemos nulo. También podríamos eliminar la sentencia de <code>else</code> por brevedad. También podríamos usar un operador lógico simple para esto:</p>
+<pre><code class='language-javascript'>function BannerAdvertencia() {
+  return (
+    mostrarAdvertencia && (
+      &lt;div class="warning">
+        ¡Cuidado!
+      &lt;/div>
+    )
+  )
+}</code></pre>
+        <p>En ese caso, el use del operaor lógico es claro y conciso. También podríamos usar un operador ternario para esto:</p>
+<pre><code class='language-javascript'>function BannerAdvertencia() {
+  return (
+    mostrarAdvertencia ? (
+      &lt;div class="warning">
+        ¡Cuidado!
+      &lt;/div>
+    ) : null
+  )
+}</code></pre>
+        <p>En este caso, el operador tenario no es tan conciso como el operador lógico. El operador ternario require lógica de <cod>if/else</cod>, mientras que el operador ternario no deja una sóla condición de <code>if</code>.</p>
+
+        <h2>Límites del Contendior</h2>
+        <p>Cuando @composi/core renderiza un componente en un contenedor, almacena en caché el nodo virtual del componente en el contenedor mismo como propiedad. La próxima vez que se renderice ese componente, Composi toma el nodo virtual almacenado en caché del contenedor y lo usa para descubrir las diferencias y parchear el DOM. Esto significa que un contenedor solo puede tener un componente. Cuando se renderiza un componente en un contenedor, si dicho contenedor tiene contenido estático, el componente se agregará después del contenido.</p>
+        <p>Si necesita generar más de un componente en el mismo contenedor, envuélvalos en un componente principal y procesarlos en el componente. No puede usar la etiqueta <code>Fragment</code> para esto, ya que debe ser consumida por una etiqueta que devuelve un elemento singular.</p>
+
+        <h2>Rebotar las Renderizaciones</h2>
+        <p>Es posible que esté usando algún tipo de evento, como la posición del cursor, para activar una actualización. Esto es muy común para la animación. En ese caso, desearía envolver la función de render en <code>requestAnimationFrame</code>. Esto hará que se omitan intentos innecesarios de renderizar más rápido de lo que el navegador puede mantener. El formato es así:</p>
+<pre><code class="language-javascript">requestAnimationFrame(() => {
+  render(<MyComponent data={data}/>, 'body')
+})
+</code></pre>
+        <p>Consulta la documentación de cómo hacer esto con <a target="__blank" href='/es/docs/core/state.html#debounce-renders'>@composi/datastore</a></p>
+        <p>&nbsp;</p>
+      </div>
+    </section>
+  </article>
+  <footer>
+    <section>
+      <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>Composi Logo</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+            <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+              id="Combined-Shape"></path>
+          </g>
+        </g>
+      </svg>
+      <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a>
+        y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+    </section>
+  </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+
+</html>

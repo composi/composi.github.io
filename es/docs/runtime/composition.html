@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/runtime:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/es/docs/runtime/runtime.html">Entorno de Ejecución</a></li>
+          <li><a href="/es/docs/runtime/init.html">Init</a></li>
+          <li><a href="/es/docs/runtime/view.html">View</a></li>
+          <li><a href="/es/docs/runtime/update.html">Update</a></li>
+          <li><a href="/es/docs/runtime/effects.html">Efectos</a></li><li><a href="/es/docs/runtime/tagged-unions.html">Unión Etiquetada</a></li>
+          <li class='selected'>Composición</li>
+          <li><a href="/es/docs/runtime/end-program.html">Parar el Programa</a></li>
+          <li><a href="/es/docs/runtime/immutability.html">Inmutabilidad</a></li>
+          <li><a href="/es/docs/runtime/hop.html">Programa de Orden Superior</a></li>
+        </ul>
+          <h1>Composición</h1>
+          <h2>Un Programa dentro de Otro</h2>
+          <p>A medida que un programa se vuelve más complejo, lo mismo pasa con su vista. Esto puede requerir dividirlo en partes más pequeñas, incluso almacenarlas en archivos separados para que puedan reutilizarse. La naturaleza de los componentes funcionales hace que sea fácil componerlos juntos, pasando las props de padres a hijos. Puede obtener más información sobre la composición de componentes funcionales en la sección sobre la función <a target='__blank' href="/es/docs/core/render.html">render</a>.</p>
+
+          <p>También es posible que desese utilizar un pequeño programa de entrono de ejecución dentro de otro. Esto es posible, aunque un poco complejo. Hay que tener en cuenta al hacer esto que la función render de @composi/core solo puede procesar el marcado. Eso significa que la vista del programa hijo no puede renderizar su componente, sino tiene que devolver lo como marcado. De esa manera, la vista del componente padre manejará la renderización de la vista del hijo. Fíjate cómo lo hacemos en el siguiente ejemplo:</p>
+
+          <p data-height="600" data-theme-id="6688" data-slug-hash="LXZQLv" data-default-tab="js,result" data-user="rbiggs" data-pen-title="@composi/core + runtime Composición1a" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/LXZQLv/">@composi/core + runtime Composición1a</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+          <p> </p>
+          <h2>Efectos Mapeados</h2>
+
+          <p>El entorno de ejecución proporciona una función especial <code>mapEffect</code> para usar con la composición de programas. Esta habilita el mapear de los efectos de un programa a los de otro. Eso facilita que un programa use el efecto de otro. Para usarlo, lo necesitas importar en el proyecto:</p>
+
+<pre><code class="language-javascript">import { h, render, run, mapEffect } from '@composi/core'</code></pre>
+
+            <p>Aquí está nuestro ejemplo anterior rehecho usando <code>mapEffect</code>. Fíjate en cuán limpio y fácil de
+            leer es.</p>
+            
+            <p data-height="600" data-theme-id="6688" data-slug-hash="Pxzjrd" data-default-tab="js,result" data-user="rbiggs" data-pen-title="@composi/core + runtime Composition2a es" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/Pxzjrd/">@composi/core + runtime Composition2a es</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+            
+            <p> </p>
+            <h2>Communicación de Padre a Hijo</h2>
+            <p>Podemos usar técnicas similares para que el padre cambie el estado predeterminado de un programa hijo. El siguiente ejemplo muestra cómo lo hacemos con un efecto sencillo que se transmite al hijo. Nota que el programa contador tiene su estado establecido en 22. Pero el padre sobrescribe ese valor a 123.</p>
+
+            <p data-height="600" data-theme-id="6688" data-slug-hash="VVjdQZ" data-default-tab="js,result" data-user="rbiggs"
+              data-pen-title="@composi/core + runtime Composición3a es" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/VVjdQZ/">@composi/core
+                + runtime Composición3a es</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+            
+            <p> </p>
+            <h2>Communicación de Hijo a Padre</h2>
+            <p>Por usar el mismo formato del ejemplo previos, tenemos un ejemplo de hijo usando un efecto para comunicar con su padre.</p>
+
+            <p data-height="600" data-theme-id="6688" data-slug-hash="gQMjaW" data-default-tab="js,result" data-user="rbiggs" data-pen-title="@composi/core + runtime Composición4a es" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/gQMjaW/">@composi/core + runtime Composición4a es</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a> y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

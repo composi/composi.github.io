@@ -41,6 +41,7 @@
         <a class='nav-menu__item__link en' href="./index.html" title='English'>English</a>
       </li>-->
     </ul>
+    <a class='version spanish' href="./index-es.html" title='Español'></a>
   </nav>
   <header class='main__header'>
     <section>
@@ -56,11 +57,11 @@
       <div class="main__column">
         <h2 class='main__modular'>Modular</h2>
         <p>Create simple components and combine them into more complex ones. The virtual DOM takes care of efficiently updating the HTML when a component's props change.</p>
-        <p>Composi core is small, barely <strong>2KB</strong>. It has only three functions: h, render and run. And three lifecycle events: onmount, onupdate and onunmount.</p>
+        <p>@composi/core is small, barely <strong>2KB</strong>. It has three main functions: h, render and run. And three lifecycle events: onmount, onupdate and onunmount.</p>
       </div>
       <div class="main__column">
         <h2 class='main__declarative'>Declarative</h2>
-        <p>Define your component markup with JSX, or Hyperscript, or ES6 template literals.</p>
+        <p>Define your component markup with JSX, or Hyperscript.</p>
         <p>Everything is just JavaScript. You can use JavaScript inside your render functions.</p>
         <p>No need for special markup syntax or directives.</p>
       </div>
@@ -167,11 +168,11 @@
     <section>
       <div class="main__example--column">
         <h3>Dynamic Counters</h3>
-        <p>This is a functional component that generates keyed couters. It uses the runtime along with tagged unions for state management. This is similar to how the todo app is implemented above. Each counter occupies a keyed list item. This makes it more efficient for deleting random counters from the list.</p>
+        <p>This is a functional component that generates keyed counters. It uses the runtime along with a tagged union for state management. This is similar to how the todo app is implemented above. Each counter occupies a keyed list item. This makes it more efficient for deleting random counters from the list.</p>
         <p>Each counter has the events and functionality it needs to act like an independent component. In reality they are just part of a larger, all-encomposing component.</p>
         <p>We're also using the <code>Fragment</code> tag to generate a group of sibling elements--the buttons that constitute the counter.</p>
       </div>
-      <<p data-height="600" data-theme-id="6688" data-slug-hash="PyMjob" data-default-tab="result" data-user="rbiggs"
+      <p data-height="600" data-theme-id="6688" data-slug-hash="PyMjob" data-default-tab="result" data-user="rbiggs"
         data-pen-title="@composi/core --Counters with Runtime" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/PyMjob/">@composi/core
           --Counters with Runtime</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
       <script async src="https://static.codepen.io/assets/embed/ei.js"></script>

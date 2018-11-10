@@ -120,7 +120,7 @@ render(&lt;HelloWorld />, document.body)</code></pre>
     - Hello World-2</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
-        <p>Since we are now using <code>props</code> in our component, we can update the component at any time by re-rendering it with a new <code>prop</code> value. Let's say we want to update the value of our Hello World example after five seconds. To update a component, we need to pass in the value we stored in a variable from the first render as the third argument of the render:</p>
+        <p>Since we are now using <code>props</code> in our component, we can update the component at any time by re-rendering it with a new <code>prop</code> value. Let's say we want to update the value of our Hello World example after five seconds. To update a component, we just need to change the value of the prop when we re-render it:</p>
 <p data-height="300" data-theme-id="6688" data-slug-hash="GYNezV" data-default-tab="js,result" data-user="rbiggs"
   data-pen-title="@composi/core - Hello World-3" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/GYNezV/">@composi/core
     - Hello World-3</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
@@ -223,7 +223,7 @@ function Greeting(props) {
         <p>In the end, pick the approach that works best for you. </p>
 
         <h3>Not Rendering a Component</h3>
-        <p>Sometimes you want to not render a component when a codition occurs. Using the above conditional state format we can solve this. Here's an example:</p>
+        <p>Sometimes you want to not render a component when a condition occurs. Using the above conditional state format we can solve this. Here's an example:</p>
         <p data-height="300" data-theme-id="6688" data-slug-hash="wYobYQ" data-default-tab="js,result" data-user="rbiggs"
           data-pen-title="@composi/core - Conditional-4" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/wYobYQ/">@composi/core
             - Conditional-4</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>

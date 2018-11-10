@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/runtime:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/es/docs/runtime/runtime.html">Entorno de Ejecución</a></li>
+          <li class='selected'>Init</li>
+          <li><a href="/es/docs/runtime/view.html">View</a></li>
+          <li><a href="/es/docs/runtime/update.html">Update</a></li>
+          <li><a href="/es/docs/runtime/effects.html">Efectos</a></li>
+          <li><a href="/es/docs/runtime/tagged-unions.html">Unión Etiquetada</a></li>
+          <li><a href="/es/docs/runtime/composition.html">Composición</a></li>
+          <li><a href="/es/docs/runtime/end-program.html">Parar el Programa</a></li>
+          <li><a href="/es/docs/runtime/immutability.html">Inmutabilidad</a></li>
+          <li><a href="/es/docs/runtime/hop.html">Programa de Orden Superior</a></li>
+        </ul>
+          <h1>Init</h1>
+          <h2>Preparar para el Inicio</h2>
+          <p>Cuando pasas un programa a la función <code>run</code>, el entorno de ejecución toma el valor devuelto por el método <code>init</code> para usarlo para configuracón. Si su programa tiene estado, entonces el método <code>init</code> lo devolverá envuelto en una matriz. Si deseas ejecutar un efecto al inicio, también lo incluiría como el segundo valor de la matriz devuelto por <code>init</code>. Un efecto es solo una función. Un efecto podría ser un temporizador de algún tipo, o una solicitud de datos. Un efecto es siempre asincrónico, ejecutándose independientemente del resto del programa. La mayoría de las veces, su inicio solo volverá al estado. Aun así, siempre debes encerrarlo entre llaves.</p>
+
+<pre><code class="language-javascript">const program = {
+  init() {
+    return [estado]
+  },
+  view() {},
+  update() {}
+}</code></pre>
+          <p>Cuando quieres operar un efecto durante el inicio del programa, siempre va a ser el segundo valor en el vector que devuelve init:</p>
+<pre><code class="language-javascript">const program = {
+  init() {
+    return [estado, efecto]
+  },
+  view() {},
+  update() {}
+}</code></pre>
+
+        <p>Aquí está un ejemplo sencilo de Hola Mundo:</p>
+        
+        <p data-height="300" data-theme-id="6688" data-slug-hash="mQPGbz" data-default-tab="js,result" data-user="rbiggs"
+          data-pen-title="@composi/core + runtime Hola Mundo" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/mQPGbz/">@composi/core
+            + runtime Hola Mundo</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+
+        <p>En el ejemplo siguiente mostamos cómo implementar un efecto en el init del programa para empezar un bucle para mostra el tiempo cada segundo. El bucle se ejecuta en forma separada del entorno de ejecución, enviando mensaje cada segundo a la acción del update, causando que la vista acutalice el tiempo que muestra.</p>
+        
+        <p data-height="300" data-theme-id="6688" data-slug-hash="MzyqKe" data-default-tab="js,result" data-user="rbiggs"
+          data-pen-title="@composi/core + runtime Reloj" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/MzyqKe/">@composi/core
+            + runtime Reloj</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+        <p>Aquí es un escrito que muestra como usar un efecto en el método <code>init</code>, mientras también devuele estado:</p>
+<pre><code class="language-javascript">// Contado para la vista:
+function Contador({estado, send}) {
+  return (
+    &lt;p>
+      {
+        estado
+      }
+    &lt;/p>
+  )
+}
+
+// Un efecto que ejecutar al iniciar:
+function effect() {
+  setTimeout(() => {
+    alert('¡El efecto funciona!')
+  }, 3000)
+}
+
+// Asembla el programa:
+const programa = {
+  init() {
+    // Devolver el efector con el estado:
+    return ['un valor para el estado', effect]
+  },
+  view(estado) {
+  render(&lt;Contador {...{estado}} />, 'section')
+  },
+  update() {}
+}
+
+// Run program:
+run(programa)</code></pre>
+
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a> y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

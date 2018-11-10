@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+      <!--
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/lessons/index.html">Lessons</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/datastore:</h3>
+        <ul class='breadcrumb'>
+        <li><a href="/es/docs/datastore/install.html">Instalación</a></li>
+        <li><a href="/es/docs/datastore/data-store.html">DataStore</a></li>
+        <li class='selected'>Watch</li>
+        <li><a href="/es/docs/datastore/set-state.html">setState</a></li>
+        <li><a href="/es/docs/datastore/send.html">Send</a></li>
+        <li><a href="/es/docs/datastore/unwatch.html">Unwatch</a></li>
+        <li><a href="/es/docs/datastore/put-in-localstorage.html">putInLocalStorage</a></li>
+        <li><a href="/es/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a></li>
+        </ul>
+          <h1>watch</h1>
+          <h2>Wach for Events</h2>
+
+          <p>DataStores use <code>@composi/observer</code> internally to enable watching and reacting to state changes. For you this means that you can setup a watcher on a dataStore to do something when its state changes. The <code>watch</code> method takes two arguments: an event to watch, and a callback to run when the event happens. Be default the callback receives the current state of the dataStore as its argument.</p>
+
+          <p>You can use any string value as an event name: <code>update</code>, <code>stuff-happened</code>. You can also create namespaced events to organize them better: <code>employee:added</code>, <code>employee:promoted</code>, <code>employee:dismissed</code>, etc.</p>
+
+          <p>DataStore has a default event that always fires when its state changes: <code>dataStoreStateChanged</code>. As such, you can create a watcher withou an event and it will default to this one. You do so by using a falsy value for the event: <code>null</code>, <code>undefined</code>, <code>false</code>, <code>''</code>, <code>0</code>.</p>
+<pre><code class='language-javascript'>dataStore.watch(null, () => {
+  // Do stuff
+})
+// or:
+dataStore.watch('', () => {
+  // Do stuff
+})
+</code></pre>
+<p>These would also fire if you sent to the event <code>dataStoreStateChanged</code>.</p>
+
+          <pre><code class='language-javascript'>import { DataStore } from  @composi/datastore
+
+const dataStore = new DataStore({
+  employes: [
+    {
+      id: 101,
+      name: 'Joe Shmoe',
+      job: 'mechanic'
+    }
+  ]
+})
+// Create a watcher with custom event:
+dataStore.watch('added-employee', data => {
+  // Do whatever you need to with the data.
+})
+</code></pre>
+
+          <p></p>
+          <h2>Multiple Watchers</h2>
+          <p>A dataStore can have as many watchers as you need, each with their own cusotm events. Or, you could set up multiple watchers all using the same event. Whatever fits your needs.</p>
+
+          <p>You might want to create multiple watchers for the same event so that you don't have too much going on in the watcher. If you do follow this course, try to keep all watchers for the same event in the same place. That way it will be easier to track down issues if something isn't working properly when that event fires.</p>
+
+          <pre><code class='language-javascript'>// Create multiple watchers with the same custom event:
+dataStore.watch('added-employee', data => {
+  // Do something here.
+})
+dataStore.watch('added-employee', data => {
+// Do something else here.
+}
+dataStore.watch('added-employee', data => {
+// And our third watcher here.
+}
+</code></pre>
+          <p>You can also set up multiple watchers on a dataStore with different custom events:</p>
+
+          <pre><code class='language-javascript'>// Create multiple watchers with the same custom event:
+dataStore.watch('added-employee', data => {
+  // Do something here.
+})
+dataStore.watch('employee-fired', data => {
+  // Do something here.
+}
+dataStore.watch('employee-promoted', data => {
+  // Do something here.
+}
+</code></pre>
+          <p>Having watchers with different events is useful for triggering different scenarious. This is possible when using a dataStore <a href='/docs/datastore/send.html'>send</a> method.</p>
+
+          <h2>Updating a Functional Component</h2>
+          <p>DataStores provide state management for functional components. Functional components don't have state. They receive their data through props. Instead of manually changing data and then re-rendering the component, you can use a dataStore to do that for you. You simply set up a watcher that will re-render the component every time the dataStore state changes:</p>
+
+          <pre><code class='language-javascript'>import { h, render } from  '@composi/core'
+import { DataStore } from '@composi/datastore'
+
+// Define a list component:
+function List({data}) {
+  return (
+    &lt;ul>
+      {
+        data.map(item => &lt;li key={item.key}>{item.value}&lt;/li>)
+      }
+    &lt;/ul>
+  )
+}
+
+// Create a dataStore:
+const dataStore = new DataStore({
+  state: [
+    {
+      key: 101,
+      value: 'Apples'
+    },
+    {
+      key: 102,
+      value: 'Oranges'
+    },
+
+    {
+      key: 103,
+      value: 'Bananas'
+    }
+  ]
+})
+
+// Render the component:
+let list render(&lt;List data={dataStore.state}/>, 'body')
+
+// Create a watcher to update the component when state changes:
+dataStore.watch('update-occurred', data => {
+  list render(&lt;List data={dataStore.state} />, 'body', list)
+})
+</code></pre>
+
+          <p>After creating a component that uses a dataStore, and setting up a watcher to update the component, when we modify the dataStore state, the component will update automatically.</p>
+<pre><code class="language-javascript">dataStore.setState(prevState => {
+  prevState.push({
+    key: 104,
+    value: 'Melons'
+  })
+})
+</code></pre>
+
+          
+
+
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a> y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>
