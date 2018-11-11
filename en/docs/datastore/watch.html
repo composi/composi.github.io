@@ -58,7 +58,7 @@
 
           <p>You can use any string value as an event name: <code>update</code>, <code>stuff-happened</code>. You can also create namespaced events to organize them better: <code>employee:added</code>, <code>employee:promoted</code>, <code>employee:dismissed</code>, etc.</p>
 
-          <p>DataStore has a default event that always fires when its state changes: <code>dataStoreStateChanged</code>. As such, you can create a watcher withou an event and it will default to this one. You do so by using a falsy value for the event: <code>null</code>, <code>undefined</code>, <code>false</code>, <code>''</code>, <code>0</code>.</p>
+          <p>DataStore has a default event that always fires when its state changes: <code>dataStoreStateChanged</code>. As such, you can create a watcher without an event and it will default to this one. You do so by using a falsy value for the event: <code>null</code>, <code>undefined</code>, <code>false</code>, <code>''</code>, <code>0</code>.</p>
 <pre><code class='language-javascript'>dataStore.watch(null, () => {
   // Do stuff
 })
@@ -88,7 +88,7 @@ dataStore.watch('added-employee', data => {
 
           <p></p>
           <h2>Multiple Watchers</h2>
-          <p>A dataStore can have as many watchers as you need, each with their own cusotm events. Or, you could set up multiple watchers all using the same event. Whatever fits your needs.</p>
+          <p>A dataStore can have as many watchers as you need, each with their own custom events. Or, you could set up multiple watchers all using the same event. Whatever fits your needs.</p>
 
           <p>You might want to create multiple watchers for the same event so that you don't have too much going on in the watcher. If you do follow this course, try to keep all watchers for the same event in the same place. That way it will be easier to track down issues if something isn't working properly when that event fires.</p>
 
@@ -97,15 +97,15 @@ dataStore.watch('added-employee', data => {
   // Do something here.
 })
 dataStore.watch('added-employee', data => {
-// Do something else here.
+  // Do something else here.
 }
 dataStore.watch('added-employee', data => {
-// And our third watcher here.
+  // And our third watcher here.
 }
 </code></pre>
           <p>You can also set up multiple watchers on a dataStore with different custom events:</p>
 
-          <pre><code class='language-javascript'>// Create multiple watchers with the same custom event:
+          <pre><code class='language-javascript'>// Create multiple watchers with the different custom event:
 dataStore.watch('added-employee', data => {
   // Do something here.
 })
@@ -155,11 +155,11 @@ const dataStore = new DataStore({
 })
 
 // Render the component:
-let list render(&lt;List data={dataStore.state}/>, 'body')
+render(&lt;List data={dataStore.state}/>, 'body')
 
 // Create a watcher to update the component when state changes:
 dataStore.watch('update-occurred', data => {
-  list render(&lt;List data={dataStore.state} />, 'body', list)
+  render(&lt;List data={dataStore.state} />, 'body')
 })
 </code></pre>
 

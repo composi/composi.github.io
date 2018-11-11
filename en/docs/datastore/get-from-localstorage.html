@@ -58,7 +58,7 @@
         <h2>Hydrate DataStore from LocalStorage</h2>
 
         <p>If you're using <a href="/en/docs/datastore/put-in-localstorage.html">putInLocalStorage</a> to persist a dataStore's state, you can use <code>getFromLocalStorage</code> during page load to hydrate the dataStore with the data saved during the last session.</p>
-        <p><code>getFromLocalStorage</code> returns a promise, so it is non-blocking. That also means you'll have to use a <code>then</code> function to do anything with the result. If the dataStore does not exist in localStorage, or there is any other problem is retrieving it, <code>getFromLocalStorage</code> with throw and error. This means you must always use a conditional check to see if you received any data before trying to use it. To deal with a failure you will have to use a <code>catch</code> function.</p>
+        <p><code>getFromLocalStorage</code> returns a promise, so it is non-blocking. That also means you'll have to use a <code>then</code> function to do anything with the result. If there is no data in localStorage, or there is any other problem is retrieving it, <code>getFromLocalStorage</code> will throw an error. This means you must always use a conditional check to see if you received any data before trying to use it. To deal with a failure you will have to use a <code>catch</code> function.</p>
 
         <p></p>
         <pre><code class='language-javascript'>import { h, render } from '@composi/core'
@@ -80,7 +80,7 @@ dataStore.getFromLocalStorage()
     }
   })
 </code></pre>
-        <p>In the above example we hyrdate a dataStore with what was found in localStore. However, if there was nothing there, you might want to provide some default data. The following example shows how to do that. We introduce a watcher to render a list component. That way, whether state is set with default data or data retrieved from localStorage, the component will render. We also show how to persist changes to dataStore's state with <code>putInLocalStorage</code>.</p>
+        <p>In the above example we hyrdate a dataStore with what was found in localStorage. However, if there was nothing there, you might want to provide some default data. The following example shows how to do that. We introduce a watcher to render a list component. That way, whether state is set with default data or data retrieved from localStorage, the component will render. We also show how to persist changes to dataStore's state with <code>putInLocalStorage</code>.</p>
 <pre><code class="language-javascript">import { h, render } from '@composi/core'
 import { DataStore } from '@composi/datastore'
 

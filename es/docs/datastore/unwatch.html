@@ -52,17 +52,17 @@
         <li><a href="/es/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a></li>
         </ul>
           <h1>Unwatch</h1>
-          <h2>Unwatch an Event</h2>
-          <p>There might arise a situation where you want a watcher for a specific period of time, after which you don't want it to function any longer. You can do this using the <code>unwatch</code> method. This takes one argument: the event to unwatch.</p>
+          <h2>Dejar de Vigilar un Evento</h2>
+          <p>Puede ocurrir una situación en la cual quieres un vigilante por un tiempo específico, después de lo cual querrás despojarte él. Esto se realiza con el método <code>unwatch</code>. Éste toma un argumento: el evento que dejar de vigilar.</p>
 
 
-<pre><code class='language-javascript'>dataStore.watch('temp-event', () => {
-  console.log('This event will not be watched much longer!')
+<pre><code class='language-javascript'>dataStore.watch('evento-temporal', () => {
+  console.log('No vamos a vigilar este event por mucho tiempo.')
 })
-// Sometime later:
-dataStore.unwatch('temp-event')
-// Now if you send that event, nothing will happen:
-dataStore.send('temp-event')</code></pre>
+// Después terminamos el evento:
+dataStore.unwatch('evento-temporal')
+// Ahora, si enviamos ese evento, no pasa nada:
+dataStore.send('evento-temporal')</code></pre>
 
 
 

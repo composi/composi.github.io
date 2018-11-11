@@ -52,19 +52,19 @@
         <li><a href="/es/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a></li>
         </ul>
           <h1>putInLocalStorage</h1>
-          <h2>Saving to localStorage</h2>
+          <h2>Gaurdar el estado en localStorage</h2>
+          <p>Es posible que tengas la necesidad de persistir los datos de una sesión a otra. Esto se puede realizar por usar <code>putInLocalStorage</code>. Este método guarda el estado del dataStore en el localStorage del navegador. <code>putInLocalStorage</code> siempre devuelve una promesa, así que no bloquea el código. Puedes usarlo dentro de un vigilante para guardar el estado del dataStore automáticamente cuando el estado combia. Casos para esto son como cuando el usuario añade or elimina ítemes de una lista, etc.</p>
 
-          <p>Sometimes you may need to persist a dataStore state across user sessions. You can do this using <code>putInLocalStorage</code>. This saves the state of the dataStore in localStorage. <code>putInLocalStorage</code> returns a promise, so it is non-blocking. You can use it in a watcher to automatically save the dataStore state when it changes. You would want to do this to preserve the state when a user adds or deletes items from a list, etc.</p>
 
 
-<pre><code class='language-javascript'>// We just put a callback in the watcher
-// because we're using the default event:
+<pre><code class='language-javascript'>// Usamos un callback en el vigilante
+// porque vamos usando el evento por defecto:
 dataStore.watch(() => {
-  // When state changes, save to localStorage.
+  // Cuando se cambia el estado, guárdalo en localStorage:
   dataStore.putInLocalStorage()
 })
 </code></pre>
-          <p>After you've saved a dataStore's state in localStorage, you can retrieve it during a page load to hydrate a dataStore with it. Read the docs for <a target='__blank' href="/es/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a> to learn how.</p>
+          <p>Después de guardar el estado del dataStore en localStorage, puedes recuperar los datos durante la próxima recargada  de la página y así usarlo para hidratar el dataStore. Lee la documentation de <a target='__blank' href="/es/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a> para aprender cómo hacer eso.</p>
 
           
 

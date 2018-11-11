@@ -55,135 +55,137 @@
           <li class='selected'>getFromLocalStorage</li>
         </ul>
         <h1>getFromLocalStorage</h1>
-        <h2>Hydrate DataStore from LocalStorage</h2>
+        <h2>Hidratar DataStore con Datos de LocalStorage</h2>
 
-        <p>If you're using <a href="/es/docs/datastore/put-in-localstorage.html">putInLocalStorage</a> to persist a dataStore's state, you can use <code>getFromLocalStorage</code> during page load to hydrate the dataStore with the data saved during the last session.</p>
-        <p><code>getFromLocalStorage</code> returns a promise, so it is non-blocking. That also means you'll have to use a <code>then</code> function to do anything with the result. If the dataStore does not exist in localStorage, or there is any other problem is retrieving it, <code>getFromLocalStorage</code> with throw and error. This means you must always use a conditional check to see if you received any data before trying to use it. To deal with a failure you will have to use a <code>catch</code> function.</p>
+        <p>Si estás utilizando <a href="/es/docs/datastore/put-in-localstorage.html">putInLocalStorage</a> para persistir el estado de un dataStore, puedes usar <code>getFromLocalStorage</code> durante la recarga de la página para hidratar el dataStore con los datos guardados durante la última sesión.</p>
+        <p><code>getFromLocalStorage</code> devuelve una promesa, por lo que no bloquea la ejecución del programa. Eso también significa que tendrás que usar una función <code>then</code> para hacer algo cosa con el resultado. Si no hay datos en localStorage, o si hay algún otro problema para recuperarlos, <code>getFromLocalStorage</code> lanzará un  error. Esto significa que siempre debes usar una verificación condicional para ver si recibiste algunos datos antes de intentar usarlos. Para tratar con a una falla, tendrás que usar la función <code>catch</code>.</p>
 
         <p></p>
         <pre><code class='language-javascript'>import { h, render } from '@composi/core'
 import { DataStore } from '@composi/datastore'
 
-// Create empty dataStore:
+// Create un dataStore vacio:
 const dataStore = new DataStore()
 
-// Try to hydrate dataStore from localStorage.
+// Tratar de hidratar el dataStore con datos de localStorage.
 dataStore.getFromLocalStorage()
-  .then(data => {
-    // Always check that you got something back:
-    if (data) {
-      // Use the data to set state on the empty dataStore:
-      dataStore.setState(prevState => {
-        prevState = data
-        return prevState
+  .then(datos => {
+    // Siempre chequeas que recibistes algo del pedido: 
+    if (datos) {
+      // Usas los datos para definir el estado del dataStore vacío:
+      dataStore.setState(estadoPrevio => {
+        estadoPrevio = datos
+        return estadoPrevio
       })
     }
   })
 </code></pre>
-        <p>In the above example we hyrdate a dataStore with what was found in localStore. However, if there was nothing there, you might want to provide some default data. The following example shows how to do that. We introduce a watcher to render a list component. That way, whether state is set with default data or data retrieved from localStorage, the component will render. We also show how to persist changes to dataStore's state with <code>putInLocalStorage</code>.</p>
+        <p>En el ejemplo anterior, hidratamos un dataStore con lo que se encontró en localStorage. Sin embargo, si no había nada allí, es posible que vas a querer proporcionar algunos datos predeterminados. El siguiente ejemplo muestra cómo hacerlo. Introducimos un vigilante para renderizar un componente de lista. De esa manera, ya sea que el estado se establezca con datos predeterminados o datos recuperados de localStorage, el componente se renderizará. También mostramos cómo persistir los cambios en el estado del dataStore con <code>putInLocalStorage</code>.</p>
+
 <pre><code class="language-javascript">import { h, render } from '@composi/core'
 import { DataStore } from '@composi/datastore'
 
 const refs = {}
 
+// Función para generar un uuid para dataos nuevos.
 function uuid() {
   return Math.random().toString(16).substring(2, 16)
 }
 
-// Default data to use.
-const fruits = [
+// Datos por defecto.
+const frutas = [
   {
-    key: 101,
-    value: 'Apples'
+    clave: 101,
+    valor: 'Manzanas'
   },
   {
-    key: 102,
-    value: 'Oranges'
+    clave: 102,
+    valor: 'Naranjas'
   },
   {
-    key: 103,
-    value: 'Bananas'
+    clave: 103,
+    valor: 'Plátanos'
   }
 ]
 
-// Create an empty dataStore:
+// Crear un dataStore vacío:
 const dataStore = new DataStore()
 
-// Setup a watcher to render the component when state changes:
-dataStore.watch('update-list', () => {
-  render(&lt;List data={dataStore.state}/>, 'section')
+// Configurar un vigilante que renderice el componente cuando se cambio el estado:
+dataStore.watch('actualizar-lista', () => {
+  render(&lt;Lista datos={dataStore.state}/>, 'section')
 })
 
-// Hydrate dataStore with data from localStorage:
+// Hidratar el dataStore con los datos de localStorage:
 dataStore.getFromLocalStorage()
-  .then(data => {
-    // If there was data retrieved from localStorage,
-    // add it to dataStore, which will trigger the watcher.
-    if (data) {
-      dataStore.setState(prevState => {
-        prevState = data
-        return prevState
+  .then(datos => {
+    // Si hay datos recuperados de localStorage,
+    // ponlos en el dataStore, lo cual activará al vigilante.
+    if (datos) {
+      dataStore.setState(estadoPrevio => {
+        estadoPrevio = datos
+        return estadoPrevio
       })
     }
   })
-  // If localStorage has no data,
-  // this is the first time loading.
-  // In that case give the dataStore some default data.
+  // Si localStorage no tiene datos,
+  // ésta es la primera vez que la página se carga.
+  // En ese caos proporcionamos unos datos por defecto.
   .catch(() => {
-    dataStore.setState(prevState => {
-      prevState = fruits
-      return prevState
+    dataStore.setState(estadoPrevio => {
+      estadoPrevio = frutas
+      return estadoPrevio
     })
     dataStore.putInLocalStorage()
   })
 
-// Define component to render.
-function List({data}) {
-  const createInputRef = input => {
+// Definir el componente que renderiar.
+function Lista({datos}) {
+  const crearRefInput = input => {
     if (input)
     refs.input = input
   }
-  const addItem = () => {
-    const value = refs.input && refs.input.value
-    if (value) {
-      dataStore.setState(prevState => {
-        prevState.push({
-          key: uuid(),
-          value
+  const añadirÍtem = () => {
+    const valor = refs.input && refs.input.value
+    if (valor) {
+      dataStore.setState(estadoPrevio => {
+        estadoPrevio.push({
+          clave: uuid(),
+          valor
         })
-        return prevState
+        return estadoPrevio
       })
       refs.input.value = ''
       refs.input.focus()
-      // When data is added, save to localStorage.
+      // Cuando se agregan datos, guárdalos en localStorage.
       dataStore.putInLocalStorage()
-        .then(() => console.log('Successfully saved data with new item in localStorage!'))
+        .then(() => console.log('Se guardaron datos de un ítem nuevo en localStorage.'))
     } else {
-      alert('Please provide a value before submitting.')
+      alert('Por favor de un valor antest de enviar.')
     }
   }
-  function deleteItem(key) {
-    dataStore.setState(prevState => {
-      const state = prevState.filter(item => item.key != key)
+  function eliminarÍtem(clave) {
+    dataStore.setState(estadoPrevio => {
+      const state = estadoPrevio.filter(item => item.clave != clave)
       return state
     })
-    // When an item is deleted, 
-    // save new state to localStorage.
+    // Cuando se elimina un ítem,
+    // guarda el estado nuevo en localStorage.
     dataStore.putInLocalStorage()
-      .then(() => console.log('Successfully persisted removal of item in localStorage!'))
+      .then(() => console.log('Se eliminó un ítem guardado de localStorage.'))
   }
   return (
     &lt;div>
       &lt;p>
-        &lt;input onmount={createInputRef} type="text"/>
-        &lt;button onclick={addItem}>Add&lt;/button>
+        &lt;input onmount={crearRefInput} type="text"/>
+        &lt;button onclick={añadirÍtem}>Añadir&lt;/button>
       &lt;/p>
       &lt;ul>
         {
-          data.map(item => (
-            &lt;li key="item.key">
-              &lt;span>{item.value}&lt;/span>
-              &lt;button onclick={() => deleteItem(item.key)} className='delete-item'>X&lt;/button>
+          datos.map(item => (
+            &lt;li clave="item.clave">
+              &lt;span>{item.valor}&lt;/span>
+              &lt;button onclick={() => eliminarÍtem(item.clave)} className='eliminar-item'>X&lt;/button>
             &lt;/li>
           ))
         }

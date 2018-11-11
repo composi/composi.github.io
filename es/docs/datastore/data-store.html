@@ -52,90 +52,95 @@
         <li><a href="/es/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a></li>
         </ul>
           <h1>DataStore</h1>
-          <h2>Storing Data</h2>
-          <p>DataStores are for storing data. The DataStore class creates an immutable clone of the data provided. Since dataStores are about immutability, it doesn't make sense to have data that cannot be immutable. We're talking about native DOM elements, etc. You would not use data with references to the DOM since these are always by reference, not by value.</p>
+          <h2>Almacenaje de Datos</h2>
+          <p>Los dataStores son para guardar datos. La clase DataStore crea un clone inmutable de los datos que se abastecen. Puesto que los dataStores habilitan la inmutabilidad de datos, no tiene sentido usar datos que no pueden ser inmutables. Nos referimos a los elementos nativos del DOM, etc.No vas a querer tener referencieas al DOM como datos debido a que éstas siempre mantienen sus valores por referencia, y no por valor.</p>
 
-          <h2>Creating a DataStore</h2>
-          <p>First, after installing it,  you need to import the DataStore class into your project:</p>
+          <h2>Crear un DataStore</h2>
+          <p>Tendrás que importar la clase DataStore al proyecto:</p>
 
 <pre><code class='language-javascript'>import { DataStore } from '@composi/data-store'</code></pre>
 
-          <p>After that you are ready to create a dataStore. This can take upto two arguments: the data to use for state and an optional custom event.</p>
+          <p>Con eso estás listo para crear un dataStore. La inicialización espera hasta dos argumentos: los datos que usar cómo estado y un evento personalizado opcional.</p>
 
-          <p>Just pass the data you want to use in a dataStore to the DataStore constructor. You'll be able to access the dataStore's data from its <code>Estado</code> property:</p>
+          <p>Pasas los datos que quieres usar al constructor de DataStore. Entonces pordrás acceder a los datos del dataStore desde use propiedad <code>state</code>:</p>
 
           <pre><code class='language-javascript'>import { DataStore } from '@composi/data-store'
 
-const dataStore = new DataStore({name: 'Sarah'})
+const dataStore = new DataStore({nombre: 'Elena'})
+
+const nombre = dataStore.state.nombre
+// nombre tendrá el valor 'Elena'.
 </code></pre>
 
-          <p>You can assign any valid JavaScript data type to the dataStore's state: null, undefined, false, number, string, array, object. In most cases you'll have a complex object as the dataStore's state.</p>
+          <p>Puedes asignar cualquier tipo válido de dato JavaScript al estado del dataStore: null, undefined, false, number, string, array, object. En la mayoría de los casos vas a tener un objeto complejo como el estado del dataStore.</p>
 
           <h2>watch</h2>
-          <p>You use the <code>watch</code> method to watch for a custom event. The watch can also capture the updated state of the dataStore. A watcher fires a callback, which you can use to do whatever you need to do. For practical purposes this might be to update a component, or persist the data somehow.</p>
+          <p>Usas el método <code>watch</code> vigilar un evento personalizado. Watch puede incluso captar el estado acutalizado del dataStore. Tal vigilante ejecuta un callback, el cual puedes usar para cualquier fin. Para los propósitos prácticos, pueda que sea para actualizar un componente, o para persistir los datos de alguna manera.</p>
 
-          <pre><code class='language-javascript'>dataStore.watch('special-event', function(data) {
-  list = render(<List data={data} />, 'body', list)
+          <pre><code class='language-javascript'>dataStore.watch('special-event', datos => render(<List {...{datos}} />, 'body')
 })
 </code></pre>
 
           <p> </p>
           <h2>setState</h2>
-          <p>You can use the dataStore's <code>setState</code> to update its state. When yo do so the dataStore notifies all of its watchers, sending them the updated state. Depending on how they are set up, the watchers can do something with the data, or merely react to the event.</p>
-          <p>When you use setState, the callback gets the previous state passed as its argument.</p>
-<pre><code class='language-javascript'>dataStore.setState(prevState => {
-  prevState.names.push('Jessica')
-  return prevState
+          <p>Usas el método <code>setState</code> del dataStore para actualizar su estado. Cuando haces esto, el dataStore notifica a todos sus vigilantes, enviándoles el estado actualizado. Según cómo se configuraron, los vigilantes puede hacer algo con los datos, o no más reaccionar de alguna manera al evento.</p>
+          <p>Cuando usas setState, el callback recibe el estado previo que fue pasado como argumento.</p>
+<pre><code class='language-javascript'>dataStore.setState(estadoPrevio => {
+  estadoPrevio.nombres.push('María')
+  return estadoPrevio
 })</code></pre>
           <p> </p>
           <h2>send</h2>
-          <p>dataStores are not just passive watchers. You can have the dataStore send an event and arbitrary data for that event to use.</p>
-          <pre><code class='language-javascript'>dataStore.send('update-component', {name: 'Jeffrey'})</code></pre>
+          <p>Los dataStores no son vigilantes pasivos. Puedes mandar eventos con ellos, junto con unos datos arbitrarios para que el vigilante los use.</p>
+          <pre><code class='language-javascript'>dataStore.send('actualizar-componente', {nombre: 'José'})</code></pre>
           <p> </p>
           <h2>unwatch</h2>
-          <p>Sometimes you may want a temporary watcher that you can dispose of latter. You can do this using the dataStore <code>unwatch</code> method. This takes one arguemtn: the event to unwatch. After unwatching an event, any watchers expecting that event will no longer work.</p>
+          <p>A veces vas a querer tener un vigilante temporal del cual te puedes deshacer más tarde. Puedes realizar esto con el método <code>unwatch</code> del dataStore. Éste toma un argumento: el event que eliminar. Después de dejar de vigilar un evento, cualesquier vigilantes que observan ese evento ya no funcionarán.</p>
           <pre><code class='language-javascript'>dataStore.unwatch('temp-event')</code></pre>
 
           <p> </p>
-          <h2>Data Persistence</h2>
-          <p>DataStore has no builtin means of persistence. To do so the best way is to create an observe to watch for a special persist event. When you send that event, the observer will persist you dataStore(s). To learn how to use observer, read the documentation for <a href='/docs/observer/install.html'>@composi/observer</a>.</p>
+          <h2>Persistencia de Datos</h2>
+          <p>DataStore no tiene manera de persistir los datos en lugar remoto. Para hacerlo, lo mejor es crear un observador para vigilar un evento espeical para la persistencia. Luego harías una conexión con el servidor remoto para conservar los datos. Para aprender a usar el observador, lee la documentación de <a href='/es/docs/observer/install.html'>@composi/observador</a>.</p>
 
-          <h2>Versioning</h2>
-          <p>When you create a dataStore, it has a version of 1. You can increase the version with the <code>bumpVersion</code> method:</p>
-<pre><code class='language-javascript'>dataStore.version // returns 1
+          <p>DataStore proporciona una forma de conservar los datos localmente, utilizando el almacenamiento local (localStorage) del navegador. Para obtener más información al respecto, consulta la documentación de <a target='__blank' href="/en/docs/datastore/put-in-localstorage.html">putInLocalStorage</a> y <a href = "/ en /docs/datastore/get-from-localstorage.html "target =" __ blank ">getFromLocalStorage</a></p>
+
+          <h2>Versiones</h2>
+          <p>Cuando creas un dataSotre, tiene versión de 1. Puedes aumentar la versión con el método <code>bumpVersion</code>:</p>
+<pre><code class='language-javascript'>dataStore.version // Devuelve 1
 dataStore.bumpVersion()
-dataStore.version // returns 2
+dataStore.version // Devuelve 2
 </code></pre>
-          <p><code>bumpVersion</code> always increments the version by 1.</p>
-          <p>Whenever you save the dataStore state to localStorage with <code>putInLocalStorage</code>, it also saves the current version with the kye <code>composi-store-version</code>. You can retrieve this version during page load to see what version the dataStore was at when the last session ended:</p>
+          <p><code>bumpVersion</code> siempre aumenta la versión por 1.</p>
+
+          <p>Cuando guardas el estado en localStorage con <code>putInLocalStorage</code>, también guarda la versión actual con la clave <code>composi-store-version</code>. Puedes acceder a esta versión al cargarse la página para ver cuál versión tenía el dataStore durante la sesión previa:</p>
 <pre><code class='language-javascript'>const key = localStorage.getItem('composi-datastore-version')
 if (version < 10) {
-  console.log('The dataStore\'s version is too old.')
+  console.log('La versión del dataStore es demasiado vieja.')
 }
 </code></pre>
           <p> </p>
-          <h2>Timestamps</h2>
-          <p>When you save a dataStore's state with <code>putInLocalStorage</code> it also saves a timestamp for the save with the key <code>composi-datatore-timestamp</code>. During page load you can retrieve the timestamp to see when was the last time the dataStore was saved. If it's too old you may want to clear localStorage to populate it with fresher data.</p>
-<pre><code class='language-javascript'>// During page load:
-const timestamp = localStorage.getItem('composi-datastore-timestamp')
-const currentTime = new Date().getTime()
-// One day in milliseconds.
-const day = 1000 * 60 * 60 * 24
+          <h2>Marca de Tiempo</h2>
+          <p>Cuando guardas el estado de un dataStore por medio de <code>putInLocalStorage</code>, también se guardará una marca de tiempo con la clave <code>composi-datatore-timestamp</code>. Durante la carga de la página, puedes recuperar la marca de tiempo para ver cuándo fue la última vez que se guardó el dataStore. Si es demasiado viejo, es podrías borrar localStorage para poblarlo con datos más recientes.</p>
+<pre><code class='language-javascript'>// Al cargarse la página:
+const tiempo = localStorage.getItem('composi-datastore-timestamp')
+const tiempoActual = new Date().getTime()
+// Un día en milisegundos.
+const día = 1000 * 60 * 60 * 24
 
-// Test to see if timestamp is older than 30 days.
-// If it is, clear localStorage:
-if ((currentTime - timestamp) / day > 30) {
-  // Remove the dataStore's key/value.
+// Probar para ver si el tiempo tiene más de 30 días.
+// Si tiene, borrar el localStorage:
+if ((tiempoActual - tiempo) / día > 30) {
+  // Eliminar la clave y valor del dataStore.
   localStorage.removeItem('composi-datastore')
-  // Or clear the entire localStorage cache:
+  // O borrar el caché entero de localStorage:
   localStorage.clear()
 }
 </code></pre>
 
           <p> </p>
-          <h2>Summary</h2>
-          <p>If you are already familiar with <a href='/docs/observer/install.html'>@composi/observer</a>, you might have noticed that DataStore shares many features: watch, send and unwatch. That's because internally DataStore uses an observer to watch for changes and react to those when the occur, as well as the ability to send and unwatch its events. Although these features in dataStores make them more versatile, there may be situations where it makes more sense to use an observer in conjunction with a dataStore. That's because of their differences. A dataStore can register events and watch them. And you can send to a particular dataStore event to trigger it. But whenever the dataStore's state changes, ALL of its events are executed. In contrast, with a dedicated observer, you can also register as many custom events as you need. For observers, when you send to an event, only that one will fire.</p>
-          <p>Although dataStore provides a way to persist its state in localStorage, this may be inadequate for your needs. If that's the case, consider using <a target='__blank' href="/es/docs/idb/idb.html">@composi/idb</a>. This is a promise-base wrapper for IndexedDB with a simple interface like localStorage.</p>
+          <h2>Resumen</h2>
+          <p>Si ya estás familiarizado con <a href='/docs/observer/install.html'>@composi/observer</a>, tal vez habrías notado que DataStore comparte varias características: watch, send y unwatch. Esto se debe a que, internamente, DataStore utiliza un observador para vigilar los cambios y reaccionar cuando ocurren, así como la capacidad de enviar y desbloquear los eventos. Aunque estas características en los dataStores los hacen más versátiles, puede haber situaciones en las que vas a querer utilizar un observador junto con un dataStore. Eso es debido a sus diferencias. Un dataStore puede registrar eventos y vigilarlos. También puedes enviarlo al dataStore un evento particular para activarlo. Pero siempre que el estado del dataStore cambia, todos sus eventos se ejecutan. En contraste, con un observador dedicado, también puedes registrar múltiples eventos personalizados. Para los observadores, cuando envías un evento, solo ése se ejecutará.</p>
+          <p>Aunque un dataStore dispone una manera de persistir us estado en localStorage, pueda que esto sea inadecuado para tus propósitos. Si ese es el caso, considera usar <a target='__blank' href="/es/docs/idb/idb.html">@composi/idb</a>. Éste es un envoltura de promesas sobre IndexedDB con una interfaz sencilla como localStorage.</p>
 
 
 

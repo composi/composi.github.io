@@ -61,15 +61,15 @@
   console.log(data)
 })
 
-// Sometme later send the event:
+// Sometime later send the event:
 dataStore.send('uh-oh', 'Woohoo!')</code></pre>
-          <p>As mentioned above, you can send and event with data, and for that matter, you can have an event that doesn't expect any data either:</p>
+          <p>As mentioned above, you can send an event with data, and for that matter, you can have an event that doesn't expect any data either:</p>
 
 <pre><code class='language-javascript'>dataStore.watch('uh-oh', () => {
   console.log('Looks like something happened.')
 })
 
-// Sometme later send the event:
+// Sometime later send the event:
 dataStore.send('uh-oh')</code></pre>
 
           <p> </p>

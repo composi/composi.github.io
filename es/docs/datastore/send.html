@@ -52,29 +52,29 @@
         <li><a href="/es/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a></li>
         </ul>
           <h1>send</h1>
-          <h2>Send Events</h2>
-          <p>You can send an event that a dataStore is watching. The <code>send</code> method can take two arguments: the event and some optional data to pass with it.</p>
+          <h2>Enviar Eventos</h2>
+          <p>Puedes mandar un evento a un dataStore que lo esté esperando. El método <code>send</code> toma dos argumentos: el evento y unos datos opcionales que se pasan con el evento.</p>
 
 
-<pre><code class='language-javascript'>dataStore.watch('uh-oh', data => {
-  console.log('Just received some data.')
-  console.log(data)
+<pre><code class='language-javascript'>dataStore.watch('que-pasa', datos => {
+  console.log('Acabo de recibir unos datos')
+  console.log(datos)
 })
 
-// Sometme later send the event:
-dataStore.send('uh-oh', 'Woohoo!')</code></pre>
-          <p>As mentioned above, you can send and event with data, and for that matter, you can have an event that doesn't expect any data either:</p>
+// Más tarde enviar el evento:
+dataStore.send('que-pasa', '¡Caray!')</code></pre>
+          <p>Cómo se mencionó previamente, puedes enviar un evento junto con datos, o puedes mandar el evento solo, sin datos cualesquiera:</p>
 
-<pre><code class='language-javascript'>dataStore.watch('uh-oh', () => {
-  console.log('Looks like something happened.')
+<pre><code class='language-javascript'>dataStore.watch('vigilar', () => {
+  console.log('Parece que algo pasó.')
 })
 
-// Sometme later send the event:
+// Más tarde enviar el evento:
 dataStore.send('uh-oh')</code></pre>
 
           <p> </p>
           <h2>Observer</h2>
-          <p>Send is a convenient feature of dataStores, but in many cases it may be more efficient to just use an observer to watch for the event and deal with it. That's because all dataStore watchers are run whenever the dataStore state changes, not just when you send the event. This could lead to some rather convoluted behaviors where having a separate dedicated observer might be more simple and efficient. Please check out the documentation for <a href='/docs/observer/install.html'>@composi/observer</a> to learn how to use it.</p>
+          <p>Send es una característica conveniente de los dataStores, pero en muchos casos puede ser más eficiente usar un observador para vigilar el evento y tratar con él. Esto se debe a que todos los vigilantes de dataStore se ejecutan cada vez que cambia el estado de dicho dataStore, no solo cuando se envía el evento. Esto podría llevar a algunos comportamientos bastante complicados en donde tener un observador dedicado separado podría ser más simple y eficiente. Consulta la documentación de <a href='/docs/observer/install.html'>@composi/observer</a> para aprender cómo usarlo.</p>
 
               <p>&nbsp;</p>
       </div>

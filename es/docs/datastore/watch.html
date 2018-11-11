@@ -52,127 +52,123 @@
         <li><a href="/es/docs/datastore/get-from-localstorage.html">getFromLocalStorage</a></li>
         </ul>
           <h1>watch</h1>
-          <h2>Wach for Events</h2>
+          <h2>Vigilar los Eventos</h2>
 
-          <p>DataStores use <code>@composi/observer</code> internally to enable watching and reacting to state changes. For you this means that you can setup a watcher on a dataStore to do something when its state changes. The <code>watch</code> method takes two arguments: an event to watch, and a callback to run when the event happens. Be default the callback receives the current state of the dataStore as its argument.</p>
+          <p>Los dataStores usan <code>@composi/observer</code> internamente para habilitar el vigilar y reaccionar a los cambios de estado. En cuanto a ti, esto significa que puedes configurar un vigilante para un dataStore para hacer algo cuando su estado cambie. El método <code>watch</code> toma dos argumentos: un evento que vigilar y un callback que ejecutar cuando aquel evento ocurre. Por defecto el callback recibe el estado actual del dataStore como su argumento.</p>
 
-          <p>You can use any string value as an event name: <code>update</code>, <code>stuff-happened</code>. You can also create namespaced events to organize them better: <code>employee:added</code>, <code>employee:promoted</code>, <code>employee:dismissed</code>, etc.</p>
+          <p>Puedes usar cualquier valor de cadena de texto como el nombre del evento: <code>actualizar</code>, <code>algo-pasó</code>, etc. También puedes crear eventos que usan módulos nombrados para organizarlos mejor: <code>empleado:agregado</code>, <code>empleado:promovido</code>, <code>empleado:despedido</code>, etc.</p>
 
-          <p>DataStore has a default event that always fires when its state changes: <code>dataStoreStateChanged</code>. As such, you can create a watcher withou an event and it will default to this one. You do so by using a falsy value for the event: <code>null</code>, <code>undefined</code>, <code>false</code>, <code>''</code>, <code>0</code>.</p>
+          <p>DataStore tiene un evento por defecto que siempre se ejecuta cuando el estado de él cambie: <code>dataStoreStateChanged</code>. Así pues, puedes crear un vigilant sin evento y el dataStore usará el suyo por defecto. Haces esto por usar un valor falso para el valor del evento: <code>null</code>, <code>undefined</code>, <code>false</code>, <code>''</code>, <code>0</code>.</p>
 <pre><code class='language-javascript'>dataStore.watch(null, () => {
-  // Do stuff
+  // Haz algo aquí
 })
-// or:
+// o:
 dataStore.watch('', () => {
-  // Do stuff
+  // Haz algo aquí
 })
 </code></pre>
-<p>These would also fire if you sent to the event <code>dataStoreStateChanged</code>.</p>
+<p>Estos también se operaban si mandas un evento a <code>dataStoreStateChanged</code>.</p>
 
           <pre><code class='language-javascript'>import { DataStore } from  @composi/datastore
 
 const dataStore = new DataStore({
-  employes: [
+  empleados: [
     {
       id: 101,
-      name: 'Joe Shmoe',
-      job: 'mechanic'
+      nombre: 'José Gutierrez Caldarón',
+      job: 'cocinero'
     }
   ]
 })
-// Create a watcher with custom event:
-dataStore.watch('added-employee', data => {
-  // Do whatever you need to with the data.
+// Crear un vigilante con un evento personalizado:
+dataStore.watch('añadir-empleado', data => {
+  // Haz lo que quieres con estos datos.
 })
 </code></pre>
 
           <p></p>
-          <h2>Multiple Watchers</h2>
-          <p>A dataStore can have as many watchers as you need, each with their own cusotm events. Or, you could set up multiple watchers all using the same event. Whatever fits your needs.</p>
+          <h2>Vigilantes Múltiples</h2>
+          <p>Un dataStore puede tener cuantos vigilantes como necesario, cada uno con sus propios eventos personalizados. O, puedes configurar vigilantes múltiples que usan el mismo evento. Haz lo que sirve tu propósito.</p>
+          <p>Pueda que quieres crear vigilantes múltiples para el mismo evento para que no el vigilante no sea demasiado complicado. Si tomas este sendero, trata de mantener los vigilantes para el mismo evento en el mismo lugar. De esa manera será más fácil averiguar en dónde ocurren los errores cuando algo no funciona apropiadamente.</p>
 
-          <p>You might want to create multiple watchers for the same event so that you don't have too much going on in the watcher. If you do follow this course, try to keep all watchers for the same event in the same place. That way it will be easier to track down issues if something isn't working properly when that event fires.</p>
-
-          <pre><code class='language-javascript'>// Create multiple watchers with the same custom event:
-dataStore.watch('added-employee', data => {
-  // Do something here.
+          <pre><code class='language-javascript'>// Crear vigilantes múltiples con el mismo evento:
+dataStore.watch('añadir-empleado', data => {
+  // Haz algo aquí.
 })
-dataStore.watch('added-employee', data => {
-// Do something else here.
+dataStore.watch('añadir-empleado', data => {
+  // Haz otra cosa aquí.
 }
-dataStore.watch('added-employee', data => {
-// And our third watcher here.
+dataStore.watch('añadir-empleado', data => {
+  // Y aquí puedes hacer algo completamente diferente.
 }
 </code></pre>
-          <p>You can also set up multiple watchers on a dataStore with different custom events:</p>
+          <p>Por supuesto puedes tener vigilantes en el dataStore con eventos personalizados diferentes:</p>
 
-          <pre><code class='language-javascript'>// Create multiple watchers with the same custom event:
-dataStore.watch('added-employee', data => {
-  // Do something here.
+          <pre><code class='language-javascript'>// Crear vigilantes múltiples con eventos diferentes:
+dataStore.watch('empleado-contratado', data => {
+  // Haz algo aquí.
 })
-dataStore.watch('employee-fired', data => {
-  // Do something here.
+dataStore.watch('empleado-despedido', data => {
+  // Haz algo aquí.
 }
-dataStore.watch('employee-promoted', data => {
-  // Do something here.
+dataStore.watch('empleado-promovido', data => {
+  // Haz algo aquí.
 }
 </code></pre>
-          <p>Having watchers with different events is useful for triggering different scenarious. This is possible when using a dataStore <a href='/docs/datastore/send.html'>send</a> method.</p>
+          <p>Tener vigilantes con diferentes eventos es útil para desencadenar diferentes escenarios. Esto es posible cuando se usa el método <a href='/docs/datastore/send.html'>send</a> del dataStore.</p>
 
-          <h2>Updating a Functional Component</h2>
-          <p>DataStores provide state management for functional components. Functional components don't have state. They receive their data through props. Instead of manually changing data and then re-rendering the component, you can use a dataStore to do that for you. You simply set up a watcher that will re-render the component every time the dataStore state changes:</p>
+          <h2>Actualizar un Componente Funcional </h2>
+          <p>DataStores proporcionan gestión de estado para los componentes funcionales. Los componentes funcionales no tienen estado. Reciben sus datos a través de props. En lugar de cambiar los datos manualmente y luego volver a renderizar el componente, puedes usar un dataStore para hacerlo. Simplemente configure un vigilage que renderizará el componente cada vez que cambie el estado del dataStore:</p>
 
           <pre><code class='language-javascript'>import { h, render } from  '@composi/core'
 import { DataStore } from '@composi/datastore'
 
-// Define a list component:
-function List({data}) {
+// Definir un componente de lista:
+function Lista({data}) {
   return (
     &lt;ul>
       {
-        data.map(item => &lt;li key={item.key}>{item.value}&lt;/li>)
+        data.map(item => &lt;li key={item.clave}>{item.valor}&lt;/li>)
       }
     &lt;/ul>
   )
 }
 
-// Create a dataStore:
-const dataStore = new DataStore({
-  state: [
-    {
-      key: 101,
-      value: 'Apples'
-    },
-    {
-      key: 102,
-      value: 'Oranges'
-    },
+// Crear un dataStore:
+const dataStore = new DataStore([
+  {
+    clave: 101,
+    valor: 'Manzanas'
+  },
+  {
+    clave: 102,
+    valor: 'Naranjas'
+  },
 
-    {
-      key: 103,
-      value: 'Bananas'
-    }
-  ]
-})
+  {
+    clave: 103,
+    valor: 'Plátanos'
+  }
+])
 
-// Render the component:
-let list render(&lt;List data={dataStore.state}/>, 'body')
+// Renderizar el componente:
+render(&lt;Lista data={dataStore.state}/>, 'body')
 
-// Create a watcher to update the component when state changes:
-dataStore.watch('update-occurred', data => {
-  list render(&lt;List data={dataStore.state} />, 'body', list)
+// Crear vigilante para actualizar el component cuando se cambia el estado:
+dataStore.watch('ocurrió-actualización', data => {
+  render(&lt;Lista data={dataStore.state} />, 'body')
 })
 </code></pre>
 
-          <p>After creating a component that uses a dataStore, and setting up a watcher to update the component, when we modify the dataStore state, the component will update automatically.</p>
-<pre><code class="language-javascript">dataStore.setState(prevState => {
-  prevState.push({
-    key: 104,
-    value: 'Melons'
+          <p>Después de crear un componente que utiliza un dataStore y después de configurar un vigilante para actualizar el componente, cuando modifiquemos el estado de aquel dataStore, el componente se actualizará automáticamente.</p>
+<pre><code class="language-javascript">dataStore.setState(estadoPrevio => {
+  estadoPrevio.push({
+    clave: 104,
+    valor: 'Melones'
   })
 })
 </code></pre>
 
-          
 
 
               <p>&nbsp;</p>

@@ -56,7 +56,7 @@
           <p>DataStores are for storing data. The DataStore class creates an immutable clone of the data provided. Since dataStores are about immutability, it doesn't make sense to have data that cannot be immutable. We're talking about native DOM elements, etc. You would not use data with references to the DOM since these are always by reference, not by value.</p>
 
           <h2>Creating a DataStore</h2>
-          <p>First, after installing it,  you need to import the DataStore class into your project:</p>
+          <p>First, you need to import the DataStore class into your project:</p>
 
 <pre><code class='language-javascript'>import { DataStore } from '@composi/data-store'</code></pre>
 
@@ -67,6 +67,8 @@
           <pre><code class='language-javascript'>import { DataStore } from '@composi/data-store'
 
 const dataStore = new DataStore({name: 'Sarah'})
+const name = dataStore.state.name
+// name will have the value 'Sarah'
 </code></pre>
 
           <p>You can assign any valid JavaScript data type to the dataStore's state: null, undefined, false, number, string, array, object. In most cases you'll have a complex object as the dataStore's state.</p>
@@ -74,14 +76,13 @@ const dataStore = new DataStore({name: 'Sarah'})
           <h2>watch</h2>
           <p>You use the <code>watch</code> method to watch for a custom event. The watch can also capture the updated state of the dataStore. A watcher fires a callback, which you can use to do whatever you need to do. For practical purposes this might be to update a component, or persist the data somehow.</p>
 
-          <pre><code class='language-javascript'>dataStore.watch('special-event', function(data) {
-  list = render(<List data={data} />, 'body', list)
+          <pre><code class='language-javascript'>dataStore.watch('special-event', data => render(<List data={data} />, 'body')
 })
 </code></pre>
 
           <p> </p>
           <h2>setState</h2>
-          <p>You can use the dataStore's <code>setState</code> to update its state. When yo do so the dataStore notifies all of its watchers, sending them the updated state. Depending on how they are set up, the watchers can do something with the data, or merely react to the event.</p>
+          <p>You can use the dataStore's <code>setState</code> to update its state. When you do so the dataStore notifies all of its watchers, sending them the updated state. Depending on how they are set up, the watchers can do something with the data, or merely react to the event.</p>
           <p>When you use setState, the callback gets the previous state passed as its argument.</p>
 <pre><code class='language-javascript'>dataStore.setState(prevState => {
   prevState.names.push('Jessica')
@@ -89,16 +90,17 @@ const dataStore = new DataStore({name: 'Sarah'})
 })</code></pre>
           <p> </p>
           <h2>send</h2>
-          <p>dataStores are not just passive watchers. You can have the dataStore send an event and arbitrary data for that event to use.</p>
+          <p>dataStores are not just passive watchers. You can have the dataStore send an event and arbitrary data for that watcher to use.</p>
           <pre><code class='language-javascript'>dataStore.send('update-component', {name: 'Jeffrey'})</code></pre>
           <p> </p>
           <h2>unwatch</h2>
-          <p>Sometimes you may want a temporary watcher that you can dispose of latter. You can do this using the dataStore <code>unwatch</code> method. This takes one arguemtn: the event to unwatch. After unwatching an event, any watchers expecting that event will no longer work.</p>
+          <p>Sometimes you may want a temporary watcher that you can dispose of later. You can do this using the dataStore <code>unwatch</code> method. This takes one argument: the event to unwatch. After unwatching an event, any watchers expecting that event will no longer work.</p>
           <pre><code class='language-javascript'>dataStore.unwatch('temp-event')</code></pre>
 
           <p> </p>
           <h2>Data Persistence</h2>
-          <p>DataStore has no builtin means of persistence. To do so the best way is to create an observe to watch for a special persist event. When you send that event, the observer will persist you dataStore(s). To learn how to use observer, read the documentation for <a href='/docs/observer/install.html'>@composi/observer</a>.</p>
+          <p>DataStore has no builtin means of remote persistence. To do that the best way is to create an observer to watch for a special persist event. Then you would make a connection to the remote server to persist the data. To learn how to use observer, read the documentation for <a href='/en/docs/observer/install.html'>@composi/observer</a>.</p>
+          <p>DataStore does provide a way to persist data locally, using the browser's localStorage. To learn more about that, check out the documentation for <a target='__blank'  href="/en/docs/datastore/put-in-localstorage.html">putInLocalStorage</a> and <a href="/en/docs/datastore/get-from-localstorage.html" target="__blank">getFromLocalStorage</a></p>
 
           <h2>Versioning</h2>
           <p>When you create a dataStore, it has a version of 1. You can increase the version with the <code>bumpVersion</code> method:</p>
@@ -107,7 +109,7 @@ dataStore.bumpVersion()
 dataStore.version // returns 2
 </code></pre>
           <p><code>bumpVersion</code> always increments the version by 1.</p>
-          <p>Whenever you save the dataStore state to localStorage with <code>putInLocalStorage</code>, it also saves the current version with the kye <code>composi-store-version</code>. You can retrieve this version during page load to see what version the dataStore was at when the last session ended:</p>
+          <p>Whenever you save the dataStore state to localStorage with <code>putInLocalStorage</code>, it also saves the current version with the key <code>composi-store-version</code>. You can retrieve this version during page load to see what version the dataStore was at when the last session ended:</p>
 <pre><code class='language-javascript'>const key = localStorage.getItem('composi-datastore-version')
 if (version < 10) {
   console.log('The dataStore\'s version is too old.')
