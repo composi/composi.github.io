@@ -51,23 +51,23 @@
           <li class='selected'>Unwatch</li>
         </ul>
           <h1>Unwatch</h1>
-          <h2>Unwatch an Event</h2>
-          <p>There may be situations where you need an observer, but only temporarily. You can use the observer's <code>unwatch</code> method to stop watchers from reacting to a particular event. This takes just one argument: the event to stop watching. When you turn off an event with <code>unwatch</code>, this affects all watchers for that event.</p>
+          <h2>Dejar de Vigilar un Evento</h2>
+          <p>Pueda que haya situaciones en las cuales vas a necesitar un observador, pero solo temporalmente. Puedes usar el método <code>unwatch</code> del observador para terminar un vigilante para que no reaccione a un evento particular. Éste toma un solo argumento: el evento que parar. Cuando paras un evento con <code>unwatch</code>, esto afecta a todos los vigilantes para aquel evento.</p>
 
           <pre><code class='language-bash'>import { Observer } from '@composi/observer' 
-const observer = new Observer()
-observer.watch('whatever', () => {
-  alert('Whatever just happened!')
+const observador = new Observer()
+observador.watch('algún-evento', () => {
+  alert('¡Acaba de ejecutarse algún-evento!')
 })
 
-// Sometime later send the event:
-observer.send('whatever')
-// alert: 'Whatever just happened!'
+// Más tarde enviar el evento:
+observador.send('algún-evento')
+// alerta: '¡Acaba de ejecutarse algún-evento!'
 
-// Sometime later unwatch the event:
-observer.unwatch('whatever')
-// Sending the event now does nothing:
-observer.send('whatever')
+// Aun más tarde:
+observador.unwatch('algún-evento')
+// Mandar el evento ya no sirve para nada:
+observador.send('algún-evento')
           </code></pre>
 
           <p>If you need to revive an unwatched event, you can do so by initalizing a watcher for it later.</p>

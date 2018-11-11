@@ -51,106 +51,106 @@
           <li><a href="/es/docs/observer/unwatch.html">Unwatch</a></li>
         </ul>
           <h1>Watch</h1>
-          <p>Observers are meant to watch for events. To do so, you use the observer's <code>watch</code> method. This takes two arguments: an event, and a callback to execute when the event occurs. The callback gets one argument passed to it automatically: any data that was passed with the event. A watcher does not have to deal with event data. It can completely ignore the data and do whatever it needs to.</p>
+          <p>Los observadores sirven para vigilar los eventos. Para hacerlo, utilizas el método <code>watch</code> del observador. Esto requiere dos argumentos: un evento y un callback para ejecutar cuando ocurre el evento. El callback recibe un argumento que se le pasa automáticamente: cualesquier datos que se hayan pasado con el evento. Un observador no tiene que usar los datos del evento. Puede ignorarlos completamente hacer cualquier otra cosa.</p>
 
-          <h2>Setting up a Watcher</h2>
+          <h2>Configuración de Vigilante</h2>
           <p> </p>
           <pre><code class='language-bash'>import { Observer } from '@composi/observer
 
-const observer = new Observer()
-observer.watch('special-event', data => {
-  console.log(`Just received this data: ${data}`)
+const observador = new Observer()
+observer.watch('evento-especial', datos => {
+  console.log(`Acabo de recibir estos datos: ${datos}`)
 })
 </code></pre>
 
           <p> </p>
 
-          <h2>Ignoring the Data Passed</h2>
-          <p>Same watcher, but ignoring any data passed:</p>
+          <h2>Ignorar los Datos Recibidos</h2>
+          <p>Este es el mismo vigilante anterior, pero aquí ignoramos los datos:</p>
 
 
           <pre><code class='language-bash'>import { Observer } from '@composi/observer
 
-const observer = new Observer()
-observer.watch('special-event', data => {
-  // Ignore the data:
-  console.log('The special event just fired!')
+const observador = new Observer()
+observer.watch('evento-especial', datos => {
+  // Ignorar los datos:
+  console.log('Acaba de ejecutarse el evento especial.')
 })
 </code></pre>
 
           <p> </p>
-          <h2>Watcher without Data</h2>
-          <p>As mentioned, a watcher does not even have to expect any data. You can opt to instead just watch for the event.</p>
+          <h2>Vigilante sin Datos</h2>
+          <p>Cómo mencionamos, un vigilante no tiene que esperar datos cualesquiera. Puedes escoger solo esperar por el evento.</p>
 <pre><code class='language-bash'>import { Observer } from '@composi/observer
 
-const observer = new Observer()
-// No data for this watcher:
-observer.watch('special-event', () => {
-  console.log('The special event just fired!')
+const observador = new Observer()
+// No hay datos para este vigilante:
+observer.watch('evento-especial', () => {
+  console.log('Acaba de ejecutarse el evento especial')
 })
 </code></pre>
 
           <p> </p>
-          <h2>Multiple Watchers for Same Event</h2>
-          <p>It is possible to create multiple watchers for the same event. You might need to do this when you have several components that need to react to the same event. When you create multiple watchers on the same event, whenever that event is sent, all the watchers will execute.</p>
+          <h2>Múlitples Vigilantes para el Mismo Evento</h2>
+          <p>Es posible crear vigilantes múlitples para el miso evento. Tal vez necesites hacer esto cuando hay varios componentes que deben reaccionar al mismo evento. Cuando creas vigilantes múltiples para el mismo evento, cuandoquiera que el evento ocurre, todos los vigilantes se ejecutarán.</p>
 
 
 
           <pre><code class='language-bash'>import { Observer } from '@composi/observer
 
-const observer = new Observer()
-// First watcher for 'special-event':
-observer.watch('special-event', data => {
-  console.log(`The first watcher received this data: ${data}`)
+const observador = new Observer()
+// El primer vigilante para 'evento-especial':
+observer.watch('evento-especial', datos => {
+  console.log(`El primer vigilante recibió estos datos: ${datos}`)
 })
 
-// Second watcher for 'special-event':
-observer.watch('special-event', () => {
-console.log('The second watcher just fired!')
+// El segundo vigilante para 'evento-especial':
+observer.watch('evento-especial', () => {
+console.log('El segundo vigilante se ejecutó!')
 })
 </code></pre>
-          <p>Sending 'special-event' with cause both of these watchers to execute.</p>
+          <p>Por enviar 'evento-especial' los dos vigilantes se ejecutarán.</p>
 
-          <p>To learn how to send and event to a watcher, read its <a  href='/docs/observer/send.html'>documentation</a>.</p>
+          <p>Para aprender cómo enviar un evento a un vigilante, lee la <a  href='/docs/observer/send.html'>documentación</a>.</p>
           <p> </p>
 
-          <h2>Using Guards</h2>
+          <h2>Usar Guardias</h2>
 
-          <p>Because you can't know if an event will be send with data or not, it's always best to check that the callback did receive some data before trying to use it.</p>
+          <p>Debido a que no puedes saber is un evento va a mandar datos o no, siempre debes de chequear que el callback recibió datos antes de tratar de usarlos.</p>
 
           <pre><code class='language-bash'>import { Observer } from '@composi/observer
 
-const observer = new Observer()
-observer.watch('special-event', data => {
-  // Check that data was passed with the event:
-  if (data) {
-    console.log(`Just received this data: ${data}`)
-  // No event was sended, so do something else:
+const observador = new Observer()
+observer.watch('evento-especial', datos => {
+  // Chequea que llegaron datos con el evento:
+  if (datos) {
+    console.log(`Acaba de recibir estos datos: ${datos}`)
+  // No se mandó ningún evento, así que haz otra cosa:
   } else {
-    console.log(`The event happened but no data was received.`)
+    console.log(`El evento ocurrió pero no recibimos datos algunos.`)
   }
 })
 </code></pre>
-          <p>In all our examples we used a simple string as the data for our events. In reality the data could be any type. As such it's best to also check the type of the data before attempting to use it.</p>
+          <p>In todos los otros ejemplos usaos una cadena simple de texto para los eventos. En realidad los datos pueden ser de cualquier tip. Por eso es ejor que chequees el tipo de los daots anges de tratar de usarlos.</p>
 
           
           <pre><code class='language-bash'>import { Observer } from '@composi/observer
 
-const observer = new Observer()
-observer.watch('special-event', data => {
-  // Check that data was passed with the event:
-  if (data) {
-    // Dealing with a string:
-    if (typeof data === 'string') {
-      console.log(`Just received this data: ${data}`)
-    // Dealing with an array of strings:
-    } else if(Array.isArray(data)) {
-      console.log('Received this array:')
-      data.map((item, idx) => console.log(`item ${idx}: ${item}))
+const observador = new Observer()
+observer.watch('evento-especial', datos => {
+  // Chequea que llegaron datos con el evento:
+  if (datos) {
+    // Se trata de una cadena de texto:
+    if (typeof datos === 'string') {
+      console.log(`Acaba de recibir estos datos: ${datos}`)
+    // Se trata de una matriz de cadenas:
+    } else if(Array.isArray(datos)) {
+      console.log('Recibimos esta matriz:')
+      datos.map((item, idx) => console.log(`ítem ${idx}: ${item}))
     }
-  // No event was sent, so do something else:
+  // Ningún evento fue ejecutado, así que haz otra cosa:
   } else {
-    console.log(`The event happened but no data was received.`)
+    console.log(`El evento ocurrió pero no recibimos datos..`)
   }
 })
 </code></pre>
