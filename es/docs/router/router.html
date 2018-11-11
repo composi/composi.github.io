@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
   <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
-  <title>Composi - Documentación</title>
+  <title>Composi - Docs</title>
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/prism.css">
   <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
@@ -18,7 +18,7 @@
   <nav>
     <ul class='nav-menu'>
       <li class='nav-menu__item'>
-        <a class='nav-menu__item__link' href="/index-es.html">
+        <a class='nav-menu__item__link' href="/index.html">
           <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <title>Composi Logo</title>
             <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -30,7 +30,7 @@
         <span class='logo__link--text'>Composi</span></a>
       </li>
       <li class='nav-menu__item selected'>
-        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Docs</a>
       </li>
     </ul>
   </nav>
@@ -40,54 +40,172 @@
         <h3>@composi/router:</h3>
         <ul class='breadcrumb'>
           <li><a href="/es/docs/router/install.html">Instalación</a></li>
-          <li class='selected'>Router</li>
-          <li><a href="/es/docs/router/usage.html">Uso</a></li>
+          <li class='selected'>Usage</li>
         </ul>
           <h1>Router</h1>
-          <h2>Routing for Components</h2>
-          <p>@composi/styler lets you create styles scoped to a component it. It does this by creating a virtual stylesheet for
-            the comonent. Styler does not add any identifier to the stylesheet target like some solutions do. The specificity of the style you define is up to you. This means that if you want your styles to be specific to a component, give the component base an id and use that in the style declaration. Or if you want to be more generic, use a class on the component base and in your stylesheet. Also, using <a href='https://css-tricks.com/bem-101/' target='__blank'>BEM</a> can make this specificity a lot easier.</p>
-          <p>If you use Styler with more than one component, the rules all get added to the same virtual stylesheet. This means that if you create rules with the same selector, the last one created will overwrite the earlier ones. Let's look at an example:</p>
-          <pre><code class='language-javascript'>addStyles('ul', {
-  li: {
-    color: 'red'
+          <h2>Enrutador para los Componentes</h2>
+          <p>@composi/router es un enrutador del cliente basado en hash para aplicaciones de una sola página (SPA). Esto es para aquellas ocasiones en las que deseas renderizar condicionalmente un conjunto de subcomponentes según el URL. Esto funciona correctamente con el botón de retroceso del navegador y puede usarlo con la API de historia. @composi/router es muy simple con solo algunas opciones. Si necesitas un enrutador más avanzado, considera Universal Router. O usa el enrutador que prefieras.</p>
+          
+          <h2>Definir las Rutas</h2>
+          <p>El siguiente ejemplo muestra cómo configurar las rutas. Lo que hagas cuando pasa la ruta depende completamente de ti:</p>
+<pre><code class="language-javascript">import { h, render } from '@composi/core'
+import { Router } from '@composi/router'
+
+// Crear instancia de Router:
+const router = new Router()
+
+// Definir las rutas que usar:
+router([
+  {
+    path: "/",
+    action: () => {
+      // Haz algo cuando la página pricipal se carga.
+    }
   },
-  li: {
-    color: 'green'
-  }
-})</code></pre>
-              <p>The above code defines two rules for the same selector. The properties are identical, only the values differ. In normal CSS the cascade means the only the last rule will get applied. The previous one would be ignored. That's for a hand-crafted stylesheet. Because we are create the stylesheet with JavaScript, the first rule gets overwritten by the second rule. If we open the web inspector and examine the document's style sheet: <code>document.styleSheets[1].cssRules[0].cssText</code> we'll get this:</p>
-<pre><code class="language-bash">cssText: "ul li { color: green; }"
-</code></pre>
-              <p> </p>
-              <h2>Features</h2>
-              <p>@composi/styler lets you nest selectors, somewhat like SASS and LESS:</p>
-<pre><code class="language-javascript">addStyles('#list-contianer', {
-  ul: {
-    listStyle: 'none',
-    'boder': 'solid 1px #ccc',
-    margin: 0,
-    padding: 0,
-    // Child selector:
-    li: {
-      padding: '5px 10px',
-      borderBottom: 'solid 1px #ccc',
-      color: '#333',
-      backgroundColor: '#fff'
-      // pseudo-element:
-      ':hover': {
-        color: '#fff',
-        backgroundColor: '#333'
-      }
+  {
+    path: "/about",
+    action: () => {
+      // Cargar el componente "About"
+    }
+  },
+  {
+    // Captar la id del parámetro:
+    path: "/usuarios/:nombre",
+    action: (nombre) => {
+      if (nombre === 'jose') alert('Hi, José!')
+      else console.log(nombre)
     }
   }
-})
-</code></pre>
-      <p>Notice how we indicate that the <code>li</code> tag is a child of the <code>ul</code> tag. We also indicate the hover state for the li item as a child of the list item. pseudo-elements have to be in quotes because the begin with ":".</p>
+])</code></pre>
+          <p>Normalmente usarías una ruta para manejar la carga de un componente. La forma más fácil de hacer esto es usar un componente funcional:</p>
 
-      <h2>Use Sparingly</h2>
-      <p>@composi/styler is not meant to be a replacement for external stylesheets. It should be used to encapsulate some component-specific styles independent of the regular stylesheets. Don't try to provide all styles for a component with Styler. Instead use it to work with whatever the default stylesheet provides.</p>
-              <p>&nbsp;</p>
+<pre><code class="language-javascript">import { h, render } from '@composi/core'
+import { Router } from '@composi/router'
+
+const router = new Router()
+
+const Home = &lt;h1>Legaste a casa&lt;/h1>
+const PrimeraPágina = &lt;h1>¡Bienvendio a la Primera Página!&lt;/h1>
+const SegundaPágina = &lt;h1>Esta es la Segunda Página.&lt;/h1>
+
+function Menu(props, hijo) {
+  return (
+    &lt;div>
+      &lt;ul class='menu'>
+        &lt;li>&lt;a href="#/">Home&lt;/a>&lt;/li>
+        &lt;li>&lt;a href="#/first">Primera Página&lt;/a>&lt;/li>
+        &lt;li>&lt;a href="#/second">Segunda Página&lt;/a>&lt;/li>
+      &lt;/ul>
+      {
+        hijo
+      }
+    &lt;/div>
+  )
+}
+
+function renderizarPágina(component) {
+  render(&lt;Menu>{component}&lt;/Menu>, 'section')
+}
+
+router([
+  {
+    path: '/',
+    action: () => renderizarPágina(Home)
+  },
+  {
+    path: '/primero',
+    action: () => renderizarPágina(PrimeraPágina)
+  },
+  {
+    path: '/segundo',
+    action: () => renderizarPágina(SegundaPágina)
+  },
+  {
+    path: '/*',
+    action: () => {
+      console.log('Esta no es una ruta correcta.')
+    }
+  }
+])
+
+render(&lt;Menu>{Home}&lt;/Menu>, 'section')</code></pre>
+        <p>También puedse utilizar rutas junto con @composi/datastore. La ruta establecería un valor en el dataStore, lo que causaría que el componente se actualice.</p>
+
+        <h2>Gestores Múltiples para una Ruta</h2>
+        <p>Puedes utilizar más de un gestor para una ruta. Tal vez necesitas hacer eso para eliminar algunas funcionalidades en adelante. Si ese es el caso, debes usar gestores con nombre para cualquier gestor que desee eliminar:</p>
+<pre><code class="language-javascript">// Gestor que se va eliminar más tarde:
+const gestorTemporal = () => {
+  console.log('Este gestor es temporario y será eliminado.')
+}
+router([
+  {
+    path: '/',
+    action: () => console.log('¡Estás en casa!')
+  },
+  {
+    path: '/',
+    // Esta ruta será eliminado después de un tiempo.
+    action: gestorTemporal
+  }
+])</code></pre>
+
+        <p>Para apreder cómo eliminar una ruta o gestor, examina <a href='#removing-route'/>Eliminar una Ruta</a></p>
+
+        <h2>Parámetros Opcionales</h2>
+        <p>Puedes indicar que un parámetro es opcioinal por usar el carácter <code>?</code> después de él:</p>
+
+<pre><code class="language-javascript">router('usuarios/:nombre?', function(nombre) {
+  if (nombre) {
+    console.log(nombre)
+  } else {
+    console.log('No se encontró ningún nombre.')
+  }
+})
+router('usuarios/') // Registra `No se encontró ningún nombre.`
+router('usuarios/julio') // logs `julio`</code></pre>
+        <h2>Comodín</h2>
+        <p>El uso de <code>*</code> captará cualquier ruta que no coincida con las rutas previamente definidas. Usa este como comodín para las rutas inesperadas o para 404:</p>
+
+<pre><code class="language-javascript">router('usuarios/*', function() {
+console.log('¡Captó ruta inesperada!')
+})
+router('usuarios/12312312')</code></pre>
+        <h2>Boquear una Ruta</h2>
+        <p>Puedes bloquear una ruta por devolver false:</p>
+
+<pre><code class="language-javascript">router('/admin', function() {
+return false
+})</code></pre>
+        <p> </p> 
+        <h2>Eliminar Todas las Rutas y sus Gestores</h2>
+        <p>Si quieres eliminar todas las rutas actuales y sus gestores, solo tienes que ejectuar lo siguiente:</p>
+<a name="removing-route"></a>
+<pre><code class="language-javascript">router.removeAll()</code></pre>
+        <p>Después de eso, ninguna de las rutas funcionará.</p>
+
+        <h2>Eliminar una sola Ruta</h2>
+        <p>Puedes eliminar una ruta singular como sigue:</p>
+
+<pre><code class="language-javascript">// Gestor para eliminar más tarde:
+const gestorTemporal = () => {
+  console.log('Este gestor es temporario y será eliminado.')
+}
+router([
+  {
+    path: '/',
+    action: () => console.log('¡Estás en casa!')
+  },
+  {
+    path: '/',
+    action: () => gestorTemporal
+  }
+])
+
+// Después de un tiempo eliminamos la ruta con su gestor:
+router.remove('/', gestorTemporal)</code></pre>
+
+          
+          <p>&nbsp;</p>
       </div>
     </section> 
   </article>
@@ -101,7 +219,7 @@
             </g>
           </g>
         </svg>
-        <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a> y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+        <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a> and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
       </section>
     </footer>
   <script src="/js/prism.js"></script>

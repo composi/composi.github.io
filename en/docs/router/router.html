@@ -131,8 +131,7 @@ router([
 render(&lt;Menu>{Home}&lt;/Menu>, 'section')</code></pre>
         <p>You could also use routes in conjuction with @composi/datastore. The route would set a value on the dataStore, which would cause the component to update.</p>
         <h2>Multiple Handlers for One Route</h2>
-        <p>You can use more than one handler for a route. You might do this because you need to remove some functionality later.
-        If that's the case, you want to use named handlers for any handler you will want to remove:</p>
+        <p>You can use more than one handler for a route. You might do this because you need to remove some functionality later. If that's the case, you want to use named handlers if you want to remove it:</p>
 
 <pre><code class="language-javascript">// Handler to delete later:
 const removableHandler = () => {
@@ -145,7 +144,8 @@ router([
   },
   {
     path: '/',
-    action: () => console.log('This is another handler on the Home path.')
+    // This route will be removed later.
+    action: removableHandler
   }
 ])</code></pre>
 
@@ -178,7 +178,7 @@ return false
 })</code></pre>
         <p> </p> 
         <h2>Remove All Routes and Handlers</h2>
-        <p>If you want to remove all current routes and handlers, you can invokde the following:</p>
+        <p>If you want to remove all current routes and handlers, you can invoke the following:</p>
 <a name="removing-route"></a>
 <pre><code class="language-javascript">router.removeAll()</code></pre>
         <p>After running that none of the paths will work.</p>
