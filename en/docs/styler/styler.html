@@ -61,7 +61,7 @@
     color: 'green'
   }
 })</code></pre>
-              <p>The above code defines two rules for the same selector. The properties are identical, only the values differ. In normal CSS the cascade means the only the last rule will get applied. The previous one would be ignored. That's for a hand-crafted stylesheet. Because we are create the stylesheet with JavaScript, the first rule gets overwritten by the second rule. If we open the web inspector and examine the document's style sheet: <code>document.styleSheets[1].cssRules[0].cssText</code> we'll get this:</p>
+              <p>The above code defines two rules for the same selector. The properties are identical, only the values differ. In normal CSS the cascade means the only the last rule will get applied. The previous one would be ignored. That's for a hand-crafted stylesheet. Because we are create the stylesheet with JavaScript, the first rule gets overwritten by the second rule. If we open the web inspector and examine the document's style sheet like this: <code>document.styleSheets[1].cssRules[0].cssText</code> we'll get this:</p>
 <pre><code class="language-bash">cssText: "ul li { color: green; }"
 </code></pre>
               <p> </p>
@@ -88,7 +88,7 @@
   }
 })
 </code></pre>
-      <p>Notice how we indicate that the <code>li</code> tag is a child of the <code>ul</code> tag. We also indicate the hover state for the li item as a child of the list item. pseudo-elements have to be in quotes because the begin with ":".</p>
+      <p>Notice how we indicate that the <code>li</code> tag is a child of the <code>ul</code> tag. We also indicate the hover state for the list item as a child of the list item. pseudo-elements have to be in quotes because the begin with ":".</p>
 
       <h2>Use Sparingly</h2>
       <p>@composi/styler is not meant to be a replacement for external stylesheets. It should be used to encapsulate some component-specific styles independent of the regular stylesheets. Don't try to provide all styles for a component with Styler. Instead use it to work with whatever the default stylesheet provides.</p>
