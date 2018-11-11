@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's datos or state.">
   <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
   <title>Composi - Documentación</title>
   <link rel="stylesheet" href="/css/styles.css">
@@ -48,42 +48,38 @@
           <li class='selected'>Uso</li>
         </ul>
           <h1>Uso</h1>
-          <h2>How to Use Fragments</h2>
-          <p>@composi/fragment is a custom function for JSX. It does one thing, returns its children as an array. This allows you to group a series of siblingg element together for use by another component. You would typically do this for lists or table cells. But you can use it for any situation where you want to group several items together. </p>
+          <h2>Cómo Usar los Fragmentos</h2>
+          <p>@composi/fragment es una función espeical para JSX. Hace una cosa, devuelve sus hijos envuletos en una matriz. Esto habilita agrupar una serie de elementos hermanos para que otro elemento los envuelva. Harías esto típicamente para las listas o celdas de tablas. Pero puedes usarlo para cualquier situación en que quieres agrupar varios elementos juntos.</p>
 
-          <p>To use Fragment just put the sibings inside it and return it:</p>
+          <p>Para usar Fragment, tan solo pon los hermanos dento de él y devuélvelo:</p>
 
-          <p data-height="300" data-theme-id="6688" data-slug-hash="gBgbWP" data-default-tab="js,result" data-user="rbiggs"
-            data-pen-title="@composi/core - Fragment" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/gBgbWP/">@composi/core
-              - Fragment</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
-          <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+          <p datos-height="300" datos-theme-id="6688" datos-slug-hash="OaRgpj" datos-default-tab="js,result" datos-user="rbiggs" datos-pen-title="@composi/core - Fragment es" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/OaRgpj/">@composi/core - Fragment es</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
-<p>Here's another example with buttons:</p>
+<p>Y aquí hay otro ejemplo de Fragment:</p>
 
-<p data-height="300" data-theme-id="6688" data-slug-hash="VEPLpP" data-default-tab="js,result" data-user="rbiggs"
-  data-pen-title="@composi/core - Fragment-2" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/VEPLpP/">@composi/core
-    - Fragment-2</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<p datos-height="300" datos-theme-id="6688" datos-slug-hash="gQwRWW" datos-default-tab="js,result" datos-user="rbiggs" datos-pen-title="@composi/core - Fragment-2 es" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/gQwRWW/">@composi/core - Fragment-2 es</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 <p> </p>
 
-<h2>Short Form: &lt;>&lt;/></h2>
-<p>Since <code>create-composi-app</code> makes projects using Babel 7,  you can use the shorted form for Fragment: <code>&lt;>&lt;/></code></p>
+<h2>Forma Abreviada: &lt;>&lt;/></h2>
+<p>Puesto que <code>create-composi-app</code> hace proyectos que usan Babel 7, puedes tomar ventaja de la forma abreviada de Fragment: <code>&lt;>&lt;/></code></p>
 
 <pre><code class="language-javascript">import { h, render } from '@composi/core'
 import { Fragment } from '@composi/fragment'
 
-function ListItems() {
-  // Return fragment:
+function ÍtemesDeLista() {
+  // Devolver el fragmento:
   return (
     &lt;>
-      &lt;li>One&lt;/li>
-      &lt;li>Two&lt;/li>
-      &lt;li>Three&lt;/li>
+      &lt;li>Uno&lt;/li>
+      &lt;li>Dos&lt;/li>
+      &lt;li>Tres&lt;/li>
     &lt;/>
   )
 }   
 </code></pre>
-          <p>To be able to use this shorten form with Babel, you need to let Babel know to use it with Composi's fragment by updating your <code>.babelrc</code> file with a <code>pragmaFrag</code> value:</p>
+          <p>Para poder usar esta abreviatura con Babel, tienes que informle a Babel que use el fragmento de Coposi en el archivo <code>.babelrc</code> con un valor para <code>pragmaFrag</code>:</p>
 
 
 <pre><code class="language-javascript">"plugins": [
@@ -98,31 +94,31 @@ function ListItems() {
 </code></pre>
         
         <p> </p>
-        <h2>No Attributes for Fragments</h2>
-        <p>Since Fragments are not real elements, you can't give them any attributes. When the JSX is compiled to a virtual node, the Fragments are discarded and only their children are returned. The Fragment's children become the children of the Fragment's parent node. This means you cannot assign an id, class or key to a Fragment. You can, however, pass them props. Notice how we pass data to the ListItems tag:</p>
+        <h2>Los Fragmentos no Tienen Atributos</h2>
+        <p>Dado que los fragmentos no son elementos reales, no puedes darles ningún atributo. Cuando el JSX se compila en un nodo virtual, los fragmentos se descartan y solo se devuelven sus hijos. Los hijos de Fragment se convierten en hijos del nodo padre del Fragment. Esto significa que no puedes asignar un id, class o key a un Fragmento. Usted puede, sin embargo, pasar las props. Fíjate cómo pasamos los datos a la etiqueta ÍtemesDeLista:</p>
 
 <pre><code class='language-javascript'>import { h, render } from '@composi/core'
 import { Fragment } from '@composi/fragment'
 
-function ListItems({data}) {
+function ÍtemesDeLista({datos}) {
   return (
     &lt;>
       {
-        data.map(item => &lt;li>{item}&lt;/li>)
+        datos.map(ítem => &lt;li>{ítem}&lt;/li>)
       }
     &lt;/>
   )
 }
 
-function List({data}) {
+function Lista({datos}) {
   return (
     &lt;ul>
-      &lt;ListItems data={data} />
+      &lt;ÍtemesDeLista {...{datos}} />
     &lt;/ul>
   )
 }
 
-render(&lt;List data={[1,2,3]} />, 'section')</code></pre>
+render(&lt;Lista datos={[1,2,3]} />, 'section')</code></pre>
 
               <p>&nbsp;</p>
       </div>
