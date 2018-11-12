@@ -135,6 +135,13 @@ render(&lt;Menu>{Home}&lt;/Menu>, 'section')</code></pre>
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
         <p>También puedse utilizar rutas junto con @composi/datastore. La ruta establecería un valor en el dataStore, lo que causaría que el componente se actualice.</p>
 
+
+        <h2>Enrutador con Entorno de Ejecución</h2>
+        <p>El entorno de ejecución expone su método interno <code>send</code> como una función estática con el fin de enviar mensajes a las acciones de update en el objeto de programa. Usando esto, puedes enviar mensajes de una acción de ruta a una acción de programa. Harías esto para determinar el estado que se devolvería, que entonces actualizaría la vista según la ruta que se cargó. A continuación se muestra un ejemplo de Codepen de cómo hacer esto.</p>
+
+        <p data-height="500" data-theme-id="6688" data-slug-hash="oQYEyQ" data-default-tab="js,result" data-user="rbiggs" data-pen-title="@composi/core Router with runtime" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/dQOJdz/">@composi/core Router with runtime</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
         <h2>Gestores Múltiples para una Ruta</h2>
         <p>Puedes utilizar más de un gestor para una ruta. Tal vez necesitas hacer eso para eliminar algunas funcionalidades en adelante. Si ese es el caso, debes usar gestores con nombre para cualquier gestor que desee eliminar:</p>
 <pre><code class="language-javascript">// Gestor que se va eliminar más tarde:
