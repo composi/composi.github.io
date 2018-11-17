@@ -119,6 +119,27 @@ function List({state}) {
     + runtime</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
+          <h2>Hydration</h2>
+          <p>The default <code>render</code> function of @composi/core makes it easy to hydrate server-rendered content. Just pass in a reference to the element you want to hydrate as a third argument to <code>render</code>, after the container value. Composi with take that node reference and convert it into a virtual node which it will then use to diff and patch the DOM. A runtime program's view is agnostic about how the view is generated. However, it is possible to have it hydrate an element conditionally. This requires adding a new property to the program: hydrate. Set it's value to <code>true</code>, then, in the view, check it value and either hydrate the DOM are update. Notice how we do this in the following snippet:</p>
+<pre><code class='language-javascript'>const program = {
+  // Add a hydrate property and set it to true:
+  hydrate: true,
+  init() {
+    return [state]
+  },
+  view(state, send) {
+    // If view is running first time, hydrate should be true.
+    // So render list with third argument to hydrate.
+    if (program.hydrate) {
+      return render(<List {...{ state, send }} />, 'section', '.list-container')
+      program.hydrate = false
+    } else {
+      return render(<List {...{ state, send }} />, 'section')
+    }
+  },
+  update(msg, state) {}
+}</code></pre>
+
               <p>&nbsp;</p>
       </div>
     </section> 
