@@ -134,11 +134,11 @@ function List({state}) {
     if (program.hydrate) {
       // Set hydrate to false.
       program.hydrate = false
-      return render(<List {...{ state, send }} />, 'section', '.list-container')
+      return render(&lt;List {...{ state, send }} />, 'section', '.list-container')
     } else {
       // When hydrate is false, just update the component,
       // no need to hydrate.
-      return render(<List {...{ state, send }} />, 'section')
+      return render(&lt;List {...{ state, send }} />, 'section')
     }
   },
   update(msg, state) {}
