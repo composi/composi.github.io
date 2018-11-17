@@ -132,12 +132,12 @@ function List({state}) {
     // If view is running first time, hydrate should be true.
     // So render list with third argument to hydrate.
     if (program.hydrate) {
+    // Set hydrate to false.
+    program.hydrate = false
       return render(<List {...{ state, send }} />, 'section', '.list-container')
-      // Set hydrate to false.
-      program.hydrate = false
-    // When hydrate is false, just update the component,
-    // no need to hydrate.
     } else {
+      // When hydrate is false, just update the component,
+      // no need to hydrate.
       return render(<List {...{ state, send }} />, 'section')
     }
   },
