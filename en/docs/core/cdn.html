@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Docs</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                  id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+          <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
+      </li>
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/core</h3>
+        <ul class='breadcrumb'><li><a href="/en/docs/core/install.html">Install</a></li>
+        <li><a href="/en/docs/core/render.html">Render</a></li>
+        <li><a href="/en/docs/core/props.html">Props</a></li>
+        <li><a href="/en/docs/core/events.html">Events</a></li>
+        <li><a href="/en/docs/core/lifecycle.html">Lifecycle</a></li>
+        <li><a href="/en/docs/core/hydrate.html">Hydration</a></li>
+        <li><a href="/en/docs/core/state.html">State</a></li>
+        <li class='selected'>CDN</li>
+        </ul>
+        <h1>CDN</h1>
+        <h2>Run in Browser without Build</h2>
+        <p>It is possible to run @composi/core directly in the browser without a build step. This is a great way to quickly prototype an idea, or try out @composi/core with something you already have build. The advantage of the build step is it allows you to use JSX to define the markup for your components. Without a build step you have two choices: use the <code>h</code> function to define markup, or use the <code>htm</code> module to define markup. <code>htm</code> is a tiny module that allows you to use a JSX-like syntax in the browser by means of a tagged template. This is not the same as using ordinary template literals, as the result gets converted into virtual nodes that @composi/core can render to the DOM.</p>
+        <p>This technique takes advantage of the fact that modern browsers can import ES6 modules directly. You do need to let the browser know that the code you are importing is an ES6 module. You do this on the script tag by providing the attribute <code>type='module'</code>.</p>
+        <h3>Setup for in Browser Use</h3>
+        <p>To use @composi/core in the browser, create a folder and name it whatever you want. In it create an index.html file, and a JavaScript file. In this case we're going to name it <code>app.js</code>. You can also create a CSS file if you want. This means our project structure should look like this:</p>
+<pre><code class="language-bash">MyProject-|
+    |-app.js
+    |-index.html
+    |-style.css
+</code></pre>
+        <p>In <code>app.js</code> we are going to import three files: @composi/core, @composi/merge-objects, and htm. Notice how each import ends with <code>?module</code>. This is to let the browser know that these are ES6 modules:</p>
+<pre><code class="language-javascript">import { h, render, run, union } from 'https://unpkg.com/@composi/core@0.10.0/dist/composi-core.mjs?module'
+import { mergeObjects } from 'https://unpkg.com/@composi/merge-objects@1.1.0/src/index.js?module'
+import { htm } from 'https://unpkg.com/htm.mjs?module'
+
+// Pass the @composi/core h function to htm,
+// and capture the result in variable 'html'.
+// We'll use this to define markup.
+const html = htm.bind(h)
+</code></pre>
+
+        <p>Next create basic html to import this code:</p>
+
+<pre><code class="language-html">&lt;!DOCTYPE html>
+&lt;html lang="en">
+&lt;head>
+  &lt;meta charset="UTF-8">
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+  &lt;meta http-equiv="X-UA-Compatible" content="ie=edge">
+  &lt;title>Document&lt;/title>
+  &lt;link rel="stylesheet" href="/styles.css">
+&lt;/head>
+&lt;body>
+  &lt;header>&lt;/header>
+  &lt;section>&lt;/section>
+  &lt;script type='module' src="/app.js">&lt;/script>
+&lt;/body>
+&lt;/html></code></pre>
+        <p>Notice that the script tag has the type <code>module</code>. This is very important so that the browser knows it is important and ES6 module. For the CSS you can provide whatever you need to. We used absoltute paths here because this will need to be run with a server.</p>
+        <h3>CSS</h3>
+        <p>For this example, we're going to use the following CSS:</p>
+<pre><code class="language-css">:root {
+  --masthead-background-color:#f10;
+  --masthead__header-color:#fff
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+header {
+  background-color:var(--masthead-background-color);
+  padding:20px;
+}
+header h1 {
+  color:var(--masthead__header-color);
+  margin:0;font-size:2rem;
+}
+
+section {
+  padding: 2rem;
+}
+.container {
+  width: 350px;
+}
+p {
+  display: flex;
+  justify-content: space-between;
+}
+input {
+  flex: 1;
+  margin-right: 10px;
+}
+.list {
+  list-style: none;
+  border: solid 1px #ccc;
+  margin: 0;
+  padding: 0;
+}
+.list li {
+  padding: 5px 10px;
+  border-bottom: solid 1px #ccc;
+  display: flex;
+  flex-direction: row;
+}
+.list li:last-of-type {
+  border: none;
+}
+.list li > span {
+  flex: 1;
+}
+.delete-item {
+  border: solid 1px red;
+  background-color: white;
+  color: red;
+  transition: all .25s ease-out;
+  cursor: pointer;
+}
+.delete-item:hover {
+  color: white;
+  background-color: red;
+}
+.add-item {
+  border: solid 1px green;
+  background-color: green;
+  color: white;
+  transition: all .25s ease-out;
+  cursor: pointer;
+}
+.add-item:hover {
+  color: green;
+  background-color: white;
+}</code></pre>
+        <p> </p>
+        <h3>App.js</h3>
+        <p>And now, for the <code>app.js</code> file we're going to use the following:</p>
+<pre><code class="language-javascript">import { h, render, run, union } from 'https://unpkg.com/@composi/core@0.10.0/dist/composi-core.mjs?module'
+import { mergeObjects } from 'https://unpkg.com/@composi/merge-objects@1.1.0/src/index.js?module'
+import { htm } from 'https://unpkg.com/htm.mjs?module'
+
+// Pass the @composi/core h function to htm,
+// and capture the result in variable 'html'.
+// We'll use this to define markup.
+const html = htm.bind(h)
+
+function Title({greeting}) {
+  return html`
+    &lt;nav>
+      &lt;h1>Hello, ${greeting}!&lt;/h1>
+    &lt;/nav>
+  `
+}
+render(html`&lt;${Title} greeting='Everyone'/>`, 'header')
+
+
+const ref = {
+  target: undefined
+}
+
+const Msg = union(['AddItem', 'DeleteItem'])
+function List({state, send}) {
+  function setTarget(input) {
+    ref.target = input
+  }
+  let inputValue
+  function getInputValue(value) {
+    inputValue = value
+  }
+  return html`
+    &lt;div class='container'>
+      &lt;p>
+        &lt;input autofocus onmount=${input => setTarget(input)} value=${state.resetInput} type='text' onchange=${e => getInputValue(e.target.value)}>
+        &lt;button onclick=${() => send(Msg.AddItem(inputValue))} class='add-item'>Add&lt;/button>
+      &lt;/p>
+      &lt;ul class='list'>
+        ${
+          state.fruits.map(fruit => html`&lt;li key=${fruit.key}>
+            &lt;span>${fruit.value}&lt;/span>
+            &lt;button class='delete-item' onclick=${() => send(Msg.DeleteItem(fruit.key))}>X&lt;/button>
+          &lt;/li>`)
+        }
+      &lt;/ul>
+    &lt;/div>
+  `
+}
+
+const state = {
+  newKey: 104,
+  resetInput: '',
+  fruits: [
+    {
+      key: 101,
+      value: 'Apples'
+    }, 
+    {
+      key: 102,
+      value: 'Oranges'
+    }, 
+    {
+      key: 103,
+      value: 'Bananas'
+    }
+  ]
+}
+function actions(msg, state) {
+  const prevState = mergeObjects(state)
+  return Msg.match(msg, {
+    'AddItem': value => {
+      if (!value) return [prevState]
+      const key = prevState.newKey++
+      prevState.fruits.push({key, value})
+      ref.target.focus()
+      return [prevState]
+    },
+    'DeleteItem': key => {
+      const filteredFruits = prevState.fruits.filter(fruit => fruit.key != key)
+      prevState.fruits = filteredFruits
+      return [prevState]
+    }
+  })
+}
+const program = {
+  init() {
+    return [state]
+  },
+  view(state, send) {
+    render(html`&lt;${List} ...${{state, send}} />`, 'section')
+  },
+  update(msg, state) {
+    return actions(msg, state)
+  }
+}
+
+run(program)
+
+</code></pre>
+        <p>Now all we need to do is run this. To do so we need a server. There are a number of ways to do this. I use <code>http-server</code>. You can install it from NPM:</p>
+        <pre><code class="language-javascript">npm i -g http-server</code></pre>
+        <p>Run it in the project folder. When it starts it will indicate the url you can use to load in the browser. Copy and paste into the browser and voilá, you should have a fully operation @composi/core app running in the browser without a build process.</p>
+
+        <h2>HTM</h2>
+        <p>In the previous example we were using <code>htm</code> to define our component markup. This is a tiny module that lets you use tagged templates with a syntax similar to JSX. There are differences because it is ultimately a template literal. Here we will go over how to use HTM.</p>
+        <h3>html``</h3>
+        <p>You use <code>html``</code> to define all your markup.</p>
+<pre><code class="language-javascript">function Title() {
+  return html`
+    &lt;nav>
+      &lt;h1>Hello, World!&lt;/h1>
+    &lt;/nav>
+  `
+}</code></pre>
+        <p> </p>
+        <h3>{} = ${}</h3>
+        <p>Whereas JSX uses curly braces to mark off a variable to block of code, HTM used <code>${}</code>. Using the previous example, we'll pass in value for the Hello World. Instead of the normal JSX curly braces, we precede them with the $ sign:</p>
+<pre><code class="language-javascript">function Title({greeting}) {
+  return html`
+    &lt;nav>
+      &lt;h1>Hello, ${greeting}!&lt;/h1>
+    &lt;/nav>
+  `
+}
+</code></pre>
+        <p>To do a JavaScript code block inside of the markup, we again use curly braces with a $ sign:</p> 
+<pre><code class="language-javascript">function List({state}) {
+  return (
+    html`&lt;ul class='list'>
+      ${
+        state.fruits.map(fruit => html`&lt;li key=${fruit.key}>${fruit.value}&lt;/li>`)
+      }
+    &lt;/ul>`
+  )
+}</code></pre>
+        <p> </p>
+        <h3>&lt;List/> = &lt;${List}/></h3>
+        <p>To use a functional component as a tag, you need to enclose the function name inside curly braces with the $ sign:</p>
+<pre><code class="language-javascript">render(&lt;${List}/>, document.body)</code></pre>
+        <p> </p>
+        <h3>{...{state}} = ...${{state}}</h3>
+        <p>To descructure props in a tag, you start with the spread operator, followed by the values to use in curly braces with the $ sign:</p>
+<pre><code class="language-javascript">render(&lt;${List} ...${{state, send}}/>, document.body)</code></pre>
+        <p>Notice the difference between this and JSX:</p>
+<pre><code class="language-javascript">render(&lt;List {...{state, send}}/>, document.body)</code></pre>
+        <p> </p>
+        <h2>Summary</h2>
+        <p>Using @composi/core along with htm in the browser provides and easy way to test out ideas and do quick prototyping. The small size of both @composi/core and htm make this approach very performant.</p>
+        <p>&nbsp;</p>
+
+      </div>
+    </section>
+  </article>
+  <footer>
+    <section>
+      <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>Composi Logo</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+            <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+              id="Combined-Shape"></path>
+          </g>
+        </g>
+      </svg>
+      <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a>
+        and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+    </section>
+  </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+
+</html>
