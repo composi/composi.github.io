@@ -81,7 +81,10 @@ Msg.deleteItem(132)
 {type: 'deleteItem', data: 132}
 </code></pre>
 
-        <p>Now, when we setup the update function, we check that the message sent matches the values in the tagged union. We do that using the <code>match</code> method on the tagged union. Notice that we don't need to check for a tag type <code>msg.type</code>, just the direct value of the tag. Also we don't need to access the data of the message with <code>msg.data</code>. Instead it's made directly available to the action callback as its argument. Since we're using the tagged union's match method, we don't need a switch statement's signature (switch, case, break.) This results in a simpler signature for the actions:</p>
+
+        <p>A tagged union has a <code>match</code> method. This takes two arguments: a tag to test and handers. When using a tagged union inside of the <code>udpate</code> method, the tag to test will be the message passed to it from a user interaction using the <code>send</code> function. Handers is an object literal of tags and functions to execute. When the message sent matches a tag, the corresponding function gets executed.</p>
+
+        <p>When we setup the update function, we can check that the message sent matches the values in the tagged union using the <code>match</code> method. Since we're using a tagged union, we don't need a switch statement to check for a tag type <code>msg.type</code>. This now gets handled by the <code>match</code> method. This results in a simpler signature for the actions. We can make an <code>actions</code> function that takes the message and state and retuns the result of a match:</p>
 <pre><code class="language-javascript">function actions(msg, state) {
   return Msg.match(msg, {
     // Check for the message tag:
@@ -118,6 +121,31 @@ function actions(msg, state) {
   }
 }</code></pre>
         <p>The above example should make it clear why to use a tagged union. It makes the code cleaner and easier to reason about. Using a tagged union in the view makes the intent of the event clearer. They imply that they will invoke a corresponding update action. Without tagged unions, the events in our view are senging message objects off to an unspecified destination. We rely on our understanding of how the runtime works to assume that they will be intercepted by update actions. Tagged unions make the intent of view events clearer, and the update actions more compact.</p>
+
+        <h3>Default or CatchAll</h3>
+        <p>In the previous actions example we were checking each possible tag and providing a function to execute. In a switch statement we can use <code>default</code> to use when there is no match. We can also do that with a tagged union. Just provide a function as the last argument after the handlers object:</p>
+<pre><code class="language-javascript">function actions(msg, state) {
+  return Msg.match(msg, {
+    // Check for the message tag:
+    'addItem': value => {
+      // Use mergeObjects to clone state:
+      const prevState = mergeObjects(state)
+      prevState.fruits.push({ key: state.newKey++, value })
+      return [prevState]
+    },
+    // Check for the message tag:
+    'deleteItem': key => {
+      // Use mergeObjects to clone state:
+      const prevState = mergeObjects(state)
+      prevState.fruits = prevState.fruits.filter(item => item.key != key)
+      return [prevState]
+    }
+  },
+  // Provide default action if no matching message:
+  () => {
+    console.log('There was no match.')
+  })
+}</code></pre>
 
         <p>Below is a complete working example of using a tagged union for setting up actions and sending them from the view.</p>
 
