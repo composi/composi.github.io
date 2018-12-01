@@ -45,6 +45,7 @@
           <li><a href="/es/docs/runtime/update.html">Update</a></li>
           <li class='selected'>Efectos</li>
           <li><a href="/es/docs/runtime/tagged-unions.html">Unión Etiquetada</a></li>
+          <li><a href="/es/docs/runtime/subscriptions.html">Suscripciones</a></li>
           <li><a href="/es/docs/runtime/composition.html">Composición</a></li>
           <li><a href="/es/docs/runtime/end-program.html">Parar el Programa</a></li>
           <li><a href="/es/docs/runtime/immutability.html">Inmutabilidad</a></li>
@@ -84,7 +85,7 @@ const contador = {
   init() {
     return [0]
   }, // El estado es un número para contar:
-  update(mensaje, state) {
+  update(state, mensaje, ) {
     return [state + 1] // Aumentar el estado
   },
   view(state, send) {

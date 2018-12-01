@@ -45,6 +45,7 @@
           <li class='selected'>Update</li>
           <li><a href="/en/docs/runtime/effects.html">Effects</a></li>
           <li><a href="/en/docs/runtime/tagged-unions.html">Tagged Unions</a></li>
+          <li><a href="/en/docs/runtime/subscriptions.html">Subscriptions</a></li>
           <li><a href="/en/docs/runtime/composition.html">Composition</a></li>
           <li><a href="/en/docs/runtime/end-program.html">Stop Program</a></li>
           <li><a href="/en/docs/runtime/immutability.html">Immutability</a></li>
@@ -73,7 +74,7 @@ const program = {
   // Use those actions to transform state.
   // Then return the new state.
   // That will cause the view to update.
-  update(msg, state) {
+  update(state, msg) {
     switch (msg.type) {
       case 'add-item':
         const value = msg.inputValue

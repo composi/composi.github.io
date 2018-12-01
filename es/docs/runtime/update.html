@@ -45,6 +45,7 @@
           <li class='selected'>Update</li>
           <li><a href="/es/docs/runtime/effects.html">Efectos</a></li>
           <li><a href="/es/docs/runtime/tagged-unions.html">Unión Etiquetada</a></li>
+          <li><a href="/es/docs/runtime/subscriptions.html">Suscripciones</a></li>
           <li><a href="/es/docs/runtime/composition.html">Composición</a></li>
           <li><a href="/es/docs/runtime/end-program.html">Parar el Programa</a></li>
           <li><a href="/es/docs/runtime/immutability.html">Inmutabilidad</a></li>
@@ -74,7 +75,7 @@ const programa = {
   // Usar esas acciones para transformar al estado.
   // Después se devuelve el nuevo estado.
   // Eso causará que la vista se actualice.
-  update(mensaje, estado) {
+  update(estado, mensaje) {
     switch (mensaje.type) {
       case 'añadir-ítem':
         const valor = mensaje.valorDeInput

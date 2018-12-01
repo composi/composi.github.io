@@ -45,6 +45,7 @@
           <li><a href="/en/docs/runtime/update.html">Update</a></li>
           <li class='selected'>Effects</li>
           <li><a href="/en/docs/runtime/tagged-unions.html">Tagged Unions</a></li>
+          <li><a href="/en/docs/runtime/subscriptions.html">Subscriptions</a></li>
           <li><a href="/en/docs/runtime/composition.html">Composition</a></li>
           <li><a href="/en/docs/runtime/end-program.html">Stop Program</a></li>
           <li><a href="/en/docs/runtime/immutability.html">Immutability</a></li>
@@ -85,7 +86,7 @@ const counter = {
   init() {
     return [0]
   }, // State is an integer to count
-  update(message, state) {
+  update(state, message) {
     return [state + 1] // Increment the state
   },
   view(state, send) {

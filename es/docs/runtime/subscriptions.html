@@ -39,51 +39,52 @@
       <div class='docs'>
         <h3>@composi/runtime:</h3>
         <ul class='breadcrumb'>
-          <li><a href="/en/docs/runtime/runtime.html">Runtime</a></li>
-          <li><a href="/en/docs/runtime/init.html">Init</a></li>
-          <li><a href="/en/docs/runtime/view.html">View</a></li>
-          <li><a href="/en/docs/runtime/update.html">Update</a></li>
-          <li><a href="/en/docs/runtime/effects.html">Effects</a></li>
-          <li><a href="/en/docs/runtime/tagged-unions.html">Tagged Unions</a></li>
-          <li><a href="/en/docs/runtime/subscriptions.html">Subscriptions</a></li>
-          <li><a href="/en/docs/runtime/composition.html">Composition</a></li>
-          <li><a href="/en/docs/runtime/end-program.html">Stop Program</a></li>
-          <li class='selected'>Immutability</li>
-          <li><a href="/en/docs/runtime/hop.html">Higher Order Program</a></li>
+          <li><a href="/es/docs/runtime/runtime.html">Entorno de Ejecución</a></li>
+          <li><a href="/es/docs/runtime/init.html">Init</a></li>
+          <li><a href="/es/docs/runtime/view.html">View</a></li>
+          <li><a href="/es/docs/runtime/update.html">Update</a></li>
+          <li><a href="/es/docs/runtime/effects.html">Efectos</a></li>
+          <li><a href="/es/docs/runtime/tagged-unions.html">Unión Etiquetada</a></li>
+          <li class='selected'>Suscripciones</li>
+          <li><a href="/es/docs/runtime/composition.html">Composición</a></li>
+          <li><a href="/es/docs/runtime/end-program.html">Parar el Programa</a></li>
+          <li><a href="/es/docs/runtime/immutability.html">Inmutabilidad</a></li>
+          <li><a href="/es/docs/runtime/hop.html">Programa de Orden Superior</a></li>
         </ul>
-          <h1>Immutability</h1>
-          <h2>Program State is Mutable</h2>
-
-          <p>By default a program's state is mutable when you have access to it inside both the update and view methods. Hopefully no one would ever modify state from the code for rendering the view. Update, on the other hand, is how you modify a program's state. For simple examples this is probably not going to be a problem. However, if your app and data are complex, you will probably want to avoid directly modifying state in an action. Instead you can clone that state inside the action, modify the clone and then return it. You can use @composi/merge-objects to clone objects or arrays. It creates a deep clone. You would need to import it into your project and then use it in an update action.</p>
-
-<pre><code class="language-javascript">import { h, render, run, union } from '@composi/core'
-import { mergeObjects } from '@composi/merge-objects'
-
-const Msg = union(['addItem', 'deleteItem'])
-// And here we use mergeObjects in our actions.
-// Here were using a tagged union.
-function actions(state, msg) {
-  return Msg.match(msg, {
-    // Check for the message tag:
-    'addItem': value => {
-      // Clone the state:
-      const prevState = mergeObjects(state)
-      prevState.fruits.push({ key: prevState.newKey++, value })
-      // Render view and update program state:
-      return [prevState]
-    },
-    // Check for the message tag:
-    'deleteItem': key => {
-      // Clone state:
-      const prevState = mergeObjects(state)
-      prevState.fruits = prevState.fruits.filter(item => item.key != key)
-      // Render view and update program state:
-      return [prevState]
-    }
-  })
+          <h1>Suscripciones</h1>
+          <h2>Efectos al Iniciarse</h2>
+          <p>Cuando cubrimos <code>init</code>, se explicó cómo se podía ejecutar un efecto al iniciar un programa tan solo por pasarlo como un segundo valor en la tupla que devuelve <code>init</code>. En general, los efectos que se ejecutan en el inicio se conocen como suscripciones. Podemos ser más explícito sobre la implementación de una suscripción utilizando el método <code>subscriptions</code> en un programa. Esto debe devolver la efecto que ejecutar.</p>
+<pre><code class="language-javascript">function empezarContar() {
+  let cuenta = 0
+  const id = setInterval(() => {
+    if (cuenta === 10) clearInterval(id)
+    cuenta += 1
+    programa.send(cuenta)
+  }, 1000)
 }
-</code></pre>
-            <p>Using the above technique of cloning the state with <code>mergeObjects</code> means that the program state won't be updated until the action returns it.</p>
+const programa = {
+  init() {
+    return [estado]
+  },
+  view(estado, send) {
+    return render(<h1>La cuenta es: {estado}.</h1>, document.body)
+  },
+  update(estado, mensaje) {
+    if (mensaje) {
+      // Fija el estado del programa con el valor del mensaje:
+      return [mensaje]
+    }
+  },
+  subsciptions() {
+    return empezarContar
+  }
+}</code></pre>
+          <p>No hay nada de magia aquí. Las suscripciones hacen lo que dice la etiqueta. Usar suscripciones para ejecutar efectos al inicio
+          es más explícito. Pero puedes usar cualquier método, init o subscriptions, para ejecutar efectos al inicio.</p>
+
+          <p>Al igual que con cualquier otro efecto, puede usar <code>batchEffects</code> para ejecutar múltiples efectos al mismo tiempo. Consulte la documentación de <a href="/es/docs/runtime/effects.html">efectos</a> para ver cómo hacer esto.</p>
+
+          
 
               <p>&nbsp;</p>
       </div>

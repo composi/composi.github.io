@@ -45,6 +45,7 @@
           <li><a href="/es/docs/runtime/update.html">Update</a></li>
           <li><a href="/es/docs/runtime/effects.html">Efectos</a></li>
           <li><a href="/es/docs/runtime/tagged-unions.html">Unión Etiquetada</a></li>
+          <li><a href="/es/docs/runtime/subscriptions.html">Suscripciones</a></li>
           <li><a href="/es/docs/runtime/composition.html">Composición</a></li>
           <li><a href="/es/docs/runtime/end-program.html">Parar el Programa</a></li>
           <li class='selected'>Inmutabilidad</li>
@@ -60,8 +61,8 @@ import { mergeObjects } from '@composi/merge-objects'
 
 const Msj = union(['añadirÍtem', 'eliminarÍtem'])
 // Usamos mergeObjects en las acciones.
-// También estamos unsando una unión etiquetada.
-function acciones(msj, estado) {
+// También estamos usando una unión etiquetada.
+function acciones(estado, msj) {
   return Msj.match(msj, {
     // Chequear la etiqueta del mensaje:
     'añadirÍtem': value => {

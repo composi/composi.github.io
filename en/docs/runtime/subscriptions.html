@@ -45,45 +45,45 @@
           <li><a href="/en/docs/runtime/update.html">Update</a></li>
           <li><a href="/en/docs/runtime/effects.html">Effects</a></li>
           <li><a href="/en/docs/runtime/tagged-unions.html">Tagged Unions</a></li>
-          <li><a href="/en/docs/runtime/subscriptions.html">Subscriptions</a></li>
+          <li class='selected'>Subscriptions</li>
           <li><a href="/en/docs/runtime/composition.html">Composition</a></li>
           <li><a href="/en/docs/runtime/end-program.html">Stop Program</a></li>
-          <li class='selected'>Immutability</li>
+          <li><a href="/en/docs/runtime/immutability.html">Immutability</a></li>
           <li><a href="/en/docs/runtime/hop.html">Higher Order Program</a></li>
         </ul>
-          <h1>Immutability</h1>
-          <h2>Program State is Mutable</h2>
-
-          <p>By default a program's state is mutable when you have access to it inside both the update and view methods. Hopefully no one would ever modify state from the code for rendering the view. Update, on the other hand, is how you modify a program's state. For simple examples this is probably not going to be a problem. However, if your app and data are complex, you will probably want to avoid directly modifying state in an action. Instead you can clone that state inside the action, modify the clone and then return it. You can use @composi/merge-objects to clone objects or arrays. It creates a deep clone. You would need to import it into your project and then use it in an update action.</p>
-
-<pre><code class="language-javascript">import { h, render, run, union } from '@composi/core'
-import { mergeObjects } from '@composi/merge-objects'
-
-const Msg = union(['addItem', 'deleteItem'])
-// And here we use mergeObjects in our actions.
-// Here were using a tagged union.
-function actions(state, msg) {
-  return Msg.match(msg, {
-    // Check for the message tag:
-    'addItem': value => {
-      // Clone the state:
-      const prevState = mergeObjects(state)
-      prevState.fruits.push({ key: prevState.newKey++, value })
-      // Render view and update program state:
-      return [prevState]
-    },
-    // Check for the message tag:
-    'deleteItem': key => {
-      // Clone state:
-      const prevState = mergeObjects(state)
-      prevState.fruits = prevState.fruits.filter(item => item.key != key)
-      // Render view and update program state:
-      return [prevState]
-    }
-  })
+          <h1>Subscriptions</h1>
+          <h2>Running Effects at Startup</h2>
+          <p>When we covered <code>init</code> it was explained how you could execute an effect at startup by passing it as a second value in the tuple that <code>init</code> returns. Generally effects that run at startup are referred to as subscriptions. You can be more explicit about implementing a subscription by using the <code>subscriptions</code> method on a program.  This needs to return the subscription to execute.</p>
+<pre><code class="language-javascript">function startCount() {
+  let count = 0
+  const id = setInterval(() => {
+    if (count === 10) clearInterval(id)
+    count += 1
+    program.send(count)
+  }, 1000)
 }
-</code></pre>
-            <p>Using the above technique of cloning the state with <code>mergeObjects</code> means that the program state won't be updated until the action returns it.</p>
+const program = {
+  init() {
+    return [state]
+  },
+  view(state, send) {
+    return render(<h1>The count is: {state}.</h1>, document.body)
+  },
+  update(state, msg) {
+    if (msg) {
+      // Set program state to value of message:
+      return [msg]
+    }
+  },
+  subsciptions() {
+    return startCount
+  }
+}</code></pre>
+          <p>There is no magic here. Subscriptions does what the label says. Using subscriptions to run effects at start is more explicit. But you can use whatever approach, init or subscriptions, to run effects at startup.</p>
+
+          <p>Like any other effects, you can use <code>batchEffects</code> to run multiple effects at the same time. See the documentation for <a href="/en/docs/runtime/effects.html">effects</a> to see how to do this.</p>
+
+          
 
               <p>&nbsp;</p>
       </div>
