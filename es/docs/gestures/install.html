@@ -30,31 +30,43 @@
         <span class='logo__link--text'>Composi</span></a>
       </li>
       <li class='nav-menu__item selected'>
-        <a class='nav-menu__item__link' href="/es/docs/index.html">Docs</a>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
       </li>
     </ul>
   </nav>
   <article class='article'>
     <section>
       <div class='docs'>
-        <h3>@composi/router:</h3>
+        <h3>@composi/gestures:</h3>
         <ul class='breadcrumb'>
           <li class='selected'>Instalación</li>
-          <li><a href="/es/docs/router/router.html">Usage</a></li>
+          <li><a href="/es/docs/gestures/usage.html">Uso</a></li>
         </ul>
           <h1>Instalación</h1>
-          <h3>No Hay que Instalar</h3>
-          <p>Si has creado un proyecto utilizando <code>create-composi-app</code>, no tienes que instalar @composi/idb. Ya está instalado en el nuevo proyecto y listo para importar en tu código. Lee la <a target="_blank" href="/es/docs/create-composi-app/usage.html">documentación de create-composi-app</a> para aprender cómo ponerte productivo rápidamente.</p>
+          <h3>No Install</h3>
+          <p>Si has creado un proyecto utilizando <code>create-composi-app</code>, no tienes que instalar @composi/gestures. Ya está
+          instalado en el nuevo proyecto y listo para importar en tu código. Lee la <a target="_blank" href="/es/docs/create-composi-app/usage.html">documentación de create-composi-app</a> para aprender cómo ponerte productivo rápidamente.</p>
 
-          <p>Para usar @composi/router, primero tienes que importarlo al proyecto:</p>
-          <pre><code class='language-javascript'>import { Router } from @composi/router</code></pre>
+          <p>Para usar @core/gestures, vas a tener que importarlo al proyecto:</p>
+
+          <pre><code class='language-bash'>import { gestures } from '@composi/gestures'
+// Después de importar,
+// hay que inicializarlo:
+gestures()
+          </code></pre>
           
-          <p>Una vez que está importado, lo puedes usar.  @composi/router into your project you are ready to start using it. Lee la documentación de <a href="/es/docs/router/router.html">Uso</a>.</p>
+          <p>Una vez que está importado, lo puedes usar. @composi/router into your project you are ready to start using it. Lee la
+          documentación de <a href="/es/docs/gestures/uso.html">Uso</a>.</p>
 
-          <p>Si quieres usar @composi/router con una librería aparte de @composi/core, vas a tener que instalarlo en tu proyecto:</p>
+          <p>Si quieres usar @composi/gestures con una librería or framework aparte de  @composi/core, vas a tener que instalarlo de NPM y entonces importarlo en el proyecto:</p>
 
-<pre><code class='language-bash'>npm i -D @composi/router</code></pre>
-
+<pre><code class='language-bash'>npm i -D @composi/gestures</code></pre>
+<p>Importar @composi/gestures en el proyecto:</p>
+<pre><code class='language-javascript'>import { gestures } from @composi/gestures
+// Después de importar, hay que
+// invializar los gestos antes de usarlas:
+gestures()
+</code></pre>
 
               <p>&nbsp;</p>
       </div>

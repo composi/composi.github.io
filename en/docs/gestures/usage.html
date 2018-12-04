@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Docs</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
+      </li>
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/gestures:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/en/docs/gestures/install.html">Install</a></li>
+          <li>Usage</li>
+        </ul>
+          <h1>Usage</h1>
+          <h3>Gestures for Mobile and Desktop</h3>
+          <p>@composi/gestures is a cross-platform gesture library for desktop and mobile. Gzipped, @composi/gestures is only 1KB. It's smaller than most
+          images you will use in your app.</p>
+          <p>@composi/gestures provides normalized events and gestures for use in your app.</p>
+          <h2>Normalized Events</h2>
+          <p>@composi/core provides normalized events so you don't have to worry about mousedown, touchstart, pointerdown, etc. There are four events for use:</p>
+          <ul class="main-menu">
+            <li>eventstart: mousedown, pointerdown, touchstart</li>
+            <li>eventend: mouseup, pointerup, touchend</li>
+            <li>eventmove: mousemove, pointermove, touchmove</li>
+            <li>eventcancel: mousecancel, pointercancel, touchcancel</li>
+          </ul>
+          <p>You use these just like you would use any other event with an event listener:</p>
+<pre><code class="language-javascript">const btn = document.querySelector('button')
+btn.addEventListener(eventstart, () => { alert('The event started!') })
+</code></pre>
+          <p>Although these enable you to use one event for desktop and touch devices, it's almost always better to use gestures. This is especially so for <code>tap</code> since this responds to both a click and a finger or stylus tap. This better represents what users are accumstomed to doing.</p>
+          <h2>Gestures</h2>
+          <p>On mobile devices users expect to be able to tap and swipe. @composi/gestures provides taps and swipes that work on
+          both mobile and desktop, ensuring an consitent user experience across platforms. With @composi/gestures you don't have
+          to have separate events for desktop and mobile. @composi/core provides the following gestures:</p>
+          <ul class="main-menu">
+            <li>tap</li>
+            <li>dbltap</li>
+            <li>longtap</li>
+            <li>swipe</li>
+            <li>swipeleft</li>
+            <li>swiperight</li>
+            <li>swipeup</li>
+            <li>swipedown</li>
+          </ul>
+          <p>There are two ways you can use gestures, as inline events or as event listeners.</p>
+          <h2>Inline Gestures</h2>
+          <p></p>
+          <pre><code class="language-javascript">import { gestures } from '@composi/gestures'
+// Initialize the gestures:
+gestures()
+
+// Define event callbacks:
+function announceTap() {
+  alert('You just tapped!')
+}
+
+function announceSwipe() {
+  alert('You just swiped!')
+}
+
+// Define inline events:
+function TappableButton(props) {
+  return (
+    &lt;button ontap={() => announceTap()}>Tap&lt;/button>
+  )
+},
+
+function SwipableButton(props) {
+  return (
+    &lt;button onswipe={() => announceSwipe()}>Swipe&lt;/button>
+  )
+}</code></pre>
+
+          <p> </p> 
+          <h2>Gestures with Event Listeners</h2>
+          <p>You can also use gestures with event listeners. You use them just as you would any other standard DOM event:</p>
+          <pre><code class="language-javascript">import { gestures } from '@composi/gestures'
+// Initialize the gestures:
+gestures()
+
+const tappableBtn = document.querySelector('#tappableBtn')
+tappableBtn.addEventListener('tap', function() {
+  alert('You just tapped the button!')
+})</code></pre>
+
+              <p> </p> 
+              <h2>About Swipe</h2>
+              <p>Besides <code>swipeleft</code>, <code>swiperight</code>, <code>swipeup</code> and <code>swipedown</code> there is also a generic gesture for swipe. When you use the generic swipe event, it gets passed a data value indicating what direction the swipe was. You can use this data to determine how to handle the swipe. According to which direction the user swiped, the value will be "left", "right", "up" or "down". Notice in the following example how we announce the swipe direction through the event data attribute:</p>
+              <pre><code class="language-javascript">import { gestures } from '@composi/gestures'
+// Initialize the gestures:
+gestures()
+
+function SwipeTest() {
+  function announceSwipe(e) {
+    // The swipe direction gets passed with the event
+    // as the value of the property `data`:
+    alert(`The swipe direction was: ${e.data}.`)
+  }
+  return (
+    <div onswipe={e => announceSwipe(e)}>Swipe on me!</div>
+  )
+}</code></pre>
+              <p>By capturing and checking the event data, you can have a single swipe event handle different directions. You might do
+              that with a toggle switch. Attach a swipe gesture to it, and when the event data is `left`, turn it on, else turn it
+              off.</p>
+
+              <h2>Swipes and Text Selection</h2>
+              <p>If you register a swipe on an element and it or its children have any text, when the user tried to swipe it will result
+              in a text selection. You can avoid this glitch by using @composi/gestures's `disableTextSelection` function. You import
+              it in and the pass it the element to disable text selection on. Below we show how to do this with React. We disable
+              text selection on the button when the `componentDidMount` lifecycle hook executes:</p>
+              <pre><code class="language-javascript">import { React } from 'react'
+import { gestures, disableTextSelection } from '@composi/gestures'
+// Initialize gestures:
+gestures()
+
+class Button extends React.Component {
+  constructor(props) {
+    super(props)
+    this.button  = React.createRef();
+  }
+  render() {
+    return (
+      <button ref={this.button} onswipe={e => this.handleSwipe(e)}>Swipe Me!</button>
+    )
+  }
+  handleSwipe(e) {
+    // Handle the swipe here...
+  }
+  componentDidMount() {
+    // Disable text selection on the button:
+    disableTextSelection(this.button.current)
+  }
+}</code></pre>
+              <p>If you wish to disable text selection on any element, say all button tags or all elements of a class, you can use the
+              selector followed by a second truthy value:</p>
+
+              <pre><code class="language-javascript">disableTextSelection('button', true)
+// or (any string is truthy)
+disableTextSelection('.swipable', 'all')</code></pre>
+
+              <p> </p>
+              <h2>Re-enabling Text Selection</h2>
+              <p>If you want to later re-enable text selection on an element that you disabled, you can import and use the
+              `enableTextSelection` function. Import it and pass it the element to enable:</p>
+              <pre><code class="language-javascript">enableTextSelection('#user-list')</code></pre>
+              <p>To re-enable many elements of the same type, you use it the same as `disableTextSelection` by passing in a tag selector
+              or class, followed by a second truth value:</p>
+              <pre><code class="language-javascript">enableTextSelection('button', true)
+// or (any string is truthy)
+enableTextSelection('.swipable', 'yes')</code></pre>
+              <p> </p>
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a> and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Docs</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+        <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/gestures:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/es/docs/gestures/install.html">Instalación</a></li>
+          <li>Uso</li>
+        </ul>
+          <h1>Uso</h1>
+          <h3>Gestos para Escritorio y Móviles</h3>
+          <p>@composi/gestures es una biblioteca de gestos multiplataforma para escritorio y despositivos móviles. Cuando compreso con gzip, @composi/gestures es tan solo 1 KB. Es más pequeño que la mayoría de las imágenes que usarás en tu proyecto.</p>
+          <p>@composi/gestures proporciona eventos normalizados y gestos para usar en tu aplicación.</p>
+          <h2>Eventos Normalizados</h2>
+          <p>@composi/core proporciona eventos normalizados para que no tenga que preocuparse por mousedown, touchstart, pointerdown, etc. Hay cuatro eventos para usar:</p>
+          <ul class="main-menu">
+            <li>eventstart: mousedown, pointerdown, touchstart</li>
+            <li>eventend: mouseup, pointerup, touchend</li>
+            <li>eventmove: mousemove, pointermove, touchmove</li>
+            <li>eventcancel: mousecancel, pointercancel, touchcancel</li>
+          </ul>
+          <p>Se usan así cómo se usan los eventos de DOM con una escucha de eventos:</p>
+<pre><code class="language-javascript">const btn = document.querySelector('button')
+btn.addEventListener(eventstart, () => { alert('¡El evento comenzó!') })
+</code></pre>
+          <p>Aunque estos te permiten usar un evento para escritorio y dispositivos táctiles, casi siempre es mejor usar gestos. Esto es especialmente válido para <code>tap</code>, ya que responde tanto a un clic como a un toque de dedo o lápiz. Esto representa mejor lo que los usuarios están acostumbrados a hacer.</p>
+          <h2>Gestos</h2>
+          <p>En los dispositivos móviles, los usuarios esperan poder tocar y deslizar el dedo. @composi/gestures proporciona toques y deslizamientos que funcionan tanto en dispositivos móviles como en el escritorio, lo que garantiza una experiencia de usuario consistente en todas las plataformas. Con @composi/gestures no tienes que tener eventos separados para equipos de escritorio y móviles. @composi/core proporciona los siguientes gestos:</p>
+          <ul class="main-menu">
+            <li>tap: un toque o golpecito</li>
+            <li>dbltap: dos toques en sucesión rápida</li>
+            <li>longtap: tocar y mantener las presión</li>
+            <li>swipe: deslizar el dedo en la pantalla</li>
+            <li>swipeleft: deslizar a la izquierda</li>
+            <li>swiperight: deslizar a la derecha</li>
+            <li>swipeup: deslizar para arriba</li>
+            <li>swipedown: deslizar para abajo</li>
+          </ul>
+          <p>Hay dos formas de usar gestos, como eventos en línea o como escuchas de eventos.</p>
+          <h2>Gestos en Línea</h2>
+          <p></p>
+          <pre><code class="language-javascript">import { gestures } from '@composi/gestures'
+// Inicializar los gestos:
+gestures()
+
+// Definir evento de callback:
+function announciarPulsar() {
+  alert('¡Pulsaste el botón!')
+}
+
+function announciarDeslizamiento() {
+  alert('¡Deslizaste sobre el botón!')
+}
+
+// Definir eventos en línea:
+function PulsarBotón(props) {
+  return (
+    &lt;button ontap={() => announciarPulsar()}>Pulsar&lt;/button>
+  )
+},
+
+function DeslizarBotón(props) {
+  return (
+    &lt;button onswipe={() => announciarDeslizamiento()}>Deslizar&lt;/button>
+  )
+}</code></pre>
+
+          <p> </p> 
+          <h2>Gestos con Escuchas de Eventos</h2>
+          <p>También puedes utilizar gestos con escuchas de eventos. Los usas tal como lo harías con cualquier otro evento DOM estándar:</p>
+          <pre><code class="language-javascript">import { gestures } from '@composi/gestures'
+// Inicializar los gestos:
+gestures()
+
+const pulsarBtn = document.querySelector('#pulsarBtn')
+pulsarBtn.addEventListener('tap', function() {
+  alert('¡Pulsaste el botón!')
+})</code></pre>
+
+              <p> </p> 
+              <h2>En Cuanto a Swipe</h2>
+              <p>Además de <code>swipeleft</code>, <code>swiperight</code>, <code>swipeup</code> y <code>swipedown</code> también hay un gesto genérico para deslizar. Cuando se utiliza el evento genérico swipe, éste recibe un valor que indica en qué dirección fue el deslizamiento. Puede utilizar este dato para determinar cómo manejar el deslizamiento. Según la dirección en la cuál el usuario deslizó, el valor será "left" (izquierda), "right" (derecha), "up" (arriba) or "down (abajo)". Observa en el siguiente ejemplo cómo anunciamos la dirección de deslizamiento a través del atributo <code>data</code> del evento:</p>
+              <pre><code class="language-javascript">import { gestures } from '@composi/gestures'
+// Inicializar los gestos:
+gestures()
+
+function ProbarDeslizamiento() {
+  function anunciarDeslizamiento(e) {
+    // La direción del deslizamiento se pasa con el evento
+    // como el valor del la propiedad `data`.
+    // Usamos switch para ver cuál es el valor y
+    // entonces traducirlo al español:
+    let dirección
+    switch(e.data) {
+      case 'left':
+        dirección = 'a la izquierda' 
+        break
+      case 'right'
+        dirección = 'a la derecha'
+        break
+      case 'up'
+        dirección = 'para arriba'
+        break
+      case 'down'
+        dirección = 'para abajo'
+        break
+    }
+    alert(`La dirección de deslizamiento fue: ${e.data}.`)
+  }
+  return (
+    <div onswipe={e => anunciarDeslizamiento(e)}>Swipe on me!</div>
+  )
+}</code></pre>
+              <p>Al capturar y verificar los datos del evento, puedes hacer que un solo evento de deslizamiento maneje diferentes direcciones. Podrías hacer eso con un interruptor. Proporciónalo un gesto de swipe, y cuando el dato del evento sea 'a la izquierda', actívalo, de lo contrario, desactívalo.</p>
+
+              <h2>Deslizar sin Seleccionar Texto</h2>
+              <p>Si registras un deslizamiento en un elemento y éste o sus hijos tienen texto, cuando el usuario intente deslizar sobre él, resultará en una selección de texto. Puedes evitar este problema usando la función `disableTextSelection` de @composi/gestures. Lo importas y luego le pasas el elemento para deshabilitar la selección de texto. A continuación mostramos cómo hacer esto. Deshabilitamos la selección de texto en el botón cuando el gancho del ciclo de vida `onmount` se ejecuta:</p>
+              <pre><code class="language-javascript">import { h, render } from '@composi/core'
+import { gestures, disableTextSelection } from '@composi/gestures'
+// Inicializar gestos:
+gestures()
+
+function Botón({state}) {
+  gestionarDeslizamiento(e) {
+    // Gestionar el deslizamiento aquí...
+  }
+  prevenirSelección(e) {
+    // Deshabilitar la selección del texto del botón:
+    disableTextSelection(e.target)
+  }
+  return (
+    <button onmount={prevenirSelección} onswipe={e => gestionarDeslizamiento(e)}>Deslizar</button>
+  )
+}</code></pre>
+              <p>Si quieres desactivar la selección de texto en cualquier elemento, es decir, todas las etiquetas de botón o todos los elementos de una clase, puedes usar el selector seguido de un segundo valor veraz:</p>
+
+              <pre><code class="language-javascript">disableTextSelection('button', true)
+// o (cualquier cadena de texto será veraz)
+disableTextSelection('.deslizable', 'todos')</code></pre>
+
+              <p> </p>
+              <h2>Rehabilitar la Selección de Texto</h2>
+              <p>Si deseas volver a habilitar la selección de texto en un elemento que has deshabilitado, puedes importar y usar la función `enableTextSelection`. Impórtalo y úsalo en el elemento para habilitarlo:</p>
+              <pre><code class="language-javascript">import { gestures, disableTextSelection, enableTextSelection } from '@composi/gestures'
+enableTextSelection('#user-list')</code></pre>
+              <p>Para volver a habilitar muchos elementos del mismo tipo, lo usas de la misma manera que `disableTextSelection`, pasando un selector de etiqueta o clase, seguido de un segundo valor veraz:</p>
+              <pre><code class="language-javascript">enableTextSelection('button', true)
+// o (cualquier cadena de texto será veraz)
+enableTextSelection('.deslizable', 'si')</code></pre>
+              <p> </p>
+              <p>&nbsp;</p>
+      </div>
+    </section> 
+  </article>
+  <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a>         y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+  <script src="/js/prism.js"></script>
+  
+  
+</body>
+</html>

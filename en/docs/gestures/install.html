@@ -30,31 +30,40 @@
         <span class='logo__link--text'>Composi</span></a>
       </li>
       <li class='nav-menu__item selected'>
-        <a class='nav-menu__item__link' href="/es/docs/index.html">Docs</a>
+        <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
       </li>
     </ul>
   </nav>
   <article class='article'>
     <section>
       <div class='docs'>
-        <h3>@composi/router:</h3>
+        <h3>@composi/gestures:</h3>
         <ul class='breadcrumb'>
-          <li class='selected'>Instalación</li>
-          <li><a href="/es/docs/router/router.html">Usage</a></li>
+          <li class='selected'>Install</li>
+          <li><a href="/en/docs/gestures/usage.html">Usage</a></li>
         </ul>
-          <h1>Instalación</h1>
-          <h3>No Hay que Instalar</h3>
-          <p>Si has creado un proyecto utilizando <code>create-composi-app</code>, no tienes que instalar @composi/idb. Ya está instalado en el nuevo proyecto y listo para importar en tu código. Lee la <a target="_blank" href="/es/docs/create-composi-app/usage.html">documentación de create-composi-app</a> para aprender cómo ponerte productivo rápidamente.</p>
+          <h1>Install</h1>
+          <h3>No Install</h3>
+          <p>If you've created a project using <code>create-composi-app</code>, you do not have to install @composi/gestures. It is already installed in the new project and ready to import into your code. Read
+            the <a target="_blank" href="/en/docs/create-composi-app/usage.html">documentation for create-composi-app</a> to
+            learn how to get up and running fast.</p>
 
-          <p>Para usar @composi/router, primero tienes que importarlo al proyecto:</p>
-          <pre><code class='language-javascript'>import { Router } from @composi/router</code></pre>
+          <p>To use @composi/gestures, you'll need to import it into your project:</p>
+          <pre><code class='language-javascript'>import { gestures } from @composi/gestures
+// Initialize the gestures:
+gestures()</code></pre>
           
-          <p>Una vez que está importado, lo puedes usar.  @composi/router into your project you are ready to start using it. Lee la documentación de <a href="/es/docs/router/router.html">Uso</a>.</p>
+          <p>Once you've imported @composi/gestures into your project you are ready to start using it. Read the docs for <a href="/en/docs/styler/usage.html">Usage</a>.</p>
 
-          <p>Si quieres usar @composi/router con una librería aparte de @composi/core, vas a tener que instalarlo en tu proyecto:</p>
+          <p>If you want to use @composi/gestures with a library/framework other than @composi/core, you need to install it from NPM and then import it into your project:</p>
 
-<pre><code class='language-bash'>npm i -D @composi/router</code></pre>
-
+<pre><code class='language-bash'>npm i -D @composi/gestures</code></pre>
+<p>Then you need to import @composi/gestures into your project:</p>
+<pre><code class='language-javascript'>import { gestures } from @composi/gestures
+// After importing, you need to
+// initialize the gestures before using:
+gestures()
+</code></pre>
 
               <p>&nbsp;</p>
       </div>
@@ -70,7 +79,7 @@
             </g>
           </g>
         </svg>
-        <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a>         y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+        <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a> and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
       </section>
     </footer>
   <script src="/js/prism.js"></script>
