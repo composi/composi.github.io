@@ -76,44 +76,6 @@
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
         
           <p> </p>
-          <h2>mapEffects</h2>
-          <p>Another useful function for effects is <code>mapEffects</code>. You would use this the same way you use tagged unions to enable views to use actions. With mapped effects you can access from one program the effect of another program. This opens up a channel of communication between a parent program and a child program.</p>
-
-          <p>To create mapped effects you first need to import it into your project.</p>
-<pre><code class="language-javascript">import { h, render, run, mapEffects } from '@composi/core'
-
-const counter = {
-  init() {
-    return [0]
-  }, // State is an integer to count
-  update(state, message) {
-    return [state + 1] // Increment the state
-  },
-  view(state, send) {
-    // add later...
-  }
-}
-// Effect we will use with counter:
-const counterMessage = message => ({
-  type: 'counterMessage',
-  data: message
-})
-
-// Capture the state and effect of counter program to be used by its parent:
-const [counterState, counterEffect] = counter.init()
-
-// Create a new init function that we will use with counter.
-// Here we map the effects:
-const init = () => [{counterState}, mapEffect(counterEffect, counterMessage)]
-</code></pre>
-
-              
-          <p>In the following Codepen example, the child program is being rendered by the parent program. But the child has its own local state. To enable the parent to know that state and use it to render the child, we use a mapped effect. The mapped effect allows the parent to know what the child's state is. It has access to the state to print it out in its own scope, but the state is owned by the child.</p>
-
-          <p data-height="500" data-theme-id="6688" data-slug-hash="yQBRwX" data-default-tab="js,result" data-user="rbiggs"
-            data-pen-title="@composi/core + runtime Composition2a" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/yQBRwX/">@composi/core
-              + runtime Composition2a</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
-          <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
           
               <p>&nbsp;</p>
       </div>

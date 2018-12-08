@@ -74,45 +74,6 @@
           <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
         
           <p> </p>
-          <h2>mapEffects</h2>
-          <p>Otra función útil para los efectos es <code>mapEffects</code>. Usarías esto de la misma manera que usa uniones etiquetadas para permitir que el view use acciones del update. Con los efectos mapeados puede acceder al efecto de un programa desde otro. Esto abre un canal de comunicación entre un programa principal y un programa secundario.</p>
-
-
-          <p>Para crear los efectos mapeados primero hay que importar <code>mapEffects</code> al proyecto.</p>
-<pre><code class="language-javascript">import { h, render, run, mapEffects } from '@composi/core'
-
-const contador = {
-  init() {
-    return [0]
-  }, // El estado es un número para contar:
-  update(state, mensaje, ) {
-    return [state + 1] // Aumentar el estado
-  },
-  view(state, send) {
-    // y después...
-  }
-}
-// El efecto que usaremos con el contador:
-const mensajeContador = mensaje => ({
-  tipo: 'mensajeContador',
-  datos: mensaje
-})
-
-// Conseguir el estado y efecto del programa contador que se va exponer a su padre:
-const [counterState, counterEffect] = contador.init()
-
-// Crear un nuevo función init que usaremos con el contador.
-// Aquí vamos a mapear los efectos:
-const init = () => [{counterState}, mapEffect(counterEffect, mensajeContador)]
-</code></pre>
-
-              
-          <p>In the following Codepen example, the child program is being rendered by the parent program. But the child has its own local state. To enable the parent to know that state and use it to render the child, we use a mapped effect. The mapped effect allows the parent to know what the child's state is. It has access to the state to print it out in its own scope, but the state is owned by the child.</p>
-
-          <p>En el siguiente ejemplo de Codepen, el programa padre renderiza el programa hijo. A pesar de eso,  el hijo tiene su propio estado local. Para permitir que el padre conozca ese estado y que lo use para representar al hijo, usamos un efecto mapeado. El efecto mapeado permite al padre saber cuál es el estado del hijo. Así ése iene acceso al estado para imprimirlo en su propio ámbito, pero el estado es propiedad del hijo.</p>
-
-          <p data-height="500" data-theme-id="6688" data-slug-hash="Pxzjrd" data-default-tab="js,result" data-user="rbiggs" data-pen-title="@composi/core + runtime Composition2a es" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/Pxzjrd/">@composi/core + runtime Composition2a es</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
           
               <p>&nbsp;</p>
       </div>
