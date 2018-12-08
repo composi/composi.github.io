@@ -131,7 +131,7 @@ const program3 = {
           <p>The previous clicker example is overly simplistic, but it does show the basic setup for a runtime Composi program: init, view and update. You can learn more about from their dedicated docs from the menu at the top for init, update, view, etc..</p>
 
           <h2>Part of Core</h2>
-          <p>The runtime is part of @composi/core, so importing and using it does not add anything to the final payload of your project's JavaScript. @composi/core is 2KB gzipped.</p>
+          <p>The runtime is part of @composi/core, so importing and using it does not add anything to the final payload of your project's JavaScript. @composi/core is 3KB gzipped.</p>
 
           <p>When we say the runtime is small, we mean it. Here's all the code for the runtime minified and completely functional:</p>
 <pre><code class="language-javascript">function run(a){function b(k){j&&c(d(h,k))}function c(k){let l,m=a.init();k?[h,i]=k:m&&m.length?([h,i]=m,f&&(l=f(),l(b))):h=[],i&&i(b),e(h,b)}const d=a.update,e=a.view,f=a.subscriptions,g=a.done;let h,i,j=!0;return a.send=b,c(h),()=>{j&&(j=!1,g&&g(h))}}</code></pre>
