@@ -54,7 +54,7 @@
           <h1>Inmutabilidad</h1>
           <h2>El Estado de un Program es Mutable</h2>
 
-          <p>Por defecto, el estado de un programa es mutable cuando tienes acceso a él, tanto dentro de los métodos de update y view. Esperemos que nadie modifique el estado con código que renderiza la vista. Por otro lado, la función update es cómo modificas el estado de un programa. Para ejemplos simples, esto probablemente no será un problema. Sin embargo, si tu aplicación y tus datos son complejos, es probable que desees evitar modificar directamente el estado con una acción. En su lugar, puedes clonar ese estado dentro de la acción, y entonces modificar el clon y luego devolverlo. Puede usar @composi/merge-objects para clonar objetos o matrices. Este crea un clon profundo. Necesitarás importarlo en el proyecto y luego usarlo en una acción de update.</p>
+          <p>Por defecto, el estado de un programa es mutable cuando tienes acceso a él, tanto dentro de los métodos de update y view. Esperemos que nadie modifique el estado con código que renderiza la vista. Por otro lado, la función update es cómo modificas el estado de un programa. Para ejemplos simples, esto probablemente no será un problema. Sin embargo, si tu aplicación y tus datos son complejos, es probable que desees evitar modificar directamente el estado con una acción. En su lugar, puedes clonar ese estado dentro de la función <code>update</code> y modificarlo en las acciones,devloviéndolo para actualizar el estado del programa. Puede usar @composi/merge-objects para clonar objetos o matrices. Cuando creas un nuevo proyecto, śte ya está instalado. Tan solo tienes que importarlo en el proyecto y luego usarlo en una acción de update.</p>
 
 <pre><code class="language-javascript">import { h, render, run, union } from '@composi/core'
 import { mergeObjects } from '@composi/merge-objects'
@@ -63,19 +63,17 @@ const Msj = union(['añadirÍtem', 'eliminarÍtem'])
 // Usamos mergeObjects en las acciones.
 // También estamos usando una unión etiquetada.
 function acciones(estado, msj) {
+  // Clonar el estado:
+  const estadoPrevio = mergeObjects(estado)
   return Msj.match(msj, {
     // Chequear la etiqueta del mensaje:
     'añadirÍtem': value => {
-      // Clonar el estado:
-      const estadoPrevio = mergeObjects(estado)
       estadoPrevio.fruits.push({ key: estadoPrevio.newKey++, value })
       // Renderizar la vista y actualizar el estado del programa:
       return [estadoPrevio]
     },
     // Chequear la etiqueta del mensaje:
     'eliminarÍtem': key => {
-      // Clonar el estado:
-      const estadoPrevio = mergeObjects(estado)
       estadoPrevio.fruits = estadoPrevio.fruits.filter(item => item.key != key)
       // Renderizar la vista y actualizar el estado del programa:
       return [estadoPrevio]
