@@ -53,7 +53,8 @@
         </ul>
           <h1>Suscripciones</h1>
           <h2>Efectos al Iniciarse</h2>
-          <p>Cuando cubrimos <code>init</code>, se explicó cómo se podía ejecutar un efecto al iniciar un programa tan solo por pasarlo como un segundo valor en la tupla que devuelve <code>init</code>. En general, los efectos que se ejecutan en el inicio se conocen como suscripciones. Podemos ser más explícito sobre la implementación de una suscripción utilizando el método <code>subscriptions</code> en un programa. Esto debe devolver la efecto que ejecutar.</p>
+          <p>Cuando cubrimos <code>init</code>, se explicó cómo se podía ejecutar un efecto al iniciar un programa tan solo por pasarlo como un segundo valor en la tupla que devuelve <code>init</code>. En general, los efectos que se ejecutan en el inicio se conocen como suscripciones. Podemos ser más explícito sobre la implementación de una suscripción utilizando el método <code>subscriptions</code> en un programa. Esto debe devolver el efecto que ejecutar.</p>
+          <p>Las suscripciones sirven para detectar los movimientos del ratón, el pulsar del teclado, los cambios de la locación del navegador o para iniciar bucles.</p>
 <pre><code class="language-javascript">function empezarContar() {
   let cuenta = 0
   const id = setInterval(() => {

@@ -54,6 +54,7 @@
           <h1>Subscriptions</h1>
           <h2>Running Effects at Startup</h2>
           <p>When we covered <code>init</code> it was explained how you could execute an effect at startup by passing it as a second value in the tuple that <code>init</code> returns. Generally effects that run at startup are referred to as subscriptions. You can be more explicit about implementing a subscription by using the <code>subscriptions</code> method on a program.  This needs to return the subscription to execute.</p>
+          <p>You would use subscriptions to track mouse movements, keyboard events, scrolling, changes to browser location, or timers.</p>
 <pre><code class="language-javascript">function startCount() {
   let count = 0
   const id = setInterval(() => {
