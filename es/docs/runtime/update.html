@@ -54,7 +54,7 @@
           <h1>Update</h1>
           <h2>Lógica de Negocios del Programa</h2>
           <p>El método update es para contener toda la lógica de negocios para el programa El método escucha los mensajes, cuando recibe uno, lo chequéa para averiguar cuál es y entonces ejecuta una acción apropiada. Por definir acciones diferentes, instruyes update cómo gestionarlas.</p>
-          <p>Update recibe dos argumentos: mensaje y estado. Mensaje es cualquier mensaje enviado por una interación del usuario con la vista. El argumento segundo es el estado actual del programa. Si el programa es complejo, a lo mejore va requerir enviar varios mensajes a update. Puesto que send solo puede tratar de uno solo argumento, es conveniente combinar lo todo como un objeto literal con tipo y datos. Nota cómo hacemos eso en el escrito siguiente.</p>
+          <p>Update recibe dos argumentos: mensaje y estado. El primer argumento es el estado actual del programa. Mensaje es cualquier mensaje enviado por una interación del usuario con la vista. Si el programa es complejo, a lo mejore va requerir enviar varios mensajes a update. Puesto que send solo puede tratar de uno solo argumento, es conveniente combinar lo todo como un objeto literal con tipo y datos. Nota cómo hacemos eso en el escrito siguiente.</p>
           <pre><code class='language-javascript'>&lt;p class='formulario'>
   &lt;input autofocus onchange={consigueValorInput} type="text" />
   &lt;button class='añadir-ítem' onclick={()=> send({type: 'añadir-ítem', dato: valorDeInput})}>Añadir&lt;/button>
