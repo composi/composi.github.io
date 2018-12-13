@@ -87,18 +87,16 @@ Msg.deleteItem(132)
 
         <p>When we setup the update function, we can check that the message sent matches the values in the tagged union using the <code>match</code> method. Since we're using a tagged union, we don't need a switch statement to check for a tag type <code>msg.type</code>. This now gets handled by the <code>match</code> method. This results in a simpler signature for the actions. We can make an <code>actions</code> function that takes the message and state and retuns the result of a match:</p>
 <pre><code class="language-javascript">function actions(state, msg) {
+  // Use mergeObjects to clone state:
+  const prevState = mergeObjects(state)
   return Msg.match(msg, {
     // Check for the message tag:
     'addItem': value => {
-      // Use mergeObjects to clone state:
-      const prevState = mergeObjects(state)
       prevState.fruits.push({ key: state.newKey++, value })
       return [prevState]
     },
     // Check for the message tag:
     'deleteItem': key => {
-      // Use mergeObjects to clone state:
-      const prevState = mergeObjects(state)
       prevState.fruits = prevState.fruits.filter(item => item.key != key)
       return [prevState]
     }
