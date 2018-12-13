@@ -75,11 +75,11 @@ const program = {
   // Then return the new state.
   // That will cause the view to update.
   update(state, msg) {
+    const prevState = mergeObjects(state)
     switch (msg.type) {
       case 'add-item':
         const value = msg.inputValue
         if (value) {
-          const prevState = mergeObjects(state)
           prevState.fruits.push({ key: prevState.newKey++, value })
           return [prevState]
         } else {
@@ -88,7 +88,6 @@ const program = {
         }
         break
       case 'delete-item':
-        const prevState = mergeObjects(state)
         prevState.fruits = prevState.fruits.filter(item => item.key != msg.key)
         return [prevState]
         break

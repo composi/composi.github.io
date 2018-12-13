@@ -76,11 +76,11 @@ const programa = {
   // Después se devuelve el nuevo estado.
   // Eso causará que la vista se actualice.
   update(estado, mensaje) {
+    const estadoPrevio = mergeObjects(estado)
     switch (mensaje.type) {
       case 'añadir-ítem':
         const valor = mensaje.valorDeInput
         if (valor) {
-          const estadoPrevio = mergeObjects(estado)
           estadoPrevio.frutas.push({ clave: estadoPrevio.newKey++, valor })
           return [estadoPrevio]
         } else {
@@ -89,7 +89,6 @@ const programa = {
         }
         break
       case 'eliminar-ítem':
-        const estadoPrevio = mergeObjects(estado)
         estadoPrevio.frutas = estadoPrevio.frutas.filter(item => item.clave != mensaje.clave)
         return [estadoPrevio]
         break
