@@ -63,7 +63,7 @@
 
           <p>If the above illustration is a little to technical for you, then here's a another one that shows how an runtime program works. As a user, you interact with the view by sending messages. These are intercepted by the update method, which then manipulates the state, causing the view to change.</p>
 
-          <div style='text-align: center;'><img style='height: auto; width: 100%;' src="/images/SVU2.jpg" alt="SVU Diagram"></div>
+          <div style='text-align: center;'><img style='height: auto; width: 1000px;' src="/images/SVU2.jpg" alt="SVU Diagram"></div>
 
           <p>Every @composi/core runtime program implements this SVU pattern. It does so with three methods: init, update and view. Init is where you define the default state for the program. At startup the runtime takes the value returned by init and uses it to render the view. The following example shows the core parts of a runtime program.</p>
 <pre><code class='language-javascript'>const program = {
