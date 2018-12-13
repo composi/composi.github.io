@@ -90,18 +90,16 @@ Msj.eliminarÍtem(132)
         <p>Ahora, cuando configuramos la función update, verificamos que el mensaje enviado coincida con los valores de la unión etiquetada. Lo hacemos utilizando el método <code>match</code> en la unión etiquetada. Date cuenta que no tenmos que chequar el tipo de la etiqueta: <code>msg.tipo</code>, solo el valor directo de la etiqueta. Además, no necesitamos acceder a los datos del mensaje con <code>msg.datos</code>. En su lugar, está directamente disponible para el callback de acción como su argumento. Ya que estamos usando el método match de la unión etiquetada, no necesitamos una sentencia de <code>switch</code>(switch, case, break). Esto resulta en código más sencillo para las acciones:</p>
 
 <pre><code class="language-javascript">function actions(estado, msg) {
+  // Usar mergeObjects para clonar el estado:
+  const estadoPrevio = mergeObjects(estado)
   return Msj.match(msg, {
     // Chequear la etiqueta del mensaje:
     'añadirÍtem': value => {
-      // Usar mergeObjects para clonar el estado:
-      const estadoPrevio = mergeObjects(estado)
       estadoPrevio.frutas.push({ clave: estado.newKey++, value })
       return [estadoPrevio]
     },
     // Chequear la etiqueta del mensaje:
     'eliminarÍtem': clave => {
-      // Usar mergeObjects para clonar el estado:
-      const estadoPrevio = mergeObjects(estado)
       estadoPrevio.frutas = estadoPrevio.frutas.filter(ítem => ítem.clave != clave)
       return [estadoPrevio]
     }
@@ -110,16 +108,15 @@ Msj.eliminarÍtem(132)
 
 // Sin la unión etiquetada:
 function actions(estado, msg) {
+  // Usar mergeObjects para clonar el estado:
+  const estadoPrevio = mergeObjects(estado)
   switch (msg.tipo) {
     case 'añadir-ítem':
-      // Usar mergeObjects para clonar el estado:
-      const estadoPrevio = mergeObjects(estado)
+      
       estadoPrevio.frutas.push({ clave: estadoPrevio.newKey++, msg.valorDeInput })
       return [estadoPrevio]
       break
     case 'eliminar-ítem': 
-      // Usar mergeObjects para clonar el estado:
-      const estadoPrevio = mergeObjects(estado)
       estadoPrevio.frutas = estadoPrevio.frutas.filter(ítem => ítem.clave != msg.clave)
       return [estadoPrevio]
       break

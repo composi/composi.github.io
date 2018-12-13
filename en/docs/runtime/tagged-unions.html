@@ -106,16 +106,14 @@ Msg.deleteItem(132)
 }
 // As opposed to:
 function actions(state, msg) {
+  // Use mergeObjects to clone state:
+  const prevState = mergeObjects(state)
   switch (msg.type) {
     case 'add-item':
-      // Use mergeObjects to clone state:
-      const prevState = mergeObjects(state)
       prevState.fruits.push({ key: prevState.newKey++, msg.inputValue })
       return [prevState]
       break
     case 'delete-item': 
-      // Use mergeObjects to clone state:
-      const prevState = mergeObjects(state)
       prevState.fruits = prevState.fruits.filter(item => item.key != msg.key)
       return [prevState]
       break
@@ -126,18 +124,16 @@ function actions(state, msg) {
         <h3>Default or CatchAll</h3>
         <p>In the previous actions example we were checking each possible tag and providing a function to execute. In a switch statement we can use <code>default</code> to use when there is no match. We can also do that with a tagged union. Just provide a function as the last argument after the handlers object:</p>
 <pre><code class="language-javascript">function actions(msg, state) {
+  // Use mergeObjects to clone state:
+  const prevState = mergeObjects(state)
   return Msg.match(msg, {
     // Check for the message tag:
     'addItem': value => {
-      // Use mergeObjects to clone state:
-      const prevState = mergeObjects(state)
       prevState.fruits.push({ key: state.newKey++, value })
       return [prevState]
     },
     // Check for the message tag:
     'deleteItem': key => {
-      // Use mergeObjects to clone state:
-      const prevState = mergeObjects(state)
       prevState.fruits = prevState.fruits.filter(item => item.key != key)
       return [prevState]
     }
