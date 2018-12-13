@@ -83,7 +83,28 @@ const program = {
           <p>There is no magic here. Subscriptions does what the label says. Using subscriptions to run effects at start is more explicit. But you can use whatever approach, init or subscriptions, to run effects at startup.</p>
 
           <p>Like any other effects, you can use <code>batchEffects</code> to run multiple effects at the same time. See the documentation for <a href="/en/docs/runtime/effects.html">effects</a> to see how to do this.</p>
+          <h3>Shortcut</h3>
+          <p>Instead of using <code>subscriptions</code> you can use the shorter form <code>subs</code>:</p>
 
+<pre><code class="language-javascript">
+const program = {
+  init() {
+    return [state]
+  },
+  view(state, send) {
+    return render(<h1>The count is: {state}.</h1>, document.body)
+  },
+  update(state, msg) {
+    if (msg) {
+      // Set program state to value of message:
+      return [msg]
+    }
+  },
+  // Use short form for subscriptions:
+  subs() {
+    return startCount
+  }
+}</code></pre>
           
 
               <p>&nbsp;</p>

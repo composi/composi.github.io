@@ -80,6 +80,14 @@
                 + runtime Composition4a</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
             <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
+            <p> </p>
+            <h2>Strategies for Composition</h2>
+            <p>When planning to use program composition, there are a couple of things to be aware of. The first is that the child component should not render its view. It should just return it.</p>
+            <p>Handling state between a child and parent takes some planing. In our previous examples the parent is using the state of the child. But if the parent has its own state, then the child's state will need to be added to the parent's state as a property. And when the child component is rendered in the parent, the parent will need to pass the part of its state that corresponds to what the child expects.</p>
+            <p>Handling effects is fairly straightforward. The parent needs to hijack the child's update method. Doing so, it can allow the child to send a message that gets captured by the parent, or it can hijack the child's update function so that it can send a message to the child.</p>
+            <p>In general it makes sense to use functional components for most composition requirements. However, there will be situations where a child needs to have its own state. In that case, make it a separate runtime program and use the technique discussed here.</p>
+
+
               <p>&nbsp;</p>
       </div>
     </section> 
