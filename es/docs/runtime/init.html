@@ -89,6 +89,8 @@
 
         <h2>Ejecutar Efecto al Iniciarse</h2>
 
+        <p>Por proporcionar un efecto como el segundo valor en la matriz que devuelta por init, puedes ejecutar en efector al iniciar el program. Si prefieres, puedes en vez usar el método <code>subscriptions</code> del programa para lo mismo. Lee la documentación de <a href="/en/docs/runtime/subscriptions.html" target='__blank'>Subscriptions</a> para detalles de cómo usar los.</p>
+
         <p>Aquí es un escrito que muestra cómo usar un efecto en el método <code>init</code>, mientras también devuele estado:</p>
 <pre><code class="language-javascript">// Contado para la vista:
 function Contador({estado, send}) {
