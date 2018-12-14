@@ -112,7 +112,7 @@ function Lista({estado}) {
           <p>Como puedes ver, al usar la función <code>h</code> para crear los nodos virtuales en vez de JSX resulta en código más complejo y difícil de leer.</p>
           
           <h2>Enviar Mensajes</h2>
-          <p>Las vistas pueden ser comlpetamente estáticas, como para un boletín de noticias o un blog. Pero frecuentamente muchas vistas van a requerir interacciones con el usuario. El entorno de ejecución de @composi/core proporciona la función send para que las vistas envíen mensajes y datos a la función update.</p>
+          <p>Las vistas pueden ser comlpetamente estáticas, como para un boletín de noticias o un blog. Pero frecuentamente muchas vistas van a requerir interacciones con el usuario. El entorno de ejecución de @composi/core proporciona la función send para que las vistas envíen mensajes y datos a la función update del programa.</p>
           <p>Un mensaje puede ser de cualquier tipo : null, undefined, number, string, array u object. Sin embargo, en la mayoría de casos un mensage tendra que ser un objeto para que haya una interfaz consistente para que la función update pruebe el tipo de mensaje que recibe. Usar un objeto también permite que se pasan unos datos con el mensaje.</p>
           <p>Cuando se define la view del programa, se le pasan dos argumentos, el estado y la función sned. En el ejemplo próximo fíjate cómo el componente de lista tiene evento de clic que envía un objeto como mensaje con tipo y unos datos. Esto hace posible use una sentencia <code>switch</code> en la función update para averiguar cuál tipo de mensaje se recibió.</p>
 

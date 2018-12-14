@@ -110,7 +110,7 @@ function List({state}) {
           <p>As you can see, using the <code>h</code> function to create the virtual nodes instead of using JSX produces a more verbose and difficult to read result.</p>
           
           <h2>Sending Messages</h2>
-          <p>Views can be completely static, such as a newsletter or blog. However many views will be designed for user interaction. The @composi/core runtime provides a <code>send</code> function for views to send messages and data to the update function.</p>
+          <p>Views can be completely static, such as a newsletter or blog. However many views will be designed for user interaction. The @composi/core runtime provides a <code>send</code> function for views to send messages and data to the program's update function.</p>
           <p>A message can be any type: null, undefined, number, string, array or object. However, in most cases a message will need to be an object so you can have a consistent interface for the update function to test what type of message was sent. An object also allows you to pass along some data with the message.</p>
 
           <p>When you define a program's view, you pass in two arguments, the state and the send function. In the following example, notice how in the List component we have click events that send a message object with a type and some data. This enables us to use a switch in the update function to check what type of message was sent.</p>
