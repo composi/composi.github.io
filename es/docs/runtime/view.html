@@ -57,7 +57,7 @@
 
           <p>La función de view toma dos argumentos: estado y send. Ya deberías estar familiarizado con el estado. Send es una función que permite a la vista enviar mensajes a la función update. Enviar es una función unaria. Es decir, solo acepta un argumento. Por lo tanto, para ayudar la función update distinguir entre los mensajes lo pasamos un objeto con propipiedad de tipo. Si también necesitamos pasar algunos datos, puedemos incluirlos en el objeto del mensaje.</p>
 
-          <p>En general, recomendamos utilizar JSX para definir la vista que se va a crear, pero en su lugar podría usar la función <code>h</code>. Aquí está la misma vista creada con JSX y <code>h</code>:</p>
+          <p>En general, recomendamos utilizar JSX para definir la vista que se va a crear, pero en su lugar podría usar la función <code>h</code>. Aquí está la misma vista creada con JSX y después con <code>h</code>:</p>
 <pre><code class="language-javascript">
 function Lista({estado}) {
   return (

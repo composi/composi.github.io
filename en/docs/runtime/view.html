@@ -55,7 +55,7 @@
           <h2>Representation of State</h2>
           <p>The view is a function that deals with how to present the data from the state. It doesn't dictate how that view will be produced. You can do that with @composi/core's render function, or any other rendered. You could use it to return a string of HTML for server-side rendering or even return native code for native app development. Here we're dealing with front end development so we'll use @composi/core's render function to output our program to the DOM.</p>
           <p>The view function takes two arguments: state and send. You should already be familiar with state. Send is a function that enables the view to send messages to the update function. Send is a unary function. It can only handle one argument. Therefore to help update distinguish one message from another, we pass and object with a type. If you need to also pass along some data, you can add that to the message object as well.</p>
-          <p>In general we recommend using JSX to define the view to be created, but you could use the <code>h</code> function instead. Here's the same view created with JSX and <code>h</code>:</p>
+          <p>In general we recommend using JSX to define the view to be created, but you could use the <code>h</code> function instead. Here's the same view created with JSX and then <code>h</code>:</p>
 <pre><code class="language-javascript">
 function List({state}) {
   return (
