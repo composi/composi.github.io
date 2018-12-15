@@ -76,12 +76,12 @@ const programa = {
       return [mensaje]
     }
   },
-  subsciptions() {
+  subsciptions(state, send) {
     return empezarContar
   }
 }</code></pre>
           <p>No hay nada de magia aquí. Las suscripciones hacen lo que dice la etiqueta. Usar suscripciones para ejecutar efectos al inicio
-          es más explícito. Pero puedes usar cualquier método, init o subscriptions, para ejecutar efectos al inicio.</p>
+          es más explícito. Pero puedes usar cualquier método, init o subscriptions, para ejecutar efectos al inicio. Subscriptions reciben el state y la function <conde>send</conde>. Esto quuiere decir que puedes acceder al estado del program or enviar un mensage a la function <code>update</code> desde una suscripción..</p>
 
           <p>Al igual que con cualquier otro efecto, puede usar <code>batchEffects</code> para ejecutar múltiples efectos al mismo tiempo. Consulte la documentación de <a href="/es/docs/runtime/effects.html">efectos</a> para ver cómo hacer esto.</p>
           <h3>Abreviatura Para Suscriptions</h3>
