@@ -61,7 +61,7 @@
 
           <div style='text-align: center;'><img src="/images/SVU.png" alt="SVU Diagram"></div>
 
-          <p>If the above illustration is a little to technical for you, then here's a another one that shows how an runtime program works. As a user, you interact with the view by sending messages. These are intercepted by the update method, which then manipulates the state, causing the view to change.</p>
+          <p>If the above illustration is a little too technical for you, then here's a another one that shows how an runtime program works. As a user, you interact with the view by sending messages. These are intercepted by the update method, which then manipulates the state, causing the view to change.</p>
 
           <div style='text-align: center;'><img style='height: auto; width: 1000px;' src="/images/SVU2.jpg" alt="SVU Diagram"></div>
 
@@ -127,8 +127,8 @@ const program3 = {
 
           <p> </p>
           <h3>An Object is an Object</h3>
-          <p>In the above example you will notice that we have created an object <code>program</code> that we pass to the <code>run</code> function. This has some parallels to a class component. A class instance is an object returned by a class. The difference is in how these two are used. With class components its common to add new properties to the class to handled new functionality. In contrast, a @composi/core runtime program only has the three main methods: init, update and view.</p>
-          <p>The previous clicker example is overly simplistic, but it does show the basic setup for a runtime Composi program: init, view and update. You can learn more about from their dedicated docs from the menu at the top for init, update, view, etc..</p>
+          <p>In the above example you will notice that we have created an object <code>program</code> that we pass to the <code>run</code> function. This has some parallels to a class component. A class instance is an object returned by a class. The difference is in how these two are used. With class components its common to add new properties to the class to handled new functionality. In contrast, a @composi/core runtime program only has the three main methods: init, update and view. Any new funtionality that the program needs would be handled by actions in the update method. This forces a ver clean separation of concerns: init handles initial state for the program, view presents the program's state, and update handles the program's effects.</p>
+          <p>The previous clicker example is overly simplistic, but it does show the basic setup for a runtime Composi program: init, view and update. You can learn more about them from their dedicated docs from the menu at the top.</p>
 
           <h2>Part of Core</h2>
           <p>The runtime is part of @composi/core, so importing and using it does not add anything to the final payload of your project's JavaScript. @composi/core is 3KB gzipped.</p>
