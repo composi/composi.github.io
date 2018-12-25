@@ -53,8 +53,16 @@
           <h1>Composition</h1>
           <h2>One Program in Another</h2>
           <p>As a program becomes more complex, so will its view. This may require breaking it down into smaller pieces, even storing those in separate files so they can be reused. The nature of functional components makes it easy to compose them together, passing props from parent to child. You can learn more about functional component composition in the section about the @composi/core <a target='__blank' href="/en/docs/core/render.html">render</a> function.</p>
+
+          <p>Sometimes composition with function components is not enough. May find that you want children with their own state management. This means they need to be separate programs that you can use instide a parent program. There are several ways in which you can do this:</p>
+
+          <ul class='main-menu'>
+            <li>The parent's init may contain the child's init.</li>
+            <li>The parent's update may call the child's update with messages for the child and the child's state.</li>
+            <li>The parent's view may call the child's view with the child's state and send function.</li>
+          </ul>
           
-          <p>You may also want to use a small, separate runtime app inside another one. This is possible, though a bit verbose. The main thing to be aware of when doing this is that the @composi/core render function can only process markup. That means that the child program's view cannot render the component, it has to just return its markup. That way the parent component's view will handle rendering the child's view. Notice how we do this in the following example:</p>
+          <p>When composing programs, the child program's view cannot render the component, it has to just return its markup. That way the parent component's view will handle rendering the child's view. Notice how we do this in the following example:</p>
 
           <p data-height="600" data-theme-id="6688" data-slug-hash="qQWJPY" data-default-tab="js,result" data-user="rbiggs"
             data-pen-title="@composi/core + runtime Composition1a" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/qQWJPY/">@composi/core
