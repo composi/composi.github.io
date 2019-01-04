@@ -48,12 +48,12 @@
 <pre><code class="language-javascript">function Title({title
 {
   return (
-    <h1>The Title: {title}</h1>
+    &lt;h1>The Title: {title}&lt;/h1>
   )
 }
 // Create a string version of the component:
-const renderedTitle = renderToString(<Title title="We are rendering on the server!" />)
-          </code></pre>
+const renderedTitle = renderToString(&lt;Title title="We are rendering on the server!" />)</code></pre>
+
           <p>After creating a string representation of the component, you can use it with whatever server-side templating solution you are using.</p>
           <p>When rendering a component on the server, you'll probably also want to have a dynamic version that loads on the clinet side. You can hydrate the server side version by providing a reference to it as the third value of the <code>render</code> function. Please <a target='__blank' href="https://composi.github.io/en/docs/core/hydrate.html">read the docs</a> for that.</p>
           <h3>Gotcha</h3>
@@ -64,7 +64,7 @@ const renderedTitle = renderToString(<Title title="We are rendering on the serve
 <pre><code class="language-javascript">
 function Title({state}) {
   return (
-    <h1>The Title: {state}</h1>
+    &lt;h1>The Title: {state}&lt;/h1>
   )
 }
 const state = 'We are rendering on the server!'
@@ -74,7 +74,7 @@ const state = 'We are rendering on the server!'
   },
   view(state, send) {
     // Return a string version of the component:
-    const renderedTitle = renderToString(<Title {...{state, send}} />)
+    const renderedTitle = renderToString(&lt;Title {...{state, send}} />)
     // Do whatever you need to do to put the page together here...
   },
   update(state, msg) {
