@@ -409,6 +409,7 @@ nav > svg {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 .main__header section {
   display: flex;
@@ -417,20 +418,54 @@ nav > svg {
   padding: 4rem 10rem;
   width: 100%;
   max-width: 150rem;
-  background-image: url(../images/Composi-Logo-Red@2x.png);
+  /* background-image: url(../images/Composi-Logo-Red@2x.png);
   background-repeat: no-repeat;
   background-size: 12rem 12rem;
-  background-position: 90% center;
+  background-position: 90% center; */
+}
+.animate {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+}
+
+@keyframes animate-in {
+  0%  {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  75% {
+    opacity: 1;
+    transform: scale(1.5) rotate(360deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(360deg);
+  }
+}
+.animate {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  animation: animate-in;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  z-index: 1;
 }
 .main__header h1 {
   font-size: 3.5rem !important;
   font-weight: 700;
+  position: relative;
+  z-index: 10;
 }
 .main__header h2 {
   font-size: 2.4rem;
   margin-bottom: 2rem;
   color: #ccc;
   font-weight: 200;
+  position: relative;
+  z-index: 10;
 }
 h2 {
   font-size: 2.4rem;
@@ -658,8 +693,8 @@ footer a:hover {
 .tutorial__article aside {
   width: 30rem;
   padding: 2rem;
-  background-color: rgba(223,0,0,0.075); 
-  background-color: rgba(223,200,200,.25); 
+  background-color: rgba(223,0,0,0.075);
+  background-color: rgba(223,200,200,.25);
   border-left: solid 1px rgba(223,200,200,.5);
 }
 .article menu,
@@ -835,7 +870,7 @@ h1.documentation-header {
   width: 100%;
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr) ) 
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr) )
 }
 .menu-grid ul {
   margin: 10px;
@@ -879,7 +914,7 @@ article > section,
   .cp_embed_wrapper {
     width: 100%;
   }
-  .article aside, 
+  .article aside,
   .tutorial__article aside {
     width: 100%;
   }
@@ -910,7 +945,7 @@ article > section,
   .main__example--section {
     padding: 4rem 2rem;
   }
-  .article aside, 
+  .article aside,
   .tutorial__article aside {
     padding: 2rem 1rem;
   }
@@ -934,7 +969,7 @@ article > section,
   .cp_embed_wrapper {
     width: 100%;
   }
-  .article aside, 
+  .article aside,
   .tutorial__article aside {
     width: 100%;
   }
@@ -956,7 +991,7 @@ article > section,
 }
 
 @media only screen and (max-width: 737px) {
-  .article aside, 
+  .article aside,
   .tutorial__article aside {
     padding: 2rem .25rem;
   }
@@ -979,10 +1014,10 @@ article > section,
     padding: 0 2rem;
   }
 }
-@media only screen and (max-width: 414px) { 
+@media only screen and (max-width: 414px) {
   article {
     padding: 2rem 2rem !important;
-  }        
+  }
   pre {
     width: 95%;
   }
@@ -995,7 +1030,7 @@ article > section,
   .main__example--section {
     padding: 3rem .5rem;
   }
-  .article aside, 
+  .article aside,
   .tutorial__article aside {
     padding: 2rem .5rem;
   }
@@ -1008,16 +1043,16 @@ article > section,
   .page *,
   .page * {
     font-size: 1.6rem;
-  }  
+  }
   .cp_embed_wrapper {
     width: 100%;
   }
 }
 
-@media only screen and (max-width: 375px) { 
+@media only screen and (max-width: 375px) {
  article.article {
     padding: 2rem 1rem !important;
-  }  
+  }
   .docs {
     width: 100%;
     min-width: 100%;

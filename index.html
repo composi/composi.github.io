@@ -1,198 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
-  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
-  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
-  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
 
-  <title>Composi</title>
-  <link rel="stylesheet" href="./css/prism.css">
-  <link rel="stylesheet" href="./css/styles.css">
-</head>
-<body>
-  <nav>
-    <ul class='nav-menu'>
-      <li class='nav-menu__item'>
-        <a class='nav-menu__item__link' href="./index.html">
-          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <title>Composi Logo</title>
-            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <g id="Composi-Logo-Solid" fill="#fff">
-                <path d="M0,-4 L95,0 L95,40 L205,40 L205,0 L300,0 L300,95 L260,94.8571663 L260,205 L300,205 L300,300 L205,300 L205,260 L95,260 L95,300 L0,300 L0,205 L40,205 L40,95 L0,94.8571663 L0,-4 Z M108,107 L108,192 L193,192 L193,107 L108,107 Z" id="Combined-Shape"></path>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+    <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+
+    <title>Composi</title>
+    <link rel="stylesheet" href="./css/prism.css">
+    <link rel="stylesheet" href="./css/styles.css">
+  </head>
+
+  <body>
+    <nav>
+      <ul class='nav-menu'>
+        <li class='nav-menu__item'>
+          <a class='nav-menu__item__link' href="./index.html">
+            <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <title>Composi Logo</title>
+              <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="Composi-Logo-Solid" fill="#fff">
+                  <path d="M0,-4 L95,0 L95,40 L205,40 L205,0 L300,0 L300,95 L260,94.8571663 L260,205 L300,205 L300,300 L205,300 L205,260 L95,260 L95,300 L0,300 L0,205 L40,205 L40,95 L0,94.8571663 L0,-4 Z M108,107 L108,192 L193,192 L193,107 L108,107 Z"
+                    id="Combined-Shape"></path>
+                </g>
               </g>
-            </g>
-          </svg>
-        <span class='logo__link--text'>Composi</span></a>
-      </li>
-      <li class='nav-menu__item'>
-        <a class='nav-menu__item__link' href="./en/docs/index.html">Docs</a>
-      </li>
-      <!--
+            </svg>
+            <span class='logo__link--text'>Composi</span></a>
+        </li>
+        <li class='nav-menu__item'>
+          <a class='nav-menu__item__link' href="./en/docs/index.html">Docs</a>
+        </li>
+        <!--
       <li class='nav-menu__item'>
         <a class='nav-menu__item__link' href="./tuts/index.html">Tutorials</a>
       </li>
       <li class='nav-menu__item'>
         <a class='nav-menu__item__link en' href="./index.html" title='English'>English</a>
       </li>-->
-    </ul>
-    <a class='version spanish' href="./index-es.html" title='Español'></a>
-  </nav>
-  <header class='main__header'>
-    <section>
-      <h1>Composi</h1>
-      <h2>Make Component-Based Interfaces</h2>
-      <p>
-        <a class="gh-btn" href="https://github.com/composi/core/" target="_blank" rel="noopener" aria-label="Star on GitHub"><span class="gh-ico"></span> Star</a>
-      </p>
-    </section> 
-  </header>
-  <article>
-    <section>
-      <div class="main__column">
-        <h2 class='main__modular'>Modular</h2>
-        <p>Create simple components and combine them into more complex ones. The virtual DOM takes care of efficiently updating the HTML when a component's props change.</p>
-        <p>@composi/core is small, barely <strong>2KB</strong>. It has three main functions: h, render and run. And three lifecycle events: onmount, onupdate and onunmount.</p>
-      </div>
-      <div class="main__column">
-        <h2 class='main__declarative'>Declarative</h2>
-        <p>Define your component markup with JSX, or Hyperscript.</p>
-        <p>Everything is just JavaScript. You can use JavaScript inside your render functions.</p>
-        <p>No need for special markup syntax or directives.</p>
-      </div>
-      <div class="main__column">
-        <h2 class='main__reusable'>Reusable</h2>
-        <p>Functional components and runtime programs encapsulate their behavior and properties, so you can reuse them even in other applications.</p>
-        <p>Render default HTML on the server and bring everything to life at load time with Composi.</p>
-      </div>
-    </section>
-    <section class='main__section__separator'>
-        <hr class='main__separator'>
-    </section>
-
-    <section>
-      <div>
-        <h2>@composi/core</h2>
-        <p>The core provides support for functional components just like React, using JSX. There is a render function for injecting content into the DOM: <code>render(&lt;Component />, document.body)</code>. You use it the same way you use the ReactDOM.render function. Unlike React, function components come with support for three lifecycle hooks. These are implemented as props so you can track any element as it mounts, updates and unmounts. No need for camel case events or special attributes like React does. Use normal HTML attributes. You can use JSX for components, but you don't have to use odd attribute names. React requires <code>className</code>, <code>onClick</code>, etc. With @composi/core you use normal HTML attributes: <code>class</code>, <code>onclick</code>, etc. If you want to use innerHTML, it is just a normal HTML attribute that accepts a string. We do expect you to be aware of the security implications of using it.</p>
-        <h2>@composi/core runtime</h2>
-
-        <p>Core also provides state management for functional components through its runtime. Inspired by the Elm architecture, the runtime is based on the pattern of SVU-State, View and Update. State can be any valid JavaScript type. View is a function that returns a representation of the state. Update is like a simplified version of Redux, but without all the boilerplate. The runtime also provides a way to deal with effects. Runtime programs support composition as well, with communication between parent and child through effects.</p>
-
-        <p>In just 2KB, @composi/core with the runtime provides the same functionality as React functional components, but with Redux-like state management. @composi/core does not need <code>shouldComponentUpdate</code>, etc. It checks props and automatically bails if they have not changed.</p>
-      </div>
-    </section>
-
-    <section class='main__section__separator'>
-      <hr class='main__separator'>
-    </section>
-    
-    <section class='main__example--section'>
-      <div class="main__example--column">
-        <h3>A Simple Functional Component</h2>
-        <p>Use <code>render</code> to inject markup into the DOM. This takes a functional component to convert to HTML and a container to inject in.</p>
-      </div>
-<p data-height="300" data-theme-id="6688" data-slug-hash="zmYzmE" data-default-tab="result" data-user="rbiggs"
-  data-pen-title="@composi/core - Hello World" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/zmYzmE/">@composi/core
-    - Hello World</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-    </section>
-
-    <section>
-      <div class="main__example--column">
-        <h3>Updating a Component</h2>
-        <p>You can update a functional component by rendering it with a new value for its props.</p>
-        <p>In this example we're updating the component every second until 100. We use the lifecycle method <code>onmount</code> to start the <code>tick</code> method.</p>
-      </div>
-      <p data-height="300" data-theme-id="6688" data-slug-hash="KGKvzW" data-default-tab="result" data-user="rbiggs"
-        data-pen-title="@composi/core - timer" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/KGKvzW/">@composi/core
-          - timer</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
-      <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-    </section>
-
-    <section>
-      <div class="main__example--column">
-        <h3>A Todo List</h3>
-        <p>Here we put together a todo list with core and runtime for state management, along with tagged unions for simpler update actions and messaging. List items and their children inherit state through props passed down from their parent. Child components communicate with their parent through messages.</p>
-        <p>Inline events handle user interactions. All todos are saved to localStorage. On reloads, the saved items are used.</p>
-        <p>Animations are implemented using onmount and onunmount lifecycle events.</p>
-      </div>
-<p data-height="600" data-theme-id="6688" data-slug-hash="oarLpB" data-default-tab="result" data-user="rbiggs"
-  data-pen-title="@composi/core - runtime Todo List" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/oarLpB/">@composi/core
-    - runtime Todo List</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-    </section>
-
-    <section>
-      <div class="main__example--column">
-        <h3>A Calculator</h3>
-        <p>Here is a simple calculator implemented with @composi/core and @composi/datastore. The parent component manages events for all the subcomponents. This component has many custom methods for handling all the Math computations, etc.</p>
-      </div>
-      <p data-height="600" data-theme-id="6688" data-slug-hash="VEYyLE" data-default-tab="result" data-user="rbiggs"
-        data-pen-title="@composi/core Mac Calculator" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/VEYyLE/">@composi/core
-          Mac Calculator</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
-      <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-    </section>
-    <section>
-      <div class="main__example--column">
-        <h3>An Image Browser with Popup</h3>
-        <p>This uses @composi/core with the runtime and a tagged union for state management. It grabs images from Flickr. You can click on an image to get a closer look. Clicking again will close it.</p>
-        <p>When you click on the "10 More" button, its sends a message to the program update function, which fetches 10 more images and returns the new state to re-render the view.</p>
-      </div>
-      <p data-height="700" data-theme-id="6688" data-slug-hash="QZeEQV" data-default-tab="result" data-user="rbiggs"
-        data-pen-title="@composi/core Image Browser with runtime & tagged unions" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/QZeEQV/">@composi/core
-          Image Browser with runtime & tagged unions</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on
-        <a href="https://codepen.io">CodePen</a>.</p>
-      <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-    </section>
-  
+      </ul>
+      <a class='version spanish' href="./index-es.html" title='Español'></a>
+    </nav>
+    <header class='main__header'>
       <section>
-      <div class="main__example--column">
-        <h3>SVG Animation</h3>
-        <p>Here we're using <a target="__blank" href="https://d3js.org">D3</a> to animate a Pythagoras tree using Composi's virtual DOM to update the SVG in real time. Move the cursor over the panel. As you do so, upto 2,000
-        rectanges will be created, animated and destroyed in real time based on the cursor position. This shows how efficient
-        Composi's virtual DOM is.</p> 
-        <p>You can use many third-party libraries and frameworks with Composi, such a Redux, Mobx, RxJS, Lodash, Bootstrap, Material Design Lite, etc.</p>
-      </div>
-<p data-height="500" data-theme-id="6688" data-slug-hash="vVEWQa" data-default-tab="result" data-user="rbiggs"
-  data-pen-title="@composi/core Pythagoras Dancing Tree" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/vVEWQa/">@composi/core
-    Pythagoras Dancing Tree</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-    </section>
-
-
-    <section>
-      <div class="main__example--column">
-        <h3>Dynamic Counters</h3>
-        <p>This is a functional component that generates keyed counters. It uses the runtime along with a tagged union for state management. This is similar to how the todo app is implemented above. Each counter occupies a keyed list item. This makes it more efficient for deleting random counters from the list.</p>
-        <p>Each counter has the events and functionality it needs to act like an independent component. In reality they are just part of a larger, all-encomposing component.</p>
-        <p>We're also using the <code>Fragment</code> tag to generate a group of sibling elements--the buttons that constitute the counter.</p>
-      </div>
-      <p data-height="600" data-theme-id="6688" data-slug-hash="PyMjob" data-default-tab="result" data-user="rbiggs"
-        data-pen-title="@composi/core --Counters with Runtime" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/PyMjob/">@composi/core
-          --Counters with Runtime</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
-      <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-    </section>
-
-  </article>
-  <footer>
-    <section>
-      <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <title>Composi Logo</title>
-        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-          <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
-            <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z" id="Combined-Shape"></path>
+        <svg class='animate' width="125px" height="125px" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g id="Composi-Logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo" fill="#80010A" fill-rule="nonzero">
+              <path d="M0,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L0,300 L0,209 L40,209 L40,94 L0,93.8571663 L0,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                id="Combined-Shape"></path>
+            </g>
           </g>
-        </g>
-      </svg>
-      <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a> and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
-    </section>
-  </footer>
+        </svg>
+        <h1>Composi</h1>
+        <h2>Make Component-Based Interfaces</h2>
+        <p>
+          <a class="gh-btn" href="https://github.com/composi/core/" target="_blank" rel="noopener" aria-label="Star on GitHub"><span
+              class="gh-ico"></span> Star</a>
+        </p>
+      </section>
+    </header>
+    <article>
+      <section>
+        <div class="main__column">
+          <h2 class='main__modular'>Modular</h2>
+          <p>Create simple components and combine them into more complex ones. The virtual DOM takes care of
+            efficiently updating the HTML when a component's props change.</p>
+          <p>@composi/core is small, barely <strong>2KB</strong>. It has three main functions: h, render and run. And
+            three lifecycle events: onmount, onupdate and onunmount.</p>
+        </div>
+        <div class="main__column">
+          <h2 class='main__declarative'>Declarative</h2>
+          <p>Define your component markup with JSX, or Hyperscript.</p>
+          <p>Everything is just JavaScript. You can use JavaScript inside your render functions.</p>
+          <p>No need for special markup syntax or directives.</p>
+        </div>
+        <div class="main__column">
+          <h2 class='main__reusable'>Reusable</h2>
+          <p>Functional components and runtime programs encapsulate their behavior and properties, so you can reuse
+            them even in other applications.</p>
+          <p>Render default HTML on the server and bring everything to life at load time with Composi.</p>
+        </div>
+      </section>
+      <section class='main__section__separator'>
+        <hr class='main__separator'>
+      </section>
 
-  <script src="./js/prism.js"></script>
-</body>
+      <section>
+        <div>
+          <h2>@composi/core</h2>
+          <p>The core provides support for functional components just like React, using JSX. There is a render function
+            for injecting content into the DOM: <code>render(&lt;Component />, document.body)</code>. You use it the
+            same way you use the ReactDOM.render function. Unlike React, function components come with support for
+            three lifecycle hooks. These are implemented as props so you can track any element as it mounts, updates
+            and unmounts. No need for camel case events or special attributes like React does. Use normal HTML
+            attributes. You can use JSX for components, but you don't have to use odd attribute names. React requires
+            <code>className</code>, <code>onClick</code>, etc. With @composi/core you use normal HTML attributes: <code>class</code>,
+            <code>onclick</code>, etc. If you want to use innerHTML, it is just a normal HTML attribute that accepts a
+            string. We do expect you to be aware of the security implications of using it.</p>
+          <h2>@composi/core runtime</h2>
+
+          <p>Core also provides state management for functional components through its runtime. Inspired by the Elm
+            architecture, the runtime is based on the pattern of SVU-State, View and Update. State can be any valid
+            JavaScript type. View is a function that returns a representation of the state. Update is like a simplified
+            version of Redux, but without all the boilerplate. The runtime also provides a way to deal with effects.
+            Runtime programs support composition as well, with communication between parent and child through effects.</p>
+
+          <p>In just 2KB, @composi/core with the runtime provides the same functionality as React functional
+            components, but with Redux-like state management. @composi/core does not need <code>shouldComponentUpdate</code>,
+            etc. It checks props and automatically bails if they have not changed.</p>
+        </div>
+      </section>
+
+      <section class='main__section__separator'>
+        <hr class='main__separator'>
+      </section>
+
+      <section class='main__example--section'>
+        <div class="main__example--column">
+          <h3>A Simple Functional Component</h2>
+            <p>Use <code>render</code> to inject markup into the DOM. This takes a functional component to convert to
+              HTML and a container to inject in.</p>
+        </div>
+        <p data-height="300" data-theme-id="6688" data-slug-hash="zmYzmE" data-default-tab="result" data-user="rbiggs"
+          data-pen-title="@composi/core - Hello World" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/zmYzmE/">@composi/core
+            - Hello World</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+      </section>
+
+      <section>
+        <div class="main__example--column">
+          <h3>Updating a Component</h2>
+            <p>You can update a functional component by rendering it with a new value for its props.</p>
+            <p>In this example we're updating the component every second until 100. We use the lifecycle method <code>onmount</code>
+              to start the <code>tick</code> method.</p>
+        </div>
+        <p data-height="300" data-theme-id="6688" data-slug-hash="KGKvzW" data-default-tab="result" data-user="rbiggs"
+          data-pen-title="@composi/core - timer" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/KGKvzW/">@composi/core
+            - timer</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+      </section>
+
+      <section>
+        <div class="main__example--column">
+          <h3>A Todo List</h3>
+          <p>Here we put together a todo list with core and runtime for state management, along with tagged unions for
+            simpler update actions and messaging. List items and their children inherit state through props passed down
+            from their parent. Child components communicate with their parent through messages.</p>
+          <p>Inline events handle user interactions. All todos are saved to localStorage. On reloads, the saved items
+            are used.</p>
+          <p>Animations are implemented using onmount and onunmount lifecycle events.</p>
+        </div>
+        <p data-height="600" data-theme-id="6688" data-slug-hash="oarLpB" data-default-tab="result" data-user="rbiggs"
+          data-pen-title="@composi/core - runtime Todo List" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/oarLpB/">@composi/core
+            - runtime Todo List</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+      </section>
+
+      <section>
+        <div class="main__example--column">
+          <h3>A Calculator</h3>
+          <p>Here is a simple calculator implemented with @composi/core and @composi/datastore. The parent component
+            manages events for all the subcomponents. This component has many custom methods for handling all the Math
+            computations, etc.</p>
+        </div>
+        <p data-height="600" data-theme-id="6688" data-slug-hash="VEYyLE" data-default-tab="result" data-user="rbiggs"
+          data-pen-title="@composi/core Mac Calculator" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/VEYyLE/">@composi/core
+            Mac Calculator</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+      </section>
+      <section>
+        <div class="main__example--column">
+          <h3>An Image Browser with Popup</h3>
+          <p>This uses @composi/core with the runtime and a tagged union for state management. It grabs images from
+            Flickr. You can click on an image to get a closer look. Clicking again will close it.</p>
+          <p>When you click on the "10 More" button, its sends a message to the program update function, which fetches
+            10 more images and returns the new state to re-render the view.</p>
+        </div>
+        <p data-height="700" data-theme-id="6688" data-slug-hash="QZeEQV" data-default-tab="result" data-user="rbiggs"
+          data-pen-title="@composi/core Image Browser with runtime & tagged unions" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/QZeEQV/">@composi/core
+            Image Browser with runtime & tagged unions</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>)
+          on
+          <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+      </section>
+
+      <section>
+        <div class="main__example--column">
+          <h3>SVG Animation</h3>
+          <p>Here we're using <a target="__blank" href="https://d3js.org">D3</a> to animate a Pythagoras tree using
+            Composi's virtual DOM to update the SVG in real time. Move the cursor over the panel. As you do so, upto
+            2,000
+            rectanges will be created, animated and destroyed in real time based on the cursor position. This shows how
+            efficient
+            Composi's virtual DOM is.</p>
+          <p>You can use many third-party libraries and frameworks with Composi, such a Redux, Mobx, RxJS, Lodash,
+            Bootstrap, Material Design Lite, etc.</p>
+        </div>
+        <p data-height="500" data-theme-id="6688" data-slug-hash="vVEWQa" data-default-tab="result" data-user="rbiggs"
+          data-pen-title="@composi/core Pythagoras Dancing Tree" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/vVEWQa/">@composi/core
+            Pythagoras Dancing Tree</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+      </section>
+
+
+      <section>
+        <div class="main__example--column">
+          <h3>Dynamic Counters</h3>
+          <p>This is a functional component that generates keyed counters. It uses the runtime along with a tagged
+            union for state management. This is similar to how the todo app is implemented above. Each counter occupies
+            a keyed list item. This makes it more efficient for deleting random counters from the list.</p>
+          <p>Each counter has the events and functionality it needs to act like an independent component. In reality
+            they are just part of a larger, all-encomposing component.</p>
+          <p>We're also using the <code>Fragment</code> tag to generate a group of sibling elements--the buttons that
+            constitute the counter.</p>
+        </div>
+        <p data-height="600" data-theme-id="6688" data-slug-hash="PyMjob" data-default-tab="result" data-user="rbiggs"
+          data-pen-title="@composi/core --Counters with Runtime" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/PyMjob/">@composi/core
+            --Counters with Runtime</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+      </section>
+
+    </article>
+    <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a>
+          and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+
+    <script src="./js/prism.js"></script>
+  </body>
+
 </html>
