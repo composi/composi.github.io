@@ -81,8 +81,72 @@ const program = {
   }
 }</code></pre>
           <p>There is no magic here. Subscriptions does what the label says. Using subscriptions to run effects at start is more explicit. But you can use whatever approach, init or subscriptions, to run effects at startup. Subscriptions gets state and send passed to it. This means you can access the program's state and send a message to an update action.</p>
+          <p>Regardless of whether you use state and send in your subscriptions, the program method requires them as parameters:</p>
+<pre><code class="language-javascript">const program = {
+  init() {
 
-          <p>Like any other effects, you can use <code>batchEffects</code> to run multiple effects at the same time. See the documentation for <a href="/en/docs/runtime/effects.html">effects</a> to see how to do this.</p>
+  },
+  view(state, send) {
+
+  },
+  update(state, msg) {
+
+  },
+  // state and send required as arguments here:
+  subscriptions(state, send) {
+
+  }
+}
+</code></pre>
+          <p>Like any other effects, you can use <code>batchEffects</code> to run multiple effects at the same time. See the documentation for <a href="/en/docs/runtime/effects.html">effects</a> to learn how to use  <code>batcheEffects</code>.</p>
+          <p>Now let's look at how to use batched subscriptions. We are going to take two effects, one to fetch data and one to set up an event to listen for key presses that we want to execute when our program starts. Since there are two effects, rather than putting them directly in the body of the <code>subscriptions</code> program method, we'll keep them separate and use a batched version. Since we're fetching data at start up, there will be no state for the initial vew render. In our view we'll check whether state is truthy or not before returning the rendered view. And in our initial setup for state in the <code>init</code> method we will set state to null.</p>
+<pre><code class='language-javascript'>// Below are two effects.
+// Each effect expects the `send` function as its argument.
+// This will get passed automatically when the batched effects are processed.
+
+// Subscription effect to fetch data:
+function fetchState(send) {
+  fetch('/src/js/state.json')
+    .then(function (response) {
+      return response.json();
+    })
+    .then(data => {
+      send(Msg.fetchThenRender(data))
+    })
+}
+// Subscription effect to handle Enter key:
+function handleEnter(send) {
+  document.addEventListener('keypress', function (e) {
+    if (e.keyCode === 13) {
+      send(Msg.addItem())
+    }
+  })
+}
+
+// Batch subscrption effects together:
+const batchedSubscriptions = batchEffects([fetchState, handleEnter])
+
+// Define program to run:
+const program = {
+  init() {
+    // Here we set state to null:
+    return [null]
+  },
+  view(state, send) {
+    // Here we check if state is truthy or not:
+    return state && render(<List {...{ state, send }}/>, 'section')
+  },
+  update(state, msg) {
+    const prevState = mergeObjects(state)
+    return actions(prevState, msg)
+  },
+  subscriptions(state, send) {
+    // Here we return the batched effects.
+    // Notice that we do not need to call them, just return them.
+    return batchedSubscriptions
+  }
+}</code></pre>
+          <p> </p>
           <h3>Shortcut</h3>
           <p>Instead of using <code>subscriptions</code> you can use the shorter form <code>subs</code>:</p>
 
@@ -105,11 +169,11 @@ const program = {
     return startCount
   }
 }</code></pre>
-          
+
 
               <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -125,7 +189,7 @@ const program = {
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>

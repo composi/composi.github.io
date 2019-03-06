@@ -81,13 +81,79 @@ const programa = {
   }
 }</code></pre>
           <p>No hay nada de magia aquí. Las suscripciones hacen lo que dice la etiqueta. Usar suscripciones para ejecutar efectos al inicio
-          es más explícito. Pero puedes usar cualquier método, init o subscriptions, para ejecutar efectos al inicio. Subscriptions reciben el state y la function <conde>send</conde>. Esto quuiere decir que puedes acceder al estado del program or enviar un mensage a la function <code>update</code> desde una suscripción..</p>
+          es más explícito. Pero puedes usar cualquier método, init o subscriptions, para ejecutar efectos al inicio. Subscriptions reciben el state y la function <conde>send</conde>. Esto quuiere decir que puedes acceder al estado del program or enviar un mensage a la function <code>update</code> desde una suscripción.</p>
+          <p>Sí usas state y send en las suscripciones or no, el método <code>subscriptions</code> del program requiere que se preveyen los cómo argumentos:</p>
+<pre><code class="language-javascript">const program = {
+  init() {
+
+  },
+  view(state, send) {
+
+  },
+  update(state, msg) {
+
+  },
+  // Se requieren state y send cómo argumentos aquí:
+  subscriptions(state, send) {
+
+  }
+}
+</code></pre>
 
           <p>Al igual que con cualquier otro efecto, puede usar <code>batchEffects</code> para ejecutar múltiples efectos al mismo tiempo. Consulte la documentación de <a href="/es/docs/runtime/effects.html">efectos</a> para ver cómo hacer esto.</p>
+
+          <p>Ahora bien, vamos a ver cómo usar suscripciones en tanda, o más bien, combinados. Vamos a tomar dos efectos, uno para conseguir datos y otro para iniciar un evento para escuchar la pulsación de teclas. Queremos que estos do se executen cuando el programa se inicia. Puesto que se trata de dos efectos, en vez de ponerlos directamente in el método <code>subscriptions</code> del program, los vamos a mantener aparte y usar una versión combinada. Puesto que vamos a conseguir los datos después de que el programa se inicie, no habrá estado para la rendición inicial del la vista. Así pues, tenemos que chequear si el estado es veraz o falso antes de retornar la rendición de la vista. Por eso, vamos a designar el estatdo inicial in el método <code>init</code> cómo <code>null</code>.</p>
+
+          <pre><code class='language-javascript'>// Aquí hay dos efectos.
+// Cada efecto espera la función `send` como su argumento.
+// Ésta será proveída automáticamente cuando los efectos en tanda se procesan.
+
+// Efecto para conequir datos:
+function fetchState(send) {
+  fetch('/src/js/state.json')
+    .then(function (response) {
+      return response.json();
+    })
+    .then(data => {
+      send(Msg.fetchThenRender(data))
+    })
+}
+// Efecto para manejar la compresión de la tecla Enter:
+function handleEnter(send) {
+  document.addEventListener('keypress', function (e) {
+    if (e.keyCode === 13) {
+      send(Msg.addItem())
+    }
+  })
+}
+
+// Combinar los efectos en uno:
+const batchedSubscriptions = batchEffects([fetchState, handleEnter])
+
+// Definir el program que usar:
+const program = {
+  init() {
+    // Aquí designamos el estado como null:
+    return [null]
+  },
+  view(state, send) {
+    // Aquí chequeamos si el estado es veraz o no:
+    return state && render(<List {...{ state, send }}/>, 'section')
+  },
+  update(state, msg) {
+    const prevState = mergeObjects(state)
+    return actions(prevState, msg)
+  },
+  subscriptions(state, send) {
+    // Aquí retornamos los efectos combinados.
+    // No tenemos que invocar esto, solo lo retornamos.
+    return batchedSubscriptions
+  }
+}</code></pre>
+          <p> </p>
           <h3>Abreviatura Para Suscriptions</h3>
           <p>Puedes usar el término <code>subs</code> en vez de <code>subscriptions</code>. Es más corto:</p>
-<pre><code class="language-javascript">
-const programa = {
+<pre><code class="language-javascript">const programa = {
   init() {
     return [estado]
   },
@@ -105,11 +171,11 @@ const programa = {
   }
 }</code></pre>
 
-          
+
 
               <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -125,7 +191,7 @@ const programa = {
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>
