@@ -54,6 +54,7 @@
           <h1>Efectos</h1>
           <h2>Ejecutar los Efectos de una Acción</h2>
           <p>En el entorno de ejecución @composi/core, un efecto es una función que envía un mensaje. Los efectos son asincrónicos. Los efectos le permiten interactuar con el mundo fuera del entorno de ejecución. Un efecto puede crear un temporizador, recuperar datos, persistir los datos, registrar datos o abrir una alerta del navegador. La sección que cubre <a href="/es/docs/runtime/init.html" target='__blank'>init</a> explica cómo iniciar un efecto en el inicio al proporcionar a init un segundo valor en su matriz. Del mismo modo, la sección sobre <a href="/es/docs/runtime/update.html">update</a> mostró que una acción siempre devuelve el estado rodeado de llaves. Eso es para que puedas incluir un segundo valor opcional como efecto.</p>
+           <p><strong>Attención:</strong> Los efectos no son para manipular el estado. El acto de cambiar el estado en un efecto resultará en que la vista y el estado estarán desincronizados. Si has producido algunos dataos en un efetcto y quieres actualizar el estado con ellos, hazlo por enviar un mensaje a una acción. Haciendo esto logrará que el algoritmo de reconciliación se ejecute, lo cual puede causar que la vista vuelva a rendirse.</p>
 
           <h2>Separados Pero Iguales</h2>
           <p>El separar los efectos en sus propias acciones hace que sea más fácil razonar acerca de las acciones que tratan con la gestión de estado.</p>
@@ -72,12 +73,12 @@
             data-pen-title="@composi/core + runtime Efectos" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/vQKxow/">@composi/core
               + runtime Efectos</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
           <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-        
+
           <p> </p>
-          
+
               <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -93,7 +94,7 @@
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>
