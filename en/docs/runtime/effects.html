@@ -54,7 +54,7 @@
           <h1>Effects</h1>
           <h2>Launching Effects from an Action</h2>
           <p>In @composi/core runtime an effect is a function that sends a message. Effects are asynchronous. Effects let you interact with the world outside the runtime. An effect can create a timer, fetch data, persist data, log data, or open a browser alert. The section covering <a href="/en/docs/runtime/init.html" target='__blank'>init</a> explained how to launch an effect at startup by providing init with a second value in its array. Similarly, the section on <a href="/en/docs/runtime/update.html">update</a> showed that an action always returns state surrounded by braces. That's so you can include an optional second value as an effect.</p>
-          <p><strong>Note:</strong> Effects are not for manipualting state. Changing state in an effect will result in the view and state being out of sync. If you have produced some data in an effect and want to update state, do so by sending a message to an action. Doing so will trigger the reconciliation algorythm and a possible re-render of the view.</p>
+          <p><strong>Note:</strong> Effects are not for manipulating state. Changing state in an effect will result in the view and state being out of sync. If you have produced some data in an effect and want to update state, do so by sending a message to an action. Doing so will trigger the reconciliation algorythm and a possible re-render of the view.</p>
 
           <h2>Separate but Equal</h2>
           <p>Separating effects out into their own actions makes it easier to reason about the actions that deal with state management.</p>

@@ -98,7 +98,7 @@ const program = {
   }
 }
 </code></pre>
-          <p><strong>Note:</strong> Subscriptions are not for manipualting state. Changing state in an subscription will result in the view and state being out of sync. If you have produced some data in an effect and want to update state, do so by sending a message to an action. Doing so will trigger the reconciliation algorythm and a possible re-render of the view.</p>
+          <p><strong>Note:</strong> Subscriptions are not for manipulating state. Changing state in an subscription will result in the view and state being out of sync. If you have produced some data in an effect and want to update state, do so by sending a message to an action. Doing so will trigger the reconciliation algorythm and a possible re-render of the view.</p>
           <p>Like any other effects, you can use <code>batchEffects</code> to run multiple effects at the same time. See the documentation for <a href="/en/docs/runtime/effects.html">effects</a> to learn how to use  <code>batcheEffects</code>.</p>
           <p>Now let's look at how to use batched subscriptions. We are going to take two effects, one to fetch data and one to set up an event to listen for key presses that we want to execute when our program starts. Since there are two effects, rather than putting them directly in the body of the <code>subscriptions</code> program method, we'll keep them separate and use a batched version. Since we're fetching data at start up, there will be no state for the initial vew render. In our view we'll check whether state is truthy or not before returning the rendered view. And in our initial setup for state in the <code>init</code> method we will set state to null.</p>
 <pre><code class='language-javascript'>// Below are two effects.
