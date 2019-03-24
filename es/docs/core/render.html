@@ -49,6 +49,7 @@
           <li><a href="/es/docs/core/lifecycle.html">Ciclo de Vida</a></li>
           <li><a href="/es/docs/core/hydrate.html">Hidratación</a></li>
           <li><a href="/es/docs/core/state.html">Estado</a></li>
+          <li><a href="/es/docs/core/fragment.html">Fragmentos</a></li>
         </ul>
         <h1>Renderización</h1>
         <h2>Defición de Marcado</h2>
@@ -73,8 +74,8 @@ function HolaMundo() {
     &lt;h1>¡Hola, Mundo!&lt;/h1>
   )
 }</code></pre>
-        <p>Date cuenta que esta función hace una sóla cosa, devuelve algunas etiquetas de JSX.</p> 
-        
+        <p>Date cuenta que esta función hace una sóla cosa, devuelve algunas etiquetas de JSX.</p>
+
         <h2>Renderización</h2>
         <p>Ahora podemos pasar esta función a la función <code>render</code> como una etiqueta. La función <code>render</code> espera dos argumentos: la etiqueta para renderizar y el contenedor en el cual va renderizar. La etiqueta debe ser una función escrita como una etiqueta JSX. El contenedor puede ser una referencia de nodo DOM, o un selector.</p>
 
@@ -96,7 +97,7 @@ render(&lt;HolaMundo />, document.body)</code></pre>
         <p> </p>
         <h2>Selector vs Referencia de DOM</h2>
         <p>En el ejemplo anterior, estamos usando el texto <code>"header"</code> como contenedor para el componente. Esto está bien para la renderización ocasional. Sin embargo, si el componente puede procesarse muchas veces en rápida sucesión, como cuando se anima un componente, sería mejor usar una referencia de DOM para ese contenedor. Esto se debe a que cuando proporciona un selector de text para el contenedor, cada vez que se procesa el componente, Composi tiene que consultar el DOM para ese selector. Obtener una referencia al contenedor primero y usar eso en la función significa que el procesamiento puede comenzar de inmediato a computar las differences para parchear el DOM.</p>
-        
+
         <p> </p>
         <h2>Pasando Hijos a un Componente</h2>
         <p>A veces es posible que desees pasar componentes niños a un componente. Puedes habilitar cualquier componente funcional para que acepte hijos arbitrarios pasándole un segundo parámetro después del argument de props (propiedades). Luego, puede emitir lo que sean los hijos procesando el valor <code>children</code> dentro de llaves. Observe cómo lo hacemos en este ejemplo. Tenemos un <code>BordeLujoso</code> que acepta cualquier componente secundario. Esto significa que podemos pasar cualquier cosa
@@ -145,7 +146,7 @@ function Saludo(props) {
   const sesiónIniciada = props.sesiónIniciada
   // Con operadores lógicos:
   return (
-    sesiónIniciada && &lt;SaludarUsuario /> ||  
+    sesiónIniciada && &lt;SaludarUsuario /> ||
     !sesiónIniciada && &lt;SaludarVisitante />
   )
 }
@@ -280,8 +281,8 @@ function Saludo(props) {
     </section>
   </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 
 </html>

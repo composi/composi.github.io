@@ -49,6 +49,7 @@
           <li><a href="/en/docs/core/lifecycle.html">Lifecycle</a></li>
           <li><a href="/en/docs/core/hydrate.html">Hydration</a></li>
           <li><a href="/en/docs/core/state.html">State</a></li>
+          <li><a href="/en/docs/core/fragment.html">Fragment</a></li>
           <li><a href="/en/docs/core/cdn.html">CDN</a></li>
         </ul>
         <h1>Render</h1>
@@ -74,8 +75,8 @@ function HelloWorld() {
     &lt;h1>Hello, World!&lt;/h1>
   )
 }</code></pre>
-        <p>Notice that this function does one thing, it returns some JSX markup.</p> 
-        
+        <p>Notice that this function does one thing, it returns some JSX markup.</p>
+
         <h2>Rendering</h2>
         <p>We can now pass this function to the <code>render</code> function as a tag. The <code>render</code> function takes two arguments: the tag to render, and the container to render into. The tag should be a function written as a JSX tag. The container can be a DOM node reference, or a selector.</p>
 
@@ -145,7 +146,7 @@ function Greeting(props) {
   const isLoggedIn = props.isLoggedIn
   // With logical operators:
   return (
-    isLoggedIn && &lt;UserGreeting /> ||  
+    isLoggedIn && &lt;UserGreeting /> ||
     !isLoggedIn && &lt;GuestGreeting />
   )
 }
@@ -277,8 +278,8 @@ function Greeting(props) {
     </section>
   </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 
 </html>

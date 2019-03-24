@@ -48,8 +48,15 @@
 
           <p>Para usar Fragment, tan solo pon los hermanos dento de él y devuélvelo:</p>
 
-          <p datos-height="300" datos-theme-id="6688" datos-slug-hash="OaRgpj" datos-default-tab="js,result" datos-user="rbiggs" datos-pen-title="@composi/core - Fragment es" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/OaRgpj/">@composi/core - Fragment es</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+          <p class="codepen" data-height="300" data-theme-id="6688" data-default-tab="js,result" data-user="rbiggs"
+            data-slug-hash="OaRgpj"
+            style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;"
+            data-pen-title="@composi/core - Fragment es">
+            <span>See the Pen <a href="https://codepen.io/rbiggs/pen/OaRgpj/">
+                @composi/core - Fragment es</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>)
+              on <a href="https://codepen.io">CodePen</a>.</span>
+          </p>
+          <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
 <p>Y aquí hay otro ejemplo de Fragment:</p>
 
@@ -72,7 +79,7 @@ function ÍtemesDeLista() {
       &lt;li>Tres&lt;/li>
     &lt;/>
   )
-}   
+}
 </code></pre>
           <p>Para poder usar esta abreviatura con Babel, tienes que informle a Babel que use el fragmento de Coposi en el archivo <code>.babelrc</code> con un valor para <code>pragmaFrag</code>:</p>
 
@@ -87,7 +94,7 @@ function ÍtemesDeLista() {
   ]
 ]
 </code></pre>
-        
+
         <p> </p>
         <h2>Los Fragmentos no Tienen Atributos</h2>
         <p>Dado que los fragmentos no son elementos reales, no puedes darles ningún atributo. Cuando el JSX se compila en un nodo virtual, los fragmentos se descartan y solo se devuelven sus hijos. Los hijos de Fragment se convierten en hijos del nodo padre del Fragment. Esto significa que no puedes asignar un id, class o key a un Fragmento. Usted puede, sin embargo, pasar las props. Fíjate cómo pasamos los datos a la etiqueta ÍtemesDeLista:</p>
@@ -117,7 +124,7 @@ render(&lt;Lista datos={[1,2,3]} />, 'section')</code></pre>
 
               <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -133,7 +140,7 @@ render(&lt;Lista datos={[1,2,3]} />, 'section')</code></pre>
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>

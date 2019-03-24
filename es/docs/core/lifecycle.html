@@ -49,6 +49,7 @@
           <li class='selected'>Ciclo de Vida</li>
           <li><a href="/es/docs/core/hydrate.html">Hidratación</a></li>
           <li><a href="/es/docs/core/state.html">Estado</a></li>
+          <li><a href="/es/docs/core/fragment.html">Fragmentos</a></li>
         </ul>
         <h1>Ciclo de Vida</h1>
         <h2>Enganches de Ciclo de Vida</h2>
@@ -134,7 +135,7 @@ render(&lt;Lista datos={frutas}/>, 'body')
         <p><code>onunmount</code> expects that its callback with handle a <code>done()</code> function. Specifically, <code>onunmount</code> gets passed two arguments: the element being deleted, and a <code>done</code> callback to invoke when you are done. If you fail to provide a <code>done()</code> callback in your code or forget to invoke at the end of your code, the element will not be removed from the DOM, which could result in really unexpected results as the list data is mutated.</p>
 
         <p><code>onunmount</code> espera que su callback va tratar con una función <code>done()</code>. Específicamente, <code>onunmount</code> pasa dos argumentos: el elemento que se está eliminando y el callback <code>done</code> para invocar cuando haya terminado. Si no proporcionas un callback <code>done()</code> en su código u olvidas invocarlo al final del código en esa función, el elemento no se eliminará del DOM, lo que podría causar resultados realmente inesperados mientras se cambian los datos de aquella lista.</p>
-        
+
         <p>En el ejemplo próximo usamos <code>onunmount</code> para implementar una animación de keyframe antes de que el ítem de lista sea eliminado. También usamos <code>onmount</code> en los ítemes de lista para hacer la animación de los ítemes nuevos mientras se trasladan en la vista.</p>
 
 <p data-height="500" data-theme-id="6688" data-slug-hash="OaNgyv" data-default-tab="js,result" data-user="rbiggs"
@@ -201,8 +202,8 @@ render(&lt;Lista datos={frutas}/>, 'body')
     </section>
   </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 
 </html>

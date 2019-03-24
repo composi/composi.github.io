@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <title>Composi - Documentación</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+</head>
+
+<body class='page'>
+  <nav>
+    <ul class='nav-menu'>
+      <li class='nav-menu__item'>
+        <a class='nav-menu__item__link' href="/index-es.html">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>Composi Logo</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Composi-Logo-Solid" fill="#fff">
+                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                  id="Combined-Shape"></path>
+              </g>
+            </g>
+          </svg>
+          <span class='logo__link--text'>Composi</span></a>
+      </li>
+      <li class='nav-menu__item selected'>
+        <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+      </li>
+    </ul>
+  </nav>
+  <article class='article'>
+    <section>
+      <div class='docs'>
+        <h3>@composi/core:</h3>
+        <ul class='breadcrumb'>
+          <li><a href="/es/docs/core/install.html">Instalación</a></li>
+          <li><a href="/es/docs/core/render.html">Renderización</a></li>
+          <li><a href="/es/docs/core/props.html">Propiedades</a></li>
+          <li><a href="/es/docs/core/events.html">Eventos</a></li>
+          <li><a href="/es/docs/core/lifecycle.html">Ciclo de Vida</a></li>
+          <li><a href="/es/docs/core/hydrate.html">Hidratación</a></li>
+          <li><a href="/es/docs/core/state.html">Estado</a></li>
+          <li class='selected'>Fragmentos</li>
+        </ul>
+        <h1>Fragmento</h1>
+        <h2>Cómo Usar Fragmentos en los Componentes</h2>
+        <p>Para poder usar los fragmentos, primero tenemos que importar la función <code>Fragment</code> en el proyecto desde <strong>@composi/core</strong>:</p>
+
+        <pre><code class='language-javascript'>import { h, render, Fragment } from '@composi/core'</code></pre>
+
+        <p>Después de importarlo, podemos ya usarlo.</p>
+        <h1>Uso</h1>
+        <h2>Cómo Usar los Fragmentos</h2>
+        <p>@composi/fragment es una función espeical para JSX. Hace una cosa, devuelve sus hijos envuletos en una matriz. Esto
+          habilita agrupar una serie de elementos hermanos para que otro elemento los envuelva. Harías esto típicamente para las
+          listas o celdas de tablas. Pero puedes usarlo para cualquier situación en que quieres agrupar varios elementos juntos.
+        </p>
+
+        <p>Para usar Fragment, tan solo pon los hermanos dento de él y devuélvelo:</p>
+
+        <p data-height="300" data-theme-id="6688" data-slug-hash="OaRgpj" data-default-tab="js,result" data-user="rbiggs"
+          data-pen-title="@composi/core - Fragment" class="codepen">See the Pen <a
+            href="https://codepen.io/rbiggs/pen/OaRgpj/">@composi/core
+            - Fragment</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a
+            href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+        <p>Y aquí hay otro ejemplo de Fragment:</p>
+
+        <p data-height="300" data-theme-id="6688" data-slug-hash="gQwRWW" data-default-tab="js,result" data-user="rbiggs"
+          data-pen-title="@composi/core - Fragment-2" class="codepen">See the Pen <a
+            href="https://codepen.io/rbiggs/pen/gQwRWW/">@composi/core
+            - Fragment-2</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a
+            href="https://codepen.io">CodePen</a>.</p>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+        <p> </p>
+
+        <h2>Forma Abreviada: &lt;>&lt;/></h2>
+        <p>Puesto que <code>create-composi-app</code> hace proyectos que usan Babel 7, puedes tomar ventaja de la forma
+          abreviada de Fragment: <code>&lt;>&lt;/></code></p>
+
+        <pre><code class="language-javascript">import { h, render } from '@composi/core'
+        import { Fragment } from '@composi/fragment'
+
+        function ÍtemesDeLista() {
+          // Devolver el fragmento:
+          return (
+            &lt;>
+              &lt;li>Uno&lt;/li>
+              &lt;li>Dos&lt;/li>
+              &lt;li>Tres&lt;/li>
+            &lt;/>
+          )
+        }
+        </code></pre>
+        <p>Para poder usar esta abreviatura con Babel, tienes que informle a Babel que use el fragmento de Coposi en el archivo
+          <code>.babelrc</code> con un valor para <code>pragmaFrag</code>:</p>
+
+
+        <pre><code class="language-javascript">"plugins": [
+          [
+            "@babel/plugin-transform-react-jsx",
+            {
+              "pragma": "h",
+              "pragmaFrag": "Fragment"
+            }
+          ]
+        ]
+        </code></pre>
+
+        <p> </p>
+        <h2>Los Fragmentos no Tienen Atributos</h2>
+        <p>Dado que los fragmentos no son elementos reales, no puedes darles ningún atributo. Cuando el JSX se compila en un
+          nodo virtual, los fragmentos se descartan y solo se devuelven sus hijos. Los hijos de Fragment se convierten en hijos
+          del nodo padre del Fragment. Esto significa que no puedes asignar un id, class o key a un Fragmento. Usted puede, sin
+          embargo, pasar las props. Fíjate cómo pasamos los datos a la etiqueta ÍtemesDeLista:</p>
+
+        <pre><code class='language-javascript'>import { h, render } from '@composi/core'
+        import { Fragment } from '@composi/fragment'
+
+        function ÍtemesDeLista({datos}) {
+          return (
+            &lt;>
+              {
+                datos.map(ítem => &lt;li>{ítem}&lt;/li>)
+              }
+            &lt;/>
+          )
+        }
+
+        function Lista({datos}) {
+          return (
+            &lt;ul>
+              &lt;ÍtemesDeLista {...{datos}} />
+            &lt;/ul>
+          )
+        }
+
+        render(&lt;Lista datos={[1,2,3]} />, 'section')</code></pre>
+        <p>&nbsp;</p>
+      </div>
+    </section>
+  </article>
+  <footer>
+    <section>
+      <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <title>Composi Logo</title>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+            <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+              id="Combined-Shape"></path>
+          </g>
+        </g>
+      </svg>
+      <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core' target='__blank'>Github</a>
+        y <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
+    </section>
+  </footer>
+  <script src="/js/prism.js"></script>
+
+
+</body>
+
+</html>

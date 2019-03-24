@@ -49,6 +49,7 @@
         <li><a href="/en/docs/core/lifecycle.html">Lifecycle</a></li>
         <li><a href="/en/docs/core/hydrate.html">Hydration</a></li>
         <li><a href="/en/docs/core/state.html">State</a></li>
+        <li><a href="/en/docs/core/fragment.html">Fragment</a></li>
         <li><a href="/en/docs/core/cdn.html">CDN</a></li>
       </ul>
         <h1>Events</h1>
@@ -57,7 +58,7 @@
         <p>You can make your components interact with users through inline events. It's also possible to use event listeners, particularly for setting up delegated events. You'll need to read the documentation for <a href="/en/docs/core/lifecycle.html">Lifecycle hooks</a> for details on how to do that.</p>
 
         <p>Composi inline events are just like normal JavaScript inline events. You do not need to camel case them like React. They should be lower case. In the event that you accidentally camel case an inline event, Composi will automatically convert it to lower case.</p>
-        
+
         <p data-height="300" data-theme-id="6688" data-slug-hash="OBWyve" data-default-tab="js,result" data-user="rbiggs"
           data-pen-title="@composi/core - Events-1" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/OBWyve/">@composi/core
             - Events-1</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
@@ -71,7 +72,7 @@
           data-pen-title="@composi/core - Events-2" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/pxRjxN/">@composi/core
             - Events-2</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
         <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-          
+
         <p> </p>
         <h2>Event Delegation</h2>
         <p>When you have a long list, having events on every list item uses a lot of memory. Event delegation lets us use just one event to handle click events on all the child elements. So, we'll redo the above example to use event delegation. We do this by registering the event on the list and passing it the event object. In the event handler we check to see what the event target is. If the event target's <code>nodeName</code> is <code>LI</code>, we get its dataset content value that we stored on the list item. We the announce that value. The technique is very simple, actually.</p>
@@ -145,8 +146,8 @@ render(&lt;Counter data={count}/> 'section')
     </section>
   </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 
 </html>
