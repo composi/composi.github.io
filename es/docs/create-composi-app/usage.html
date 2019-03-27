@@ -86,27 +86,6 @@
         <p>If you want to launch your project after clean, then run this:</p>
 <pre><code class="language-shell">npm run clean && npm start</code></pre>
         <p> </p>
-        <h3>Minificación de Imágenes</h3>
-        <p>Es posible que tengas muchas imágenes en su proyecto y querrías minimizarlas para la producción. Puedes actualizar su proyecto para manejar esto con un script NPM. Primero instala <code>imagemin</code></p>
-
-<pre><code class="language-bash">npm i -D imagemin-cli</code></pre>
-
-        <p>Entonces agrega la línea siguiente a los scripts en el archivo package.json:</p>
-
-        <pre><code class="language-bash">"build:images": "imagemin src/images/* -o dist/images",</code></pre>
-        <p>Cómo puedes ver, según este comando los imágenes deben de estar dentro de la carpeta src del proyecto.</p>
-        <p>Con esto, prodrás minificar los imágenes y ponerlas en la carpeta dist por ejecutar:</p>
-        <pre><code class="language-bash">npm run build:images,</code></pre>
-        <p>Esto comprimirá los jpegs y pngs.</p>
-
-        <h3>Icónos de SVG</h3>
-        <p>Si desea utilizar imágenes SVG como iconos, puede poner todas sus imágenes SVG en la carpeta src/images/icons de su proyecto. Luego instale los siguientes dos módulos:</p>
-<pre><code class="language-bash">npm i -D svg-sprite-generator svgo</code></pre>
-
-        <p>Agrega el comando siguiente a los escriptos en el package.json:</p>
-<pre><code class="language-bash">"build:icons": "svgo -f src/images/icons -o dist/images/icons && svg-sprite-generate -d dist/images/icons -o
-        dist/images/icons/icon-sprites.svg",</code></pre>
-        <p> </p>
 
         <h2>Versión de Producción</h2>
         <p>Para crear una versión del proyector para producción, <code>cd</code> a la carpeta y ejecuta:</p>
@@ -125,7 +104,7 @@
 </code></pre>
               <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -141,7 +120,7 @@
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>

@@ -87,27 +87,6 @@
         <p>If you want to launch your project after clean, then run this:</p>
 <pre><code class="language-shell">npm run clean && npm start</code></pre>
         <p> </p>
-        <h3>Image Minification</h3>
-        <p>You may have many images in your project and would like to minify them for production. You can update you project to handle this with and NPM script. First install <code>imagemin</code></p>
-
-<pre><code class="language-bash">npm i -D imagemin-cli</code></pre>
-
-        <p>Then add the following line to your package.json scripts:</p>
-
-        <pre><code class="language-bash">"build:images": "imagemin src/images/* -o dist/images",</code></pre>
-        <p>As you can see from this command, this expects your images will be inside an images folder in your project's src folder.</p>
-        <p>With the above in place, you can minify our images and output them to the dist folder by running:</p>
-        <pre><code class="language-bash">npm run build:images,</code></pre>
-        <p>This will compress jpegs and pngs.</p>
-
-        <h3>SVG Icons</h3>
-        <p>If you want to use SVG images as icons, you can put all your SVG images in your project's src/images/icons folder. Then install the following two modules:</p>
-<pre><code class="language-bash">npm i -D svg-sprite-generator svgo</code></pre>
-
-        <p>Add the following command to your package.json scripts:</p>
-<pre><code class="language-bash">"build:icons": "svgo -f src/images/icons -o dist/images/icons && svg-sprite-generate -d dist/images/icons -o
-        dist/images/icons/icon-sprites.svg",</code></pre>
-        <p> </p>
 
         <h2>Production Build</h2>
         <p>To create a production build of your project, <code>cd</code> to the folder and run:</p>
@@ -126,7 +105,7 @@
 </code></pre>
               <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -142,7 +121,7 @@
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>
