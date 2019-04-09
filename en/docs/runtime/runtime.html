@@ -91,7 +91,7 @@
           <p>The View is the representation of the program's state. A view usually has events for user interaction. An interaction will send a message to the program's Update function.</p>
           <h3>Update</h3>
           <p>Update is where all the program's business logic resides. Update receives messages sent by the view. Depending on what message was received, Update performs actions on a copy of the program state and returns it. This causes the program to re-render the view with the new state.</p>
-          
+
 
           <p>Here is the simplest possible runtime program that you can make. This is valid and it is running, but doing nothing.</p>
           <p data-height="300" data-theme-id="6688" data-slug-hash="MPxXrR" data-default-tab="js,result" data-user="rbiggs"
@@ -99,7 +99,7 @@
               + runtime Basic</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
           <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
           <p> </p>
-          
+
           <h3>Order Doesn't Matter</h3>
           <p>When creating a program to run, the order of the properties is irrelevant. In our examples we use init, update, view. But you could choose to do init, view, update or any other order that you prefer. </p>
 <pre><code class='language-javascript'>const program1 = {
@@ -135,16 +135,17 @@ const program3 = {
 
           <p>When we say the runtime is small, we mean it. Here's all the code for the runtime minified and completely functional:</p>
 <pre><code class="language-javascript" style='overflow-wrap: break-word;
-word-wrap: break-word;'>function run(a){function b(l){j&&c(d(h,l))}function c(l){let
-m,n=a.init();l?[h,i]=l:n&&n.length?([h,i]=n,f&&!k&&(m=f(),m(b))):h=[],i&&i(b),e(h,b),k=!0}const
-d=a.update,e=a.view,f=a.subscriptions||a.subs,g=a.done;let h,i,j=!0,k=!1;return a.send=b,c(h),()=>{j&&(j=!1,g&&g(h))}}</code></pre>
+word-wrap: break-word;'>function run(a){function b(l){j&&c(d(h,l,b))}function c(l){let
+m,n=a.init();l?[h,i]=l:n&&n.length?([h,i]=n,f&&!k&&(m=f(h,b),'function'==typeof
+m&&m(h,b),k=!0)):h=[],i&&i(h,b),e(h,b)}const d=a.update,e=a.view,f=a.subscriptions||a.subs,g=a.done;let
+h,i,j=!0,k=!1;return a.send=b,c(h),()=>{j&&(j=!1,g&&g(h))}}</code></pre>
             <p> </p>
 
             <h2>Download Examples</h2>
             <p>You can download examples of simple and complex runtime programs on <a target='__blank'  href="https://github.com/composi/examples">Github</a>.</p>
               <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -160,7 +161,7 @@ d=a.update,e=a.view,f=a.subscriptions||a.subs,g=a.done;let h,i,j=!0,k=!1;return 
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>
