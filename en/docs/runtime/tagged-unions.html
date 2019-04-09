@@ -111,13 +111,24 @@ function actions(state, msg) {
       prevState.fruits.push({ key: prevState.newKey++, msg.inputValue })
       return [prevState]
       break
-    case 'delete-item': 
+    case 'delete-item':
       prevState.fruits = prevState.fruits.filter(item => item.key != msg.key)
       return [prevState]
       break
   }
 }</code></pre>
         <p>The above example should make it clear why to use a tagged union. It makes the code cleaner and easier to reason about. Using a tagged union in the view makes the intent of the event clearer. They imply that they will invoke a corresponding update action. Without tagged unions, the events in our view are senging message objects off to an unspecified destination. We rely on our understanding of how the runtime works to assume that they will be intercepted by update actions. Tagged unions make the intent of view events clearer, and the update actions more compact.</p>
+
+        <h3>Destructuring Union Methods</h3>
+        <p>We can use destructuring to make the <code>send</code> function code even clean by creating alias of the union methods. Using our previous example, it would look like this:</p>
+        <pre><code class="language-javascript">const Msg = new union(['addItem', 'deleteItem'])
+// Destructure union methods for using in the send function:
+const {addItem, deleteItem} = Msg
+
+// Then in our component markup we can use them like this:
+send(addItem('Watermelon'))
+// or
+send(deleteItem(123))</code></pre>
 
         <h3>Default or CatchAll</h3>
         <p>In the previous actions example we were checking each possible tag and providing a function to execute. In a switch statement we can use <code>default</code> to use when there is no match. We can also do that with a tagged union. Just provide a function as the last argument after the handlers object:</p>

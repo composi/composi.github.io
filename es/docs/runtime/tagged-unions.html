@@ -85,8 +85,6 @@ Msj.eliminarÍtem(132)
 {tipo: 'eliminarÍtem', datos: 132}
 </code></pre>
 
-        <p>Now, when we setup the update function, we check that the message sent matches the values in the tagged union. We do that using the <code>match</code> method on the tagged union. Notice that we don't need to check for a tag tipo <code>msg.tipo</code>, just the direct value of the tag. Also we don't need to access the datos of the message with <code>msg.datos</code>. Instead it's made directly available to the action callback as its argument. Since we're using the tagged union's match method, we don't need a switch statement's signature (switch, case, break.) This results in a simpler signature for the actions:</p>
-
         <p>Ahora, cuando configuramos la función update, verificamos que el mensaje enviado coincida con los valores de la unión etiquetada. Lo hacemos utilizando el método <code>match</code> en la unión etiquetada. Date cuenta que no tenmos que chequar el tipo de la etiqueta: <code>msg.tipo</code>, solo el valor directo de la etiqueta. Además, no necesitamos acceder a los datos del mensaje con <code>msg.datos</code>. En su lugar, está directamente disponible para el callback de acción como su argumento. Ya que estamos usando el método match de la unión etiquetada, no necesitamos una sentencia de <code>switch</code>(switch, case, break). Esto resulta en código más sencillo para las acciones:</p>
 
 <pre><code class="language-javascript">function actions(estado, msg) {
@@ -112,17 +110,29 @@ function actions(estado, msg) {
   const estadoPrevio = mergeObjects(estado)
   switch (msg.tipo) {
     case 'añadir-ítem':
-      
+
       estadoPrevio.frutas.push({ clave: estadoPrevio.newKey++, msg.valorDeInput })
       return [estadoPrevio]
       break
-    case 'eliminar-ítem': 
+    case 'eliminar-ítem':
       estadoPrevio.frutas = estadoPrevio.frutas.filter(ítem => ítem.clave != msg.clave)
       return [estadoPrevio]
       break
   }
 }</code></pre>
         <p>El ejemplo anterior debería dejar claro por qué usar una unión etiquetada. Hace el código más limpio y más fácil de comprender. El uso de una unión etiquetada en la vista aclara la intención del evento. La etiqueta implica que invocará una acción correspondiente de update. Sin uniones etiquetadas, los eventos en nuestra vista disvían los objetos del mensaje a un destino no especificado. Confiamos en nuestra comprensión de cómo funciona el entorno de ejecución para asumir que serán interceptados por acciones de update. Las uniones etiquetadas hacen que la intención de los eventos de la vista sea más clara y las acciones de udpate más compactas.</p>
+
+
+<h3>Cómo Destructurar los Métodos de la Unión</h3>
+<p>Podemos usar destructuración para que la función <code>send</code> sea más limpia por crear aliases de los métodos de la unión etiquetada. Usando el ejemplo previos, debe de ser así:</p>
+<pre><code class="language-javascript">const Msg = new union(['añadirÍtem', 'eliminarÍtem'])
+// Destructurar los métodos de la unión para usar en la función send:
+const {añadirÍtem, eliminarÍtem} = Msg
+
+// Podemos usarlos en el código de los componentes así:
+send(añadirÍtem('Watermelon'))
+// o:
+send(eliminarÍtem(123))</code></pre>
 
         <p>Sigue un ejemplo vivo de cómo usar una unión etiquetada para definir las acciones y enviarlas desde la vista.</p>
 
