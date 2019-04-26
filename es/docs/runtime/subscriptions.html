@@ -102,7 +102,9 @@ const programa = {
 
           <p><strong>Attención:</strong> Las suscripciones no son para manipular el estado. El acto de cambiar el estado en un efecto resultará en que la vista y el estado estarán desincronizados. Si has producido algunos dataos en una suscripción y quieres actualizar el estado con ellos, hazlo por enviar un mensaje a una acción. Haciendo esto logrará que el algoritmo de reconciliación se ejecute, lo cual puede causar que la vista vuelva a rendirse.</p>
 
-          <p>Al igual que con cualquier otro efecto, puede usar <code>batchEffects</code> para ejecutar múltiples efectos al mismo tiempo. Consulte la documentación de <a href="/es/docs/runtime/effects.html">efectos</a> para ver cómo hacer esto.</p>
+          <h2>Suscripciones Combinadas</h2>
+
+          <p>Al igual que con cualquier otros efectos, puedes usar <code>batchEffects</code> para ejecutar múltiples efectos al mismo tiempo. Consulte la documentación de <a href="/es/docs/runtime/effects.html">efectos</a> para ver cómo hacer esto.</p>
 
           <p>Ahora bien, vamos a ver cómo usar suscripciones en tanda, o más bien, combinados. Vamos a tomar dos efectos, uno para conseguir datos y otro para iniciar un evento para escuchar la pulsación de teclas. Queremos que estos do se executen cuando el programa se inicia. Puesto que se trata de dos efectos, en vez de ponerlos directamente in el método <code>subscriptions</code> del program, los vamos a mantener aparte y usar una versión combinada. Puesto que vamos a conseguir los datos después de que el programa se inicie, no habrá estado para la rendición inicial del la vista. Así pues, tenemos que chequear si el estado es veraz o falso antes de retornar la rendición de la vista. Por eso, vamos a designar el estatdo inicial in el método <code>init</code> cómo <code>null</code>.</p>
 
