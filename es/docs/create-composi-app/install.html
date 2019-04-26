@@ -54,21 +54,15 @@
           <p>Después de la instalación, puedes verificar que todo está bien por ejecutar:</p>
 
 
-          <pre><code class='language-bash'>create-composi-app -h
-// o:
-create-composi-app --help
-</code></pre>
+          <pre><code class='language-bash'>create-composi-app -h</code></pre>
           <p>Esto imprimirá ayuda en la terminal. También puede obtener la versión actual de <code> create-composi-app </code>:</p>
-<pre><code class='language-bash'>create-composi-app -v
-// o:
-create-composi-app --version
-</code></pre>
+<pre><code class='language-bash'>create-composi-app -v</code></pre>
           <p> </p>
           <h2>Crear un Proyecto</h2>
-          <p>Ahora que tiene instalado @composi/create-composi-app, puedes usarlo para crear una nuevo proyecto para usar @composi/core. Para hacer esto, abre la terminal y entra <code>create-composi-app</code> seguido del
-          nombre del proyecto. Esto creará un proyecto con ese nombre en el escritorio:</p>
+          <p>Ahora que tiene instalado @composi/create-composi-app, puedes usarlo para crear una nuevo proyecto para usar @composi/core. Para hacer esto, abre la terminal y entra <code>create-composi-app -n</code> seguido del
+          nombre del proyecto. El signo <code>-n</code> indica que lo que sigue es el nombre del proyecto. Esto creará un proyecto con ese nombre en el escritorio:</p>
 
-<pre><code class='language-bash'>create-composi-app MiProyecto</code></pre>
+<pre><code class='language-bash'>create-composi-app -n MiProyecto</code></pre>
 
           <p>Si desea un nombre de proyecto de varias palabras con espacios, deberá incluir el nombre entre comillas:</p>
 <pre><code class='language-bash'>create-composi-app "Mi Proyecto"</code></pre>
@@ -77,8 +71,8 @@ create-composi-app --version
           seguiría siendo "Mi Proyecto".</p>
 
           <h2>Provée una Senda</h2>
-          <p>Por defecto, create-composi-app coloca el nuevo proyecto en el escritorio. Sin embargo, puede decirle dónde desea ubicar el proyecto proporcionando un segundo argumento. Esto debe ser una ruta válida para el sistema operativo. También necesita ser citado. Crearemos nuestro proyecto en una carpeta especial en nuestro directorio principal:</p>
-<pre><code class='language-bash'>create-composi-app "Panda Puff" "~/dev"</code></pre>
+          <p>Por defecto, create-composi-app coloca el nuevo proyecto en el escritorio. Sin embargo, puede decirle dónde desea ubicar el proyecto proporcionando un argumento despues de <code>-p</code>. El signo <code>-p</code> indica que lo que sigue es la senda para el proyecto. Esto debe ser una ruta válida para el sistema operativo. También necesita ser citado. Crearemos nuestro proyecto en una carpeta especial en nuestro directorio principal:</p>
+<pre><code class='language-bash'>create-composi-app -n "Panda Puff" -p "~/dev"</code></pre>
           <p>Lo anterior creará el proyecto "Panda Puff" en la carpeta <code>dev</code>. Si <code>dev</code> no existe, se creará. De lo contrario, se creará dentro de la carpeta sin cambiar otras cosas en la carpeta. Date cuenta que los archivos con el mismo nombre que los del nuevo proyecto serán reemplazados por los nuevos.</p>
 
           <h2>Instalar Dependencias</h2>

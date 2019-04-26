@@ -53,18 +53,12 @@
           <p>After installing you can check that everything is right by running:</p>
 
 
-          <pre><code class='language-bash'>create-composi-app -h
-// or:
-create-composi-app --help
-</code></pre>
+          <pre><code class='language-bash'>create-composi-app -h</code></pre>
           <p>This will output help in the terminal. You can also get the current version of <code>create-composi-app</code>:</p>
-<pre><code class='language-bash'>create-composi-app -v
-// or:
-create-composi-app --version
-</code></pre>
+<pre><code class='language-bash'>create-composi-app -v</code></pre>
           <p> </p>
           <h2>Create a Project</h2>
-          <p>Now that you have @composi/create-composi-app installed, you can use it to create a new project setup to use @composi/core. To do this you open your terminal and type in <code>create-composi-app</code> followed by the name for the project. This will create a project with that name on your desktop:</p>
+          <p>Now that you have @composi/create-composi-app installed, you can use it to create a new project setup to use @composi/core. To do this you open your terminal and type in <code>create-composi-app -n</code> followed by the name for the project. The <code>-n</code> flag indicates that what follows is the name for the project. This will create a project with that name on your desktop:</p>
 
 <pre><code class='language-bash'>create-composi-app MyProj</code></pre>
 
@@ -74,8 +68,8 @@ create-composi-app --version
           <p>When you create a project with a multi-word name with spaces, Composi creates a folder with that name. However, because of NPM requirements, the package.json name is converted to lowercase and the spaces to hyphens. So the name "My Project" would appear in the package.json file as "my-project". But the project folder would remain "My Project".</p>
 
           <h2>Provide a Path</h2>
-          <p>By default create-composi-app puts the new project on the desktop. However, you can tell it where you want the project to be placed by providing a second argument. This needs to be a valid path for your operating system. It also needs to be quoted. We'll create our project in a special folder in our home directory:</p>
-<pre><code class='language-bash'>create-composi-app "Panda Puff" "~/dev"</code></pre>
+          <p>By default create-composi-app puts the new project on the desktop. However, you can tell it where you want the project to be placed by providing a second argument. This needs to be a valid path for your operating system. It also needs to be quoted. To designate a path for a new project you use the <code>-p</code> flag followed by the path. We'll create our project in a special folder in our home directory:</p>
+<pre><code class='language-bash'>create-composi-app -n "Panda Puff" -p "~/dev"</code></pre>
           <p>The above will create the project "Panda Puff" in the folder <code>dev</code>. If <code>dev</code> does not exist, it will be created. Otherwise it will be create inside of it with whatever else the folder contains.</p>
 
           <h2>Install Dependencies</h2>
