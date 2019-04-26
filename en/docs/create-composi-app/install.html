@@ -60,10 +60,10 @@
           <h2>Create a Project</h2>
           <p>Now that you have @composi/create-composi-app installed, you can use it to create a new project setup to use @composi/core. To do this you open your terminal and type in <code>create-composi-app -n</code> followed by the name for the project. The <code>-n</code> flag indicates that what follows is the name for the project. This will create a project with that name on your desktop:</p>
 
-<pre><code class='language-bash'>create-composi-app MyProj</code></pre>
+<pre><code class='language-bash'>create-composi-app -n MyProj</code></pre>
 
           <p>If you want a multi-word project name with spaces, you'll need to enclose the name in quotes:</p>
-<pre><code class='language-bash'>create-composi-app "My Project"</code></pre>
+<pre><code class='language-bash'>create-composi-app -n "My Project"</code></pre>
 
           <p>When you create a project with a multi-word name with spaces, Composi creates a folder with that name. However, because of NPM requirements, the package.json name is converted to lowercase and the spaces to hyphens. So the name "My Project" would appear in the package.json file as "my-project". But the project folder would remain "My Project".</p>
 
