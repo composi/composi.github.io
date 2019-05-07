@@ -59,9 +59,9 @@
         <p>Cuando tratábamos de cómo usar acciones en la función update, el uso fue muy similar al de Redux. Seguro que Redux requiere mucho más boilerplate (código repetivo). Aún así, hay una ligera desconexión entre lo que está haciendo un evento de la vista y lo que sucedió dentro de la función udpate. @composi/core ofrece una solución a esta desconexión por medio de uniones etiquetadas. Proporciona uniones etiquetadas con su función <code>union</code>. Para usarlo, primero tienes que importarlo a su proyecto:</p>
 
 <pre><code class="language-javascript">import { h, render, run, union } from '@composi/core'</code></pre>
-        <p>Una unión etiquetada es básicamente una matriz que vincula un valor de cadena, el nombre de una función, con la acción en la función update. Hacer esto nos permite invocarlos desde la vista. En nuestro ejemplo anterior, usamos cadenas con guión como tipo de mensaje: "añadir-ítem", "eliminar-ítem", etc. Ahora vamos a cambiar esas a nombres sin quiones que podemos usar como función en esta form: "añadirÍtem", "eliminarÍtem". Usaremos estos como los valores para crear una unión etiquetada. Estos argumentos se incluyen en una matriz, incluso si es un solo valor:</p>
+        <p>Una unión etiquetada es básicamente una matriz que vincula un valor de cadena, el nombre de una función, con la acción en la función update. Hacer esto nos permite invocarlos desde la vista. En nuestro ejemplo anterior, usamos cadenas con guión como tipo de mensaje: "añadir-ítem", "eliminar-ítem", etc. Ahora vamos a cambiar esas a nombres sin quiones que podemos usar como función en esta form: "añadirÍtem", "eliminarÍtem". Usaremos estos como los valores para crear una unión etiquetada. Antes de la versión 1.4.0 se tenía que incluir estos argumentos en una matriz, incluso si es un solo valor. Ahora se proveyen los argumentos separados con comas:</p>
 <pre><code class="language-javascript">// Creamos una unión etiquetada y la quardamos en el variable Msj (Mensaje):
-const Msj = new union(['añadirÍtem', 'eliminarÍtem'])</code></pre>
+const Msj = new union('añadirÍtem', 'eliminarÍtem')</code></pre>
 
         <p>Lo anterior crea una unión etiquetada que podemos usar con nuestras acciones de update. Esto nos permitirá llamar esas acciones de update directamente en nuestra vista:</p>
 <pre><code class="language-javascript">Msj.añadirÍtem('Sandía')
@@ -125,7 +125,7 @@ function actions(estado, msg) {
 
 <h3>Cómo Destructurar los Métodos de la Unión</h3>
 <p>Podemos usar destructuración para que la función <code>send</code> sea más limpia por crear aliases de los métodos de la unión etiquetada. Usando el ejemplo previos, debe de ser así:</p>
-<pre><code class="language-javascript">const Msg = new union(['añadirÍtem', 'eliminarÍtem'])
+<pre><code class="language-javascript">const Msg = new union('añadirÍtem', 'eliminarÍtem')
 // Destructurar los métodos de la unión para usar en la función send:
 const {añadirÍtem, eliminarÍtem} = Msg
 

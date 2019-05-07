@@ -132,7 +132,7 @@ function handleEnter(send) {
 }
 
 // Combinar los efectos en uno:
-const batchedSubscriptions = batchEffects([fetchState, handleEnter])
+const batchedSubscriptions = batchEffects(fetchState, handleEnter)
 
 // Definir el program que usar:
 const program = {
