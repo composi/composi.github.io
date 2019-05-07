@@ -151,7 +151,7 @@ idb.get('tiempo')
     <p>Here's an example of a todo list using @composi/idb and @composi/core with its runtime.</p>
 
 <pre><code class="language-javascript">import { h, render, run, union } from '@composi/core'
-import { mergeObjects } from '@composi/merge-objects'
+import { clone } from '@composi/merge-objects'
 import { idb } from '@composi/idb'
 
 // id para los ítemes de lista
@@ -337,7 +337,7 @@ const programa = {
       añadirÍtem: valor => {
         if (valor) {
           // Clonar el estado:
-          const estadoPrevio = mergeObjects(estado);
+          const estadoPrevio = clone(estado);
           estadoPrevio.items.push({
             activa: true,
             valor,
@@ -351,7 +351,7 @@ const programa = {
         }
       },
       eliminarÍtem: id => {
-        const estadoPrevio = mergeObjects(estado);
+        const estadoPrevio = clone(estado);
         estadoPrevio.items = estadoPrevio.items.filter(item => item.id != id);
         // Guardar el estado en IndexedDB.
         // Éste es un efecto asincrónico.
@@ -359,7 +359,7 @@ const programa = {
         return [estadoPrevio]
       },
       manejarEstadoActivo: id => {
-        const estadoPrevio = mergeObjects(estado);
+        const estadoPrevio = clone(estado);
         const index = estadoPrevio.items.findIndex(item => {
           return item.id == id;
         });
@@ -367,7 +367,7 @@ const programa = {
         return [estadoPrevio];
       },
       mostrarActivas: () => {
-        const estadoPrevio = mergeObjects(estado);
+        const estadoPrevio = clone(estado);
         estadoPrevio.items.map(item => {
           if (!item.activa) item.hidden = true;
           else item.hidden = false;
@@ -376,7 +376,7 @@ const programa = {
         return [estadoPrevio];
       },
       mostrarCompletadas: () => {
-        const estadoPrevio = mergeObjects(estado);
+        const estadoPrevio = clone(estado);
         estadoPrevio.items.map(item => {
           if (item.activa) item.hidden = true;
           else item.hidden = false;
@@ -385,7 +385,7 @@ const programa = {
         return [estadoPrevio];
       },
       mostrarTodas: () => {
-        const estadoPrevio = mergeObjects(estado);
+        const estadoPrevio = clone(estado);
         estadoPrevio.items.map(item => (item.hidden = false));
         estadoPrevio.botónSeleccionado = manejarEstadoBoton(0);
         return [estadoPrevio];
@@ -405,7 +405,7 @@ idb.get('tareas').then(datos => {
   if (datos) {
     console.log('Hay datos')
     programa.init[0] = datos
-    run(programa) 
+    run(programa)
   } else {
     console.log('No hay datos guardos así que vamos a usar otros.')
     // render(&lt;ListaTareas estado={estado} />, "section")
@@ -418,7 +418,7 @@ idb.get('tareas').then(datos => {
 
             <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -434,7 +434,7 @@ idb.get('tareas').then(datos => {
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>

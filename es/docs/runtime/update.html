@@ -76,7 +76,7 @@ const programa = {
   // Después se devuelve el nuevo estado.
   // Eso causará que la vista se actualice.
   update(estado, mensaje) {
-    const estadoPrevio = mergeObjects(estado)
+    const estadoPrevio = clone(estado)
     switch (mensaje.type) {
       case 'añadir-ítem':
         const valor = mensaje.valorDeInput
@@ -101,18 +101,18 @@ const programa = {
               + entorno de ejecución</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
           <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
-          <p>Date cuenta de que no importa qué decisión tomemos con una acción, siempre tenemos que devolver el estado. Cada acción debe devolver el estado, incluso si no realiza cambios en el estado. No hacerlo generará un error. Esto se debe a que las acciones pasan el estado a la vista para representarse, por lo que no devolver el estado hará que la vista falle porque nunca recibió el estado.</p> 
+          <p>Date cuenta de que no importa qué decisión tomemos con una acción, siempre tenemos que devolver el estado. Cada acción debe devolver el estado, incluso si no realiza cambios en el estado. No hacerlo generará un error. Esto se debe a que las acciones pasan el estado a la vista para representarse, por lo que no devolver el estado hará que la vista falle porque nunca recibió el estado.</p>
           <p>El hecho de que siempre tienes que devolver el estado, aun cuando no haya cambios, no quiere decir que esto causara que las vista vuelva a renderizarse. De echo, la función render chequéa el estado y las props del componente cuanto antes y para si son idénticos
 
           <h2>Inmutabilidad</h2>
-          <p>En el ejemplo anterior, usamos la función <code>mergeObjects</code> para clonar el estado. Esto nos permite manipular de forma segura el clon sin afectar el estado actual del programa. Cuando terminamos con modificaciones al clon del estado, lo devolvemos. Esto luego se pasa al método view para renderizar y se vuelve a asignar al estado del programa. <code>mergeObjects</code> viene preinstalado cuando creas un nuevo proyecto @composi/core. Pero necesitas importarlo en tu proyecto para usarlo:</p>
+          <p>En el ejemplo anterior, usamos la función <code>clone</code> para clonar el estado. Esto nos permite manipular de forma segura el clon sin afectar el estado actual del programa. Cuando terminamos con modificaciones al clon del estado, lo devolvemos. Esto luego se pasa al método view para renderizar y se vuelve a asignar al estado del programa. <code>clone</code> viene preinstalado cuando creas un nuevo proyecto @composi/core. Pero necesitas importarlo en tu proyecto para usarlo:</p>
 
 <pre><code class="language-javascript">import { h, render, run } from '@composi/core'
-import { mergeObjects } from '@composi/merge-objects'
-// With mergeObjects imported, you can use it to clone program state.
+import { clone } from '@composi/merge-objects'
+// With clone imported, you can use it to clone program state.
 </code></pre>
 
-          <p> </p> 
+          <p> </p>
           <h2>Acerca de Redux</h2>
           <p>Si está familiarizado con Redux, puede observar algunas similitudes con la forma en que funcionan las acciones de update. Eso es porque Redux se inspiró en la arquitectura Elm. La diferencia está en los detalles. Los mensajes enviados por la vista se parecen a las acciones de Redux, y las acciones de update se parecen a los reducers de Redux. Son similares, pero diferentes. Los reducers de Redux se llaman así porque toman el estado, realizan cualquier número de operaciones y luego devuelven el nuevo estado. Las acciones del entorno de ejecución, por otro lado, también pueden devolver un nuevo estado, o también pueden disparar un efecto. Debido a que pueden hacer más de una cosa, no pueden llamarse reducers. Aun así, en la gran mayoría de los casos, actuarán como reducers de Redux. Ese es el caso de uso más común.</p>
 
@@ -124,12 +124,12 @@ import { mergeObjects } from '@composi/merge-objects'
               + entorno de ejecución</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
           <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
-              <p> </p> 
+              <p> </p>
               <h2>Enfoque Alternativo</h2>
               <p>Hay otra forma de enviar mensajes y capturarlos utilizando una unión etiquetada. @composi/core permite esto a través de su función <code>union</code>. Básicamente, esto crea una matriz de valores de cadena para los nombres de funciones y las acciones que se utilizarán en update. Esto puede parecer complicado, pero en realidad es bastante simple y resulta en un código más limpio y fácil de leer. Debes de leer la documentación sobre cómo utilizar <a target='__blank' href="/es/docs/runtime/tagged-unions.html">Unión Etiquetada</a>.</p>
               <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -145,7 +145,7 @@ import { mergeObjects } from '@composi/merge-objects'
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>

@@ -64,7 +64,7 @@
 </code></pre>
         <p>In <code>app.js</code> we are going to import three files: @composi/core, @composi/merge-objects, and htm. Notice how each import ends with <code>?module</code>. This is to let the browser know that these are ES6 modules:</p>
 <pre><code class="language-javascript">import { h, render, run, union } from 'https://unpkg.com/@composi/core@0.10.0/dist/composi-core.mjs?module'
-import { mergeObjects } from 'https://unpkg.com/@composi/merge-objects@1.1.0/src/index.js?module'
+import { clone } from 'https://unpkg.com/@composi/merge-objects@1.1.0/src/index.js?module'
 import { htm } from 'https://unpkg.com/htm.mjs?module'
 
 // Pass the @composi/core h function to htm,
@@ -169,7 +169,7 @@ input {
         <h3>App.js</h3>
         <p>And now, for the <code>app.js</code> file we're going to use the following:</p>
 <pre><code class="language-javascript">import { h, render, run, union } from 'https://unpkg.com/@composi/core@0.10.0/dist/composi-core.mjs?module'
-import { mergeObjects } from 'https://unpkg.com/@composi/merge-objects@1.1.0/src/index.js?module'
+import { clone } from 'https://unpkg.com/@composi/merge-objects@1.1.0/src/index.js?module'
 import { htm } from 'https://unpkg.com/htm.mjs?module'
 
 // Pass the @composi/core h function to htm,
@@ -237,7 +237,7 @@ const state = {
   ]
 }
 function actions(msg, state) {
-  const prevState = mergeObjects(state)
+  const prevState = clone(state)
   return Msg.match(msg, {
     'AddItem': value => {
       if (!value) return [prevState]

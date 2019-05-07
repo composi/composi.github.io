@@ -150,7 +150,7 @@ idb.get('timestamp')
     <p>Here's an example of a todo list using @composi/idb and @composi/core with its runtime.</p>
 
 <pre><code class="language-javascript">import { h, render, run, union } from '@composi/core'
-import { mergeObjects } from '@composi/merge-objects'
+import { clone } from '@composi/merge-objects'
 import { idb } from '@composi/idb'
 
 // id for list items
@@ -336,7 +336,7 @@ const program = {
     return Msg.match(msg, {
       addItem: value => {
         if (value) {
-          const prevState = mergeObjects(state);
+          const prevState = clone(state);
           prevState.items.push({
             active: true,
             value,
@@ -350,7 +350,7 @@ const program = {
         }
       },
       deleteItem: id => {
-        const prevState = mergeObjects(state);
+        const prevState = clone(state);
         prevState.items = prevState.items.filter(item => item.id != id);
         // Preserve state in IndexedDB.
         // This is an async effect.
@@ -358,7 +358,7 @@ const program = {
         return [prevState]
       },
       setActiveState: id => {
-        const prevState = mergeObjects(state);
+        const prevState = clone(state);
         const index = prevState.items.findIndex(item => {
           return item.id == id;
         });
@@ -366,7 +366,7 @@ const program = {
         return [prevState];
       },
       showActive: () => {
-        const prevState = mergeObjects(state);
+        const prevState = clone(state);
         prevState.items.map(item => {
           if (!item.active) item.hidden = true;
           else item.hidden = false;
@@ -375,7 +375,7 @@ const program = {
         return [prevState];
       },
       showCompleted: () => {
-        const prevState = mergeObjects(state);
+        const prevState = clone(state);
         prevState.items.map(item => {
           if (item.active) item.hidden = true;
           else item.hidden = false;
@@ -384,7 +384,7 @@ const program = {
         return [prevState];
       },
       showAll: () => {
-        const prevState = mergeObjects(state);
+        const prevState = clone(state);
         prevState.items.map(item => (item.hidden = false));
         prevState.selectedButton = setButtonState(0);
         return [prevState];
@@ -397,7 +397,7 @@ const program = {
 };
 
 // Before running program,
-// check to see if there is anything stored in IndexedDB, 
+// check to see if there is anything stored in IndexedDB,
 // if there is load it as state for the program.
 // Otherwise run program with default state.
 idb.get('todos').then(data => {
@@ -418,7 +418,7 @@ idb.get('todos').then(data => {
 
             <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -434,7 +434,7 @@ idb.get('todos').then(data => {
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>

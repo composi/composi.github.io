@@ -87,8 +87,8 @@ Msg.deleteItem(132)
 
         <p>When we setup the update function, we can check that the message sent matches the values in the tagged union using the <code>match</code> method. Since we're using a tagged union, we don't need a switch statement to check for a tag type <code>msg.type</code>. This now gets handled by the <code>match</code> method. This results in a simpler signature for the actions. We can make an <code>actions</code> function that takes the message and state and retuns the result of a match:</p>
 <pre><code class="language-javascript">function actions(state, msg) {
-  // Use mergeObjects to clone state:
-  const prevState = mergeObjects(state)
+  // Use clone to clone state:
+  const prevState = clone(state)
   return Msg.match(msg, {
     // Check for the message tag:
     'addItem': value => {
@@ -104,8 +104,8 @@ Msg.deleteItem(132)
 }
 // As opposed to:
 function actions(state, msg) {
-  // Use mergeObjects to clone state:
-  const prevState = mergeObjects(state)
+  // Use clone to clone state:
+  const prevState = clone(state)
   switch (msg.type) {
     case 'add-item':
       prevState.fruits.push({ key: prevState.newKey++, msg.inputValue })
@@ -133,8 +133,8 @@ send(deleteItem(123))</code></pre>
         <h3>Default or CatchAll</h3>
         <p>In the previous actions example we were checking each possible tag and providing a function to execute. In a switch statement we can use <code>default</code> to use when there is no match. We can also do that with a tagged union. Just provide a function as the last argument after the handlers object:</p>
 <pre><code class="language-javascript">function actions(msg, state) {
-  // Use mergeObjects to clone state:
-  const prevState = mergeObjects(state)
+  // Use clone to clone state:
+  const prevState = clone(state)
   return Msg.match(msg, {
     // Check for the message tag:
     'addItem': value => {

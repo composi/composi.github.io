@@ -57,14 +57,14 @@
           <p>By default a program's state is mutable when you have access to it inside both the update and view methods. Hopefully no one would ever modify state from the code for rendering the view. Update, on the other hand, is how you modify a program's state. For simple examples this is probably not going to be a problem. However, if your app and data are complex, you will probably want to avoid directly modifying state in an action. Instead you can clone that state inside the the update function before passing the cloned state to the actions. These then will modify the clone and return it. You can use @composi/merge-objects to clone objects or arrays. It creates a deep clone. It's already installed when you create a project, so you just need to import it into your project and then use it in an update action.</p>
 
 <pre><code class="language-javascript">import { h, render, run, union } from '@composi/core'
-import { mergeObjects } from '@composi/merge-objects'
+import { clone } from '@composi/merge-objects'
 
 const Msg = union(['addItem', 'deleteItem'])
-// And here we use mergeObjects in our actions.
+// And here we use clone in our actions.
 // Here were using a tagged union.
 function actions(state, msg) {
   // Clone the state:
-  const prevState = mergeObjects(state)
+  const prevState = clone(state)
   return Msg.match(msg, {
     // Check for the message tag:
     'addItem': value => {
@@ -81,11 +81,11 @@ function actions(state, msg) {
   })
 }
 </code></pre>
-            <p>Using the above technique of cloning the state with <code>mergeObjects</code> means that the program state won't be updated until the action returns it.</p>
+            <p>Using the above technique of cloning the state with <code>clone</code> means that the program state won't be updated until the action returns it.</p>
 
               <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -101,7 +101,7 @@ function actions(state, msg) {
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>

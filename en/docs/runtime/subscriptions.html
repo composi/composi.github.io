@@ -142,7 +142,7 @@ const program = {
     return state && render(<List {...{ state, send }}/>, 'section')
   },
   update(state, msg) {
-    const prevState = mergeObjects(state)
+    const prevState = clone(state)
     return actions(prevState, msg)
   },
   subscriptions(state, send) {
