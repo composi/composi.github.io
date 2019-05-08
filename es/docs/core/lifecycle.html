@@ -161,7 +161,7 @@ render(&lt;Lista datos={frutas}/>, 'body')
       console.log('Se eliminó un ítem de la lista.')
     }
   }
-  function gestionarDesmonte(done, element) {
+  function gestionarDesmonte(element, done) {
     // Haz algo con el elemento base del componente.
     // Entonces desencadena la animación de eliminación.
     element.classList.add('deleting')

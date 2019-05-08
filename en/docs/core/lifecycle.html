@@ -158,7 +158,7 @@ render(&lt;List data={fruits}/>, 'body')
       console.log('An item was deleted from the list.')
     }
   }
-  function handleUnmount(done, element) {
+  function handleUnmount(element, done) {
     // Do something with the component base element.
     // Trigger deletion animation:
     element.classList.add('deleting')
