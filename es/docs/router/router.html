@@ -45,7 +45,7 @@
           <h1>Router</h1>
           <h2>Enrutador para los Componentes</h2>
           <p>@composi/router es un enrutador del cliente basado en hash para aplicaciones de una sola página (SPA). Esto es para aquellas ocasiones en las que deseas renderizar condicionalmente un conjunto de subcomponentes según el URL. Esto funciona correctamente con el botón de retroceso del navegador y puede usarlo con la API de historia. @composi/router es muy simple con solo algunas opciones. Si necesitas un enrutador más avanzado, considera Universal Router. O usa el enrutador que prefieras.</p>
-          
+
           <h2>Definir las Rutas</h2>
           <p>El siguiente ejemplo muestra cómo configurar las rutas. Lo que hagas cuando pasa la ruta depende completamente de ti:</p>
 <pre><code class="language-javascript">import { h, render } from '@composi/core'
@@ -55,7 +55,7 @@ import { Router } from '@composi/router'
 const router = Router()
 
 // Definir las rutas que usar:
-router([
+router(
   {
     path: "/",
     action: () => {
@@ -76,7 +76,7 @@ router([
       else console.log(nombre)
     }
   }
-])</code></pre>
+)</code></pre>
           <p>Normalmente usarías una ruta para manejar la carga de un componente. La forma más fácil de hacer esto es usar un componente funcional:</p>
 
 <pre><code class="language-javascript">import { h, render } from '@composi/core'
@@ -107,7 +107,7 @@ function renderizarPágina(component) {
   render(&lt;Menu>{component}&lt;/Menu>, 'section')
 }
 
-router([
+router(
   {
     path: '/',
     action: () => renderizarPágina(Home)
@@ -126,7 +126,7 @@ router([
       console.log('Esta no es una ruta correcta.')
     }
   }
-])
+)
 
 render(&lt;Menu>{Home}&lt;/Menu>, 'section')</code></pre>
 
@@ -148,7 +148,7 @@ render(&lt;Menu>{Home}&lt;/Menu>, 'section')</code></pre>
 const gestorTemporal = () => {
   console.log('Este gestor es temporario y será eliminado.')
 }
-router([
+router(
   {
     path: '/',
     action: () => console.log('¡Estás en casa!')
@@ -158,36 +158,42 @@ router([
     // Esta ruta será eliminado después de un tiempo.
     action: gestorTemporal
   }
-])</code></pre>
+)</code></pre>
 
         <p>Para apreder cómo eliminar una ruta o gestor, examina <a href='#removing-route'/>Eliminar una Ruta</a></p>
 
         <h2>Parámetros Opcionales</h2>
         <p>Puedes indicar que un parámetro es opcioinal por usar el carácter <code>?</code> después de él:</p>
 
-<pre><code class="language-javascript">router('usuarios/:nombre?', function(nombre) {
-  if (nombre) {
-    console.log(nombre)
-  } else {
-    console.log('No se encontró ningún nombre.')
+<pre><code class="language-javascript">router({
+  path: 'usuarios/:nombre?',
+  action: function(nombre) {
+    if (nombre) {
+      console.log(nombre)
+    } else {
+      console.log('No se encontró ningún nombre.')
+    }
   }
 })
-router('usuarios/') // Registra `No se encontró ningún nombre.`
-router('usuarios/julio') // logs `julio`</code></pre>
+router.navigate('usuarios/') // Registra `No se encontró ningún nombre.`
+router.navigate('usuarios/julio') // logs `julio`</code></pre>
         <h2>Comodín</h2>
         <p>El uso de <code>*</code> captará cualquier ruta que no coincida con las rutas previamente definidas. Usa este como comodín para las rutas inesperadas o para 404:</p>
 
-<pre><code class="language-javascript">router('usuarios/*', function() {
+<pre><code class="language-javascript">router.navigate('usuarios/*', function() {
 console.log('¡Captó ruta inesperada!')
 })
-router('usuarios/12312312')</code></pre>
+router.navigate('usuarios/12312312')</code></pre>
         <h2>Boquear una Ruta</h2>
         <p>Puedes bloquear una ruta por devolver false:</p>
 
-<pre><code class="language-javascript">router('/admin', function() {
-return false
+<pre><code class="language-javascript">router({
+  path:'/admin',
+  action: function() {
+    return false
+  }
 })</code></pre>
-        <p> </p> 
+        <p> </p>
         <h2>Eliminar Todas las Rutas y sus Gestores</h2>
         <p>Si quieres eliminar todas las rutas actuales y sus gestores, solo tienes que ejectuar lo siguiente:</p>
 <a name="removing-route"></a>
@@ -201,7 +207,7 @@ return false
 const gestorTemporal = () => {
   console.log('Este gestor es temporario y será eliminado.')
 }
-router([
+router(
   {
     path: '/',
     action: () => console.log('¡Estás en casa!')
@@ -210,15 +216,15 @@ router([
     path: '/',
     action: () => gestorTemporal
   }
-])
+)
 
 // Después de un tiempo eliminamos la ruta con su gestor:
 router.remove('/', gestorTemporal)</code></pre>
 
-          
+
           <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -234,7 +240,7 @@ router.remove('/', gestorTemporal)</code></pre>
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>

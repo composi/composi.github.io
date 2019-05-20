@@ -45,7 +45,7 @@
           <h1>Router</h1>
           <h2>Routing for Components</h2>
           <p>@composi/router is a client-side hash-based router for single page apps (SPA). This is for those occasions where you want to be able to conditionally render a set of sub components based on a url value. This is works properly with the browser's back button and you can use it with the History API. @composi/router is very simple with only a few options. If you need a more advanced router, check out Universal Router. Or use whatever router you prefer.</p>
-          
+
           <h2>Adding Routes</h2>
           <p>The following example shows how to set up routes. What you do when the route happens is completely up to you:</p>
 <pre><code class="language-javascript">import { h, render } from '@composi/core'
@@ -55,7 +55,7 @@ import { Router } from '@composi/router'
 const router = Router()
 
 // Define paths to use:
-router([
+router(
   {
     path: "/",
     action: () => {
@@ -76,7 +76,7 @@ router([
       else console.log(name)
     }
   }
-])</code></pre>
+)</code></pre>
           <p>Normally you would use a route to handle loading a component. The easiest way to do this is to use a functional component:</p>
 
 <pre><code class="language-javascript">import { h, render } from '@composi/core'
@@ -107,7 +107,7 @@ function renderPage(component) {
   render(&lt;Menu>{component}&lt;/Menu>, 'section')
 }
 
-router([
+router(
   {
     path: '/',
     action: () => renderPage(Home)
@@ -126,7 +126,7 @@ router([
       console.log('Sorry, not a proper path.')
     }
   }
-])
+)
 
 render(&lt;Menu>{Home}&lt;/Menu>, 'section')</code></pre>
 
@@ -149,7 +149,7 @@ render(&lt;Menu>{Home}&lt;/Menu>, 'section')</code></pre>
 const removableHandler = () => {
   console.log('This handler is temporary and subject to removal.')
 }
-router([
+router(
   {
     path: '/',
     action: () => console.log('You are home!')
@@ -159,36 +159,45 @@ router([
     // This route will be removed later.
     action: removableHandler
   }
-])</code></pre>
+)</code></pre>
 
         <p>To learn more about removing paths and handlers, see <a href='#removing-route'/>Removing a Route</a></p>
 
         <h2>Optional Parameters</h2>
         <p>You can indicate that a parameter is optional by using the <code>?</code> character after it:</p>
 
-<pre><code class="language-javascript">router('users/:name?', function(name) {
-  if (name) {
-    console.log(name)
-  } else {
-    console.log('No name was provided.')
+<pre><code class="language-javascript">router({
+  path: 'users/:name?',
+  action: function(name) {
+    if (name) {
+      console.log(name)
+    } else {
+      console.log('No name was provided.')
+    }
   }
 })
-router('users/') // logs `No name was provided.`
-router('users/bob') // logs `bob`</code></pre>
+router.navigate('users/') // logs `No name was provided.`
+router.navigate('users/bob') // logs `bob`</code></pre>
         <h2>Wildcard</h2>
         <p>Using <code>*</code> will catch any routes that do not match previously defined routes. Use this as a catch all for any unexpected routes or for a 404:</p>
 
-<pre><code class="language-javascript">router('users/*', function() {
-console.log('Caught unexpected route!')
+<pre><code class="language-javascript">router({
+  path: 'users/*',
+  action: function() {
+    console.log('Caught unexpected route!')
+  }
 })
-router('users/12312312')</code></pre>
+router.navigate('users/12312312')</code></pre>
         <h2>Block a Route</h2>
         <p>You can block a route by returning false:</p>
 
-<pre><code class="language-javascript">router('/admin', function() {
-return false
+<pre><code class="language-javascript">router({
+  path: '/admin',
+  action: function() {
+    return false
+  }
 })</code></pre>
-        <p> </p> 
+        <p> </p>
         <h2>Remove All Routes and Handlers</h2>
         <p>If you want to remove all current routes and handlers, you can invoke the following:</p>
 <a name="removing-route"></a>
@@ -202,7 +211,7 @@ return false
 const removableHandler = () => {
   console.log('This handler is temporary and subject to removal.')
 }
-router([
+router(
   {
     path: '/',
     action: () => console.log('You are home!')
@@ -211,15 +220,15 @@ router([
     path: '/',
     action: () => removableHandler
   }
-])
+)
 
 // Sometime later we remove the named handler:
 router.remove('/', removableHandler)</code></pre>
 
-          
+
           <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -235,7 +244,7 @@ router.remove('/', removableHandler)</code></pre>
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>
