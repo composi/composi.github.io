@@ -55,7 +55,7 @@
           <h2>Running Effects at Startup</h2>
           <p>When we covered <code>init</code> it was explained how you could execute an effect at startup by passing it as a second value in the tuple that <code>init</code> returns. Generally effects that run at startup are referred to as subscriptions. You can be more explicit about implementing a subscription by using the <code>subscriptions</code> method on a program.  This needs to return the subscription to execute.</p>
           <p>You would use subscriptions to track mouse movements, keyboard events, scrolling, changes to browser location, or timers.</p>
-<pre><code class="language-javascript">function startCount() {
+<pre><code class="language-javascript">function startCount(getState, send) {
   let count = 0
   const id = setInterval(() => {
     if (count === 10) clearInterval(id)
@@ -76,12 +76,12 @@ const program = {
       return [msg]
     }
   },
-  subsciptions(state, send) {
+  subscriptions(getState, send) {
     return startCount
   }
 }</code></pre>
-          <p>There is no magic here. Subscriptions does what the label says. Using subscriptions to run effects at start is more explicit. But you can use whatever approach, init or subscriptions, to run effects at startup. Subscriptions gets state and send passed to it. This means you can access the program's state and send a message to an update action.</p>
-          <p>Regardless of whether you use state and send in your subscriptions, the program method requires them as parameters:</p>
+          <p>There is no magic here. Subscriptions do what the label says. Using subscriptions to run effects at start is more explicit. But you can use whatever approach, init or subscriptions, to run effects at startup. Subscriptions receive getState and send as arguments. This means you can access the program's state and send a message to an update action. getState is necessary because since subscriptions run separately from the program, they don't have direct access to the program's state. Using <code>getState</code> you can get the current state of the program and using <code>send</code> you can send a message to an action.</p>
+          <p>Regardless of whether you use getState and send in your subscriptions, the program method requires them as parameters:</p>
 <pre><code class="language-javascript">const program = {
   init() {
 
@@ -93,35 +93,37 @@ const program = {
 
   },
   // state and send required as arguments here:
-  subscriptions(state, send) {
+  subscriptions(getState, send) {
 
   }
 }
 </code></pre>
           <p><strong>Note:</strong> Subscriptions are not for manipulating state. Changing state in an subscription will result in the view and state being out of sync. If you have produced some data in an effect and want to update state, do so by sending a message to an action. Doing so will trigger the reconciliation algorythm and a possible re-render of the view.</p>
+          <p>If you need to use some value from state in a subscription be careful to always make a clone of state before using it. You can use the clone function form @composi/merge-objects, or Object.assign or destructuring.</p>
 
           <h2>Batched Subscriptions</h2>
 
           <p>Like any other effects, you can use <code>batchEffects</code> to run multiple effects at the same time. See the documentation for <a href="/en/docs/runtime/effects.html">effects</a> to learn how to use  <code>batcheEffects</code>.</p>
 
           <p>Now let's look at how to use batched subscriptions. We are going to take two effects, one to fetch data and one to set up an event to listen for key presses that we want to execute when our program starts. Since there are two effects, rather than putting them directly in the body of the <code>subscriptions</code> program method, we'll keep them separate and use a batched version. Since we're fetching data at start up, there will be no state for the initial vew render. In our view we'll check whether state is truthy or not before returning the rendered view. And in our initial setup for state in the <code>init</code> method we will set state to null.</p>
-<pre><code class='language-javascript'>// Below are two effects.
+<pre><code class='language-javascript'>// Create a tagged union for message:
+const Msg = union('useFetchedData')
+
+// Below are two effects.
 // Each effect expects the `send` function as its argument.
 // This will get passed automatically when the batched effects are processed.
 
 // Subscription effect to fetch data:
-function fetchState(send) {
-  fetch('/src/js/state.json')
-    .then(function (response) {
-      return response.json();
-    })
-    .then(data => {
-      send(Msg.fetchThenRender(data))
-    })
+function fetchState(getState, send) {
+  (async () => {
+    const response = await fetch('/src/js/state.json')
+    const data = await response.json()
+    send(Msg.useFetchedData(data))
+  })()
 }
 // Subscription effect to handle Enter key:
-function handleEnter(send) {
-  document.addEventListener('keypress', function (e) {
+function handleEnter(getState, send) {
+  document.addEventListener('keypress', e => {
     if (e.keyCode === 13) {
       send(Msg.addItem())
     }
@@ -145,7 +147,7 @@ const program = {
     const prevState = clone(state)
     return actions(prevState, msg)
   },
-  subscriptions(state, send) {
+  subscriptions(getState, send) {
     // Here we return the batched effects.
     // Notice that we do not need to call them, just return them.
     return batchedSubscriptions
@@ -170,10 +172,62 @@ const program = {
     }
   },
   // Use short form for subscriptions:
-  subs(state, send) {
+  subs(getState, send) {
     return startCount
   }
 }</code></pre>
+<p>&nbsp;</p>
+      <h2>Accessing State</h2>
+      <p>By their nature subscriptions are async operations. They launch when the program first runs. They get state and the <code>send</code> function passed to them as arguments. Depending on what a subscription is doing, you can send a message to an action to handle so that the state can be updated.</p>
+      <p>Subscriptions run independently and isolated from the rest of the program. You cannot send a message to a subscription. And, because of the way state is handled, subscriptions only receive state as it was at the time the program started. If state changes after that, subsciptions are unaware. They have only a copy of state as it was at startup.</p>
+      <p>To get around this isolation to enable better means of handling subscriptions there is a special, static method exposed on the program: <code>getState</code>. This exists to enable a subscription to access the current state of a program. Using this, a subscription can run a loop to check a state value to use for making a decision, such as to cancel a subscription or perform some other task.</p>
+      <h2>program.getState()</h2>
+      <p>To access the current state of a project, you use the <code>getState</code> which gets passed as the first argument of a subscription. Say you have a program like this:</p>
+      <pre><code class="language-javascript">// src/js/app.js:
+import {h, render, run, union} from '@composi/core'
+import {Main} from './components/main.js'
+import {actions} from './effects/actions'
+import {subscription} from './effects/subscription'
+
+const program = {
+  init() {
+    return [state]
+  },
+  view(state, send) {
+    return render(&lt;Main {...{state, send}}/>, 'body')
+  },
+  update(state, msg, send) {
+    return actions(state, msg, send)
+  },
+  subscriptions(getState, send) {
+    return subscription
+  }
+}
+</code></pre>
+<p>Now say your subscription was doing this:</p>
+<pre><code class="language-javascript">// src/js/effects/subscription.js:
+import {clone} from '@composi/merge-objects'
+
+function subscription(getState, send) {
+  // clone the current program state:
+  const state = clone(getState())
+  const id = setInterval(() => {
+    if (state.items.length &lt; 10) {
+      console.log(`The number of items is: ${state.items.length}`)
+      console.log('Not enough items yet!')
+    }
+  }, 1000)
+}</code></pre>
+
+<p>If the user where to add new items, this subscription doesn't have to worry because <code>getState</code> will always return the current program state. That way it can know when the user adds the required number of items.</p>
+
+<p> </p>
+<h2>Warning!</h2>
+<p>Never ever use <code>getState</code> to directly manipulate state. Instead get state, clone it, then do what you need to do with the clone. Directly changing state inside a subscription will result in the view and state being out of sync. Remember, only when an action returns state does the view get updated. That's why that function is called <code>update</code>. Returning state from a subscription will do nothing. You can send data from a subscription to an action via a message, which will result in the view being updated.</p>
+<h2>How to Use Subscriptions</h2>
+<p>You could use a subscription to get data from somewhere or create data and send that data as a message for an action to handle. Or you might use a subscription to setup a websocket or run a loop for logging. You could also use a subscription to get the current state of a program to examine it and make a decision. This could result in a subscription canceling itself or sending a message to an action to update state.</p>
+<p>Actions are for updating state. Subscriptions are for running effects independently of the program that launch at startup. <strong>When something in a subscription warrants that the state be updated, the subscription must send a message to an action to handle the task</strong>. Remember that if a subscription creates data that you want to expose as state, you can send that data as the value of a message for an action to handle. The action can expose the message data on the state, which will automatically update the view.</p>
+
 
 
               <p>&nbsp;</p>
