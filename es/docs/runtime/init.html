@@ -72,7 +72,7 @@
 }</code></pre>
 
         <p>Aquí está un ejemplo sencillo de Hola Mundo:</p>
-        
+
         <p data-height="300" data-theme-id="6688" data-slug-hash="mQPGbz" data-default-tab="js,result" data-user="rbiggs"
           data-pen-title="@composi/core + runtime Hola Mundo" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/mQPGbz/">@composi/core
             + runtime Hola Mundo</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
@@ -80,7 +80,7 @@
 
 
         <p>En el ejemplo siguiente mostamos cómo implementar un efecto en el init del programa para empezar un bucle para mostra el tiempo cada segundo. El bucle se ejecuta en forma separada del entorno de ejecución, enviando mensaje cada segundo a la acción del update, causando que la vista acutalice el tiempo que muestra.</p>
-        
+
         <p data-height="300" data-theme-id="6688" data-slug-hash="MzyqKe" data-default-tab="js,result" data-user="rbiggs"
           data-pen-title="@composi/core + runtime Reloj" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/MzyqKe/">@composi/core
             + runtime Reloj</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
@@ -117,7 +117,7 @@ const programa = {
     return ['un valor para el estado', effect]
   },
   view(estado) {
-  render(&lt;Contador {...{estado}} />, 'section')
+    render(&lt;Contador {...{estado}} />, 'section')
   },
   update() {}
 }
@@ -128,7 +128,7 @@ run(programa)</code></pre>
               <p>Aunque puedes ejecutar un efecto de esta manera, recomendamos que uses el método <code>subscriptions</code> porque es más explicito lo que estás haciendo.</p>
               <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -144,7 +144,7 @@ run(programa)</code></pre>
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>
