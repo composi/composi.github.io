@@ -120,6 +120,16 @@ render(&lt;List data={fruits}/>, 'body')
   <p>This subtle change in exposing the data to the <code>update</code> event means that now we have access to the previous and current state of <code>data</code>. That means we could compare <code>oldProps.data</code> with <code>newProps.data</code> to see what changed.</p>
   <p>Always make sure you are exposing the properties you need to on the same element where <code>onupdate</code> is placed. Otherwise you're values will be undefined.</p>
 
+  <p>In this example we show how to use <code>onupdate</code> to log out the differences between the count value as it
+    increases and decrease. By using oldProps and newProps, we can see how the value changes and log the difference.</p>
+
+  <p data-height="300" data-theme-id="6688" data-slug-hash="ZmKZwV" data-default-tab="js,result" data-user="rbiggs"
+    data-pen-title="@composi/core - update-example" class="codepen">See the Pen <a
+      href="https://codepen.io/rbiggs/pen/ZmKZwV/">@composi/core
+      - update-example</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a
+      href="https://codepen.io">CodePen</a>.</p>
+  <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
 
         <p>You might be wondering when you would use update. The use case for it is very limited. It's great if you want to see what props changed, as we did above to log out the changes. You would not use it to change data, as that would trigger another update and put you in an infinite loop. You might use it to add a class that causes an animation, and then remove the class. You could also use it to set focus on an input or other form element.</p>
         <p> </p>
