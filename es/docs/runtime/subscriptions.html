@@ -77,7 +77,7 @@ const programa = {
     }
   },
   subscriptions(getState, send) {
-    return empezarContar
+    return empezarContar(getState, send)
   }
 }</code></pre>
           <p>No hay nada de magia aquí. Las suscripciones hacen lo que dice la etiqueta. Usar suscripciones para ejecutar efectos al inicio
