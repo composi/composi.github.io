@@ -152,7 +152,7 @@ const program = {
   subscriptions(getState, send) {
     // Aquí retornamos los efectos combinados.
     // No tenemos que invocar esto, solo lo retornamos.
-    return batchedSubscriptions
+    return batchedSubscriptions(getState, send)
   }
 }</code></pre>
           <p> </p>

@@ -200,7 +200,7 @@ const program = {
     return actions(state, msg, send)
   },
   subscriptions(getState, send) {
-    return subscription
+    return subscription(getState, send)
   }
 }
 </code></pre>
