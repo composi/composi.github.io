@@ -77,7 +77,7 @@ const program = {
     }
   },
   subscriptions(getState, send) {
-    return startCount
+    return startCount(getState, send)
   }
 }</code></pre>
           <p>There is no magic here. Subscriptions do what the label says. Using subscriptions to run effects at start is more explicit. But you can use whatever approach, init or subscriptions, to run effects at startup. Subscriptions receive getState and send as arguments. This means you can access the program's state and send a message to an update action. getState is necessary because since subscriptions run separately from the program, they don't have direct access to the program's state. Using <code>getState</code> you can get the current state of the program and using <code>send</code> you can send a message to an action.</p>
