@@ -173,7 +173,7 @@ const program = {
   },
   // Use short form for subscriptions:
   subs(getState, send) {
-    return startCount
+    return startCount(getState, send)
   }
 }</code></pre>
 <p>&nbsp;</p>
