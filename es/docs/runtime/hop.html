@@ -84,18 +84,16 @@ const programaEnvuelto = registrarEstado(programa, estado => {
 
 // Ejecutar el programa de orden superior:
 run(programaEnvuelto)
-</code></pre>   
+</code></pre>
               <p>Ya que el programa está envuelta por el programa de orden superior, el programa registrará su estado cada vez que cambia.</p>
 
               <h2>Depuración</h2>
+
               <p>Puedes crear un programa de orden superior para depurar a otro programa. Aquí mostramos un ejemplo bastante sencillo de esto. Clara que tendrías que desarollarlo mucho más para que fuera más útil.</p>
 <pre><code class="language-javascript">export function registarErrores(programa) {
   // Captar el estado y efecto del programa:
-  const [estadoDelPrograma, efectoDelPrograma] = programa.init()
-  const init = () => [
-    { tieneError: false, error: null, estadoDelPrograma },
-    efectoDelPrograma
-  ]
+  const estadoDelPrograma = program.init()
+  const init = () => ({ tieneError: false, error: null, estadoDelPrograma })
 
   // Gestionar cualquer cosa que devuelva la función update.
   // Si es error, trata con él,
@@ -118,11 +116,11 @@ run(programaEnvuelto)
     try {
       actualizarLaVista = programa.update(estado.estadoDelPrograma, mensaje)
     } catch (error) {
-      return [{ ...estado, tieneError: true, error }]
+      return ({ ...estado, tieneError: true, error })
     }
 
     const [estadoDelPrograma, efectoDelPrograma] = actualizarLaVista
-    return [{ ...estado, estadoDelPrograma }, efectoDelPrograma]
+    return ({ ...estado, estadoDelPrograma }, efectoDelPrograma)
   }
 
   // Deja que el programa termine.
@@ -140,7 +138,7 @@ run(programaEnvuelto)
 
               <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -156,7 +154,7 @@ run(programaEnvuelto)
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>

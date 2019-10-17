@@ -56,7 +56,8 @@
         </ul>
         <h1>Unión Etiquetada</h1>
         <h2>Atajos de Acciones</h2>
-        <p>Cuando tratábamos de cómo usar acciones en la función update, el uso fue muy similar al de Redux. Seguro que Redux requiere mucho más boilerplate (código repetivo). Aún así, hay una ligera desconexión entre lo que está haciendo un evento de la vista y lo que sucedió dentro de la función udpate. @composi/core ofrece una solución a esta desconexión por medio de uniones etiquetadas. Proporciona uniones etiquetadas con su función <code>union</code>. Para usarlo, primero tienes que importarlo a su proyecto:</p>
+
+        <p>Cuando tratábamos de cómo usar acciones en la función update, el uso fue muy similar al de Redux. Pasábamos mensajes, los cuáles son objetos on un tipo y datos opcionales. Seguro que Redux requiere mucho más boilerplate (código repetivo). Aún así, hay una ligera desconexión entre lo que está haciendo un evento de la vista y lo que sucedió dentro de la función udpate. @composi/core ofrece una solución a esta desconexión por medio de uniones etiquetadas. Proporciona uniones etiquetadas con su función <code>union</code>. Para usarlo, primero tienes que importarlo a su proyecto:</p>
 
 <pre><code class="language-javascript">import { h, render, run, union } from '@composi/core'</code></pre>
         <p>Una unión etiquetada es básicamente una matriz que vincula un valor de cadena, el nombre de una función, con la acción en la función update. Hacer esto nos permite invocarlos desde la vista. En nuestro ejemplo anterior, usamos cadenas con guión como tipo de mensaje: "añadir-ítem", "eliminar-ítem", etc. Ahora vamos a cambiar esas a nombres sin quiones que podemos usar como función en esta form: "añadirÍtem", "eliminarÍtem". Usaremos estos como los valores para crear una unión etiquetada. Antes de la versión 1.4.0 se tenía que incluir estos argumentos en una matriz, incluso si es un solo valor. Ahora se proveyen los argumentos separados con comas:</p>
@@ -94,12 +95,12 @@ Msj.eliminarÍtem(132)
     // Chequear la etiqueta del mensaje:
     'añadirÍtem': value => {
       estadoPrevio.frutas.push({ clave: estado.newKey++, value })
-      return [estadoPrevio]
+      return estadoPrevio
     },
     // Chequear la etiqueta del mensaje:
     'eliminarÍtem': clave => {
       estadoPrevio.frutas = estadoPrevio.frutas.filter(ítem => ítem.clave != clave)
-      return [estadoPrevio]
+      return estadoPrevio
     }
   })
 }
@@ -112,11 +113,11 @@ function actions(estado, msg) {
     case 'añadir-ítem':
 
       estadoPrevio.frutas.push({ clave: estadoPrevio.newKey++, msg.valorDeInput })
-      return [estadoPrevio]
+      return estadoPrevio
       break
     case 'eliminar-ítem':
       estadoPrevio.frutas = estadoPrevio.frutas.filter(ítem => ítem.clave != msg.clave)
-      return [estadoPrevio]
+      return estadoPrevio
       break
   }
 }</code></pre>

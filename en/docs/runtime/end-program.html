@@ -64,9 +64,9 @@
 // Run a simple program and capture its
 // shutdown function in variable:
 const endProgram = run({
-  init: [],
-  view () {},
-  update: () => {}
+  init() {},
+  view(state, send) {},
+  update(state, msg, send) {}
 })
 // Three seconds later stop the program:
 setTimeout(() => endProgram(), 3000)</code></pre>
@@ -81,18 +81,18 @@ setTimeout(() => endProgram(), 3000)</code></pre>
 
           <p>Open the pen in its own window by clicking on the Codepen logo in the upper right. Then scrolldown to the bottom of the JavaScript panel. You'll see that when we run the program, we capture its return value in a variable <code>stopProgram</code>. You can open by Codpen console in the bottom right by clicking and dragging it up. You'll see that the effect is also logging a count to the console. Now if you click in the console entry, type <code>stopProgram()</code> and hit enter, the program will stop. You can tell because the the clock component is no longer update in the HTML. But you'll notice that the effect is still running independently of the program, logging the count in the console. The following image shows how to do this:</p>
           <p><img class='codepen' src="/images/stop-program.png" alt="Image of a Codepen example of how to stop a program from running."></p>
-          
+
           <p>Having effects running after the program stops produces memory leaks. This is a big problem. But there is a simple solution to this, as explained next.</p>
 
           <h2>Done()</h2>
-          <p>So far we have always talked about @composi/core runtime programs having three properties: init, view and update. This is the basics to have a program that can run. But you can also provide a fourth optional property: <code>done()</code>. This method will get called when you stop your program. You can use it to do cleanup before the program stops.</p>
+          <p>So far we have always talked about @composi/core runtime programs having three properties: init, view and update. This is the basics to have a program that can run. But you can also provide a fourth optional property: <code>done()</code>. This method will get called when you stop your program. You can use it to do cleanup before the program stops. The <code>done</code> method gets the application state passed to it.</p>
 <pre><code class="language-javascript">import { run } from '@composi/core
 const program = {
-  init: [],
-  view() {},
-  update() {},
+  init() {},
+  view(state, send) {},
+  update(state, msg, send) {},
   // Escape hatch:
-  done() {
+  done(state) {
     // Clean up any running effects here...
   }
 }
@@ -114,7 +114,7 @@ endProgram()
             <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
               <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -130,7 +130,7 @@ endProgram()
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>

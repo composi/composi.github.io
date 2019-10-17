@@ -53,81 +53,45 @@
         </ul>
           <h1>Init</h1>
           <h2>Preparing for Startup</h2>
-          <p>When you pass a program to the <code>run</code> function, the runtime takes the value returned by the <code>init</code> method to use for setting things up. If your program has state, then the <code>init</code> method must return it wrapped in an array. If you want to run an effect at startup, you would also include that as the second value of the array returned by <code>init</code>.  An effect is just a function. An effect could be a timer of some kind, or a request for data. An effect is always asynchronous, running independently of the rest of the program. Most of the time your init will only return state. Even so, you must always enclose it in braces.</p>
+          <p>When you pass a program to the <code>run</code> function, the runtime takes the value returned by the <code>init</code> method to use for setting things up. If your program has state, then the <code>init</code> method must return it. The state that init returns can be any valid JavaScript data: null, undefined, string, number, Array, Set, Map, Object.</p>
 <pre><code class="language-javascript">const program = {
   init() {
-    return [state]
+    return state
   },
-  view() {},
-  update() {}
-}</code></pre>
-          <p>When you do want to run an effect at startup, it will always be the second value in the array that init returns:</p>
-<pre><code class="language-javascript">const program = {
-  init() {
-    return [state, effect]
-  },
-  view() {},
-  update() {}
+  view(state, send) {},
+  update(state, msg, send) {}
+  subscriptions(getState, send) {}
 }</code></pre>
 
-        <p>And here's a simple Hello World example:</p>
-        
+        <p>You might be wondering why you should be able to set state as null or undefined. Image that in your program's subscriptions you plan on fetching data from somewhere to use as your program's state. This means you don't really have state to return yet. So you can just set it as <code>null</code>. Or you could leave the <code>init</code> method empty. Either way, if you are going to fetch your data in a subscription and leave state undefined, you'll need to check state before trying to render the view. You can use a simply <code>state &&</code> check before returning the view:</p>
+<pre><code class="language-javascript">const program = {
+  init() {
+    return null
+  },
+  view(state, send) {
+    // Check state first to see if its truthy:
+    return state && render(&lt;List {...{state, send}}/>, '#list')
+  },
+  update(state, msg, send) {
+
+  },
+  subscriptions(getState, send) {
+    // Fetch some data to use as state:
+    return fetchDataForState(getState, send)
+  }
+}</code></pre>
+
+        <p>Here's a simple Hello World example:</p>
+
         <p data-height="500" data-theme-id="6688" data-slug-hash="qQBXBE" data-default-tab="js,result" data-user="rbiggs"
           data-pen-title="@composi/core + runtime Hello World" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/qQBXBE/">@composi/core
             + runtime Hello World</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
         <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
 
-        <p>In the following example we show how to set up an effect in the program's init to start an interval loop to display the time every second. The interval runs separately from the runtime, sending an message every second to the update action, causing the view to update the time shown.</p>
-        <p data-height="500" data-theme-id="6688" data-slug-hash="QZYzZm" data-default-tab="js,result" data-user="rbiggs"
-          data-pen-title="@composi/core + runtime Clock" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/QZYzZm/">@composi/core
-            + runtime Clock</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
-        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-        <p> </p>
-
-        <h2>Run Effect at Startup</h2>
-
-        <p>Effects run at startup of a program are commonly called subscriptions. By providing an effect as the second value in the array that init returns, you can launch an effect when the program starts. If you prefer, you can also just use the program's <code>subscriptions</code> method for this. Check out the documentation for <a href="/en/docs/runtime/subscriptions.html" target='__blank'>subscriptions</a> for details about how to use them.</p>
-
-        <p>And here's a snippet that shows how to use an effect in the <code>init</code> method, returning it with the state:</p>
-<pre><code class="language-javascript">// Counter for view:
-function Counter({state, send}) {
-  return (
-    &lt;p>
-      {
-        state
-      }
-    &lt;/p>
-  )
-}
-
-// An effect to run at startup:
-function effect() {
-  setTimeout(() => {
-    alert('The effect ran!')
-  }, 3000)
-}
-
-// Assemble program together:
-const program = {
-  init() {
-    // Return the effect with the state:
-    return ['Default State Value', effect]
-  },
-  view(state) {
-  render(&lt;Counter {...{state}} />, 'section')
-  },
-  update() {}
-}
-
-// Run program:
-run(program)</code></pre>
-
-              <p>Although you can run an effect in this way, we recommend that you do this with the <code>subscriptions</code> method instead since it's more explicit what you are doing.</p>
-
               <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -143,7 +107,7 @@ run(program)</code></pre>
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>

@@ -54,14 +54,34 @@
           <h1>Immutability</h1>
           <h2>Program State is Mutable</h2>
 
-          <p>By default a program's state is mutable when you have access to it inside both the update and view methods. Hopefully no one would ever modify state from the code for rendering the view. Update, on the other hand, is how you modify a program's state. For simple examples this is probably not going to be a problem. However, if your app and data are complex, you will probably want to avoid directly modifying state in an action. Instead you can clone that state inside the the update function before passing the cloned state to the actions. These then will modify the clone and return it. You can use @composi/merge-objects to clone objects or arrays. It creates a deep clone. It's already installed when you create a project, so you just need to import it into your project and then use it in an update action.</p>
+          <p>By default a program's state is mutable when you have access to it inside both the update and view methods. Hopefully no one would ever modify state from the code for rendering the view. Update, on the other hand, is how you modify a program's state. For simple examples this is probably not going to be a problem. At the very least, you can use destruction to create a shallow copy of program state:</p>
+<pre><code class="language-javascript">function actions(state, msg) {
+  // Clone the state using destructuring:
+  const prevState = {...state}
+  return Msg.match(msg, {
+    // Check for the message tag:
+    'addItem': value => {
+      prevState.fruits.push({ key: prevState.newKey++, value })
+      // Render view and update program state by return the clone:
+      return prevState
+    },
+    // Check for the message tag:
+    'deleteItem': key => {
+      prevState.fruits = prevState.fruits.filter(item => item.key != key)
+      // Render view and update program stateby return the clone:
+      return prevState
+    }
+  })
+}</code>
+</pre>
+
+          <h2>Deep Clone</h2>
+          <p>If your app and data are complex, you will probably want to create a deep clone of your data. You can do that inside the the update function just like we did with destruction above. Just import the <code>clone</code> function from <code>@composi</code> namespace:</p>
+
 
 <pre><code class="language-javascript">import { h, render, run, union } from '@composi/core'
 import { clone } from '@composi/merge-objects'
 
-const Msg = union(['addItem', 'deleteItem'])
-// And here we use clone in our actions.
-// Here were using a tagged union.
 function actions(state, msg) {
   // Clone the state:
   const prevState = clone(state)
@@ -70,13 +90,13 @@ function actions(state, msg) {
     'addItem': value => {
       prevState.fruits.push({ key: prevState.newKey++, value })
       // Render view and update program state by return the clone:
-      return [prevState]
+      return prevState
     },
     // Check for the message tag:
     'deleteItem': key => {
       prevState.fruits = prevState.fruits.filter(item => item.key != key)
       // Render view and update program stateby return the clone:
-      return [prevState]
+      return prevState
     }
   })
 }

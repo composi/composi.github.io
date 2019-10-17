@@ -108,7 +108,7 @@ function List({state}) {
 </code></pre>
 
           <p>As you can see, using the <code>h</code> function to create the virtual nodes instead of using JSX produces a more verbose and difficult to read result.</p>
-          
+
           <h2>Sending Messages</h2>
           <p>Views can be completely static, such as a newsletter or blog. However many views will be designed for user interaction. The @composi/core runtime provides a <code>send</code> function for views to send messages and data to the program's update function.</p>
           <p>A message can be any type: null, undefined, number, string, array or object. However, in most cases a message will need to be an object so you can have a consistent interface for the update function to test what type of message was sent. An object also allows you to pass along some data with the message.</p>
@@ -122,32 +122,11 @@ function List({state}) {
           <p> </p>
 
           <h2>Hydration</h2>
-          <p>The default <code>render</code> function of @composi/core makes it easy to hydrate server-rendered content. Just pass in a reference to the element you want to hydrate as a third argument to <code>render</code>, after the container value. Composi with take that node reference and convert it into a virtual node which it will then use to diff and patch the DOM. But a runtime program's view is agnostic about how the view is generated. Therefore on its own it is unable to know whether it should hydrate an element or not. If you set up the view's render function to hydrate, it would do this every time the view ran. This is not very efficient. However, it is possible to have the view hydrate an element conditionally. This requires adding a new property to the program: hydrate. Set its value to <code>true</code>, then, in the view, check its value and either hydrate the DOM or update the mounted component. Notice how we do this in the following snippet:</p>
-<pre><code class='language-javascript'>const program = {
-  // Add a hydrate property and set it to true:
-  hydrate: true,
-  init() {
-    return [state]
-  },
-  view(state, send) {
-    // If view is running first time, hydrate should be true.
-    // So render list with third argument to hydrate.
-    if (program.hydrate) {
-      // Set hydrate to false.
-      program.hydrate = false
-      return render(&lt;List {...{ state, send }} />, 'section', '.list-container')
-    } else {
-      // When hydrate is false, just update the component,
-      // no need to hydrate.
-      return render(&lt;List {...{ state, send }} />, 'section')
-    }
-  },
-  update(msg, state) {}
-}</code></pre>
+          <p>The default <code>render</code> function of @composi/core makes it easy to hydrate server-rendered content. Just pass it a reference to the element you want to hydrate as the secont argument of <code>render</code>. Composi always mounts a component on a node that already exists in the DOM, the base for the component. A such, if you have, say, a list rendder on the server. You can automatically hydrate it by using a selector for the list as the second argument to the render function when you render your list component. </p>
 
               <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -163,7 +142,7 @@ function List({state}) {
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>

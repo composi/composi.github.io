@@ -69,7 +69,7 @@
           <p>Cada programa de returno de ejecución @composi/core implementa este patrón SVU. Lo hace con tres métodos: init, ver y update. Init es donde se define el estado predeterminado para el programa. En el inicio, el retorno de ejecución toma el valor devuelto por init y lo usa para representar la vista. El siguiente ejemplo muestra las partes centrales de un programa de ejecución.</p>
 <pre><code class='language-javascript'>const programa = {
   init() {
-    return [estado, efecto]
+    return estado
   },
   view(estado, enviar) {
   // Renderiza la vista que puede enviar mensajes a update:
@@ -78,9 +78,9 @@
   update(mensaje, estado) {
     if (mensaje) {
       // Gestionar mensajes para actualizar el estado:
-      return [estado]
+      return estado
       // O implementar un efecto:
-      return [estado, efecto]
+      return estado
     }
   }
 }</code></pre>
@@ -140,10 +140,10 @@ const programa3 = {
 
           <p>When we say the runtime is small, we mean it. Here's all the code for the runtime minified and completely functional:</p>
 <pre><code class="language-javascript" style='overflow-wrap: break-word;
-word-wrap: break-word;'>function run(a){function b(m){j&&c(d(h,m,b))}function c(m){let
-n,o=a.init();m?[h,i]=m:o&&o.length?([h,i]=o,f&&!k&&(n=f(l,b),'function'==typeof
-n&&n(l,b),k=!0)):h=[],i&&i(h,b),e(h,b)}const d=a.update,e=a.view,f=a.subscriptions||a.subs,g=a.done;let
-h,i,j=!0,k=!1;const l=()=>h;return a.send=b,c(h),()=>{j&&(j=!1,g&&g(h))}}</code></pre>
+word-wrap: break-word;'>function run(a){function b(m){if(j)return c(f(i,m,b))}function c(m){m?i=m:d&&(i=d()),g&&k&&('function'==typeof
+g&&g(l,b),k=!1),e(i,b)}var
+i,d=a.init,e=a.view,f=a.update,g=a.subscriptions||a.subs,h=a.done,j=!0,k=!0,l=function(){return i};return
+a.send=b,c(i),function(){j&&(j=!1,h&&h(i))}}</code></pre>
               <p>&nbsp;</p>
       </div>
     </section>

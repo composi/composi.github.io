@@ -65,15 +65,15 @@
 }
 const program = {
   init() {
-    return [state]
+    return state
   },
   view(state, send) {
     return render(<h1>The count is: {state}.</h1>, document.body)
   },
-  update(state, msg) {
+  update(state, msg, send) {
     if (msg) {
       // Set program state to value of message:
-      return [msg]
+      return msg
     }
   },
   subscriptions(getState, send) {
@@ -89,7 +89,7 @@ const program = {
   view(state, send) {
 
   },
-  update(state, msg) {
+  update(state, msg, send) {
 
   },
   // state and send required as arguments here:
@@ -137,13 +137,13 @@ const batchedSubscriptions = batchEffects(fetchState, handleEnter)
 const program = {
   init() {
     // Here we set state to null:
-    return [null]
+    return null
   },
   view(state, send) {
     // Here we check if state is truthy or not:
     return state && render(<List {...{ state, send }}/>, 'section')
   },
-  update(state, msg) {
+  update(state, msg, send) {
     const prevState = clone(state)
     return actions(prevState, msg)
   },
@@ -160,15 +160,15 @@ const program = {
 <pre><code class="language-javascript">
 const program = {
   init() {
-    return [state]
+    return state
   },
   view(state, send) {
     return render(<h1>The count is: {state}.</h1>, document.body)
   },
-  update(state, msg) {
+  update(state, msg, send) {
     if (msg) {
       // Set program state to value of message:
-      return [msg]
+      return msg
     }
   },
   // Use short form for subscriptions:
@@ -191,7 +191,7 @@ import {subscription} from './effects/subscription'
 
 const program = {
   init() {
-    return [state]
+    return state
   },
   view(state, send) {
     return render(&lt;Main {...{state, send}}/>, 'body')

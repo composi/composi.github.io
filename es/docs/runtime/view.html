@@ -110,7 +110,7 @@ function Lista({estado}) {
 </code></pre>
 
           <p>Como puedes ver, al usar la función <code>h</code> para crear los nodos virtuales en vez de JSX resulta en código más complejo y difícil de leer.</p>
-          
+
           <h2>Enviar Mensajes</h2>
           <p>Las vistas pueden ser comlpetamente estáticas, como para un boletín de noticias o un blog. Pero frecuentamente muchas vistas van a requerir interacciones con el usuario. El entorno de ejecución de @composi/core proporciona la función send para que las vistas envíen mensajes y datos a la función update del programa.</p>
           <p>Un mensaje puede ser de cualquier tipo : null, undefined, number, string, array u object. Sin embargo, en la mayoría de casos un mensage tendra que ser un objeto para que haya una interfaz consistente para que la función update pruebe el tipo de mensaje que recibe. Usar un objeto también permite que se pasan unos datos con el mensaje.</p>
@@ -121,9 +121,15 @@ function Lista({estado}) {
     + entorno de ejecución</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
+            <p> </p>
+
+            <h2>La Hidración</h2>
+            <p>La función <code>render</code> de @composi/core lo hace fácil de hidratar el contenido renderizado en el servidor. Solo proveer una referencia al elemento al cual quieres hidratar como el segundo argumento de <code>render</code>. Composi siempre monta un componente en el nodo que ya existe en el DOM, el cuál sirve cómo base del componente. Así pues, si tienes una lista renderizada en el servidor, puedes hidratarla automaticamente usando un selector para la lista como el argument segundo de la función <code>render</code> para el componente de la lista.</p>
+
+
               <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -139,7 +145,7 @@ function Lista({estado}) {
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>

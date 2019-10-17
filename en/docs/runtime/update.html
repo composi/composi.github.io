@@ -54,7 +54,7 @@
           <h1>Update</h1>
           <h2>Program Business Logic</h2>
           <p>A program's update method holds all its business logic. The update function listens for messages, when it receives one, it can check it to see which message it is and then run an appropriate action. By defining different actions, you instruct update how to handle them.</p>
-          <p>Update gets two arguments: state and message. The first argument is the current state of the program. Message is any message sent by a user interaction with the view. If the program is complex, it will probably require a number of messages being sent to update. Since send can only handle one argument, it's convention to bundle everything up in an object literal with a type and data payload. Notice how we do this in the following snippet.</p>
+          <p>Update gets three arguments: state, message, and send. The first argument is the current state of the program. Message is any message sent by a user interaction with the view. And send allows you to send a message to another action. If the program is complex, it will probably require a number of messages being sent to update. Since send is a unary function, taking only one argument, it's convention to bundle everything up in an object literal with a type and data payload. Notice how we do this in the following snippet.</p>
           <pre><code class='language-javascript'>&lt;p class='list-form'>
   &lt;input autofocus onchange={getInputValue} type="text" />
   &lt;button class='add-item' onclick={()=> send({type: 'add-item', data: inputValue})}>Add&lt;/button>
@@ -64,7 +64,7 @@
 <pre><code class="language-javascript">
 const program = {
   init() {
-    return [state]
+    return state
   },
   view(state, send) {
     return render(&lt;List {...{ state, send }} />, section)
@@ -74,22 +74,23 @@ const program = {
   // Use those actions to transform state.
   // Then return the new state.
   // That will cause the view to update.
-  update(state, msg) {
-    const prevState = clone(state)
+  update(state, msg, send) {
+    // Clone state with destructing:
+    const prevState = {...state}
     switch (msg.type) {
       case 'add-item':
         const value = msg.inputValue
         if (value) {
           prevState.fruits.push({ key: prevState.newKey++, value })
-          return [prevState]
+          return prevState
         } else {
           alert('Please provide a value!')
-          return [state]
+          return state
         }
         break
       case 'delete-item':
         prevState.fruits = prevState.fruits.filter(item => item.key != msg.key)
-        return [prevState]
+        return prevState
         break
     }
   }
@@ -103,11 +104,69 @@ const program = {
           <p>Note that no matter what decision we make with an action, we always return state. Every action must return state. Even if you make no changes to state, you have to return it. Failing to do so will generate an error. This is because actions pass state to the view to render, so not returning state will cause the view to fail because it never received state.</p>
           <p>Just because you always return state, even when it doesn't change, doesn't mean that you cause unnecessary renders of the view. In fact, @composi/core's render function checks the state and component props early on and bails if they are identical.</p>
 
+          <h2>Actions</h2>
+          <p>Normally you would not define business logic inside the program's <code>update</code> method. This would make the program difficult to manage. Instead define the business logic in a separate funtion called <code>actions</code>. It will take the same three arguments as <code>update</code>:</p>
+<pre><code class="language-javascript">// actions function to handle business logic
+// for program's update method.
+// We clone state in update method,
+// which we pass to this function as
+// its first argument.
+function actions(state, msg, send) {
+  switch (msg.type) {
+    case 'add-item':
+      const value = msg.inputValue
+      if (value) {
+        state.fruits.push({ key: state.newKey++, value })
+        return state
+      } else {
+        alert('Please provide a value!')
+        return state
+      }
+      break
+    case 'delete-item':
+      state.fruits = state.fruits.filter(item => item.key != msg.key)
+      return state
+      break
+  }
+}
+const program = {
+  init() {
+    return state
+  },
+  view(state, send) {
+    return render(&lt;List {...{ state, send }} />, section)
+  },
+  // Update now returns the actions function
+  // which contains the program's business logic:
+  update(state, msg, send) {
+    // Clone state with destructing:
+    const prevState = {...state}
+    // Pass prevState to actions:
+    return actions(prevState, msg, send)
+  }
+}</code></pre>
+
           <h2>Immutability</h2>
-          <p>In the above example we used the <code>clone</code> function to clone the state. This allows us to safely manipulate the clone without effecting the current program state. When were done with modifications to the cloned state, we return it. This then gets passed to the view method for rendering and reassigned back to the program state. <code>clone</code> comes pre-installed when you create a new @composi/core project. But you do need to import it into your project to use it:</p>
+          <p>In the above example we used the JavaScript destructuring to create a clone of state before using it in the <code>update</code> method. In general this is good enough. However, if you would prefer to have a deep clone of state, you can use the <code>clone</code> function on state. <code>clone</code> comes pre-installed when you create a new @composi/core project. But you do need to import it into your project to use it:</p>
 <pre><code class="language-javascript">import { h, render, run } from '@composi/core'
 import { clone } from '@composi/merge-objects'
 // With clone imported, you can use it to clone program state.
+const program = {
+  init() {
+    return state
+  },
+  view(state, send) {
+    return render(&lt;List {...{ state, send }} />, section)
+  },
+  // Update now returns the actions function
+  // which contains the program's business logic:
+  update(state, msg, send) {
+    // Create a deep clone of state:
+    const prevState = clone(state)
+    // Pass cloned state to actions:
+    return actions(prevState, msg, send)
+  }
+}
 </code></pre>
 
           <p> </p>

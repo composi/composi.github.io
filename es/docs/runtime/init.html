@@ -53,22 +53,36 @@
         </ul>
           <h1>Init</h1>
           <h2>Preparar para el Inicio</h2>
-          <p>Cuando pasas un programa a la función <code>run</code>, el entorno de ejecución toma el valor devuelto por el método <code>init</code> para usarlo para configuracón. Si su programa tiene estado, entonces el método <code>init</code> lo devolverá envuelto en una matriz. Si deseas ejecutar un efecto al inicio, también lo incluiría como el segundo valor de la matriz devuelto por <code>init</code>. Un efecto es solo una función. Un efecto podría ser un temporizador de algún tipo, o una solicitud de datos. Un efecto es siempre asincrónico, ejecutándose independientemente del resto del programa. La mayoría de las veces, su inicio solo volverá al estado. Aun así, siempre debes encerrarlo entre llaves.</p>
+
+          <p>Cuando pasas un programa a la función <code>run</code>, el entorno de ejecución toma el valor devuelto por el método <code>init</code> para usarlo para configuracón. Si su programa tiene estado, entonces el método <code>init</code> tiene que devolverlo. El estado que <code>init</code> devuele puede ser cualquier dato vålido de JavaScript: null, undefined, strin, number, Array, Set, Map, Object, etc.</p>
 
 <pre><code class="language-javascript">const program = {
   init() {
-    return [estado]
+    return estado
   },
-  view() {},
-  update() {}
+  view(estado, send) {},
+  update(estado, msj send) {}
 }</code></pre>
+
+
           <p>Cuando quieres operar un efecto durante el inicio del programa, siempre va a ser el segundo valor en el vector que devuelve init:</p>
+
+          <p>Tal vez te preguntes por qué se puede tener estado con value de <code>null</code> or <code>undefined</code>. Supone que en las suscripciones del programa vas a obtener los datos de algún lugar para usar como el estado del programa. Ésto significa que no tendrás los datos a tiempo para retornarlos en el <code>init</code>. En vez, puedes devolver null en el <code>init</code>. O podrías dejar el <code>init</code> vacío, sin nada. En ambos casos vas a tener que chequear el valor del estado antes de usar la función <code>render</code> en el <code.>view</code.>:</p>
 <pre><code class="language-javascript">const program = {
   init() {
-    return [estado, efecto]
+    return estado
   },
-  view() {},
-  update() {}
+  // Chequear que el estado tiene valor:
+  view(estado, send) {
+    return estado && render(&lt;List {...{estado, send}}/>, '#lista')
+  },
+  update(estado, msj, send) {
+
+  },
+  subscriptions(getState, send) {
+  // Obtener datos para el estado:
+  return conseguirDatosParaEstado(getState, send)
+  }
 }</code></pre>
 
         <p>Aquí está un ejemplo sencillo de Hola Mundo:</p>
@@ -78,54 +92,6 @@
             + runtime Hola Mundo</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
         <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
-
-        <p>En el ejemplo siguiente mostamos cómo implementar un efecto en el init del programa para empezar un bucle para mostra el tiempo cada segundo. El bucle se ejecuta en forma separada del entorno de ejecución, enviando mensaje cada segundo a la acción del update, causando que la vista acutalice el tiempo que muestra.</p>
-
-        <p data-height="300" data-theme-id="6688" data-slug-hash="MzyqKe" data-default-tab="js,result" data-user="rbiggs"
-          data-pen-title="@composi/core + runtime Reloj" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/MzyqKe/">@composi/core
-            + runtime Reloj</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
-        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
-        <p> </p>
-
-        <h2>Ejecutar Efecto al Iniciarse</h2>
-
-        <p>Los efectos ejecutados durante el inicio de un programa se conocen cómo <code>subscriptions</code>. Por proporcionar un efecto como el segundo valor en la matriz que devuelta por init, puedes ejecutar en efector al iniciar el program. Si prefieres, puedes en vez usar el método <code>subscriptions</code> del programa para lo mismo. Lee la documentación de <a href="/en/docs/runtime/subscriptions.html" target='__blank'>subscriptions</a> para detalles de cómo usar los.</p>
-
-        <p>Aquí es un escrito que muestra cómo usar un efecto en el método <code>init</code>, mientras también devuele estado:</p>
-<pre><code class="language-javascript">// Contado para la vista:
-function Contador({estado, send}) {
-  return (
-    &lt;p>
-      {
-        estado
-      }
-    &lt;/p>
-  )
-}
-
-// Un efecto que ejecutar al iniciar:
-function effect() {
-  setTimeout(() => {
-    alert('¡El efecto funciona!')
-  }, 3000)
-}
-
-// Asembla el programa:
-const programa = {
-  init() {
-    // Devolver el efector con el estado:
-    return ['un valor para el estado', effect]
-  },
-  view(estado) {
-    render(&lt;Contador {...{estado}} />, 'section')
-  },
-  update() {}
-}
-
-// Run program:
-run(programa)</code></pre>
-
-              <p>Aunque puedes ejecutar un efecto de esta manera, recomendamos que uses el método <code>subscriptions</code> porque es más explicito lo que estás haciendo.</p>
               <p>&nbsp;</p>
       </div>
     </section>

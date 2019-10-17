@@ -65,15 +65,15 @@
 }
 const programa = {
   init() {
-    return [estado]
+    return estado
   },
   view(estado, send) {
     return render(<h1>La cuenta es: {estado}.</h1>, document.body)
   },
-  update(estado, mensaje) {
+  update(estado, mensaje, send) {
     if (mensaje) {
       // Fija el estado del programa con el valor del mensaje:
-      return [mensaje]
+      return mensaje
     }
   },
   subscriptions(getState, send) {
@@ -87,20 +87,20 @@ const programa = {
   init() {
 
   },
-  view(state, send) {
+  view(estado, send) {
 
   },
-  update(state, msg) {
+  update(estado, mensaje, send) {
 
   },
-  // Se requieren state y send cómo argumentos aquí:
+  // Se requieren getState y send cómo argumentos aquí:
   subscriptions(getState, send) {
 
   }
 }
 </code></pre>
 
-          <p><strong>Attención:</strong> Las suscripciones no son para manipular el estado. El acto de cambiar el estado en un efecto resultará en que la vista y el estado estarán desincronizados. Si has producido algunos dataos en una suscripción y quieres actualizar el estado con ellos, hazlo por enviar un mensaje a una acción. Haciendo esto logrará que el algoritmo de reconciliación se ejecute, lo cual puede causar que la vista vuelva a rendirse.</p>
+          <p><strong>Atención:</strong> Las suscripciones no son para manipular el estado. El acto de cambiar el estado en un efecto resultará en que la vista y el estado estarán desincronizados. Si has producido algunos dataos en una suscripción y quieres actualizar el estado con ellos, hazlo por enviar un mensaje a una acción. Haciendo esto logrará que el algoritmo de reconciliación se ejecute, lo cual puede causar que la vista vuelva a rendirse.</p>
 
           <h2>Suscripciones Combinadas</h2>
 
@@ -139,13 +139,13 @@ const batchedSubscriptions = batchEffects(fetchState, handleEnter)
 const program = {
   init() {
     // Aquí designamos el estado como null:
-    return [null]
+    return null
   },
   view(state, send) {
     // Aquí chequeamos si el estado es veraz o no:
     return state && render(<List {...{ state, send }}/>, 'section')
   },
-  update(state, msg) {
+  update(state, msg, send) {
     const prevState = clone(state)
     return actions(prevState, msg)
   },
@@ -160,15 +160,15 @@ const program = {
           <p>Puedes usar el término <code>subs</code> en vez de <code>subscriptions</code>. Es más corto:</p>
 <pre><code class="language-javascript">const programa = {
   init() {
-    return [estado]
+    return estado
   },
   view(estado, send) {
     return render(<h1>La cuenta es: {estado}.</h1>, document.body)
   },
-  update(estado, mensaje) {
+  update(estado, mensaje, send) {
     if (mensaje) {
       // Fija el estado del programa con el valor del mensaje:
-      return [mensaje]
+      return mensaje
     }
   },
   subs(getState, send) {

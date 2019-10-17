@@ -82,18 +82,15 @@ const wrappedProgram = logState(program, state => {
 
 // Run the Higher Order Program:
 run(wrappedProgram)
-</code></pre>   
+</code></pre>
               <p>With our program wrapped by this Higher Order Program, the program's state will get logged every time it changes.</p>
 
               <h2>Debugging</h2>
               <p>You can also create a Higher Order Program for debugging purposes. </p>
 <pre><code class="language-javascript">export function logErrors(program) {
   // Capture the state and effect from program:
-  const [programState, programEffect] = program.init()
-  const init = () => [
-    { hasError: false, error: null, programState },
-    programEffect
-  ]
+  const programState = program.init()
+  const init = () => ({ hasError: false, error: null, programState })
 
   // Handle whatever the update returns.
   // If error, deal with it,
@@ -116,11 +113,11 @@ run(wrappedProgram)
     try {
       updateView = program.update(state.programState, msg)
     } catch (error) {
-      return [{ ...state, hasError: true, error }]
+      return ({ ...state, hasError: true, error })
     }
 
-    const [programState, programEffect] = updateView
-    return [{ ...state, programState }, programEffect]
+    const {programState} = updateView
+    return ({ ...state, programState })
   }
 
   // Allow program to end.
@@ -131,14 +128,14 @@ run(wrappedProgram)
     }
   }
 
-  return { init, update, view, done }
+  return ({ init, update, view, done })
 }</code></pre>
             <p>With the above HOP, we can wrap our program in the HOP for error logging:</p>
 <pre><code class="language-javascript">run(logErrors(program))</code></pre>
 
               <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -154,7 +151,7 @@ run(wrappedProgram)
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>

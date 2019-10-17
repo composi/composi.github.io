@@ -76,24 +76,23 @@ setTimeout(() => terminarPrograma(), 3000)</code></pre>
 <p data-height="400" data-theme-id="6688" data-slug-hash="jQrpQJ" data-default-tab="js,result" data-user="rbiggs" data-pen-title="@composi/core + runtime Reloj-3" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/jQrpQJ/">@composi/core + runtime Reloj-3</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
-
-          <p>Open the pen in its own window by clicking on the Codepen logo in the upper right. Then scrolldown to the bottom of the JavaScript panel. You'll see that when we run the program, we capture its return value in a variable <code>terminarPrograma</code>. You can open by Codpen console in the bottom right by clicking and dragging it up. You'll see that the effect is also logging a count to the console. Now if you click in the conosle entry, type <code>terminarPrograma()</code> and hit enter, the program will stop. You can tell because the the clock component is no longer update in the HTML. But you'll notice that the effect is still running independently of the program, logging the count in the console. The following image shows how to do this:</p>
           <p>Abre el ejemplo en su propia ventana haciendo clic en el logotipo de Codepen en la parte superior derecha. Luego, desplázate hasta la parte inferior del panel de JavaScript. Verás que cuando ejecutamos el programa, captamos su valor de retorno en una variable <code>terminarPrograma</code>. Puedes abrir la consola Codpen en la parte inferior derecha haciendo clic y arrastrándola hacia arriba. Verás que el efecto también está registrando un conteo en la consola. Ahora, hace clic en la consola, ingresa <code>terminarPrograma()</code> y presiona Enter o Return. Con eso el programa se detendrá ya que el componente del reloj ya no se actualiza en el HTML. Pero notarás que el efecto sigue ejecutándose independientemente del programa, registrando el conteo en la consola. La siguiente imagen muestra cómo parar el programa:</p>
 
           <p><img class='codepen' src="/images/stop-program.png" alt="Image of a Codepen example of how to stop a program from running."></p>
-          
+
           <p>Que los efectos sigan ejecutando después de que el programa termina producirá pérdidas de memoria. Eso es un problema formidable. Pero hay una solución sencilla para esto, la cual se explicará en continuación.</p>
 
           <h2>Done()</h2>
+
           <p>Hasta ahora, siempre hemos hablado de los programas de @composi/core que tienen tres propiedades: init, view y update. Esto es lo básico para tener un programa que pueda ejecutarse. Pero también puede proporcionar una cuarta método opcional: <code>done()</code>. Este método se llamará cuando el programa se detenga. Puedes usarlo para hacer la limpieza del ámbito antes de terminar el programa.</p>
 
 <pre><code class="language-javascript">import { run } from '@composi/core
 const programa = {
-  init: [],
-  view() {},
-  update() {},
+  init: null,
+  view(state, send) {},
+  update(state, msg, send) {},
   // Forma de escape:
-  done() {
+  done(state) {
     // Terminar cualesquier efectos que hayan....
   }
 }
@@ -113,7 +112,7 @@ terminarPrograma()
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
               <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -129,7 +128,7 @@ terminarPrograma()
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>

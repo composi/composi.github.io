@@ -54,7 +54,8 @@
           <h1>Update</h1>
           <h2>Lógica de Negocios del Programa</h2>
           <p>El método update es para contener toda la lógica de negocios para el programa El método escucha los mensajes, cuando recibe uno, lo chequéa para averiguar cuál es y entonces ejecuta una acción apropiada. Por definir acciones diferentes, instruyes update cómo gestionarlas.</p>
-          <p>Update recibe dos argumentos: mensaje y estado. El primer argumento es el estado actual del programa. Mensaje es cualquier mensaje enviado por una interación del usuario con la vista. Si el programa es complejo, a lo mejore va requerir enviar varios mensajes a update. Puesto que send solo puede tratar de uno solo argumento, es conveniente combinar lo todo como un objeto literal con tipo y datos. Nota cómo hacemos eso en el escrito siguiente.</p>
+
+          <p>Update recibe tres argumentos: mensaje, estado y send. El primer argumento es el estado actual del programa. Mensaje es cualquier mensaje enviado por una interación del usuario con la vista. Send permite que envías en mensaje a otra acción. Si el programa es complejo, a lo mejore va requerir enviar varios mensajes a update. Puesto que send solo puede tratar de uno solo argumento, es conveniente combinar lo todo como un objeto literal con tipo y datos. Nota cómo hacemos eso en el escrito siguiente.</p>
           <pre><code class='language-javascript'>&lt;p class='formulario'>
   &lt;input autofocus onchange={consigueValorInput} type="text" />
   &lt;button class='añadir-ítem' onclick={()=> send({type: 'añadir-ítem', dato: valorDeInput})}>Añadir&lt;/button>
@@ -64,7 +65,7 @@
 <pre><code class="language-javascript">
 const programa = {
   init() {
-    return [estado]
+    return estado
   },
   view(estado, send) {
     return render(&lt;Lista {...{ estado, send }} />, section)
@@ -75,22 +76,22 @@ const programa = {
   // Usar esas acciones para transformar al estado.
   // Después se devuelve el nuevo estado.
   // Eso causará que la vista se actualice.
-  update(estado, mensaje) {
+  update(estado, mensaje, send) {
     const estadoPrevio = clone(estado)
     switch (mensaje.type) {
       case 'añadir-ítem':
         const valor = mensaje.valorDeInput
         if (valor) {
           estadoPrevio.frutas.push({ clave: estadoPrevio.newKey++, valor })
-          return [estadoPrevio]
+          return estadoPrevio
         } else {
           alert('¡Por favor de un valor!')
-          return [estado]
+          return estado
         }
         break
       case 'eliminar-ítem':
         estadoPrevio.frutas = estadoPrevio.frutas.filter(item => item.clave != mensaje.clave)
-        return [estadoPrevio]
+        return estadoPrevio
         break
     }
   }
@@ -110,6 +111,22 @@ const programa = {
 <pre><code class="language-javascript">import { h, render, run } from '@composi/core'
 import { clone } from '@composi/merge-objects'
 // With clone imported, you can use it to clone program state.
+const program = {
+  init() {
+    return state
+  },
+  view(state, send) {
+    return render(&lt;List {...{ state, send }} />, section)
+  },
+  // Update now returns the actions function
+  // which contains the program's business logic:
+  update(state, msg, send) {
+    // Create a deep clone of state:
+    const prevState = clone(state)
+    // Pass cloned state to actions:
+    return actions(prevState, msg, send)
+  }
+}
 </code></pre>
 
           <p> </p>
