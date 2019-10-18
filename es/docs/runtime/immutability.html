@@ -56,6 +56,25 @@
           <p>Por defecto, el estado de un programa es mutable cuando tienes acceso a él, tanto dentro de los métodos de update y
           view. Por otro lado, la función update es cómo modificas el estado de un programa. Para ejemplos simples, esto probablemente no será un problema. Al menos puedes usar la destructuración para create una copia somera del estado del programa, cómo en el ejemplo siguiente.</p>
 
+          <pre><code class="language-javascript">function actions(estaado, mensaje) {
+  // Clonar el estado por medio de la destructración:
+  const estadoPrevio = {...estaado}
+  return mensaje.match(mensaje, {
+    // Chequear el mensaje de la etiqueta:
+    'addItem': valor => {
+      estadoPrevio.frutas.push({ key: estadoPrevio.newKey++, valor })
+      // Renderizar la vista y actualizar el program al devolver el estado clonado:
+      return estadoPrevio
+    },
+    // CChequear el mensaje de la etiqueta:
+    'deleteItem': key => {
+      estadoPrevio.frutas = estadoPrevio.frutas.filter(item => item.key != key)
+      // Renderizar la vista y actualizar el program al devolver el estado clonado:
+      return estadoPrevio
+    }
+  })
+}</code></pre>
+
           <h2>Clon Profundo</h2>
           <p>Si el app y sus datos son complejos, a lo mejor vas a tener que creatr una copia profunda de los datos. Puedes realizar ésto dentro de la función <code>update</code> así cómo hicimos con la destructuración previamente. Sólo hay que importarlo de @composi/merge-objects:</p>
 
