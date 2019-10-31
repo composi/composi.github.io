@@ -141,9 +141,8 @@ const programa3 = {
           <p>When we say the runtime is small, we mean it. Here's all the code for the runtime minified and completely functional:</p>
 <pre><code class="language-javascript" style='overflow-wrap: break-word;
 word-wrap: break-word;'>function run(a){function b(m){if(j)return c(f(i,m,b))}function c(m){m?i=m:d&&(i=d()),g&&k&&('function'==typeof
-g&&g(l,b),k=!1),e(i,b)}var
-i,d=a.init,e=a.view,f=a.update,g=a.subscriptions||a.subs,h=a.done,j=!0,k=!0,l=function(){return i};return
-a.send=b,c(i),function(){j&&(j=!1,h&&h(i))}}</code></pre>
+g&&g(l,b),k=!1),e(i,b)}let d=a.init;const e=a.view,f=a.update,g=a.subscriptions||a.subs,h=a.done;let i,j=!0,k=!0;const
+l=()=>i;return a.send=b,c(i),()=>{j&&(j=!1,h&&h(i))}}</code></pre>
               <p>&nbsp;</p>
       </div>
     </section>
