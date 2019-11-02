@@ -68,18 +68,17 @@
           <p>Every @composi/core runtime program implements this SVU pattern. It does so with three methods: init, update and view. Init is where you define the default state for the program. At startup the runtime takes the value returned by init and uses it to render the view. The following example shows the core parts of a runtime program.</p>
 <pre><code class='language-javascript'>const program = {
   init() {
-    return [state, effect]
+    return state
   },
   view(state, send) {
   // Render view that can send messages to update:
   return render(Component, Container)
   },
-  update(state, msg) {
+  update(state, msg, send) {
     if (msg) {
-      // Handle messages to update state:
-      return [state]
-      // Or also implement an effect:
-      return [state, effect]
+      // Handle messages to update state.
+      // Then return state.
+      return state
     }
   }
 }</code></pre>

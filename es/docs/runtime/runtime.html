@@ -75,11 +75,9 @@
   // Renderiza la vista que puede enviar mensajes a update:
   return render(componente, contenedor)
   },
-  update(mensaje, estado) {
+  update(mensaje, estado, enviar) {
     if (mensaje) {
       // Gestionar mensajes para actualizar el estado:
-      return estado
-      // O implementar un efecto:
       return estado
     }
   }
