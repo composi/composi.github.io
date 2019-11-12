@@ -62,42 +62,47 @@ my-project-|
           components-|
           |-title.js
         |-app.js
+        |-types.js
     |-.bablerc
     |-.editorconfig
     |-.eslintrc.json
     |-gulpfile.js
     |-index.html
-    |-jsconfig.json
     |-package.json
     |-README.md
-    |-rollup.config.js</code></pre>
+    |-tsconfig.d.ts</code></pre>
               <p> </p>
 
               <h2>Módulos Incluídos</h2>
               <p>Cuando creas un proyecto nuevo, ése inlcuye los siguientes módulos @composi ya listos para importar si se necesitan:</p>
               <ul class='main-menu'>
-                <li><a target='__blank' href="/es/docs/fragment/usage.html">@composi/fragment</a></li>
-                <li><a target='__blank' href="/es/docs/datastore/data-store.html">@composi/datastore</a></li>
-                <li><a target='__blank' href="/es/docs/observer/observer.html">@composi/observer</a></li>
-                <li><a target='__blank' href="/es/docs/idb/idb.html">@composi/idb</a></li>
+                <li><a target='__blank' href="https://github.com/composi/are-equal/blob/master/README.md">@composi/are-equal</a></li>
+                <li><a target='__blank' href="https://github.com/composi/clone/blob/master/README.md">@composi/clone</a></li>
+                <li><a target='__blank' href="https://github.com/composi/core/blob/master/README.md">@composi/core</a></li>
+                <li><a target='__blank' href="https://github.com/composi/gestures/blob/master/README.md">@composi/gestures</a></li>
                 <li><a target='__blank' href="https://github.com/composi/get-type/blob/master/README.md">@composi/get-type</a></li>
-                <li><a target='__blank' href="https://github.com/composi/merge-objects/blob/master/README.md">@composi/merge-objects</a></li>
+                <li><a target='__blank' href="https://github.com/composi/idb/blob/master/README.md">@composi/idb</a></li>
+                <li><a target='__blank' href="https://github.com/composi/router/blob/master/README.md">@composi/router</a></li>
+                <li><a target='__blank' href="https://github.com/composi/styler/blob/master/README.md">@composi/styler</a></li>
+                <li><a target='__blank' href="https://github.com/composi/uuid/blob/master/README.md">@composi/uuid</a></li>
               </ul>
 
               <p>Para usarlos tan sólo hay que importarlos en el proyecto:</p>
 <pre><code class="language-javascript">import { h, render } from '@composi/core'
-import { Fragment } from '@composi/fragment'
-import { DataStore } from '@composi/datastore'
-import { Observer } from '@composi/observer'
-import { idb } from '@composi/idb'
+import { areEqual } from '@composi/are-equal'
+import { clone } from '@composi/clone'
+import { gestures } from '@composi/gestures'
 import { getType } from '@composi/get-type'
-import { mergeObject } from '@composi/merge-objects'
+import { idb } from '@composi/idb'
+import { Router } from '@composi/router'
+import { addStyles } from '@composi/styler'
+import { uuid } from '@composi/uuid'
 </code></pre>
               <p>Lée la documentación de los enlaces anteriors para aprender cómo usarlos.</p>
 
               <p>&nbsp;</p>
       </div>
-    </section> 
+    </section>
   </article>
   <footer>
       <section>
@@ -113,7 +118,7 @@ import { mergeObject } from '@composi/merge-objects'
       </section>
     </footer>
   <script src="/js/prism.js"></script>
-  
-  
+
+
 </body>
 </html>

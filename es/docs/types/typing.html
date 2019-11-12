@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="description"
+      content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+    <meta name="keywords"
+      content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+    <title>Composi - Documentación</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/prism.css">
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+  </head>
+
+  <body class='page'>
+    <nav>
+      <ul class='nav-menu'>
+        <li class='nav-menu__item'>
+          <a class='nav-menu__item__link' href="/index.html">
+            <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink">
+              <title>Composi Logo</title>
+              <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="Composi-Logo-Solid" fill="#fff">
+                  <path
+                    d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                    id="Combined-Shape"></path>
+                </g>
+              </g>
+            </svg>
+            <span class='logo__link--text'>Composi</span></a>
+        </li>
+        <li class='nav-menu__item selected'>
+          <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+        </li>
+      </ul>
+    </nav>
+    <article class='article'>
+      <section>
+        <div class='docs'>
+          <h3>Seguidad de Tipos:</h3>
+          <ul class='breadcrumb'>
+            <li><a href="/es/docs/types/intro.html">Introducción</a></li>
+            <li class='selected'>Definir los Tipos</li>
+            <li><a href="/es/docs/types/testing.html">Las Pruebas</a></li>
+          </ul>
+          <h1>Definir los Tipos</h1>
+          <h2>Ponerlos en types.js</h2>
+          <p>Cuando crees un nuevo proyecto Composi con <code>create-composi-app</code>, en la carpeta <code>src/js</code> habrá un archivo llamado <code>types.js</code>. Esto importa los tipos predeterminados de <code>@composi/core</code> que ya se utilizan en el código mismo en el archivo <code>src/js/app.js</code> de su proyecto. De hecho, aquí es donde definirás los nuevos tipos de JSDoc que necesite para el código que escribas.</p>
+
+          <h2>Tipos con JSDoc</h2>
+          <p>Hay tres formas de implementar tipos en JSDoc: en parámetros de función o de método, como tipos definidos con la etiqueta <code>@typedef</code> y con la etiqueta <code>@type</code> para indicar el tipo de algo. JSDoc admite los siguientes tipos de JavaScript nativos: <code>null</code>, <code>undefined</code>, <code>string</code>, <code>number</code>, <code>Array </ code>, <code>Object</code>, <code>Date</code>, <code>RegExp</code>, <code>Symbol</code>, así como todos los tipos DOM, como < code> Documento</code>, <code>Node</code>, <code>Element</code>, <code>HTMLElement</code>, <code>HTMLDivElement</code>, etc.</p>
+
+          <h2>Ejemplo</h2>
+          <p>Para mostrar cómo escribir el código, vamos a utilizar un ejemplo simple de una lista de tareas pendientes. Esto tendrá un objeto de estado y necesitaremos agregar y eliminar elementos del estado. También utilizaremos una unión etiquetada para mensajes, que usaremos para definir las acciones que utiliza el método de actualización del programa.</p>
+
+
+          <h2>Estado</h2>
+          <p>Comencemos con el estado. Para nuestra lista de tareas, necesitamos un objeto que contenga una variedad de elementos. Debido a que es una lista, necesitamos hacer un seguimiento de las claves para el DOM virtual, por lo que necesitamos una nueva propiedad clave en el estado. También necesitamos un lugar para almacenar lo que el usuario escriba en un input de forma para permitir agregar nuevos elementos. En base a esto, podríamos tener un objeto de estado como este:</p>
+
+
+<pre><code class="language-javascript">const estado = {
+  claveNueva: 104,
+  valorDelInput: '',
+  ítems: [
+    {
+      clave: 101,
+      valor: 'Hablar con mi mamá'
+    },
+    {
+      clave: 102,
+      valor: 'Comer antojos'
+    },
+    {
+      clave: 103,
+      valor: 'Tomar una siesta'
+    }
+  ]
+}
+</code></pre>
+
+<p>Ahora definimos los tipos. Para hacerlo, creamos nuevos tipos usando la etiqueta <code>@typedef</code> y definimos sus propiedades con la etiqueta <code>@prop</code>.</p>
+
+<pre><code class="language-jsx">// Definir un tipo Ítem:
+/**
+ * @typedef {Object} Ítem
+ * @prop {number} clave
+ * @prop {string} valor
+ */
+// Definir el tipo Estado:
+/**
+ * @typedef {Object} Estado
+ * @prop {number} claveNueva
+ * @prop {string} valorDelInput
+ * @prop {Ítem[]} ítems
+ */
+</pre></code>
+        <p>Primero definimos un tipo <code>Ítem</code>. Luego, cuando definimos el tipo <code>Estado</code>, definimos elementos como una matriz de tipo <code>Ítem</code>. Así es como se dividen los tipos de objetos complejos en los más simples. Ahora podemos importar tanto el estado como los tipos de elementos para usar. Necesitaríamos el tipo de elemento si queremos iterar sobre los elementos del estado.</p>
+
+
+        <h2>Los Mensajes</h2>
+        <p>El entorno de ejecución Composi usa <a target="_blank href="/es/docs/runtime/tagged-unions.html">uniones etiquetadas</a> para facilitar y simplificar el uso de mensajes. El problema es que esa unión resulta que es un poco difícil definir el tipo de los mensajes. Se provee una serie de cadenas de texto para los nombres de los mensajes a la función <code> union</code>. Esta devuelva un objeto con métodos correspondientes a esos nombres. Estos métodos devuelven objetos de mensage de este tipo:</p>
+
+<pre><code class="language-javascript">{
+  type: 'nombreDeMensaje',
+  data: undefined
+}
+</pre></code>
+
+          <p>El objeto de unión también tiene un método <code>match</code> que espera dos argumentos, el mensaje enviado y un objeto de métodos para usar si hay una coincidencia. Para que haya una coincidencia, el objeto debe tener un método que corresponda a la propiedad <code>type</code> del mensaje recibido. Eso significa que los nombres de la unión de mensajes que envía el mensaje deben ser idénticos al método de objeto con el que proporciona el método de coincidencia. Sí suena complicado, pero funciona muy intuitivamente. Aquí están nuestros mensajes y un método de acciones que trata con esos mensajes para nuestra hipotética lista de tareas pendientes:</p>
+
+<pre><code class="language-javascript">// Crear una unión etiquetada de mensajes:
+const Msj = union('ActualizarValorInput', 'AgregarÍtem', 'EliminarÍtem')
+
+// Destructurar los métodos de la unión:
+const {ActualizarValorInput, AgregarÍtem, EliminarÍtem} = Msj
+
+// Ahora definir las acciones para estos mensajes:
+function acciones(estado, msj, send) {
+  // Destructurar el estado
+  const estadoPrevio = {...{estado}}
+  // Averiguar cuál mensaje fue recibido:
+  return Msj.match(msj, {
+    ActualizarValorInput: value => {
+      estadoPrevio.valorDelInput = value
+      return estadoPrevio
+    },
+    AgregarÍtem: () => {
+      if (estadoPrevio.valorDelInput) {
+        estadoPrevio.ítems.push({
+          clave: estadoPrevio.claveNueva++,
+          valor: estadoPrevio.valorDelInput
+        })
+        estadoPrevio.valorDelInput = ''
+      } else {
+        alert('Por favor prevee un valor antes de someter.')
+      }
+      return estadoPrevio
+    },
+    EliminarÍtem(key) {
+      estadoPrevio.ítems = estadoPrevio.ítems.filter(ítem => ítem.key !== key)
+      return estadoPrevio
+    }
+  })
+}
+</pre></code>
+
+          <p>Si pasa el cursor sobre estos valores, verá que el editor ahora tiene idea de qué tipos son. Podemos resolver este problema proporcionando tipos para estos. Comenzaremos definiendo tipos para los métodos del objeto de acciones, luego definiremos la unión del mensaje. La razón, el método de coincidencia de la unión de mensajes necesita conocer el tipo del objeto de acciones. Los pondremos en el archivo <code>src/js/types.js</code> de nuestros proyectos después del tipo que definimos para el estado de nuestro proyecto.</p>
+
+<pre><code class="language-jsx">// Definir object de acciones:
+/**
+ * @typedef {Object} MétodosDeAcción
+ * @prop {(valor: string) => Estado} ActualizarValorInput
+ * @prop {() => Estado} AgregarÍtem
+ * @prop {(clave: number) => Estado} EliminarÍtem
+ */
+
+// Definir la unión de mensajes.
+// Usar MétodosDeAcción como el tipo devuelta por el método match.
+/**
+ * @typedef {Object} UniónDeMensajes
+ * @prop {(msj: Mensaje, object: MétodosDeAcción) => Estado} match
+ * @prop {(valor: string) => Mensaje} ActualizarValorInput
+ * @prop {() => Mensaje} AgregarÍtem
+ * @prop {(clave: number) => Mensaje} EliminarÍtem
+ */
+</pre></code>
+
+          <p>Ahora bien podemos importar el tipo <code>UniónDeMensajes</code> para usar con nuesta unión etiquetada:</p>
+
+<pre><code class="language-javascript">// Importar UniónDeMensajes y aplicarlo al objeto Msj:
+/** @type {import('../types').UniónDeMensajes} */
+const Msj = union('ActualizarValorInput', 'AgregarÍtem', 'EliminarÍtem')
+</pre></code>
+
+          <p>Al hacer esto nuestas funciones destructuradas tendran los tipos correctos. Ahora vamos a definir los tipos de la función de las acciones.</p>
+<pre><code class="language-jsx">// Import default types for estado, message and send:
+/**
+ * @typedef {import('../types').State} Estado
+ * @typedef {import('../types').Message} Mensaje
+ * @typedef {import('../types').Send} Send
+ */
+// Aplicar los tipos importados a los parámetros:
+/**
+ * @param {Estado} estado
+ * @param {Mensaje} msj
+ * @param {Send} send
+ */
+function acciones(estado, msj, send) {
+  // Aplicar tipo Estado a estadoPrevio:
+  /** @type {Estado} */
+  const estadoPrevio = {...{estado}}
+  // Aplicar el tipo para la unión de mensajes aquí:
+  /** @type {import('../types').UniónDeMensajes} */
+  return Msj.match(msj, {
+    ActualizarValorInput: value => {
+      estadoPrevio.value = value
+      return estadoPrevio
+    },
+    AgregarÍtem: () => {
+      if (estadoPrevio.valorDelInput) {
+        estadoPrevio.ítems.push({
+          clave: estadoPrevio.claveNueva++,
+          valor: estadoPrevio.valorDelInput
+        })
+        estadoPrevio.valorDelInput = ''
+      } else {
+        alert('Por favor prevee un valor antes de someter.')
+      }
+      return estadoPrevio
+    },
+    EliminarÍtem(key) {
+      estadoPrevio.ítems = estadoPrevio.ítems.filter(ítem => ítem.key !== key)
+      return estadoPrevio
+    }
+  })
+}
+</pre></code>
+
+          <p>Con las adiciones de los tipos anteriores, podemos desplazar el cursor sobre cualquier propiedad y ver los tipos correctos que se muestran. Esto te permite saber que TypeScript comprende los tipos que has proporcionado para tu código. También significa que si alguien intenta cambiar el código por usar un tipo incorrecto, inmediatamente recibirá una advertencia de Visual Studo Code de que el tipo es incorrecto.</p>
+
+
+          <h2>Aprender Más Sobre Los Tipos</h2>
+          <p>Acabamos de tocar la superficie de los tipos con JSDoc. Para obtener más información, puede consultar la <a target="_blank" href="https://jsdoc.app"> documentación de JSDoc </a>. También escribí dos artículos sobre los tipos para JavaScript: <a target="_blank" href="https://medium.com/@trukrs/javascript-type-linting-5903e9e3625f">JavaScript Type Linting /a> y <a target = "_ blank" href = "https://medium.com/@trukrs/type-safe-javascript-with-jsdoc-7a2a63209b76">Type Safe JavaScript with JSDoc</a>.</p>
+
+          <h2>Descargar ejemplos</h2>
+          <p>Puede descargar una colección de ejemplos de proyectos utilizando @comosi/core que están completamente tipados como se describió anteriormente. Estos están disponibles en <a href="https://github.com/composi/examples" target="_blank"> https://github.com/composi/examples </a>. Examine el archivo <code> types.js </code> en cada carpeta <code>src/js</code> del proyecto para ver cómo se definen los tipos personalizados. Luego examine todos los demás archivos JavaScript para ver cómo se importan y usan los tipos.</p>
+
+          <p>&nbsp;</p>
+        </div>
+      </section>
+    </article>
+    <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path
+                d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core'
+            target='__blank'>Github</a> y <a href="https://www.npmjs.com/package/@composi/core"
+            target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+    <script src="/js/prism.js"></script>
+
+
+  </body>
+
+</html>

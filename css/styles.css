@@ -160,7 +160,6 @@ code,
 kbd,
 samp {
   font-family: monospace, monospace;
-  font-size: 1em;
 }
 
 pre {
@@ -554,6 +553,7 @@ article > section {
   background-color: #eee;
   color: rgb(21, 159, 255);
   padding: 0 3px;
+  font-size: 1.5rem !important;
 }
 #add-item {
   transition: all .25s ease-out;

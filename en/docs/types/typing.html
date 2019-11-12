@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="description"
+      content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+    <meta name="keywords"
+      content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+    <title>Composi - Docs</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/prism.css">
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+  </head>
+
+  <body class='page'>
+    <nav>
+      <ul class='nav-menu'>
+        <li class='nav-menu__item'>
+          <a class='nav-menu__item__link' href="/index.html">
+            <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink">
+              <title>Composi Logo</title>
+              <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="Composi-Logo-Solid" fill="#fff">
+                  <path
+                    d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                    id="Combined-Shape"></path>
+                </g>
+              </g>
+            </svg>
+            <span class='logo__link--text'>Composi</span></a>
+        </li>
+        <li class='nav-menu__item selected'>
+          <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
+        </li>
+      </ul>
+    </nav>
+    <article class='article'>
+      <section>
+        <div class='docs'>
+          <h3>Type Safety:</h3>
+          <ul class='breadcrumb'>
+            <li><a href="/en/docs/types/intro.html">Introduction</a></li>
+            <li class='selected'>Defining Types</li>
+            <li><a href="/en/docs/types/testing.html">Testing</a></li>
+          </ul>
+          <h1>Typing</h1>
+          <h2>Put them in types.js</h2>
+          <p>When you create a new Composi project with <code>create-composi-app</code>, in the src/js folder there will be a file called <code>types.js</code>. This imports default types from <code>@composi/core</code> that are already used in the default code in your project's src/js/app.js file. In fact, this is where you will define any new JSDoc types you need for the code you write.</p>
+
+          <h2>JSDoc Types</h2>
+          <p>There are three ways we implement JSDoc types: on function/method parameters, as custom types with the <code>@typedef</code> tag and with the <code>@type</code> to indicate something's type. JSDoc supports the following native JavaScript types: <code>null</code>, <code>undefined</code>, <code>string</code>, <code>number</code>, <code>Array</code>, <code>Object</code>, <code>Date</code>, <code>RegExp</code>, <code>Symbol</code>, as well as all the DOM types, such as <code>Document</code>, <code>Node</code>, <code>Element</code>, <code>HTMLElement</code>, <code>HTMLDivElement</code>, etc.</p>
+
+          <h2>Example</h2>
+          <p>To show how to type your code we are going to use a simple example of a todo list. This will have a state object and we will need to add and delete items from the state. We will be using a tagged union for messages as well, which we will use to define the actions that the program's update method uses.</p>
+
+
+          <h2>State</h2>
+          <p>Let's start with the state. For our todo list we need an object that holds an array of items. Because it is a list, we need to keep track of keys for the virtual DOM, so we need a new key propert in the state. We also need a place to store whatever the user types in a form input to enable addding new items. Based on this we could have a state object like this:</p>
+
+<pre><code class="language-javascript">const state = {
+  newKey: 104,
+  inputValue: '',
+  items: [
+    {
+      key: 101,
+      value: 'Talk to Mom'
+    },
+    {
+      key: 102,
+      value: 'Eat snacks'
+    },
+    {
+      key: 103,
+      value: 'Take a nap'
+    }
+  ]
+}
+</code></pre>
+
+<p>Now let's define its types. To do so we create new types using the <code>@typedef</code> tag and define their properties with the <code>@prop</code> tag.</p>
+
+<pre><code class="language-jsx">// Define an Item type:
+/**
+ * @typedef {Object} Item
+ * @prop {number} key
+ * @prop {string} value
+ */
+// Define the State type:
+/**
+ * @typedef {Object} State
+ * @prop {number} newKey
+ * @prop {string} inputValue
+ * @prop {Item[]} items
+ */
+</pre></code>
+
+        <p>First we define an <code>Item</code> type. Then, when we define the <code>State</code> type, we define items as an array of type <code>Item</code>. This is how you break down complex object types into simpler ones. Now we can import both the state and item types to use. We would need the item type if we want to iterate over the state's items.</p>
+
+        <h2>Runtime Messages</h2>
+        <p>The Composi runtime uses <a target="_blank href="/en/docs/runtime/tagged-unions.html">taged unions</a> to make using messages simpler and more intuitive. But because of that union, they are a little tricky to type. You provide the <code>union</code> method a series of string for the names of the messages you need to handle. It returns an object with methods corresponding to the names. These methods return message objects of type:</p>
+
+<pre><code class="language-javascript">{
+  type: 'someMessage',
+  data: undefined
+}
+</pre></code>
+
+          <p>The union object also has a <code>match</code> method that gets two arguments, the send message and an object of methods to use if there's a match. For there to be a match, the object has to have a method that corresponds to the message type received. That means the names of the message union method that sends the message have to be identical to the object method you provide the match method with. I know, it sounds complicated, but it works out really intuitiely. Here's our messages and an actions method that deals with those messages for our hypothetical todo list:</p>
+
+<pre><code class="language-javascript">// Create tagged union of messages:
+const Msg = union('updateInputValue', 'addItem', 'deleteItem')
+
+// Destructure the union methods:
+const {updateInputValue, addItem, deleteItem} = Msg
+
+// Now define actions to handle these messages:
+function actions(state, msg, send) {
+  // Destructure the state:
+  const prevState = {...{state}}
+  // Test what message was recieved:
+  return Msg.match(msg, {
+    updateInputValue: value => {
+      prevState.inputValue = value
+      return prevState
+    },
+    addItem: () => {
+      if (prevState.inputValue) {
+        prevState.items.push({
+          key: prevState.newKey++,
+          value: prevState.inputValue
+        })
+        prevState.inputValue = ''
+      } else {
+        alert('Please provide a value before submitting.')
+      }
+      return prevState
+    },
+    deleteItem(key) {
+      prevState.items = prevState.items.filter(item => item.key !== key)
+      return prevState
+    }
+  })
+}
+</pre></code>
+
+          <p>If you hover the cursor over these values you'll see that the editor has now idea what types these are. We can resolve this issue by providing types for these. We'll start by define types for the actions object methods, then we'll define the message union. The reason, the message union's match method needs to know the type of the actions object. We'll be putting these in our projects <code>src/js/types.js</code> file after the type we defined for our project's state.</p>
+
+<pre><code class="language-jsx">// Define actions object:
+/**
+ * @typedef {Object} ActionMethods
+ * @prop {(value: string) => State} updateInputValue
+ * @prop {() => State} addItem
+ * @prop {(key: number) => State} deleteItem
+ */
+
+// Define message union.
+// Use the ActionMethod as the return type of the match method.
+/**
+ * @typedef {Object} MessageUnion
+ * @prop {(msg: Message, object: ActionMethods) => State} match
+ * @prop {(value: string) => Message} updateInputValue
+ * @prop {() => Message} addItem
+ * @prop {(key: number) => Message} deleteItem
+ */
+</pre></code>
+
+          <p>Now we can import this <code>MessageUnion</code> type to use on our tagged union:</p>
+
+<pre><code class="language-javascript">// Import MessageUnion and apply it to the Msg object:
+/** @type {import('../types').MessageUnion} */
+const Msg = union('updateInputValue', 'addItem', 'deleteItem')
+</pre></code>
+
+          <p>Doing this give our destructured functions the correct types. Next lets type the actions function:</p>
+<pre><code class="language-jsx">// Import default types for state, message and send:
+/**
+ * @typedef {import('../types').State} State
+ * @typedef {import('../types').Message} Message
+ * @typedef {import('../types').Send} Send
+ */
+// Apply imported types to parameters:
+/**
+ * @param {State} state
+ * @param {Message} msg
+ * @param {Send} send
+ */
+function actions(state, msg, send) {
+  // Apply State type to prevState:
+  /** @type {State} */
+  const prevState = {...{state}}
+  // Apply message union type here:
+  /** @type {import('../types').MessageUnion} */
+  return Msg.match(msg, {
+    updateInputValue: value => {
+      prevState.value = value
+      return prevState
+    },
+    addItem: () => {
+      if (prevState.inputValue) {
+        prevState.items.push({
+          key: prevState.newKey++,
+          value: prevState.inputValue
+        })
+        prevState.inputValue = ''
+      } else {
+        alert('Please provide a value before submitting.')
+      }
+      return prevState
+    },
+    deleteItem(key) {
+      prevState.items = prevState.items.filter(item => item.key !== key)
+      return prevState
+    }
+  })
+}
+</pre></code>
+
+          <p>With the above type additions we can hover over any properties and see the corret types being shown. This lets you know that TypeScript is understanding the types that you have provided for your code. It also means that if someone tries to change the code to provide a wrong type, they will immediated get a warning from Visual Studo Code that the type is incorrect.</p>
+
+          <h2>Learn More About Types</h2>
+          <p>We just touched the surface of types with JSDoc. For more information you can consult the <a target="_blank" href="https://jsdoc.app">JSDoc documentation</a>. I've also writen two articles about typing: <a target="_blank" href="https://medium.com/@trukrs/javascript-type-linting-5903e9e3625f">JavaScript Type Linting</a>
+          and <a target="_blank" href="https://medium.com/@trukrs/type-safe-javascript-with-jsdoc-7a2a63209b76">Type Safe
+            JavaScript with JSDoc</a>.</p>
+
+          <h2>Download Examples</h2>
+          <p>You can download a collection of working examples of proejcts using the Composi runtime that are fully typed as we described above. These are available at <a href="https://github.com/composi/examples" target="_blank">https://github.com/composi/examples</a>. Examine the <code>types.js</code> file in each project <code>src/js</code> folder to see how custom types are defined. Then examine all the other JavaScript files to see how types are imported and used.</p>
+
+          <p>&nbsp;</p>
+        </div>
+      </section>
+    </article>
+    <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path
+                d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core'
+            target='__blank'>Github</a> and <a href="https://www.npmjs.com/package/@composi/core"
+            target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+    <script src="/js/prism.js"></script>
+
+
+  </body>
+
+</html>

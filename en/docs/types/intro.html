@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="description"
+      content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+    <meta name="keywords"
+      content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+    <title>Composi - Docs</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/prism.css">
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+  </head>
+
+  <body class='page'>
+    <nav>
+      <ul class='nav-menu'>
+        <li class='nav-menu__item'>
+          <a class='nav-menu__item__link' href="/index.html">
+            <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink">
+              <title>Composi Logo</title>
+              <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="Composi-Logo-Solid" fill="#fff">
+                  <path
+                    d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                    id="Combined-Shape"></path>
+                </g>
+              </g>
+            </svg>
+            <span class='logo__link--text'>Composi</span></a>
+        </li>
+        <li class='nav-menu__item selected'>
+          <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
+        </li>
+      </ul>
+    </nav>
+    <article class='article'>
+      <section>
+        <div class='docs'>
+          <h3>Type Safety:</h3>
+          <ul class='breadcrumb'>
+            <li class='selected'>Introduction</li>
+            <li><a href="/en/docs/types/typing.html">Defining Types</a></li>
+            <li><a href="/en/docs/types/testing.html">Testing</a></li>
+          </ul>
+          <h1>Introduction</h1>
+          <h2>Type Safety for JavaScript</h2>
+          <p>When you create a new project with <code>create-composi-app</code> it comes set up to provide you with the ability to have type safe JavaScript. It does this by telling Visual Studio Code to use its TypeScript Language Service to type check you JavaScript in real time, as you write it.</p>
+
+          <h2>JavaScript is Loosely Typed</h2>
+          <p>JavaScript is not strongly typed. It was designed to run in the browser, so it has no need to be built or compiled. Unlike every other language out there, JavaScript is the only language that has to deal with the browser's DOM. The DOM has its own type system and JavaScript has to deal with that. To do so, JavaScript uses type coercion. For example, if you use <code>document.getElementById</code> you get an object of type <code>Element</code>. But <code>document.querySelector</code> returns <code>HTMLElement</code>. These are not the same thing. If the element you were getting was an input, its type would be <code>HTMLInputElement</code>, which is different from the previous two types. In a strongly typed language these would not be interchangeable because their properties do not overlap. Through type coercion JavaScript lets you use access the DOM without having to thing about the underlying types.</p>
+
+          <p>Suppose you use <code>getElementById</code> to get an input element. Then you want to get the value of that input like this:</p>
+<pre><code class="language-javascript">const formInput = document.getElementById('form-input')
+const value = formInput.value
+</code></pre>
+
+          <p>This seems straightforward. It's something we do all the time. But what's really happening is the query is returning a type <code>Element</code>. This is a very generic type. It has no value property. So when we try to access the value property on <code>formInput</code> JavaScript sees that you're trying to access the value property and coerces <code>formInput</code> to type <code>HTMLInputElement</code>.</p>
+
+          <p>Type coercion makes it easy to work with the DOM. However the when and how type coercion happens is not always clear to developers, resulting in unexpected results. On top of that, because JavaScript is an interpreted language that runs in the browser, there is no way to know if code is correct until it loads in the browser. Basically the browser is your compiler and test environment. Strongly typed languages require a build step where the code is quecked for type correctness. If it is not correct, the build fails with relavant information about the type errors so you can address them.</p>
+
+          <p>For simple JavaScript, running it in the browser to catch errors is not a big deal. But if the code base is large and complex, this becomes couterproductive. The number and types of errors in a code base increase exponentially with the number of people working on it.</p>
+
+          <h2>Prevention is the Best Cure</h2>
+          <p>There are several trends to avoid the many types of JavaScript errors that can cause a crash. Linting with JSHint, ESLint, etc., warns you about dubious patterns and usages in your code. Prettier makes the code formatting consistent between team members. And there are now dozens of typed languages that compile to JavaScript. These provide static type safety at build time. This verifies that the types are correct before the JavaScript loads i the browser. There are many languages that provide static type checking for JavaScript: GWT, ClosureScript, Elm, PureScript, Reason, TypeScript, etc.</p>
+
+          <p>Regardless of what language you use to provide type safety for your code, once it is converted to JavaScript and run in the browser or in Node, there is no type safety. If all the code is from you or your team, you can have a high degree of certainty that your code will be type safe. However, if you are using third party libraries, data or APIs you cannot be sure. In such a case the only way to be sure that your code is type safe during runtime is to use type guards.</p>
+
+          <h2>JSDoc</h2>
+          <p>Composi provides type safety through a different approach. It uses TypeScript for type safety, but directly on JavaScript. TypeScript was designed to be able to understand JavaScript type usage through inference. This is nice, but not that useful because in most cases it treats so many things as type <code>any</code>. TypeScript understands JSDoc comments, including the type information that closely corresponds to those of TypeScript. This means you can provide your JavaScript code with type information with JSDoc comments that TypeScript can understand, allowing it to verify the correctness of types. This means as you type JavaScript you will get both warning about incorrect type usage and rich Intellisense about the code you are using and code completion with hints.</p>
+
+          <p>All the default Composi code already comes typed for you. But any code you write will need type definitions to make it type safe. You can learn how to provide JSDoc type definition in the docs for <a target="_blank" href="/es/docs/types/typing.html">typing</a>.</p>
+
+
+
+          <p>&nbsp;</p>
+        </div>
+      </section>
+    </article>
+    <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path
+                d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core'
+            target='__blank'>Github</a> and <a href="https://www.npmjs.com/package/@composi/core"
+            target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+    <script src="/js/prism.js"></script>
+
+
+  </body>
+
+</html>

@@ -75,8 +75,8 @@
 
           <p>When your program is very simple it may not seem like such a big deal to separate effects into separate spheres. But as a program becomes more complex, implementing actions, subscriptions and lifecycle hooks results in code that is easier to reason about and maintain. State management goes in actions, startup async code goes in subscriptions, visual effects get handled by lifecycle hooks.</p>
 
-          <h2>batchEffects</h2>
-          <p>Sometimes you may have several effects that you need to run together. Or you have one big effect doing alot of things that you want to break down into smaller pieces. @composi/core provides <code>batchEffect</code> for these purposes. It allows you to create a map of effects that you can execute one after the other. Be aware that effects run asynchronously and independently of each other. So, event though they are being executed in order, they will probably terminate at different times. If you want to execute effects sequentially, one after the other, then you should look into running them as ES6 async/await functions.</p>
+          <h2>batch</h2>
+          <p>Sometimes you may have several effects that you need to run together. Or you have one big effect doing alot of things that you want to break down into smaller pieces. @composi/core provides <code>batch</code> for these purposes. It allows you to create a map of effects that you can execute one after the other. Be aware that effects run asynchronously and independently of each other. So, event though they are being executed in order, they will probably terminate at different times. If you want to execute effects sequentially, one after the other, then you should look into running them as ES6 async/await functions.</p>
           <p>Below is an example illustrating how to batch effects together. Open the browser console to see the result of the three effects:</p>
 <p data-height="300" data-theme-id="6688" data-slug-hash="vQKZGg" data-default-tab="js,result" data-user="rbiggs"
   data-pen-title="@composi/core + runtime Batched Effects" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/vQKZGg/">@composi/core

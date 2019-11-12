@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="description"
+      content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+    <meta name="keywords"
+      content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+    <title>Composi - Docs</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/prism.css">
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+  </head>
+
+  <body class='page'>
+    <nav>
+      <ul class='nav-menu'>
+        <li class='nav-menu__item'>
+          <a class='nav-menu__item__link' href="/index.html">
+            <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink">
+              <title>Composi Logo</title>
+              <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="Composi-Logo-Solid" fill="#fff">
+                  <path
+                    d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                    id="Combined-Shape"></path>
+                </g>
+              </g>
+            </svg>
+            <span class='logo__link--text'>Composi</span></a>
+        </li>
+        <li class='nav-menu__item selected'>
+          <a class='nav-menu__item__link' href="/en/docs/index.html">Docs</a>
+        </li>
+      </ul>
+    </nav>
+    <article class='article'>
+      <section>
+        <div class='docs'>
+          <h3>Type Safety:</h3>
+          <ul class='breadcrumb'>
+            <li><a href="/en/docs/types/intro.html">Introduction</a></li>
+            <li><a href="/en/docs/types/typing.html">Defining Types</a></li>
+            <li class='selected'>Testing</li>
+          </ul>
+          <h1>Testing</h1>
+          <h2>Making Sure the Types are Correct</h2>
+          <p>Suppose you wrote some code and then come back six months later to do something. The problem is you kind of forgot a lot of the details about how this code was working. Or worse, somebody else on your team wrote this code and its your first time working on it. Why JSDoc comments defining types in the code you'll always know what are the correct types. In fact, Visual Studio Code will warn you if you try to use a wrong type. This is real time type checking. All Composi projects are set up to provide this.</p>
+          <p>But lets just say you want to make sure the code is correct. Maybe other people recently worked on other files in the project. You don't want to open every file to see if there are type errors. To check that types in all the JavaScript files you can use the project's NPM script: <code>checkjs</code>. This tells TypeScript to run a check on all the JavaScript files in your project's src folder. To do that, run it like any NPM script:</p>
+
+<pre><code class="language-bash">npm run checkjs
+</pre></code>
+
+          <p>If the above command finishes without any errors, you're good. If TypeScript find type errors, it will log them to the console complete with description and line number in the file. Below are some images of errors when running <code>checkjs</code> and without errors:</p>
+          <div>
+            <img style="text-align: center; width: 100%; height: auto;" src="/images/checkjs-errors.png" alt="">
+          </div>
+          <p>&nbsp;</p>
+          <div>
+            <img style="text-align: center; width: 100%; height: auto;" src="/images/checkjs-no-errors.png" alt="">
+          </div>
+
+          <p>&nbsp;</p>
+        </div>
+      </section>
+    </article>
+    <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path
+                d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core'
+            target='__blank'>Github</a> and <a href="https://www.npmjs.com/package/@composi/core"
+            target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+    <script src="/js/prism.js"></script>
+
+
+  </body>
+
+</html>

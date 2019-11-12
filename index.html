@@ -36,13 +36,6 @@
         <li class='nav-menu__item'>
           <a class='nav-menu__item__link' href="./en/docs/index.html">Docs</a>
         </li>
-        <!--
-      <li class='nav-menu__item'>
-        <a class='nav-menu__item__link' href="./tuts/index.html">Tutorials</a>
-      </li>
-      <li class='nav-menu__item'>
-        <a class='nav-menu__item__link en' href="./index.html" title='English'>English</a>
-      </li>-->
       </ul>
       <a class='version spanish' href="./index-es.html" title='Español'></a>
     </nav>
@@ -94,6 +87,7 @@
       <section>
         <div>
           <h2>@composi/core</h2>
+
           <p>The core provides support for functional components just like React, using JSX. There is a render function
             for injecting content into the DOM: <code>render(&lt;Component />, document.body)</code>. You use it the
             same way you use the ReactDOM.render function. Unlike React, function components come with support for
@@ -103,6 +97,7 @@
             <code>className</code>, <code>onClick</code>, etc. With @composi/core you use normal HTML attributes: <code>class</code>,
             <code>onclick</code>, etc. If you want to use innerHTML, it is just a normal HTML attribute that accepts a
             string. We do expect you to be aware of the security implications of using it.</p>
+
           <h2>@composi/core runtime</h2>
 
           <p>Core also provides state management for functional components through its runtime. Inspired by the Elm
@@ -114,6 +109,10 @@
           <p>In just 2KB, @composi/core with the runtime provides the same functionality as React functional
             components, but with Redux-like state management. @composi/core does not need <code>shouldComponentUpdate</code>,
             etc. It checks props and automatically bails if they have not changed.</p>
+
+          <h2>Type Safe JavaScript</h2>
+
+          <p>Composi comes fully typed using JSDoc comments. When you use <code>create-composi-app</code> to make a new project, it comes set up to provide you with automatic type checking. It does this by running the TypeScript language service in the background to parse the JavaScript files and understand the types based on its JSDoc comment. If you already know how to write comments with JSDoc, you add type coveage for the code you write.</p>
         </div>
       </section>
 

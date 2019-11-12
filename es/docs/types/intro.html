@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="description"
+      content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+    <meta name="keywords"
+      content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+    <title>Composi - Documentación</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/prism.css">
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
+  </head>
+
+  <body class='page'>
+    <nav>
+      <ul class='nav-menu'>
+        <li class='nav-menu__item'>
+          <a class='nav-menu__item__link' href="/index.html">
+            <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink">
+              <title>Composi Logo</title>
+              <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="Composi-Logo-Solid" fill="#fff">
+                  <path
+                    d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                    id="Combined-Shape"></path>
+                </g>
+              </g>
+            </svg>
+            <span class='logo__link--text'>Composi</span></a>
+        </li>
+        <li class='nav-menu__item selected'>
+          <a class='nav-menu__item__link' href="/es/docs/index.html">Documentación</a>
+        </li>
+      </ul>
+    </nav>
+    <article class='article'>
+      <section>
+        <div class='docs'>
+          <h3>Seguidad de Tipos:</h3>
+          <ul class='breadcrumb'>
+            <li class='selected'>Introducción</li>
+            <li><a href="/es/docs/types/typing.html">Definir los Tipos</a></li>
+            <li><a href="/es/docs/types/testing.html">Las Pruebas</a></li>
+          </ul>
+          <h1>Introducción</h1>
+          <h2>Seguidad de Tipos para JavaScript</h2>
+          <p>Cuando creas un nuevo proyecto con <code>create-composi-app</code> éste ya viene con todo para preveer JavaScript con seguridad de tipos. Lo hace por dirigirlo a Visual Studio Code que use su Servicio de Lenguage TypeScript para chequear los tipos del código JavaScript en tiempo actual, mientras lo escribas.</p>
+
+          <h2>JavaScript No Tiene Tipado Fuerte</h2>
+          <p>JavaScript fue diseñado para ejecutarse en el navegador, por lo que no es necesario construirlo ni compilarlo. A diferencia de
+          cualquier otro idioma, JavaScript es el único que tiene que tratar con el DOM del navegador. El DOM tiene su propio sistema de tipos y JavaScript tiene que tratar con eso. Para hacerlo, JavaScript utiliza la
+          coerción de tipos. Por ejemplo, si usas <code>document.getElementById</code> consigues un objeto de tipo <code>Element</code>. Pero <code>document.querySelector</code> devuelve <code>HTMLElement</code>. Estos no son la misma cosa. Si el elemento que estaba obteniendo era de etiqueta <code>input</code>, su tipo sería <code>HTMLInputElement</code>, que es
+          diferente de los dos tipos anteriores. En un lenguaje fuertemente tipado, estos no serían intercambiables porque sus propiedades no se superponen. A través de la coerción de tipos, JavaScript te permite acceder al DOM sin tener
+          que preocuparse por los tipos subyacentes.</p>
+
+          <p>Suponga que usas <code>getElementById</code> para obtener un elemento de <code>input</code>. Entonces deseas obtener el valor de
+          ese element de esta manera:</p>
+
+<pre><code class="language-javascript">const formInput = document.getElementById('form-input')
+const valor = formInput.value
+</code></pre>
+
+          <p>Esto parece sencillo. Es algo que hacemos todo el tiempo. Pero lo que realmente está sucediendo es que se devuelve un tipo <code>Element</code>. Este es un tipo muy genérico. No tiene propiedad de nombre <cdoe>value</cdoe>. Entonces, cuando
+          intentas acceder a la propiedad <code>value</code> del elemento <code>formInput</code>, JavaScript convierte el element <code>formInput</code> a tipo <code>HTMLInputElement</code>.</p>
+
+
+          <p>La coerción de tipos facilita el trabajo con el DOM. Sin embargo, a veces es difícil saber cuándo y cómo ocurre la coerción de tipos, lo que resulta en resultados inesperados para los desarrolladores. Además de eso, debido a que JavaScript es un lenguaje interpretado que se ejecuta en el navegador, no hay forma de saber si el código es correcto hasta que se carga en el navegador. Básicamente, el navegador es su compilador y entorno de prueba. Los idiomas fuertemente tipados requieren un paso de compilación durante el cual el código se chequea para la corrección de tipos. Si no es correcto, la compilación falla con información relevante sobre los errores de tipo para que pueda corregirlos.</p>
+
+          <p>Para JavaScript simple, ejecutarlo en el navegador para detectar errores no es gran cosa. Pero si el código es mucho y complejo, esto se vuelve más productivo. El número y los tipos de errores en una base de código aumentan exponencialmente con el número de personas que trabajan en él.</p>
+
+          <h2>La Prevención Es La Mejor Cura</h2>
+          <p>Hay varias tendencias para evitar los muchos tipos de errores de JavaScript que pueden causar un bloqueo. Chequear el código con JSHint, ESLint, etc., se le advierte sobre patrones y usos dudosos en su código. Prettier hace que el formato del código sea consistente entre los miembros del equipo. Y ahora hay docenas de lenguajes con tipado fuerte que se compilan en JavaScript. Estos proporcionan seguridad de tipo estático en el momento de la construcción. Esto verifica que los tipos son correctos antes de que el JavaScript se cargue en el navegador. Existen muchos lenguajes que proporcionan verificación de tipos estáticos para JavaScript: GWT, ClosureScript, Elm, PureScript, Reason, TypeScript, etc.</p>
+
+          <p>Independientemente del idioma que utilice para proporcionar seguridad de tipo para su código, una vez que se convierte a JavaScript y se ejecuta en el navegador o en Node, no hay seguridad de tipo. Si todo el código es tuyo de tu equipo, puedes tener un alto grado de certeza de que su código será de tipo seguro. Sin embargo, si estás utilizando librerías, datos o API de otra gente, no puedes estar seguro. En tal caso, la única manera de asegurarse de que el código tenga los tipos correctos durante el tiempo de ejecución es usar guardas de tipos.</p>
+
+          <p></p>
+
+          <h2>JSDoc</h2>
+          <p>Composi proporciona seguridad de tips de otra manera. Utiliza TypeScript para la seguridad de tipos, pero directamente en JavaScript. TypeScript fue diseñado para poder comprender el uso de tipos de JavaScript a través de la inferencia. Esto no es tan útil porque en la mayoría de los casos trata tantas cosas como tip <code>any</code>, que es demasiado genérico. TypeScript comprende los comentarios de JSDoc, incluida la información de tipo que se corresponde estrechamente con los de TypeScript. Esto significa que puede proporcionar su código JavaScript con información de tipo con comentarios JSDoc que TypeScript puede comprender, lo que le permite verificar la exactitud de los tipos. Esto significa que a medida que escribe JavaScript, recibirá advertencias sobre el uso incorrecto del tipo e Intellisense enriquecido sobre el código que está utilizando y la finalización del código con sugerencias. </p>
+
+          <p>El código esencial de Composi ya viene con seguridad de tipos. Pero cualquier código que escribas tu necesitará definiciones de tipo para que sea seguro. Puedes aprender cómo proporcionar la definición de tipo con JSDoc en <a target="_blank" href="/en/docs/types/typing.html"></a>la documentación</a>.</p>
+
+          <p>&nbsp;</p>
+        </div>
+      </section>
+    </article>
+    <footer>
+      <section>
+        <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>Composi Logo</title>
+          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
+              <path
+                d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                id="Combined-Shape"></path>
+            </g>
+          </g>
+        </svg>
+        <h3>Composi es código abierto (MIT) y está disponible en <a href='https://github.com/composi/core'
+            target='__blank'>Github</a> y <a href="https://www.npmjs.com/package/@composi/core"
+            target='__blank'>NPM</a>.</h3>
+      </section>
+    </footer>
+    <script src="/js/prism.js"></script>
+
+
+  </body>
+
+</html>
