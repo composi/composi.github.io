@@ -76,10 +76,10 @@
 }</code></pre>
 
           <h2>Clon Profundo</h2>
-          <p>Si el app y sus datos son complejos, a lo mejor vas a tener que creatr una copia profunda de los datos. Puedes realizar ésto dentro de la función <code>update</code> así cómo hicimos con la destructuración previamente. Sólo hay que importarlo de @composi/merge-objects:</p>
+          <p>Si el app y sus datos son complejos, a lo mejor vas a tener que creatr una copia profunda de los datos. Puedes realizar ésto dentro de la función <code>update</code> así cómo hicimos con la destructuración previamente. Sólo hay que importarlo de @composi/clone:</p>
 
 <pre><code class="language-javascript">import { h, render, run, union } from '@composi/core'
-import { clone } from '@composi/merge-objects'
+import { clone } from '@composi/clone'
 
 function acciones(estado, msj) {
   // Clonar el estado:
