@@ -76,13 +76,15 @@ const programa = {
       return mensaje
     }
   },
-  subscriptions(getState, send) {
-    return empezarContar(getState, send)
+  subscriptions(send, getState) {
+    return empezarContar(send, getState)
   }
 }</code></pre>
           <p>No hay nada de magia aquí. Las suscripciones hacen lo que dice la etiqueta. Usar suscripciones para ejecutar efectos al inicio
-          es más explícito. Pero puedes usar cualquier método, init o subscriptions, para ejecutar efectos al inicio. Subscriptions reciben las funciones <code>getState</code> y l<cond>send</cond>. Esto quiere decir que puedes acceder al estado actual del program or enviar un mensage a la function <code>update</code> desde una suscripción mediante estas funciones.</p>
-          <p>Sí usas getState y send en las suscripciones o no, el método <code>subscriptions</code> del program requiere que estén presentes cómo argumentos:</p>
+          es más explícito. Pero puedes usar cualquier método, init o subscriptions, para ejecutar efectos al inicio. Subscriptions reciben las funciones <code>send</code> y <cond>getState</cond>. Esto quiere decir que puedes acceder al estado actual del program or enviar un mensage a la function <code>update</code> desde una suscripción mediante estas funciones.</p>
+
+          <p>Tanto <code>send</code> como <code>getState</code> son opcionales. Si no vas a acceder al estado dentro de una suscripción, no hay que proveer <code>getState</code> como argumento. Si una suscripción no va enviar un mensaje, no se necesita el argument <code>send</code>:</p>
+
 <pre><code class="language-javascript">const program = {
   init() {
 
@@ -93,8 +95,8 @@ const programa = {
   update(estado, mensaje, send) {
 
   },
-  // Se requieren getState y send cómo argumentos aquí:
-  subscriptions(getState, send) {
+  // getState y send son opcionales aquí:
+  subscriptions(send, getState) {
 
   }
 }
@@ -116,7 +118,7 @@ const Msg = union('usarLosDatosRecibidos')
 // Ésta será proveída automáticamente cuando los efectos en tanda se procesan.
 
 // Efecto para consequir datos:
-function fetchState(getState, send) {
+function fetchState(send, getState) {
   (async () => {
     const response = await fetch('/src/js/state.json')
     const data = await response.json()
@@ -124,7 +126,7 @@ function fetchState(getState, send) {
   })()
 }
 // Efecto para manejar la compresión de la tecla Enter:
-function handleEnter(getState, send) {
+function handleEnter(send, getState) {
   document.addEventListener('keypress', e => {
     if (e.keyCode === 13) {
       send(Msg.addItem())
@@ -149,10 +151,10 @@ const program = {
     const prevState = clone(state)
     return actions(prevState, msg)
   },
-  subscriptions(getState, send) {
+  subscriptions(send, getState) {
     // Aquí retornamos los efectos combinados.
     // No tenemos que invocar esto, solo lo retornamos.
-    return batchedSubscriptions(getState, send)
+    return batchedSubscriptions(send, getState)
   }
 }</code></pre>
           <p> </p>
@@ -171,8 +173,8 @@ const program = {
       return mensaje
     }
   },
-  subs(getState, send) {
-    return empezarContar(getState, send)
+  subs(send, getState) {
+    return empezarContar(send, getState)
   }
 }</code></pre>
 

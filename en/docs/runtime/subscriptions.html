@@ -55,7 +55,7 @@
           <h2>Running Effects at Startup</h2>
           <p>When we covered <code>init</code> it was explained how you could execute an effect at startup by passing it as a second value in the tuple that <code>init</code> returns. Generally effects that run at startup are referred to as subscriptions. You can be more explicit about implementing a subscription by using the <code>subscriptions</code> method on a program.  This needs to return the subscription to execute.</p>
           <p>You would use subscriptions to track mouse movements, keyboard events, scrolling, changes to browser location, or timers.</p>
-<pre><code class="language-javascript">function startCount(getState, send) {
+<pre><code class="language-javascript">function startCount(send, getState) {
   let count = 0
   const id = setInterval(() => {
     if (count === 10) clearInterval(id)
@@ -76,12 +76,12 @@ const program = {
       return msg
     }
   },
-  subscriptions(getState, send) {
-    return startCount(getState, send)
+  subscriptions(send, getState) {
+    return startCount(send, getState)
   }
 }</code></pre>
-          <p>There is no magic here. Subscriptions do what the label says. Using subscriptions to run effects at start is more explicit. But you can use whatever approach, init or subscriptions, to run effects at startup. Subscriptions receive getState and send as arguments. This means you can access the program's state and send a message to an update action. getState is necessary because since subscriptions run separately from the program, they don't have direct access to the program's state. Using <code>getState</code> you can get the current state of the program and using <code>send</code> you can send a message to an action.</p>
-          <p>Regardless of whether you use getState and send in your subscriptions, the program method requires them as parameters:</p>
+          <p>There is no magic here. Subscriptions do what the label says. Using subscriptions to run effects at start is more explicit. But you can use whatever approach, init or subscriptions, to run effects at startup. Subscriptions receive <code>send</code> and <code>getState</code> as arguments. This means you can access the program's state and send a message to an update action. <code>getState</code> is necessary because since subscriptions run separately from the program, they don't have direct access to the program's state. Using <code>getState</code> you can get the current state of the program and using <code>send</code> you can send a message to an action.</p>
+          <p>Both <code>send</code> and getState are optional. If you are not accessing state in a subscription, no need for the <code>getState</code> argument. If a subscription is not going to send a message, no need for <code>send</code> as an argument:</p>
 <pre><code class="language-javascript">const program = {
   init() {
 
@@ -92,8 +92,8 @@ const program = {
   update(state, msg, send) {
 
   },
-  // state and send required as arguments here:
-  subscriptions(getState, send) {
+  // send and getState are optional here:
+  subscriptions(send, getState) {
 
   }
 }
@@ -114,7 +114,7 @@ const Msg = union('useFetchedData')
 // This will get passed automatically when the batched effects are processed.
 
 // Subscription effect to fetch data:
-function fetchState(getState, send) {
+function fetchState(send, getState) {
   (async () => {
     const response = await fetch('/src/js/state.json')
     const data = await response.json()
@@ -122,7 +122,7 @@ function fetchState(getState, send) {
   })()
 }
 // Subscription effect to handle Enter key:
-function handleEnter(getState, send) {
+function handleEnter(send, getState) {
   document.addEventListener('keypress', e => {
     if (e.keyCode === 13) {
       send(Msg.addItem())
@@ -147,10 +147,10 @@ const program = {
     const prevState = clone(state)
     return actions(prevState, msg)
   },
-  subscriptions(getState, send) {
+  subscriptions(send, getState) {
     // Here we return the batched effects.
     // Notice that we do not need to call them, just return them.
-    return batchedSubscriptions(getState, send)
+    return batchedSubscriptions(send, getState)
   }
 }</code></pre>
           <p> </p>
@@ -172,8 +172,8 @@ const program = {
     }
   },
   // Use short form for subscriptions:
-  subs(getState, send) {
-    return startCount(getState, send)
+  subs(send, getState) {
+    return startCount(send, getState)
   }
 }</code></pre>
 <p>&nbsp;</p>
@@ -199,8 +199,8 @@ const program = {
   update(state, msg, send) {
     return actions(state, msg, send)
   },
-  subscriptions(getState, send) {
-    return subscription(getState, send)
+  subscriptions(send, getState) {
+    return subscription(send, getState)
   }
 }
 </code></pre>
@@ -208,7 +208,7 @@ const program = {
 <pre><code class="language-javascript">// src/js/effects/subscription.js:
 import {clone} from '@composi/merge-objects'
 
-function subscription(getState, send) {
+function subscription(send, getState) {
   // clone the current program state:
   const state = clone(getState())
   const id = setInterval(() => {
