@@ -60,7 +60,7 @@
   },
   view(state, send) {},
   update(state, msg, send) {}
-  subscriptions(getState, send) {}
+  subscriptions(send, getState) {}
 }</code></pre>
 
         <p>You might be wondering why you should be able to set state as null or undefined. Image that in your program's subscriptions you plan on fetching data from somewhere to use as your program's state. This means you don't really have state to return yet. So you can just set it as <code>null</code>. Or you could leave the <code>init</code> method empty. Either way, if you are going to fetch your data in a subscription and leave state undefined, you'll need to check state before trying to render the view. You can use a simply <code>state &&</code> check before returning the view:</p>
@@ -75,9 +75,9 @@
   update(state, msg, send) {
 
   },
-  subscriptions(getState, send) {
+  subscriptions(send, getState) {
     // Fetch some data to use as state:
-    return fetchDataForState(getState, send)
+    return fetchDataForState(send, getState)
   }
 }</code></pre>
 

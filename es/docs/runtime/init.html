@@ -62,6 +62,7 @@
   },
   view(estado, send) {},
   update(estado, msj send) {}
+  subscriptions(send, getState) {}
 }</code></pre>
 
 
@@ -79,9 +80,9 @@
   update(estado, msj, send) {
 
   },
-  subscriptions(getState, send) {
+  subscriptions(send, getState) {
   // Obtener datos para el estado:
-  return conseguirDatosParaEstado(getState, send)
+  return conseguirDatosParaEstado(send, getState)
   }
 }</code></pre>
 
