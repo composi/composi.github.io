@@ -7,8 +7,10 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="description" content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
-  <meta name="keywords" content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
+  <meta name="description"
+    content="Composi is a JavaScript library for creating component-based interfaces. It uses the virtual DOM to make efficient updates to the DOM based on a component's data or state.">
+  <meta name="keywords"
+    content="javascript, framework, performance, small, fast, UI, programming, code, component, composi, chocolatechipui, chocolatechip-ui, reactive, virtual dom">
   <title>Composi - Docs</title>
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/prism.css">
@@ -21,11 +23,13 @@
     <ul class='nav-menu'>
       <li class='nav-menu__item'>
         <a class='nav-menu__item__link' href="/index.html">
-          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <svg id='composi-logo' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink">
             <title>Composi Logo</title>
             <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
               <g id="Composi-Logo-Solid" fill="#fff">
-                <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+                <path
+                  d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
                   id="Combined-Shape"></path>
               </g>
             </g>
@@ -55,48 +59,76 @@
           <li><a href="/en/docs/runtime/hop.html">Higher Order Program</a></li>
         </ul>
         <h1>Tagged Unions</h1>
-        <h2>Action Shortcuts</h2>
-        <p>When we were looking at how to use actions in the update function the usage was very similar to Redux. We were sending messages, which are objects with a type and optional data. For sure Redux requires much more boiler plate, and how you handle a message with a switch statement is similar to what Redux does. However, @composi/core offers a solution to this boilerplate through tagged unions. These are implement by means of the <code>union</code> function. To use it you'll need to first import it into your project:</p>
-<pre><code class="language-javascript">import { h, render, run, union } from '@composi/core'</code></pre>
-        <p>A tagged union is basically an object that links a string value, the name for the function, with the action in the update function. Doing this inables us to invoke these from the view. In our previous example we used hyphenated strings as the message type: "add-item", "delete-item", etc. Now we're going to change those to unhaphyenated names that we can use as a function: "addItem", "deleteItem". We'll use these as the values for creating a tagged union. In versions prior to 1.4.0 the arguments are enclosed in an array. But now you just pass in however arguments you need to, separated by commas:</p>
-<pre><code class="language-javascript">const Msg = new union('addItem', 'deleteItem')</code></pre>
-        <p>The above creates a tagged union that we can use to associate our update actions with. This will allow us to call the update actions directly in our view as:</p>
-<pre><code class="language-javascript">Msg.addItem('Watermelon')
-Msg.deleteItem(132)
+        <h2>Messages with Actions</h2>
+        <p>When we were looking at how to use actions in the update function the usage was very similar to Redux. We
+          were sending messages, which are objects with a type and optional data. For sure Redux requires much more
+          boiler plate, and how you handle a message with a switch statement is similar to what Redux does. However,
+          @composi/core offers a solution to this boilerplate through tagged unions. These are implement by means of the
+          <code>union</code> function. To use it you'll need to first import it into your project:</p>
+        <pre><code class="language-javascript">import { h, render, run, union } from '@composi/core'</code></pre>
+
+        <p>A tagged union is an object that links a message with the action to execute in the update function.
+          Doing this inables us to invoke these from the view. In our previous example we used hyphenated strings as the
+          message type: "add-item", "delete-item", etc. Now we're going to change those to unhaphyenated names that we
+          can use as a function: "AddItem", "DeleteItem". We'll use these as the values for creating a tagged union. In
+          versions prior to 1.4.0 the arguments are enclosed in an array. But now you just pass in however arguments you
+          need to, separated by commas:</p>
+        <pre><code class="language-javascript">const Msg = new union('AddItem', 'DeleteItem')</code></pre>
+        <p>The above creates a tagged union called <code>Msg</code> that we can use to associate our update actions
+          with. This will allow us to send messages in our view as without creating objects. To do this we can use
+          destructuring to capture the methods from the tagged union and then use those to send. Although we are dealing
+          with destructured methods, we don't have to execute them with parens. We just provide their name, and any
+          secondary data as a payload. The send function checks to see if they are functions and invokes them for us
+          automatically, passing them any data we provide:</p>
+        <pre><code class="language-javascript">const Msg = new union('AddItem', 'DeleteItem')
+// Destructure the tagged union methods:
+const {AddItem, DeleteItem} = Msg
+// Send those messages with some data:
+send(AddItem, 'Watermelon')
+send(DeleteItem, 132)
 </code></pre>
         <p>Here's how we would use them in our view markup:</p>
-<pre><code class="language-javascript">// To add an item:
-&lt;button class='add-item' onclick={() => send(Msg.addItem(inputValue))}>Add&lt;/button>
+        <pre><code class="language-javascript">// To add an item:
+&lt;button class='add-item' onclick={() => send(AddItem, inputValue)}>Add&lt;/button>
 // To delete an item:
-&lt;button class="deleteItem" onclick={() => send(Msg.deleteItem(item.key))}>X&lt;/button></code></pre>
-        <p>Compare that with the previous method of sending messages:</p>
-<pre><code class="language-javascript">// To add an item:
+&lt;button class="deleteItem" onclick={() => send(DeleteItem, item.key)}>X&lt;/button></code></pre>
+        <p>We could also invoke the destructure methods while sending them, passing the data as their argument:</p>
+        <pre><code class="language-javascript">send(AddItem('Watermelon'))
+send(DeleteItem(132))
+</code></pre>
+
+        <p>Compare the tagged union way with sending messages as objects:</p>
+        <pre><code class="language-javascript">// To add an item:
 &lt;button class='add-item' onclick={() => send({type: 'add-item', data: inputValue})}>Add&lt;/button>
 // To delete an item:
 &lt;button class="deleteItem" onclick={() => send({type: 'delete-item', data: item.key})}>X&lt;/button></code></pre>
 
-        <p>With the above code, when the user clicks, the send function will invoke the tagged union terms. This will result in a package being sent to the update function with the following format:</p>
-<pre><code class="language-javascript">// send(Msg.addItem('Watermelon'))
-{type: 'addItem', data: 'Watermelon'}
-// send(Msg.deleteItem(132))
-{type: 'deleteItem', data: 132}
-</code></pre>
+        <p>Using tagged unions results is tighter code that is easier to read and understand.</p>
 
+        <h2>Matching Messages to Actions</h2>
 
-        <p>A tagged union has a <code>match</code> method. This takes two arguments: a tag to test and handers. When using a tagged union inside of the <code>udpate</code> method, the tag to test will be the message passed to it from a user interaction using the <code>send</code> function. Handers is an object literal of tags and functions to execute. When the message sent matches a tag, the corresponding function gets executed.</p>
+        <p>A tagged union has a <code>match</code> method. This takes two arguments: a tag to test and handers. When
+          using a tagged union inside of the <code>udpate</code> method, the tag to test will be the message passed to
+          it from a user interaction using the <code>send</code> function. Handers is an object literal of tags and
+          functions to execute. When the message sent matches a tag, the corresponding function gets executed.</p>
 
-        <p>When we setup the update function, we can check that the message sent matches the values in the tagged union using the <code>match</code> method. Since we're using a tagged union, we don't need a switch statement to check for a tag type <code>msg.type</code>. This now gets handled by the <code>match</code> method. This results in a simpler signature for the actions. We can make an <code>actions</code> function that takes the message and state and retuns the result of a match:</p>
-<pre><code class="language-javascript">function actions(state, msg) {
+        <p>When we setup the update function, we can check that the message sent matches the values in the tagged union
+          using the <code>match</code> method. Since we're using a tagged union, we don't need a switch statement to
+          check for a tag type <code>msg.type</code>. This now gets handled by the <code>match</code> method. This
+          results in a simpler signature for the actions. We can make an <code>actions</code> function that takes the
+          message and state and retuns the result of a match:</p>
+        <pre><code class="language-javascript">import {Msg} from './messages'
+function actions(state, msg) {
   // Use clone to clone state:
   const prevState = clone(state)
   return Msg.match(msg, {
     // Check for the message tag:
-    'addItem': value => {
+    'AddItem': value => {
       prevState.fruits.push({ key: state.newKey++, value })
       return prevState
     },
     // Check for the message tag:
-    'deleteItem': key => {
+    'DeleteItem': key => {
       prevState.fruits = prevState.fruits.filter(item => item.key != key)
       return prevState]
     }
@@ -117,32 +149,28 @@ function actions(state, msg) {
       break
   }
 }</code></pre>
-        <p>The above example should make it clear why to use a tagged union. It makes the code cleaner and easier to reason about. Using a tagged union in the view makes the intent of the event clearer. They imply that they will invoke a corresponding update action. Without tagged unions, the events in our view are senging message objects off to an unspecified destination. We rely on our understanding of how the runtime works to assume that they will be intercepted by update actions. Tagged unions make the intent of view events clearer, and the update actions more compact.</p>
+        <p>The above example should make it clear why to use a tagged union. It makes the code cleaner and easier to
+          reason about. Using a tagged union in the view makes the intent of the event clearer. They imply that they
+          will invoke a corresponding update action. Without tagged unions, the events in our view are senging message
+          objects off to an unspecified destination. We rely on our understanding of how the runtime works to assume
+          that they will be intercepted by update actions. Tagged unions make the intent of view events clearer, and the
+          update actions more compact.</p>
 
-        <h3>Destructuring Union Methods</h3>
-        <p>We can use destructuring to make the <code>send</code> function code even clean by creating alias of the union methods. Using our previous example, it would look like this:</p>
-        <pre><code class="language-javascript">const Msg = new union('addItem', 'deleteItem')
-// Destructure union methods for using in the send function:
-const {addItem, deleteItem} = Msg
-
-// Then in our component markup we can use them like this:
-send(addItem('Watermelon'))
-// or
-send(deleteItem(123))</code></pre>
-
-        <h3>Default or CatchAll</h3>
-        <p>In the previous actions example we were checking each possible tag and providing a function to execute. In a switch statement we can use <code>default</code> to use when there is no match. We can also do that with a tagged union. Just provide a function as the last argument after the handlers object:</p>
-<pre><code class="language-javascript">function actions(msg, state) {
+        <h2>Default or CatchAll</h2>
+        <p>In the previous actions example we were checking each possible tag and providing a function to execute. In a
+          switch statement we can use <code>default</code> to use when there is no match. We can also do that with a
+          tagged union. Just provide a function as the last argument after the handlers object:</p>
+        <pre><code class="language-javascript">function actions(msg, state) {
   // Use clone to clone state:
   const prevState = clone(state)
   return Msg.match(msg, {
     // Check for the message tag:
-    'addItem': value => {
+    'AddItem': value => {
       prevState.fruits.push({ key: state.newKey++, value })
       return prevState
     },
     // Check for the message tag:
-    'deleteItem': key => {
+    'DeleteItem': key => {
       prevState.fruits = prevState.fruits.filter(item => item.key != key)
       return prevState
     }
@@ -153,11 +181,14 @@ send(deleteItem(123))</code></pre>
   })
 }</code></pre>
 
-        <p>Below is a complete working example of using a tagged union for setting up actions and sending them from the view.</p>
+        <p>Below is a complete working example of using a tagged union for setting up actions and sending them from the
+          view.</p>
 
-        <p data-height="600" data-theme-id="6688" data-slug-hash="zMOmON" data-default-tab="js,result" data-user="rbiggs"
-          data-pen-title="@composi/core + runtime + union" class="codepen">See the Pen <a href="https://codepen.io/rbiggs/pen/zMOmON/">@composi/core
-            + runtime + union</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+        <p data-height="600" data-theme-id="6688" data-slug-hash="zMOmON" data-default-tab="js,result"
+          data-user="rbiggs" data-pen-title="@composi/core + runtime + union" class="codepen">See the Pen <a
+            href="https://codepen.io/rbiggs/pen/zMOmON/">@composi/core
+            + runtime + union</a> by Robert Biggs (<a href="https://codepen.io/rbiggs">@rbiggs</a>) on <a
+            href="https://codepen.io">CodePen</a>.</p>
         <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 
         <p></p>
@@ -168,16 +199,19 @@ send(deleteItem(123))</code></pre>
   </article>
   <footer>
     <section>
-      <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <svg id='composi-logo-footer' viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink">
         <title>Composi Logo</title>
         <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
           <g id="Composi-Logo-Solid" fill="rgba(255,255,255,0.5)">
-            <path d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
+            <path
+              d="M1.77635684e-15,0 L95,0 L95,38 L209,38 L209,0 L300,0 L300,94 L265,93.8571663 L265,209 L300,209 L300,300 L209,300 L209,265 L95,265 L95,300 L1.77635684e-15,300 L1.77635684e-15,209 L40,209 L40,94 L1.77635684e-15,93.8571663 L1.77635684e-15,0 Z M107,107 L107,192 L192,192 L192,107 L107,107 Z"
               id="Combined-Shape"></path>
           </g>
         </g>
       </svg>
-      <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core' target='__blank'>Github</a>
+      <h3>Composi is open source (MIT) and available on <a href='https://github.com/composi/core'
+          target='__blank'>Github</a>
         and <a href="https://www.npmjs.com/package/@composi/core" target='__blank'>NPM</a>.</h3>
     </section>
   </footer>
